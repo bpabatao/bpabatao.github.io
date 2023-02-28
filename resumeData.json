@@ -1,7 +1,7 @@
 {
     "main": {
         "name": "Benedict Pabatao ",
-        "description": "I am a Senior Software Engineer focusing in web and mobile Development",
+        "description": "I am a Digital Nomad Senior Software Engineer focusing in web and mobile Development",
         "image": "profilepic3.jpg",
         "bio": "Experienced Full Stack Engineer focusing on frontend, backend and DevOps with a demonstrated history of working in Software development. Skilled in mobile and web application development focusing on JavaScript Frameworks (React, Node, Express), API Integration, HTML, White Box Testing, Deployment in Amazon Web Services and Software Development. Strong Engineering professional with a Bachelor of Science - BS focused in Information Technology from Polytechnic University of the Philippines. ",
         "contactmessage": "Here is where you should write your message to readers to have them get in contact with you.",
@@ -16,7 +16,7 @@
             "zip": "93727"
         },
         "website": "http://bpabatao.github.io",
-        "resumedownload": "https://docdro.id/GhTK5Ua",
+        "resumedownload": "https://docdro.id/yrTaKYW",
         "social": [{
                 "name": "facebook",
                 "url": "/",
@@ -29,7 +29,7 @@
             },
             {
                 "name": "linkedin",
-                "url": "https://www.linkedin.com/in/benedict-pabatao-1a1a81175/",
+                "url": "https://www.linkedin.com/in/benedict-pabatao",
                 "className": "fa fa-linkedin"
             },
             {
