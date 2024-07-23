@@ -1,22 +1,10 @@
 <h1 align="center">
   <div align="center">
-    <img alt="dnachavez (Dan Chavez) logo" src="./public/favicon.svg" height="150px" width="auto"/>
+    <img alt="bpabatao (Benedict Pabatao) logo" src="./public/favicon.svg" height="150px" width="auto"/>
   </div>
   <br/>
-  Portfolio - Dan Chavez
+  Portfolio - Benedict Pabatao
 </h1>
-<p align="center">
-    My personal portfolio built with Astro.
-    <br />
-    Cloned from dnachavez's <a href="https://github.com/dnachavez/portfolio">portfolio</a> project.
-    <br />
-    Based on devenapuros's <a href="https://github.com/devenapuros/portfolio">portfolio</a> project.
-    <br />
-    <a href="https://dnachavez.dev">Go to website</a>&nbsp;
-    ·
-    &nbsp;<a href="https://github.com/dnachavez/portfolio/issues">Report Bug</a>
-  </p>
-<br/>
 
 ## Built With 🚀
 
