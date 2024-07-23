@@ -12,6 +12,7 @@ const {
     jobDescription,
     jobActivities,
     jobTechnologies,
+    jobLocation,
 } = Astro.props;
 
 function calculateDuration(jobTime) {
@@ -187,6 +188,12 @@ function calculateDuration(jobTime) {
                 style="display: inline-flex; align-items: center; gap: 4px;"
             >
                 {jobCompany}
+            </span>
+            <span
+                class="text-light-gray-primary dark:text-dark-gray-primary text-base"
+                style="display: inline-flex; align-items: center; gap: 4px;"
+            >
+                {jobLocation}
             </span>
             <small class="mt-1 text-light-gray-primary dark:text-dark-gray-primary italic text-[0.91rem]">
                 {jobTime} {calculateDuration(jobTime)}
