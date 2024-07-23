@@ -1,144 +1,291 @@
 [
     {
-        "id": "develop-kreativity",
-        "jobPicture": "developkreativity.webp",
-        "jobColor": "#006fff",
-        "jobTitle": "Co-Founder and Project Lead",
-        "jobTime": "November 2023 - Present",
-        "jobCompany": "Develop Kreativity",
-        "jobCompanySite": "https://developkreativity.com/",
-        "jobDescription": "I lead the design and development of several projects, creating platforms that meet client needs and transforming their concepts into tangible results.",
+        "id": "nmblr",
+        "jobPicture": "nmblr.png",
+        "jobColor": "#FF5500",
+        "jobTitle": "Senior Software Engineer",
+        "jobTime": "March 2024 - Present",
+        "jobCompany": "Nmblr",
+        "jobCompanySite": "https://nmblr.co/",
+        "jobDescription": "A strategic collaboration platform designed specifically for small to medium-sized pharmaceutical and biotechnology companies. I contributed on both cloud infrastructure and codebase refactoring.",
         "jobActivities": [
-            "Design and development of user interfaces with HTML, CSS, and JavaScript.",
-            "Back-end and API development with PHP and CodeIgniter 4.",
-            "Full-stack development with WordPress.",
-            "Consumption of REST APIs with JavaScript.",
-            "Modeling and implementation of MySQL databases."
+            "Designed and deployed cloud infrastructure using GitHub Actions and AWS services (EC2, RDS, Route 53, Elastic Beanstalk, CloudFront), optimizing performance and scalability.",
+            "Refactored the codebase into a monorepo architecture for both front-end and back-end, improving development and enhancing codebase management within a single GitHub repository.",
+            "Introduced continuous integration and continuous deployment (CI/CD) pipelines, improving development workflow, reducing deployment times by 30%, and ensuring high code quality through automated testing."
         ],
         "jobTechnologies": [
-            {
-                "name": "PHP",
-                "icon": "php"
-            },
-            {
-                "name": "CodeIgniter",
-                "icon": "codeigniter"
-            },
-            {
-                "name": "JavaScript",
-                "icon": "javascript"
-            },
-            {
-                "name": "HTML",
-                "icon": "html"
-            },
-            {
-                "name": "CSS",
-                "icon": "css"
-            },
-            {
-                "name": "MySQL",
-                "icon": "mysql"
-            },
-            {
-                "name": "WordPress",
-                "icon": "wordpress"
-            },
-            {
-                "name": "Figma",
-                "icon": "figma"
-            },
-            {
-                "name": "cPanel",
-                "icon": "cpanel"
-            }
-        ]
-    },
-    {
-        "id": "university-of-southern-philippines-foundation",
-        "jobPicture": "uspf.webp",
-        "jobColor": "#27235e",
-        "jobTitle": "Full-Stack Developer (Working Scholar)",
-        "jobTime": "June 2023 - Present",
-        "jobCompany": "Information and Communications Technology Department at University of Southern Philippines Foundation",
-        "jobCompanySite": "https://uspf.edu.ph/",
-        "jobDescription": "I collaborate in the development of several web system applications for the university and its stakeholders, including an AI/ML chatbot called Augi and the USPF Digital app, as well as enhancements to existing web system applications.",
-        "jobActivities": [
-            "Design and development of user interfaces with HTML, CSS, and JavaScript.",
-            "Back-end and API development with PHP and CodeIgniter 4.",
-            "Consumption of REST APIs with JavaScript.",
-            "Modeling and implementation of MySQL databases."
-        ],
-        "jobTechnologies": [
-            {
-                "name": "PHP",
-                "icon": "php"
-            },
-            {
-                "name": "CodeIgniter",
-                "icon": "codeigniter"
-            },
-            {
-                "name": "JavaScript",
-                "icon": "javascript"
-            },
-            {
-                "name": "HTML",
-                "icon": "html"
-            },
-            {
-                "name": "CSS",
-                "icon": "css"
-            },
-            {
-                "name": "MySQL",
-                "icon": "mysql"
-            },
-            {
-                "name": "Bootstrap",
-                "icon": "bootstrap"
-            },
-            {
-                "name": "jQuery",
-                "icon": "jquery"
-            },
-            {
-                "name": "cPanel",
-                "icon": "cpanel"
-            },
             {
                 "name": "AWS",
                 "icon": "aws"
             },
             {
-                "name": "Git",
-                "icon": "git"
+                "name": "ReactJS",
+                "icon": "react"
+            },
+            {
+                "name": "NodeJS",
+                "icon": "javascript"
+            },
+            {
+                "name": "Docker",
+                "icon": "docker"
+            },
+            {
+                "name": "Typescript",
+                "icon": "typescript"
+            },
+            {
+                "name": "Github",
+                "icon": "github"
+            },
+            {
+                "name": "Graphql",
+                "icon": "graphql"
+            },
+            {
+                "name": "Postgresql",
+                "icon": "postgresql"
             }
         ]
     },
     {
-        "id": "mytoolz",
-        "jobPicture": "mytoolz.webp",
-        "jobColor": "#0086eb",
-        "jobTitle": "Back-End Developer",
-        "jobTime": "July 2021 - December 2021",
-        "jobCompany": "MyToolz.net",
-        "jobCompanySite": "https://mytoolz.net/tools/",
-        "jobDescription": "I contributed to the design and development of several web tools, including account checkers and content generators, as well as the enhancement of back-end and API infrastructures, improving service speed and the user experience.",
+        "id": "esc-partners",
+        "jobPicture": "escp.png",
+        "jobColor": "#FF5500",
+        "jobTitle": "Senior Software Engineer",
+        "jobTime": "June 2023 - Present",
+        "jobCompany": "ESC Partners",
+        "jobCompanySite": "https://www.esc-partners.com/",
+        "jobDescription": "Led the cloud infrastructure deployments and architecture designs for global AWS deployments using Bitbucket pipelines for utilities management applications.",
         "jobActivities": [
-            "Design and development of user interfaces with HTML, CSS, and JavaScript.",
-            "Back-end and API development with PHP.",
-            "Consumption of REST APIs with JavaScript.",
-            "Modeling and implementation of MySQL databases."
+            "Automated processes across multiple countries and utility sectors (electric, solar, water, wastewater), resulting in a 30% increase in deployment efficiency.",
+            "Refactored the backend Node.js API to integrate with AWS Cognito, Oracle CCS, and InvoiceCloud. Introduced parallelism techniques that boosted data availability by 80%, significantly enhancing the application's reliability and efficiency for electric, solar, water, and wastewater utility projects.",
+            "Pioneered the migration of a utility management application from Next.js to React.js, achieving a 50% reduction in infrastructure costs and significantly improving the user interface, performance, and overall software quality."
         ],
         "jobTechnologies": [
             {
-                "name": "PHP",
-                "icon": "php"
+                "name": "AWS",
+                "icon": "aws"
+            },
+            {
+                "name": "ReactJS",
+                "icon": "react"
             },
             {
                 "name": "JavaScript",
                 "icon": "javascript"
+            },
+            {
+                "name": "Typescript",
+                "icon": "typescript"
+            },
+            {
+                "name": "NodeJS",
+                "icon": "node"
+            },
+            {
+                "name": "MongoDB",
+                "icon": "mongodb"
+            },
+            {
+                "name": "Docker",
+                "icon": "docker"
+            }
+        ]
+    },
+    {
+        "id": "ordermentum",
+        "jobPicture": "ordermentum.png",
+        "jobColor": "#0086eb",
+        "jobTitle": "Senior Software Engineer",
+        "jobTime": "September 2022 - February 2023",
+        "jobCompany": "Ordermentum Pty Ltd",
+        "jobCompanySite": "https://www.ordermentum.com/",
+        "jobDescription": "A wholesale online order management system for the food and beverage industry. I contributed to the development of the restaurant ordering management system.",
+        "jobActivities": [
+            "Designed, developed, and deployed a robust restaurant ordering management system, streamlined food ordering and payment processes for improved efficiency and customer satisfaction. ",
+            "Worked closely with Ordermentum stakeholders to gather requirements, prioritize features, and ensure timely delivery of projects.",
+            "Contributed to the development and maintenance of software development processes, including version control and code review processes to ensure consistent and high-quality software delivery."
+        ],
+        "jobTechnologies": [
+            {
+                "name": "Typescript",
+                "icon": "typescript"
+            },
+            {
+                "name": "JavaScript",
+                "icon": "javascript"
+            },
+            {
+                "name": "Sequelize",
+                "icon": "sequelize"
+            },
+            {
+                "name": "Github",
+                "icon": "github"
+            },
+            {
+                "name": "NodeJS",
+                "icon": "node"
+            },
+            {
+                "name": "ReactJS",
+                "icon": "react"
+            }
+        ]
+    },
+    {
+        "id": "codev",
+        "jobPicture": "codev.png",
+        "jobColor": "#0086eb",
+        "jobTitle": "Software Engineer",
+        "jobTime": "March 2022 - May 2023",
+        "jobCompany": "Codev Philippines",
+        "jobCompanySite": "https://mytoolz.net/tools/",
+        "jobDescription": "A software development company that provides outsourcing services to clients in USA. I contributed to the development of customer internal portal for outsourcing talents.",
+        "jobActivities": [
+            "Contributed in the development of customer internal portal for outsourcing talents, and provided efficient project management and communication tools for CoDev clients.",
+            "Contributed on adding features to both customer portal and internal portal, improving user experience and service speed.",
+            "Designed, developed, and deployed advanced hunting and mapping management systems for Basemap Inc., and delivered reliable and innovative solutions for improved hunting experiences.",
+            "Rapidly and efficiently resolved software issues, minimized downtime, and ensured seamless operation of the hunting and mapping management systems."
+        ],
+        "jobTechnologies": [
+            {
+                "name": "Typescript",
+                "icon": "typescript"
+            },
+            {
+                "name": "JavaScript",
+                "icon": "javascript"
+            },
+            {
+                "name": "Github",
+                "icon": "github"
+            },
+            {
+                "name": "NodeJS",
+                "icon": "node"
+            },
+            {
+                "name": "ReactJS",
+                "icon": "react"
+            }
+        ]
+    },
+    {
+        "id": "hcl",
+        "jobPicture": "hcl.webp",
+        "jobColor": "#0086eb",
+        "jobTitle": "Senior Software Engineer",
+        "jobTime": "February 2020 - March 2022",
+        "jobCompany": "HCL Technologies Inc.",
+        "jobCompanySite": "https://www.hcl-software.com/dx",
+        "jobDescription": " A delivering industry-leading capabilities centered around digital, engineering, cloud and AI, powered by a broad portfolio of technology services and products. I worked on the development of the web-based website builder.",
+        "jobActivities": [
+            "Developed and implemented new features for the product software, consistently delivered high-quality and innovative solutions.",
+            "Contributed to comprehensive testing efforts, including the creation of test cases for unit, integration, and acceptance testing, as well as the maintenance and expansion of the test automation suite using Selenium.",
+            "Performed code reviews and provided knowledge transfer support to team members."        
+        ],
+        "jobTechnologies": [
+            {
+                "name": "AWS",
+                "icon": "aws"
+            },
+            {
+                "name": "Typescript",
+                "icon": "typescript"
+            },
+            {
+                "name": "JavaScript",
+                "icon": "javascript"
+            },
+            {
+                "name": "Github",
+                "icon": "github"
+            },
+            {
+                "name": "NodeJS",
+                "icon": "node"
+            },
+            {
+                "name": "ReactJS",
+                "icon": "react"
+            },
+            {
+                "name": "Docker",
+                "icon": "docker"
+            }
+        ]
+    },
+    {
+        "id": "zencomputes",
+        "jobPicture": "zencomputes.jpg",
+        "jobColor": "#0086eb",
+        "jobTitle": "Software Developer",
+        "jobTime": "February 2019 - February 2020",
+        "jobCompany": "Zencomputes Pte. Ltd",
+        "jobCompanySite": "",
+        "jobDescription": "A Software as a Solution (SaaS) company attracting customers in Malaysia and Singapore. I am one of the pioneer team focusing on web and mobile development.",
+        "jobActivities": [
+            "Successfully developed and delivered web and mobile applications to clients in Singapore and Malaysia, encompassing both front-end and back-end development responsibilities.",
+            "Contributed to the creation of visually appealing and functional product mockup designs, enhancing user experience and engagement."
+        ],
+        "jobTechnologies": [
+            {
+                "name": "Typescript",
+                "icon": "typescript"
+            },
+            {
+                "name": "JavaScript",
+                "icon": "javascript"
+            },
+            {
+                "name": "Github",
+                "icon": "github"
+            },
+            {
+                "name": "NodeJS",
+                "icon": "node"
+            },
+            {
+                "name": "ReactJS",
+                "icon": "react"
+            }
+        ]
+    },
+    {
+        "id": "halcyon",
+        "jobPicture": "halcyon.png",
+        "jobColor": "#0086eb",
+        "jobTitle": "Mobile Application Developer",
+        "jobTime": "March 2018 - February 2019",
+        "jobCompany": "Halcyon Digital Media Design",
+        "jobCompanySite": "https://halcyonagile.com/",
+        "jobDescription": "A software development company that provides outsourcing services to clients in USA. I contributed to the development of customer internal portal for outsourcing talents.",
+        "jobActivities": [
+            "Contributed in the development of customer internal portal for outsourcing talents, and provided efficient project management and communication tools for CoDev clients.",
+            "Contributed on adding features to both customer portal and internal portal, improving user experience and service speed."
+        ],
+        "jobTechnologies": [
+            {
+                "name": "Typescript",
+                "icon": "typescript"
+            },
+            {
+                "name": "JavaScript",
+                "icon": "javascript"
+            },
+            {
+                "name": "Github",
+                "icon": "github"
+            },
+            {
+                "name": "NodeJS",
+                "icon": "node"
+            },
+            {
+                "name": "ReactJS",
+                "icon": "react"
             },
             {
                 "name": "HTML",
@@ -147,14 +294,50 @@
             {
                 "name": "CSS",
                 "icon": "css"
+            }
+        ]
+    },
+    {
+        "id": "8layer",
+        "jobPicture": "8layer.png",
+        "jobColor": "#0086eb",
+        "jobTitle": "Software Developer",
+        "jobTime": "November 2017 - March 2018",
+        "jobCompany": "8Layer Technologies Inc.",
+        "jobCompanySite": "https://8layertech.com/",
+        "jobDescription": "A software development company based in the Philippines. I contributed to the development and maintenance of web applications for clients in the Philippines.",
+        "jobActivities": [
+            "Worked as a software developer intern to assist the development team with tasks and learned from their expertise in the field. ",
+            "Assumed a key role in the mobile development process, which included collaborating with team members and leveraging tools, technologies, and frameworks to deliver high-quality products and meet business objectives."
+        ],
+        "jobTechnologies": [
+            {
+                "name": "JavaScript",
+                "icon": "javascript"
             },
             {
-                "name": "MySQL",
-                "icon": "mysql"
+                "name": "Github",
+                "icon": "github"
             },
             {
-                "name": "jQuery",
-                "icon": "jquery"
+                "name": "NodeJS",
+                "icon": "node"
+            },
+            {
+                "name": "ReactJS",
+                "icon": "react"
+            },
+            {
+                "name": "Docker",
+                "icon": "docker"
+            },
+            {
+                "name": "HTML",
+                "icon": "html"
+            },
+            {
+                "name": "CSS",
+                "icon": "css"
             }
         ]
     }

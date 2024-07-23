@@ -32,7 +32,7 @@ module.exports = {
                         secondary: "#555",
                     },
                 },
-                primary: "#006fff",
+                primary: "#FF5500",
             },
             gridTemplateColumns: {
                 modal: "auto 23rem",
