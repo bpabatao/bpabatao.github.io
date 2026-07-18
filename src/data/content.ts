@@ -12,10 +12,10 @@ export const profile = {
 } as const;
 
 export const metrics = [
-  { value: 8, suffix: "+", label: "years in software" },
-  { value: 8, suffix: "", label: "tenant portals" },
-  { value: 78, suffix: "%", label: "core API authorship" },
-  { value: 110, prefix: "$", suffix: "K/yr", label: "AWS under management" },
+  { value: "8+", label: "years in software" },
+  { value: "8", label: "tenant portals" },
+  { value: "78%", label: "core API authorship" },
+  { value: "$110K/yr", label: "AWS under management" },
 ] as const;
 
 export const principles = [
