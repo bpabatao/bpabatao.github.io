@@ -62,24 +62,20 @@ export function Projects() {
         <Reveal className="mt-16">
           <h3 className="font-mono text-xs tracking-wide text-muted uppercase">Fleet portals</h3>
           <p className="mt-2 max-w-2xl text-sm leading-relaxed text-muted">
-            The 8 tenant portals in production on the core API and control-plane.
+            {fleetPortals.length} tenant portals in production on the core API and control-plane.
           </p>
           <div className="mt-5 grid gap-x-8 gap-y-4 grid-cols-2 md:grid-cols-4">
             {fleetPortals.map((p) => (
               <div key={p.tenant}>
                 <div className="text-sm font-medium text-ink">{p.tenant}</div>
-                {p.url ? (
-                  <a
-                    href={p.url}
-                    target="_blank"
-                    rel="noopener"
-                    className="font-mono text-xs text-muted transition-colors hover:text-accent"
-                  >
-                    {p.url.replace("https://", "")} ↗
-                  </a>
-                ) : (
-                  <span className="font-mono text-xs text-muted">internal</span>
-                )}
+                <a
+                  href={p.url}
+                  target="_blank"
+                  rel="noopener"
+                  className="font-mono text-xs text-muted transition-colors hover:text-accent"
+                >
+                  {p.url.replace("https://", "")} ↗
+                </a>
               </div>
             ))}
           </div>

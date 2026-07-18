@@ -150,9 +150,10 @@ export interface SecondaryProject {
   url?: string;
 }
 
-/* The 8 tenant portals running on the core API + control-plane.
-   Public production URLs only - internal/test domains never ship here. */
-export const fleetPortals: { tenant: string; url?: string }[] = [
+/* Tenant portals live in production on the core API + control-plane.
+   Public production URLs only - internal/test domains never ship here.
+   IPU intentionally absent until it launches. */
+export const fleetPortals: { tenant: string; url: string }[] = [
   { tenant: "Delta Utilities", url: "https://mydu.com" },
   { tenant: "MVU", url: "https://mvumobile.com" },
   { tenant: "NEP", url: "https://mynationwideenergypartners.com" },
@@ -160,7 +161,6 @@ export const fleetPortals: { tenant: string; url?: string }[] = [
   { tenant: "Alex Renew", url: "https://myalexrenew.com" },
   { tenant: "Carmel Utilities", url: "https://mycarmelutilities.com" },
   { tenant: "Web Aruba", url: "https://webcare.webaruba.com" },
-  { tenant: "IPU" },
 ];
 
 export const secondaryProjects: SecondaryProject[] = [
