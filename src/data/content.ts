@@ -150,21 +150,24 @@ export interface SecondaryProject {
   url?: string;
 }
 
+/* The 8 tenant portals running on the core API + control-plane.
+   Public production URLs only - internal/test domains never ship here. */
+export const fleetPortals: { tenant: string; url?: string }[] = [
+  { tenant: "Delta Utilities", url: "https://mydu.com" },
+  { tenant: "MVU", url: "https://mvumobile.com" },
+  { tenant: "NEP", url: "https://mynationwideenergypartners.com" },
+  { tenant: "DelCo Water", url: "https://delcowaterportal.com" },
+  { tenant: "Alex Renew", url: "https://myalexrenew.com" },
+  { tenant: "Carmel Utilities", url: "https://mycarmelutilities.com" },
+  { tenant: "Web Aruba", url: "https://webcare.webaruba.com" },
+  { tenant: "IPU" },
+];
+
 export const secondaryProjects: SecondaryProject[] = [
   {
     title: "Nmblr",
     description: "Biopharma strategy and real-time collaboration platform - clone engine, archive/restore, GraphQL subscriptions.",
     url: "https://nmblr.co",
-  },
-  {
-    title: "MyMVU Smart Portal",
-    description: "Utility customer portal - usage analytics, bill pay, outage reporting. Primary engineer on launch.",
-    url: "https://mvumobile.com",
-  },
-  {
-    title: "Alexandria Renew Portal",
-    description: "Wastewater utility customer portal - one of the 8 fleet tenants. Core contributor on launch.",
-    url: "https://myalexrenew.com",
   },
   {
     title: "Campaign Manager",

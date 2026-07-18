@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { earlierProjects, flagships, secondaryProjects, type SecondaryProject } from "@/data/content";
+import { earlierProjects, flagships, fleetPortals, secondaryProjects, type SecondaryProject } from "@/data/content";
 import { Reveal } from "./Reveal";
 import { SectionHeading } from "./SectionHeading";
 
@@ -31,7 +31,7 @@ export function Projects() {
       <div className="mx-auto w-full max-w-5xl px-6 py-20">
         <SectionHeading
           title="Selected work"
-          annotation={`${flagships.length} case studies · ${secondaryProjects.length + earlierProjects.length} more shipped`}
+          annotation={`${flagships.length} case studies · ${fleetPortals.length} portals · ${secondaryProjects.length + earlierProjects.length} more`}
         />
 
         <div>
@@ -58,6 +58,32 @@ export function Projects() {
             </Reveal>
           ))}
         </div>
+
+        <Reveal className="mt-16">
+          <h3 className="font-mono text-xs tracking-wide text-muted uppercase">Fleet portals</h3>
+          <p className="mt-2 max-w-2xl text-sm leading-relaxed text-muted">
+            The 8 tenant portals in production on the core API and control-plane.
+          </p>
+          <div className="mt-5 grid gap-x-8 gap-y-4 grid-cols-2 md:grid-cols-4">
+            {fleetPortals.map((p) => (
+              <div key={p.tenant}>
+                <div className="text-sm font-medium text-ink">{p.tenant}</div>
+                {p.url ? (
+                  <a
+                    href={p.url}
+                    target="_blank"
+                    rel="noopener"
+                    className="font-mono text-xs text-muted transition-colors hover:text-accent"
+                  >
+                    {p.url.replace("https://", "")} ↗
+                  </a>
+                ) : (
+                  <span className="font-mono text-xs text-muted">internal</span>
+                )}
+              </div>
+            ))}
+          </div>
+        </Reveal>
 
         <ProjectList label="Also shipped" projects={secondaryProjects} />
         <ProjectList label="Earlier work" projects={earlierProjects} />
