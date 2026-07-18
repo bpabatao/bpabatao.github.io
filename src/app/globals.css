@@ -1,0 +1,178 @@
+@import "tailwindcss";
+
+@custom-variant light (&:where(.light, .light *));
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-line: var(--line);
+  --color-ink: var(--ink);
+  --color-body: var(--body);
+  --color-muted: var(--muted);
+  --color-accent: var(--accent);
+  --color-accent-contrast: var(--accent-contrast);
+  --color-ok: var(--ok);
+  --font-display: var(--font-clash), var(--font-satoshi), system-ui, sans-serif;
+  --font-sans: var(--font-satoshi), system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, "SF Mono", monospace;
+}
+
+:root {
+  --bg: #0b0c0e;
+  --surface: #121417;
+  --surface-2: #17191d;
+  --line: #24272b;
+  --ink: #e8eaed;
+  --body: #c3c8ce;
+  --muted: #9ba1a8;
+  --accent: #ff5500;
+  --accent-contrast: #0b0c0e;
+  --ok: #4ade80;
+  color-scheme: dark;
+}
+
+:root.light {
+  --bg: #f5f6f8;
+  --surface: #ffffff;
+  --surface-2: #eceef1;
+  --line: #dfe2e6;
+  --ink: #141619;
+  --body: #3a4046;
+  --muted: #5f666e;
+  --accent: #cc4400;
+  --accent-contrast: #ffffff;
+  --ok: #15803d;
+  color-scheme: light;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
+}
+
+body {
+  background: var(--bg);
+  color: var(--body);
+  font-family: var(--font-sans), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3 {
+  text-wrap: balance;
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--accent-contrast);
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* Blueprint grid, hero only - fades out via mask */
+.hero-grid {
+  background-image:
+    linear-gradient(to right, var(--line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--line) 1px, transparent 1px);
+  background-size: 72px 72px;
+  mask-image: radial-gradient(ellipse 90% 80% at 50% 0%, black 0%, transparent 70%);
+  opacity: 0.4;
+}
+
+/* Scroll reveals: enhancement only - content stays visible where unsupported */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .reveal {
+      animation: reveal-in linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 55%;
+    }
+  }
+}
+
+/* Transform-only: content is always fully legible, even in static captures */
+@keyframes reveal-in {
+  from {
+    transform: translateY(26px);
+  }
+  to {
+    transform: none;
+  }
+}
+
+/* Hero entrance - CSS only, no hydration dependency */
+.hero-status {
+  animation: print-on 0.7s linear both;
+}
+
+.hero-rise {
+  /* transform-only: the LCP element is visible from first paint */
+  animation: rise 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.hero-fade {
+  animation: rise-fade 0.65s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes print-on {
+  from {
+    clip-path: inset(0 100% 0 0);
+  }
+  to {
+    clip-path: inset(0 0% 0 0);
+  }
+}
+
+@keyframes rise {
+  from {
+    transform: translateY(24px);
+  }
+  to {
+    transform: none;
+  }
+}
+
+@keyframes rise-fade {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.status-dot {
+  animation: pulse 2.4s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.35;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .status-dot {
+    animation: none;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
