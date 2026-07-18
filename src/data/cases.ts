@@ -3,7 +3,6 @@ export interface CaseStudy {
   title: string;
   subtitle: string;
   meta: { role: string; period: string; ownership: string; stack: string[] };
-  diagram: string;
   sections: { heading: string; paragraphs: string[] }[];
   outcomes: string[];
 }
@@ -20,20 +19,6 @@ export const cases: CaseStudy[] = [
       ownership: "78% of commits",
       stack: ["Fastify 5", "TypeScript (strict)", "Zod", "MongoDB", "AWS SDK v3", "ECS Fargate", "Vitest"],
     },
-    diagram: `delta   mvu   nep   delco   alexrenew   carmel   aruba   ipu
-  │      │     │      │        │          │        │      │
-  └──────┴─────┴──────┴───┬────┴──────────┴────────┴──────┘
-                          ▼
-              ┌───────────────────────┐
-              │       core api        │
-              │  authz on every route │
-              │  per-tenant config    │
-              │  fixed response shape │
-              └───────────┬───────────┘
-                oauth 2.0 ▼
-              ┌───────────────────────┐
-              │      oracle ccs       │
-              └───────────────────────┘`,
     sections: [
       {
         heading: "Problem",
@@ -74,18 +59,6 @@ export const cases: CaseStudy[] = [
       ownership: "Sole author",
       stack: ["Terraform", "Fastify 5", "React 18", "TypeScript", "MongoDB", "AWS SDK v3", "ECS Fargate"],
     },
-    diagram: `┌──────────────────────────────────────────────┐
-│   provisioning dashboard - fastify + react   │
-│     plan · apply · drift · tags · cost       │
-└──────────────────────┬───────────────────────┘
-                       ▼
-       terraform control-plane · 9 stacks
-    cognito · ecs fargate · cloudfront · wafv2
-   route 53 · elasticache · kms · secrets mgr
-                       ▼
-     ┌────────┬────────┬────────┬───────────┐
-     │ tenant │ tenant │ tenant │   ... ×8  │
-     └────────┴────────┴────────┴───────────┘`,
     sections: [
       {
         heading: "Problem",
@@ -124,9 +97,6 @@ export const cases: CaseStudy[] = [
       ownership: "Sole author",
       stack: ["AWS Bedrock (Claude)", "GitHub", "Jira", "Claude Code plugins", "Python", "S3/JSONL"],
     },
-    diagram: `alert  ─▶  bedrock triage  ─▶  fix PR    ─▶  human review
-ticket ─▶  plan ─▶ ⟨gate⟩ ─▶  draft PR  ─▶  ⟨gate⟩ ─▶ merge
-              label-driven state machine · reversible`,
     sections: [
       {
         heading: "Problem",
