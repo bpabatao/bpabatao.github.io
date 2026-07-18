@@ -9,7 +9,7 @@ export function Footer() {
             href="https://github.com/bpabatao/bpabatao.github.io"
             target="_blank"
             rel="noopener"
-            className="transition-colors hover:text-accent"
+            className="link-sweep transition-colors hover:text-accent"
           >
             source ↗
           </a>

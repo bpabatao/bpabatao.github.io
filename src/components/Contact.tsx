@@ -18,13 +18,13 @@ export function Contact() {
             {profile.email}
           </a>
           <div className="mt-8 flex gap-5 font-mono text-sm">
-            <a className="text-muted transition-colors hover:text-accent" href={profile.github} target="_blank" rel="noopener">
+            <a className="link-sweep text-muted transition-colors hover:text-accent" href={profile.github} target="_blank" rel="noopener">
               github ↗
             </a>
-            <a className="text-muted transition-colors hover:text-accent" href={profile.linkedin} target="_blank" rel="noopener">
+            <a className="link-sweep text-muted transition-colors hover:text-accent" href={profile.linkedin} target="_blank" rel="noopener">
               linkedin ↗
             </a>
-            <a className="text-muted transition-colors hover:text-accent" href="/resume.pdf" target="_blank" rel="noopener">
+            <a className="link-sweep text-muted transition-colors hover:text-accent" href="/resume.pdf" target="_blank" rel="noopener">
               resume.pdf ↗
             </a>
           </div>

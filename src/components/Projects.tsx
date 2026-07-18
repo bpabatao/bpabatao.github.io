@@ -65,9 +65,16 @@ export function Projects() {
             {fleetPortals.length} tenant portals in production on the core API and control-plane.
           </p>
           <div className="mt-5 grid gap-x-8 gap-y-4 grid-cols-2 md:grid-cols-4">
-            {fleetPortals.map((p) => (
+            {fleetPortals.map((p, i) => (
               <div key={p.tenant}>
-                <div className="text-sm font-medium text-ink">{p.tenant}</div>
+                <div className="flex items-center gap-2 text-sm font-medium text-ink">
+                  <span
+                    className="portal-dot size-1.5 shrink-0 rounded-full bg-ok"
+                    style={{ animationDelay: `${i * 0.3}s` }}
+                    aria-hidden
+                  />
+                  {p.tenant}
+                </div>
                 <a
                   href={p.url}
                   target="_blank"
