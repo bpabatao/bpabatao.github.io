@@ -14,8 +14,11 @@ export function Hero() {
           </span>
         </p>
 
-        <h1 className="hero-rise mt-7 max-w-4xl font-display text-5xl leading-[1.04] font-semibold tracking-tight text-ink sm:text-6xl md:text-7xl">
-          I build the platform other engineers <span className="text-accent">ship on.</span>
+        <h1 className="mt-7 max-w-4xl font-display text-5xl leading-[1.04] font-semibold tracking-tight text-ink sm:text-6xl md:text-7xl">
+          <span className="hero-rise block">I build the platform</span>
+          <span className="hero-rise block" style={{ animationDelay: "0.12s" }}>
+            other engineers <span className="text-accent">ship on.</span>
+          </span>
         </h1>
 
         <p className="hero-fade mt-6 max-w-2xl text-lg leading-relaxed" style={{ animationDelay: "0.2s" }}>
@@ -32,13 +35,13 @@ export function Hero() {
             view resume ↗
           </a>
           <div className="flex gap-4 font-mono text-sm">
-            <a className="text-muted transition-colors hover:text-accent" href={profile.github} target="_blank" rel="noopener">
+            <a className="link-sweep text-muted transition-colors hover:text-accent" href={profile.github} target="_blank" rel="noopener">
               github ↗
             </a>
-            <a className="text-muted transition-colors hover:text-accent" href={profile.linkedin} target="_blank" rel="noopener">
+            <a className="link-sweep text-muted transition-colors hover:text-accent" href={profile.linkedin} target="_blank" rel="noopener">
               linkedin ↗
             </a>
-            <a className="text-muted transition-colors hover:text-accent" href={`mailto:${profile.email}`}>
+            <a className="link-sweep text-muted transition-colors hover:text-accent" href={`mailto:${profile.email}`}>
               email
             </a>
           </div>

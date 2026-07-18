@@ -88,12 +88,49 @@ h3 {
   .hero-grid {
     animation: grid-drift 60s linear infinite;
   }
+
+  /* Grid recedes as the hero scrolls out - scroll-driven, no JS */
+  @supports (animation-timeline: view()) {
+    .hero-grid {
+      animation:
+        grid-drift 60s linear infinite,
+        grid-fade linear both;
+      animation-timeline: auto, view();
+      animation-range: normal, exit 0% exit 85%;
+    }
+  }
 }
 
 @keyframes grid-drift {
   to {
     background-position: 72px 72px;
   }
+}
+
+@keyframes grid-fade {
+  to {
+    opacity: 0.05;
+  }
+}
+
+/* Hover underline that draws in from the left */
+.link-sweep {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-size: 0% 1px;
+  background-repeat: no-repeat;
+  background-position: left calc(100% - 0.05em);
+  transition:
+    background-size 0.25s ease,
+    color 0.15s ease;
+}
+
+.link-sweep:hover {
+  background-size: 100% 1px;
+}
+
+/* Fleet portal telemetry dots - same pulse as the hero status dot */
+.portal-dot {
+  animation: pulse 2.4s ease-in-out infinite;
 }
 
 /* Scroll progress hairline - scroll-driven CSS only; hidden where unsupported */
