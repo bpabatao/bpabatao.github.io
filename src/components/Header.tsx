@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { MobileMenu } from "./MobileMenu";
 import { ThemeToggle } from "./ThemeToggle";
 
 const nav = [
@@ -26,6 +27,7 @@ export function Header() {
             </Link>
           ))}
           <ThemeToggle />
+          <MobileMenu links={nav} />
         </nav>
       </div>
     </header>
