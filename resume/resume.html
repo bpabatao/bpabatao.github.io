@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Benedict Pabatao - Lead Platform Engineer</title>
+<style>
+  /* ATS-safe: single column, linear flow, real words in headings, no text-boxes.
+     Styling via CSS only - text layer stays clean. */
+  @page { size: A4; margin: 14mm 16mm; }
+  * { margin: 0; box-sizing: border-box; }
+  body {
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-size: 9.6pt;
+    line-height: 1.45;
+    color: #1a1c1f;
+    max-width: 178mm;
+  }
+  h1 { font-size: 20pt; letter-spacing: -0.01em; color: #111; }
+  .role-line { font-size: 9.5pt; font-weight: 600; color: #c44400; margin-top: 2pt; }
+  .contact { font-size: 9pt; color: #444; margin-top: 4pt; font-family: "SF Mono", Menlo, Consolas, monospace; }
+  h2 {
+    font-size: 10pt;
+    text-transform: uppercase;
+    color: #c44400;
+    border-bottom: 1.2pt solid #2a2d31;
+    padding-bottom: 2pt;
+    margin: 12pt 0 6pt;
+  }
+  h3 { font-size: 10.5pt; margin-top: 8pt; }
+  .co { color: #c44400; font-weight: 600; }
+  .meta { font-size: 8.5pt; color: #555; font-family: "SF Mono", Menlo, Consolas, monospace; font-weight: 400; }
+  .loc { font-size: 8.8pt; color: #555; margin-bottom: 3pt; }
+  ul { padding-left: 12pt; margin: 3pt 0 6pt; }
+  li { margin: 2.2pt 0; }
+  li b, p b { color: #111; }
+  .skills p { margin: 2.5pt 0; }
+  .skills b { text-transform: uppercase; font-size: 8.4pt; letter-spacing: 0.02em; }
+  a { color: inherit; text-decoration: none; }
+</style>
+</head>
+<body>
+
+<h1>Benedict Pabatao</h1>
+<div class="role-line">LEAD PLATFORM ENGINEER (STAFF LEVEL) · FULL-STACK · AWS</div>
+<div class="contact">Italy (Remote) · [PHONE] · jajapabatao@gmail.com · linkedin.com/in/benedict-pabatao · github.com/bpabatao · bpabatao.github.io</div>
+
+<h2>Summary</h2>
+<p>Lead Platform Engineer operating at Staff level - 8+ years in software, 5+ hands-on with AWS, and ~3 years leading cloud platforms end to end: from AWS infrastructure-as-code to the shared backend services an entire product fleet runs on. Near-sole author of a Terraform control-plane and internal developer platform that ships 8 multi-tenant client portals on ECS Fargate, and primary author (78%) of the core REST API those portals are built on. Operates ~$110K/year of multi-tenant portal infrastructure on AWS, turns it into self-service, and builds the products on it end to end - full-stack from React/TypeScript through Node/GraphQL - not just the infrastructure they run on.</p>
+
+<h2>Professional Experience</h2>
+
+<h3>Lead Platform Engineer</h3>
+<div class="loc"><span class="co">ESC Partners / HometownHUB</span> - New York, USA (Remote) · <span class="meta">Jun 2023 - Present</span></div>
+<ul>
+  <li><b>Primary author (78%) of the core REST API middleware</b> connecting 8 utility-customer tenant portals (Delta, IPU, MVU, NEP, DelCo, Alex Renew, Web Aruba, Carmel) to Oracle CCS via OAuth 2.0 - the multi-tenant auth, data-access, and integration patterns the whole fleet is built on.</li>
+  <li><b>Sole author of the internal developer platform:</b> a Terraform control-plane (9 stacks, ~60 AWS resource types) with a Fastify/React dashboard that self-service provisions and ships every client environment - Cognito, ECS Fargate, CloudFront, WAFv2, Secrets Manager, Route 53, ElastiCache, KMS - turning tenant onboarding into a templated, repeatable workflow.</li>
+  <li><b>De-facto technical lead of a 5-engineer team</b> - most senior hands-on engineer, reporting to the COO/CEO; set the platform standards the fleet adopts (provisioning modules, CI/CD, security guardrails).</li>
+  <li><b>Designed and built a multi-channel campaign manager</b> integrating Twilio (SMS + IVR voice) and AWS SES (email) with CSV recipient lists and templated messaging, replacing manual notification workflows.</li>
+  <li><b>Built an automated batch pipeline</b> syncing multi-account customers between Oracle CCS and Invoice Cloud in 5K-record batches - idempotency checks, error tracking, and automated success/failure email reporting.</li>
+  <li><b>Built the team's AI-augmented developer tooling</b> - an AWS Bedrock auto-remediation service (Claude via bedrock-runtime) that triages alerts and opens fix PRs, an automated Claude PR-reviewer in CI, an agentic AI-SDLC pipeline (Jira + GitHub, with human approval gates), and an LLM-maintained knowledge base built with Python data pipelines.</li>
+  <li><b>Own and operate the multi-tenant portal infrastructure as sole platform engineer</b> - ~$110K/year of AWS across the 8-tenant production and test fleet - with CI/CD (Bitbucket Pipelines), Datadog / CloudWatch observability, on-call incident response, and cost-attribution tooling (Cost Explorer API) driving right-sizing, shared-ALB, and Fargate-Spot savings.</li>
+  <li><b>Owned production go-live readiness for 6 client launches</b> (primary engineer on MVU, Web Aruba, NEP, Carmel; core contributor on Alex Renew, DelCo) - environment validation, deployment, rollback planning, and stabilization.</li>
+</ul>
+
+<h3>Senior Full-Stack Engineer</h3>
+<div class="loc"><span class="co">Nmblr - Biopharma Strategy &amp; Collaboration Platform (freelance)</span> - Remote · <span class="meta">Mar 2024 - Present</span></div>
+<ul>
+  <li>One of 3 core engineers on an ISO 27001-certified biopharma strategy SaaS (React/TypeScript, Node/GraphQL/Prisma, AWS Elastic Beanstalk), reporting to the CEO; private beta with enterprise pharma clients.</li>
+  <li><b>Originated two subsystems from scratch:</b> a DMMF-driven strategy clone engine (automated deep-clone of entire strategies) and the Edge archive/restore isolation system.</li>
+  <li>Contributed to real-time collaboration (GraphQL subscriptions), OpenAI-backed generation features, and platform security (OWASP/IDOR, JWT sessions).</li>
+  <li>Added production observability - streamed Elastic Beanstalk logs to CloudWatch with enhanced health reporting - and contributed to CI/CD workflow tuning.</li>
+</ul>
+
+<h2>Earlier Experience</h2>
+
+<h3>Senior Software Engineer - Ordermentum (contract, concurrent)</h3>
+<div class="loc"><span class="meta">Sep 2022 - Feb 2023</span></div>
+<ul><li>Designed and deployed a restaurant ordering and payment management system for hospitality clients (Node.js, PostgreSQL, Docker, Kubernetes).</li></ul>
+
+<h3>Senior Software Engineer - CoDev (Utah, USA / Remote)</h3>
+<div class="loc"><span class="meta">Mar 2022 - May 2023</span></div>
+<ul><li>Built GIS-based hunting/mapping systems and an internal talent-management portal (JavaScript, Docker); improved reliability through rapid, iterative issue resolution.</li></ul>
+
+<h3>Senior Software Engineer II - HCL Technologies (New York, USA / Remote)</h3>
+<div class="loc"><span class="meta">Feb 2020 - Mar 2022</span></div>
+<ul><li>Shipped product features at scale on HCL Digital Experience (Kubernetes-based); built and maintained automated test suites (Selenium) for unit, integration, and acceptance testing; led code reviews and knowledge transfer.</li></ul>
+
+<h3>Software Developer - Zencomputes (Singapore)</h3>
+<div class="loc"><span class="meta">2019 - 2020</span></div>
+<ul><li>Full-stack web development for studio and commerce clients (React, Node.js).</li></ul>
+
+<h3>Mobile App Developer - Halcyon Digital (Philippines)</h3>
+<div class="loc"><span class="meta">2018 - 2019</span></div>
+<ul><li>Built customer and rider mobile applications (React Native).</li></ul>
+
+<h2>Technical Skills</h2>
+<div class="skills">
+  <p><b>Cloud &amp; Infra:</b> AWS (ECS Fargate, S3, SES, CloudFront, Cognito, Route 53, VPC, ALB, RDS, Elastic Beanstalk, ElastiCache, KMS, Secrets Manager, WAFv2, Bedrock), Terraform (IaC), Docker, Kubernetes, Linux, OpenSearch</p>
+  <p><b>Platform &amp; DevOps:</b> Internal Developer Platform (IDP), self-service / templated multi-tenant provisioning, CI/CD (Bitbucket Pipelines, GitHub Actions), Cloud Cost Optimization / FinOps (Cost Explorer)</p>
+  <p><b>Observability &amp; Security:</b> Datadog (RUM / APM), CloudWatch, Sentry, structured logging; OWASP / IDOR, JWT, WAF, Secrets management, Snyk</p>
+  <p><b>Backend &amp; Data:</b> Node.js, Fastify, Express, TypeScript, Python, REST APIs, GraphQL, Prisma, PostgreSQL, MongoDB, Redis / BullMQ, Oracle Utilities CCS, Invoice Cloud</p>
+  <p><b>AI on the Platform:</b> AWS Bedrock (Claude via bedrock-runtime), AIOps / auto-remediation, agentic AI-SDLC pipelines, AI code review, LLM-maintained knowledge bases</p>
+  <p><b>Frontend:</b> React, TypeScript, Redux, Styled Components, Next.js, Tailwind CSS</p>
+  <p><b>Practices:</b> Platform Engineering, Infrastructure-as-Code, System Design &amp; Architecture, Security &amp; Compliance, Incident Response</p>
+</div>
+
+<h2>Education</h2>
+<h3>BS Information Technology</h3>
+<div class="loc">Polytechnic University of the Philippines · <span class="meta">2014 - 2018</span></div>
+
+</body>
+</html>
