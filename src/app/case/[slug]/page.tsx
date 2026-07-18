@@ -22,6 +22,8 @@ export default async function CasePage({ params }: Props) {
   const cs = cases.find((c) => c.slug === slug);
   if (!cs) notFound();
 
+  let arrowIndex = 0;
+
   return (
     <main className="mx-auto w-full max-w-3xl px-6 py-16">
       <Link href="/#projects" className="font-mono text-xs text-muted transition-colors hover:text-accent">
@@ -49,7 +51,17 @@ export default async function CasePage({ params }: Props) {
       </dl>
 
       <div className="mt-10 overflow-x-auto border border-line bg-surface p-6">
-        <pre className="font-mono text-xs leading-relaxed text-muted">{cs.diagram}</pre>
+        <pre className="font-mono text-xs leading-relaxed text-muted">
+          {cs.diagram.split(/([▼▶])/).map((part, i) =>
+            part === "▼" || part === "▶" ? (
+              <span key={i} className="flow-arrow" style={{ animationDelay: `${(arrowIndex++) * 0.4}s` }}>
+                {part}
+              </span>
+            ) : (
+              part
+            ),
+          )}
+        </pre>
       </div>
 
       {cs.sections.map((section) => (

@@ -3,8 +3,11 @@
 /* Label/icon swap is pure CSS (light: variant) - no state, no hydration flicker */
 export function ThemeToggle() {
   const toggle = () => {
-    const light = document.documentElement.classList.toggle("light");
+    const root = document.documentElement;
+    root.classList.add("theme-fade");
+    const light = root.classList.toggle("light");
     localStorage.setItem("theme", light ? "light" : "dark");
+    setTimeout(() => root.classList.remove("theme-fade"), 400);
   };
 
   return (
