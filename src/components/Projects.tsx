@@ -1,13 +1,38 @@
 import Link from "next/link";
-import { flagships, secondaryProjects } from "@/data/content";
+import { earlierProjects, flagships, secondaryProjects, type SecondaryProject } from "@/data/content";
 import { Reveal } from "./Reveal";
 import { SectionHeading } from "./SectionHeading";
+
+function ProjectList({ label, projects }: { label: string; projects: SecondaryProject[] }) {
+  return (
+    <Reveal className="mt-16">
+      <h3 className="font-mono text-xs tracking-wide text-muted uppercase">{label}</h3>
+      <div className="mt-6 grid gap-x-10 gap-y-7 sm:grid-cols-2">
+        {projects.map((p) => (
+          <div key={p.title}>
+            {p.url ? (
+              <a href={p.url} target="_blank" rel="noopener" className="font-medium text-ink transition-colors hover:text-accent">
+                {p.title} ↗
+              </a>
+            ) : (
+              <span className="font-medium text-ink">{p.title}</span>
+            )}
+            <p className="mt-1 text-sm leading-relaxed text-muted">{p.description}</p>
+          </div>
+        ))}
+      </div>
+    </Reveal>
+  );
+}
 
 export function Projects() {
   return (
     <section id="projects" className="border-t border-line">
       <div className="mx-auto w-full max-w-5xl px-6 py-20">
-        <SectionHeading title="Selected work" annotation="3 case studies · 6 more shipped" />
+        <SectionHeading
+          title="Selected work"
+          annotation={`${flagships.length} case studies · ${secondaryProjects.length + earlierProjects.length} more shipped`}
+        />
 
         <div>
           {flagships.map((p, i) => (
@@ -34,23 +59,8 @@ export function Projects() {
           ))}
         </div>
 
-        <Reveal className="mt-16">
-          <h3 className="font-mono text-xs tracking-wide text-muted uppercase">Also shipped</h3>
-          <div className="mt-6 grid gap-x-10 gap-y-7 sm:grid-cols-2">
-            {secondaryProjects.map((p) => (
-              <div key={p.title}>
-                {p.url ? (
-                  <a href={p.url} target="_blank" rel="noopener" className="font-medium text-ink transition-colors hover:text-accent">
-                    {p.title} ↗
-                  </a>
-                ) : (
-                  <span className="font-medium text-ink">{p.title}</span>
-                )}
-                <p className="mt-1 text-sm leading-relaxed text-muted">{p.description}</p>
-              </div>
-            ))}
-          </div>
-        </Reveal>
+        <ProjectList label="Also shipped" projects={secondaryProjects} />
+        <ProjectList label="Earlier work" projects={earlierProjects} />
       </div>
     </section>
   );

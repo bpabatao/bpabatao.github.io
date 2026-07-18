@@ -162,6 +162,11 @@ export const secondaryProjects: SecondaryProject[] = [
     url: "https://mvumobile.com",
   },
   {
+    title: "Alexandria Renew Portal",
+    description: "Wastewater utility customer portal - one of the 8 fleet tenants. Core contributor on launch.",
+    url: "https://myalexrenew.com",
+  },
+  {
     title: "Campaign Manager",
     description: "Multi-channel notifications - Twilio SMS + IVR voice and AWS SES email with CSV lists and templated messaging.",
   },
@@ -176,6 +181,50 @@ export const secondaryProjects: SecondaryProject[] = [
   {
     title: "Tenant Go-Lives",
     description: "Primary engineer on MVU, Web Aruba, NEP, and Carmel launches; core contributor on Alex Renew and DelCo.",
+  },
+];
+
+export const earlierProjects: SecondaryProject[] = [
+  {
+    title: "Ordermentum",
+    description: "Wholesale food and beverage ordering and payments platform (contract).",
+    url: "https://ordermentum.com",
+  },
+  {
+    title: "HCL Digital Experience",
+    description: "Enterprise digital-experience platform - product features and test automation at scale.",
+    url: "https://www.hcl-software.com/dx",
+  },
+  {
+    title: "Basemap",
+    description: "GIS mapping and hunting platform.",
+    url: "https://www.basemap.com",
+  },
+  {
+    title: "Hope Technik",
+    description: "Click-and-collect AGV system - web and control UI.",
+    url: "https://www.hopetechnik.com/product/click-and-collect-system/",
+  },
+  {
+    title: "Bambini Photography",
+    description: "Portrait studio site and booking.",
+    url: "https://bambiniphoto.sg",
+  },
+  {
+    title: "CoDev Internal Portal",
+    description: "Talent recruitment and management portal.",
+  },
+  {
+    title: "Kickstart Express",
+    description: "Parcel delivery mobile app for customers and riders (React Native).",
+  },
+  {
+    title: "Luckyah · Soon Beng Huat",
+    description: "Scrap and metal trading management systems.",
+  },
+  {
+    title: "Sobida Motors",
+    description: "Marketing site for a truck manufacturer.",
   },
 ];
 
