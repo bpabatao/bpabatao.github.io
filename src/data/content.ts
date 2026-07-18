@@ -109,6 +109,14 @@ export const earlierJobs: Job[] = [
   },
 ];
 
+export const credentials = [
+  {
+    period: "2014 - 2018",
+    title: "BS Information Technology",
+    detail: "Polytechnic University of the Philippines",
+  },
+] as const;
+
 export interface Flagship {
   slug: string;
   title: string;

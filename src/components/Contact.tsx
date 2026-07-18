@@ -8,8 +8,10 @@ export function Contact() {
       <div className="mx-auto w-full max-w-5xl px-6 py-20">
         <SectionHeading title="Contact" annotation="async-first · CET" />
         <Reveal>
-          <p className="max-w-prose leading-relaxed text-muted">
-            Open to staff/lead platform roles and consulting on AWS, Terraform, and multi-tenant systems.
+          <p className="flex items-center gap-2 font-mono text-xs tracking-wide text-muted">
+            <span className="status-dot size-2 shrink-0 rounded-full bg-ok" aria-hidden />
+            <span className="text-ok">ACCEPTING</span>
+            <span>- STAFF/LEAD PLATFORM ROLES · CONSULTING · AWS / TERRAFORM / MULTI-TENANT</span>
           </p>
           <a
             href={`mailto:${profile.email}`}
@@ -25,7 +27,7 @@ export function Contact() {
               linkedin ↗
             </a>
             <a className="link-sweep text-muted transition-colors hover:text-accent" href="/resume.pdf" target="_blank" rel="noopener">
-              resume.pdf ↗
+              resume.pdf · jul 2026 ↗
             </a>
           </div>
         </Reveal>

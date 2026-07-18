@@ -1,4 +1,4 @@
-import { currentJobs, earlierJobs } from "@/data/content";
+import { credentials, currentJobs, earlierJobs } from "@/data/content";
 import { Reveal } from "./Reveal";
 import { SectionHeading } from "./SectionHeading";
 
@@ -51,6 +51,18 @@ export function Work() {
               ))}
             </div>
           </details>
+        </Reveal>
+
+        <Reveal className="mt-10 border-t border-line pt-8">
+          {credentials.map((c) => (
+            <div key={c.title} className="grid gap-1 md:grid-cols-[190px_1fr] md:gap-8">
+              <div className="font-mono text-xs text-muted">{c.period}</div>
+              <div>
+                <span className="font-medium text-ink">{c.title}</span>
+                <span className="text-muted"> - {c.detail}</span>
+              </div>
+            </div>
+          ))}
         </Reveal>
       </div>
     </section>
