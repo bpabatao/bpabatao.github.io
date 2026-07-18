@@ -160,24 +160,54 @@ h3 {
   }
 }
 
-/* Case diagrams: arrows pulse in sequence, like requests moving through */
-.flow-arrow {
-  color: var(--accent);
+/* Case diagrams: packets ride offset-path along the request routes.
+   Hidden entirely where unsupported or when reduced motion is set -
+   a parked dot at the path origin means nothing. */
+.packet {
+  visibility: hidden;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .flow-arrow {
-    animation: flow-pulse 2.4s ease-in-out infinite;
+@supports (offset-path: path("M0 0 L1 1")) {
+  @media (prefers-reduced-motion: no-preference) {
+    .packet {
+      visibility: visible;
+      animation: packet-travel 4s linear infinite;
+    }
+
+    .packet-approve {
+      animation:
+        packet-travel 4s linear infinite,
+        packet-approve 4s linear infinite;
+    }
   }
 }
 
-@keyframes flow-pulse {
-  0%,
-  100% {
-    opacity: 0.35;
+@keyframes packet-travel {
+  0% {
+    offset-distance: 0%;
+    opacity: 0;
   }
-  50% {
+  6% {
     opacity: 1;
+  }
+  94% {
+    opacity: 1;
+  }
+  100% {
+    offset-distance: 100%;
+    opacity: 0;
+  }
+}
+
+/* The delivery packet turns green once it clears the last human gate */
+@keyframes packet-approve {
+  0%,
+  82% {
+    fill: var(--accent);
+  }
+  86%,
+  100% {
+    fill: var(--ok);
   }
 }
 

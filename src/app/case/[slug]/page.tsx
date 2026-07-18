@@ -2,6 +2,13 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { cases } from "@/data/cases";
+import { AiSdlcDiagram, ControlPlaneDiagram, CoreApiDiagram } from "@/components/diagrams";
+
+const diagrams = {
+  "core-api": CoreApiDiagram,
+  "control-plane": ControlPlaneDiagram,
+  "ai-sdlc": AiSdlcDiagram,
+} as const;
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -22,7 +29,7 @@ export default async function CasePage({ params }: Props) {
   const cs = cases.find((c) => c.slug === slug);
   if (!cs) notFound();
 
-  let arrowIndex = 0;
+  const Diagram = diagrams[cs.slug as keyof typeof diagrams];
 
   return (
     <main className="mx-auto w-full max-w-3xl px-6 py-16">
@@ -51,17 +58,9 @@ export default async function CasePage({ params }: Props) {
       </dl>
 
       <div className="mt-10 overflow-x-auto border border-line bg-surface p-6">
-        <pre className="font-mono text-xs leading-relaxed text-muted">
-          {cs.diagram.split(/([▼▶])/).map((part, i) =>
-            part === "▼" || part === "▶" ? (
-              <span key={i} className="flow-arrow" style={{ animationDelay: `${(arrowIndex++) * 0.4}s` }}>
-                {part}
-              </span>
-            ) : (
-              part
-            ),
-          )}
-        </pre>
+        <div className="min-w-[560px]">
+          <Diagram />
+        </div>
       </div>
 
       {cs.sections.map((section) => (
