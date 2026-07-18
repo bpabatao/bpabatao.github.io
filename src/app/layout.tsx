@@ -54,6 +54,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       </head>
       <body>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+        <div className="scroll-progress" aria-hidden />
         <Header />
         {children}
         <Footer />
