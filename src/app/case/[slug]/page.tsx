@@ -28,11 +28,13 @@ export default async function CasePage({ params }: Props) {
         ← back to index
       </Link>
 
-      <div className="mt-8 font-mono text-xs tracking-wide text-accent uppercase">Case study</div>
+      <div className="mt-8 font-mono text-xs text-muted">
+        <span className="text-accent">~/</span>case/{cs.slug}
+      </div>
       <h1 className="mt-3 font-display text-4xl font-semibold tracking-tight text-ink sm:text-5xl">{cs.title}</h1>
       <p className="mt-4 text-lg leading-relaxed">{cs.subtitle}</p>
 
-      <dl className="mt-10 grid gap-x-8 gap-y-4 rounded-xl border border-line bg-surface p-6 sm:grid-cols-2">
+      <dl className="mt-10 grid gap-x-8 gap-y-4 border border-line bg-surface p-6 sm:grid-cols-2">
         {[
           ["Role", cs.meta.role],
           ["Period", cs.meta.period],
@@ -46,7 +48,7 @@ export default async function CasePage({ params }: Props) {
         ))}
       </dl>
 
-      <div className="mt-10 overflow-x-auto rounded-xl border border-line bg-surface p-6">
+      <div className="mt-10 overflow-x-auto border border-line bg-surface p-6">
         <pre className="font-mono text-xs leading-relaxed text-muted">{cs.diagram}</pre>
       </div>
 

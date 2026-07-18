@@ -1,5 +1,4 @@
 import { metrics, profile } from "@/data/content";
-import { Metric } from "./Metric";
 
 /* Entrance is pure CSS (globals.css): the h1 animates transform-only so the
    largest paint lands at first paint - no hydration dependency. */
@@ -27,7 +26,7 @@ export function Hero() {
             href="/resume.pdf"
             target="_blank"
             rel="noopener"
-            className="rounded-md bg-accent px-5 py-2.5 font-mono text-sm font-medium text-accent-contrast transition-transform hover:-translate-y-0.5"
+            className="rounded-sm bg-accent px-5 py-2.5 font-mono text-sm font-medium text-accent-contrast transition-opacity hover:opacity-85"
           >
             view resume ↗
           </a>
@@ -49,7 +48,10 @@ export function Hero() {
           style={{ animationDelay: "0.5s" }}
         >
           {metrics.map((m) => (
-            <Metric key={m.label} {...m} />
+            <div key={m.label}>
+              <div className="font-mono text-2xl text-ink sm:text-3xl">{m.value}</div>
+              <div className="mt-1 font-mono text-[11px] tracking-wide text-muted uppercase">{m.label}</div>
+            </div>
           ))}
         </div>
       </div>

@@ -26,13 +26,7 @@ export function Work() {
                   ))}
                 </ul>
                 {job.stack && (
-                  <div className="mt-4 flex flex-wrap gap-2">
-                    {job.stack.map((s) => (
-                      <span key={s} className="rounded-full border border-line px-2.5 py-0.5 font-mono text-[11px] text-muted">
-                        {s}
-                      </span>
-                    ))}
-                  </div>
+                  <div className="mt-4 font-mono text-[11px] text-muted">{job.stack.join(" · ")}</div>
                 )}
               </div>
             </Reveal>

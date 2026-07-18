@@ -45,7 +45,7 @@ export const cases: CaseStudy[] = [
       {
         heading: "Constraints",
         paragraphs: [
-          "Utility customers pay bills through this thing - uptime and correctness are non-negotiable. Oracle CCS is the system of record, reached over OAuth 2.0 with per-tenant credentials. The team is small, so the architecture had to make the secure path the easy path.",
+          "Utility customers pay bills through this thing - it has to be up and it has to be right. Oracle CCS is the system of record, reached over OAuth 2.0 with per-tenant credentials. The team is small, so the architecture had to make the secure path the easy path.",
         ],
       },
       {
@@ -103,7 +103,7 @@ export const cases: CaseStudy[] = [
         heading: "Architecture",
         paragraphs: [
           "Nine Terraform stacks covering ~60 AWS resource types: Cognito user pools, ECS Fargate services, CloudFront distributions, WAFv2, Route 53, ElastiCache, KMS, Secrets Manager. Tenant environments are instantiated from templated modules - the same shape every time.",
-          "On top sits a Fastify + React dashboard that runs Terraform plans and applies, detects drift against live state, enforces tag compliance, and attributes cost per client through the Cost Explorer API. FinOps is built in, not bolted on: right-sizing, a shared ALB, and Fargate Spot came out of the same cost data.",
+          "On top sits a Fastify + React dashboard that runs Terraform plans and applies, detects drift against live state, enforces tag compliance, and attributes cost per client through the Cost Explorer API. Right-sizing, the shared ALB, and Fargate Spot all came out of that same cost data.",
         ],
       },
     ],
