@@ -116,7 +116,7 @@ function printPdf(htmlPath: string, pdfPath: string): void {
     console.log(`PDF_SKIPPED chrome not found at ${CHROME}`);
     return;
   }
-  execFileSync(CHROME, ["--headless=new", "--disable-gpu", "--no-pdf-header-footer", `--print-to-pdf=${pdfPath}`, pathToFileURL(htmlPath).href], { stdio: "ignore" });
+  execFileSync(CHROME, ["--headless=new", "--disable-gpu", "--no-pdf-header-footer", `--print-to-pdf=${pdfPath}`, pathToFileURL(htmlPath).href], { stdio: ["ignore", "ignore", "inherit"], timeout: 60_000 });
   console.log(`pages: ${pdfPageCount(readFileSync(pdfPath))}`);
 }
 

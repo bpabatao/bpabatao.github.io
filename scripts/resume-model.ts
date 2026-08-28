@@ -37,7 +37,7 @@ function role(job: Job): Role {
     title: job.role,
     company: job.tagline ? `${job.company} - ${job.tagline}` : job.company,
     location: job.location ?? null,
-    dates: formatPeriod(job.period),
+    dates: formatPeriod(job.positions?.[0]?.period ?? job.period),
     contract: job.employmentType === "Contract",
     previous: (job.positions ?? []).slice(1).map((p) => ({ title: p.title, dates: formatPeriod(p.period) })),
     bullets: (job.resumeReceipts ?? job.receipts).map(splitLead),

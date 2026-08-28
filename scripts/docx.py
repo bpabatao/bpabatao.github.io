@@ -43,10 +43,13 @@ def body(m):
         p.append(para([run(r["title"])], "Heading3"))
         loc = f" - {r['location']}" if r.get("location") else ""
         p.append(para([run(r["company"], bold=True), run(f"{loc} | {r['dates']}")]))
+        for prev in r.get("previous", []):
+            p.append(para([run(f"Previously {prev['title']} | {prev['dates']}")]))
         p += [bullet(b) for b in r["bullets"]]
     p.append(para([run("Earlier Experience")], "Heading2"))
     for r in m["earlier"]:
-        loc = f" ({r['location']})" if r.get("location") else ""
+        parts = [x for x in [r.get("location"), "contract" if r.get("contract") else None] if x]
+        loc = f" ({', '.join(parts)})" if parts else ""
         p.append(para([run(f"{r['title']} - {r['company']}{loc}")], "Heading3"))
         p.append(para([run(r["dates"])]))
         p += [bullet(b) for b in r["bullets"]]
@@ -117,9 +120,10 @@ def _selftest():
     model = {
         "name": "Test Person", "role": "Engineer", "roleLine": "ENGINEER | AWS", "contact": "a | b",
         "summary": "Sum & more", "page": "letter",
-        "experience": [{"title": "T", "company": "C", "location": "L", "dates": "Jan 2020 - Present",
+        "experience": [{"title": "T", "company": "C", "location": "L", "dates": "Jan 2020 - Present", "contract": False,
+                        "previous": [{"title": "Old Title", "dates": "Jan 2019 - Dec 2019"}],
                         "bullets": [{"lead": "Did X:", "rest": "then Y"}, {"lead": None, "rest": "plain"}]}],
-        "earlier": [{"title": "T2", "company": "C2", "location": None, "dates": "2019 - 2020", "bullets": [{"lead": None, "rest": "old"}]}],
+        "earlier": [{"title": "T2", "company": "C2", "location": "L2", "contract": True, "dates": "2019 - 2020", "bullets": [{"lead": None, "rest": "old"}]}],
         "skills": [{"title": "Cloud", "items": "AWS, Terraform"}],
         "education": [{"title": "BS", "detail": "Uni", "dates": "2014 - 2018"}],
     }
@@ -135,6 +139,10 @@ def _selftest():
     assert "<w:tbl" not in doc
     assert "Sum &amp; more" in doc
     assert 'w:w="12240" w:h="15840"' in doc
+    assert "Previously Old Title | Jan 2019 - Dec 2019" in doc
+    assert ", contract)" in doc
+    assert doc.count('w:val="Heading1"') == 1
+    assert doc.count('w:val="Heading3"') == 3, doc.count('w:val="Heading3"')
     print("docx selftest ok")
 
 
