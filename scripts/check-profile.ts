@@ -5,7 +5,7 @@ import { fileURLToPath } from "node:url";
 import { currentJobs, earlierJobs, earlierProjects, flagships, profile, secondaryProjects } from "../src/data/content.ts";
 import { cases } from "../src/data/cases.ts";
 import { plainText } from "../src/lib/format.ts";
-import { LIMITS, bodyOf } from "./render-linkedin.ts";
+import { LIMITS, bodyOf, buildLinkedinPack } from "./render-linkedin.ts";
 import { pdfPageCount, renderHtml } from "./render-resume.ts";
 import { buildResumeModel } from "./resume-model.ts";
 
@@ -111,6 +111,14 @@ function main(argv: string[]): void {
   const pdf = resolve(ROOT, "public/resume.pdf");
   if (existsSync(pdf) && pdfPageCount(readFileSync(pdf)) > 2) problems.push("public/resume.pdf has more than 2 pages");
 
+  const linkedinDir = resolve(ROOT, "linkedin");
+  const pack = buildLinkedinPack();
+  for (const [name, text] of Object.entries(pack)) {
+    const file = resolve(linkedinDir, name);
+    if (!existsSync(file) || readFileSync(file, "utf8") !== text) problems.push(`linkedin/${name} is stale - run npm run render`);
+  }
+  if (existsSync(linkedinDir)) for (const f of readdirSync(linkedinDir).filter((f) => f.endsWith(".txt"))) if (!(f in pack)) problems.push(`linkedin/${f} is orphaned - run npm run render`);
+
   for (const { label, text } of narrativeFields()) problems.push(...tokenHits(text, label));
   problems.push(...tokenHits(html, "resume.html"));
 
@@ -121,7 +129,7 @@ function main(argv: string[]): void {
       for (const { label, text } of narrativeFields()) problems.push(...denylistHits(text, terms, label));
       problems.push(...denylistHits(html, terms, "resume.html"));
       const dir = resolve(ROOT, "linkedin");
-      if (existsSync(dir)) for (const f of readdirSync(dir)) problems.push(...denylistHits(readFileSync(resolve(dir, f), "utf8"), terms, `linkedin/${f}`));
+      if (existsSync(dir)) for (const f of readdirSync(dir).filter((f) => f.endsWith(".txt"))) problems.push(...denylistHits(readFileSync(resolve(dir, f), "utf8"), terms, `linkedin/${f}`));
     }
   }
   if (argv.includes("--require-fresh") && profile.updated !== new Date().toISOString().slice(0, 10)) problems.push(`profile.updated is ${profile.updated}, expected today`);

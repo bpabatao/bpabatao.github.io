@@ -16,7 +16,7 @@ test("the real resume passes the ATS lint", () => {
 test("negative fixtures fail", () => {
   assert.ok(lintResumeHtml(good.replace("<h2>Summary</h2>", "<h2>Summary</h2><table><tr><td>x</td></tr></table>")).some((p) => p.includes("<table")));
   assert.ok(lintResumeHtml(good.replace("<h2>Education</h2>", "<h2>Schooling</h2>")).some((p) => p.includes("heading")));
-  assert.ok(dateProblems(good.replace("May 2023 - Present", "May 2023 - now")).length > 0);
+  assert.ok(dateProblems(good.replace("Sep 2025 - Present", "Sep 2025 - now")).length > 0);
   assert.ok(bulletProblems(`<ul><li>${"x".repeat(361)}</li></ul>`).length > 0);
   assert.deepEqual(keywordGaps("nothing here", ["Kubernetes"]), ["Kubernetes"]);
   assert.deepEqual(denylistHits("work for Carmel and delta today", ["Carmel", "Delta"], "t"), ["t: Carmel", "t: Delta"]);
