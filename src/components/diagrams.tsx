@@ -71,6 +71,7 @@ function Line({ d }: { d: string }) {
 }
 
 const TENANTS = fleetPortals.map((t) => t.key);
+const LAST_X = 42 + (TENANTS.length - 1) * 78;
 
 export function CoreApiDiagram() {
   return (
@@ -79,13 +80,13 @@ export function CoreApiDiagram() {
       {TENANTS.map((_, i) => (
         <Line key={i} d={`M${42 + i * 78} 40 V64`} />
       ))}
-      <Line d="M42 64 H588" />
+      <Line d={`M42 64 H${LAST_X}`} />
       <Line d="M320 64 V96" />
       <Line d="M320 184 V232" />
 
       <Packet d="M42 40 V64 H320 V96" dur="3.2s" />
       <Packet d="M432 40 V64 H320 V96" dur="3.2s" delay="1.1s" />
-      <Packet d="M588 40 V64 H320 V96" dur="3.2s" delay="2.2s" />
+      <Packet d={`M${LAST_X} 40 V64 H320 V96`} dur="3.2s" delay="2.2s" />
       <Packet d="M320 184 V232" dur="1.8s" delay="0.5s" />
       <circle
         r={3.5}
