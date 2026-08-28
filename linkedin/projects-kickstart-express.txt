@@ -1,0 +1,5 @@
+# updated 2026-08-28 - paste into LinkedIn > Projects > Kickstart Express
+Kickstart Express
+Associated with: Halcyon Digital
+
+Parcel delivery mobile app for customers and riders (React Native).

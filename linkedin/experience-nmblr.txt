@@ -1,0 +1,9 @@
+# updated 2026-08-28 - paste into LinkedIn > Experience > Nmblr (one block per position)
+## Senior Full Stack Engineer
+Nmblr · Contract
+Mar 2024 - Present
+London, UK (Remote)
+
+- One of 3 core engineers on an ISO 27001-certified biopharma strategy SaaS in private beta with enterprise pharma clients.
+- Originated two subsystems from scratch: a DMMF-driven strategy clone engine and the Edge archive/restore isolation system.
+- Contributed to real-time collaboration (GraphQL subscriptions), OpenAI-backed generation features, and platform security (OWASP/IDOR, JWT sessions).
