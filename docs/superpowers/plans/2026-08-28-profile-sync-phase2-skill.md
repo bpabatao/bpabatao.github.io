@@ -107,23 +107,7 @@ The denylist below is copied to `~/.profile-sync/denylist.txt` by `harvest.py in
 
 ## Denylist (whole word, case-insensitive)
 
-Delta Utilities
-IPU
-MVU
-Moreno Valley
-NEP
-Nationwide Energy
-DelCo
-Del-Co
-Alex Renew
-AlexRenew
-Alexandria Renew
-Carmel
-Aruba
-Cary
-Tempe
-WTG
-Vertosoft
+(copy the 17 terms from `~/.profile-sync/denylist.txt`; never commit them)
 
 ## Replacements the drafter uses
 
@@ -650,9 +634,9 @@ class LocalDigestTest(unittest.TestCase):
         self.assertIsNone(parsers.company_for_memory_dir("-Users-macbook-pro-projects-personal-bpabatao-github-io", CFG))
 
     def test_kb_log(self):
-        text = "# Log\n\n## [2026-08-26] create | WTG CIH follow-up\n- Source: wtg-portal PR #21\n- Created: wiki/hth/guides/x.md\n- Updated: wiki/index.md\n- Pages touched: 4\n- Notes: Two findings.\n\n## [2026-08-20] update | Mixed\n- Created: wiki/hth/a.md, wiki/nmblr/b.md\n- Notes: both\n"
+        text = "# Log\n\n## [2026-08-26] create | Contoso CIH follow-up\n- Source: contoso-portal PR #21\n- Created: wiki/hth/guides/x.md\n- Updated: wiki/index.md\n- Pages touched: 4\n- Notes: Two findings.\n\n## [2026-08-20] update | Mixed\n- Created: wiki/hth/a.md, wiki/nmblr/b.md\n- Notes: both\n"
         out = parsers.parse_kb_log(text, CFG)
-        self.assertEqual([i["id"] for i in out], ["kb:2026-08-26:wtg-cih-follow-up"])
+        self.assertEqual([i["id"] for i in out], ["kb:2026-08-26:contoso-cih-follow-up"])
         self.assertEqual((out[0]["company"], out[0]["grade"]), ("hth", "F"))
         self.assertIn("Two findings", out[0]["summary"])
 
@@ -1374,7 +1358,7 @@ LEDGER = [it("a1", "2026-08-01T00:00:00Z", "A"), it("b1", "2026-08-02T00:00:00Z"
           it("a2", "2026-06-01T00:00:00Z", "A"), it("a3", "2026-07-20T00:00:00Z", "A"), it("a4", "2026-08-10T00:00:00Z", "A"), it("a5", "2026-08-11T00:00:00Z", "A"),
           it("p1", "2026-08-05T00:00:00Z", "B", "personal")]
 INDEX = {x["id"]: x for x in LEDGER}
-DENY = ["Carmel", "Delta Utilities"]
+DENY = ["Acme Water", "Northwind Utilities"]
 
 
 class DeltaTest(unittest.TestCase):
@@ -1395,7 +1379,7 @@ class VerifyTest(unittest.TestCase):
         self.assertEqual(self.v(evidence=["f1"])["status"], "needs-word")
         self.assertEqual(self.v(evidence=["nope"])["status"], "rejected")
         self.assertEqual(self.v(evidence=["a1", "n1"])["status"], "rejected")
-        self.assertEqual(self.v(text="Shipped Carmel portal")["status"], "rejected")
+        self.assertEqual(self.v(text="Shipped Acme Water portal")["status"], "rejected")
         self.assertEqual(self.v(text="x" * 221)["status"], "rejected")
         self.assertEqual(self.v(target="stack", text="Kubernetes", evidence=["a1", "b1"])["status"], "needs-word")
         self.assertEqual(self.v(target="stack", text="Kubernetes", evidence=["a1", "b1", "a3"])["status"], "proposed")

@@ -39,7 +39,7 @@ It never publishes on its own: every change arrives as a pull request that Bened
 | Headline | "Staff Software Engineer" everywhere | Benedict's explicit statement on 2026-08-28; matches LinkedIn. Site and resume currently say "Lead Platform Engineer". |
 | LinkedIn | Paste-pack committed to the repo | LinkedIn has no profile-write API; automation risks account restriction. |
 | Resume format | Keep the existing ATS-safe HTML contract; add `.docx` output | Existing layout is already ATS-clean and has senior-appropriate section order. The checked template (`developer-resume-template.docx`) is structurally equal and content-ordered for graduates. |
-| Approach | Single source of truth + renderers (approach A) | Site and resume already disagree (IPU, Kubernetes/Python, "Staff"). Rendering from one file makes drift impossible instead of unlikely. |
+| Approach | Single source of truth + renderers (approach A) | Site and resume already disagree (a client, Kubernetes/Python, "Staff"). Rendering from one file makes drift impossible instead of unlikely. |
 | Ordering | Sync skill first, recruiter pass second | The skill is built against the content shape; the redesign can change presentation without touching the sync loop. |
 | History | Ledger backfills full history for HtH (from 2023-06) and Nmblr (from 2024-03); claims are proposed only from evidence dated after 2026-07-18 | Full record as drafting context; existing bullets are Benedict's words and stay untouched. |
 | Existing client names | Resume tenant list becomes "8 utility tenants"; `fleetPortals` keeps its live public URLs | The resume travels to third parties; the site links public facts. |
@@ -331,7 +331,7 @@ Replacement text is `[redacted]`.
 - Single column, linear DOM equals reading order, no tables, no flex/grid columns, no text boxes, no images, no header/footer regions, system fonts only, real `h1/h2/h3/ul/li`.
 - Current roles: `<h3>Title</h3>` then `.loc` with `<span class="co">Company</span> - Location | <span class="meta">dates</span>`.
 - Earlier roles: `<h3>Title - Company (Location)</h3>` then `.loc` with `<span class="meta">dates</span>`.
-- Dates render as `Mon YYYY - Mon YYYY`, `Mon YYYY - Present`, or `YYYY - YYYY` when a period has year-only precision; the renderer computes "Present" from `end: null`.
+- Dates render as `Mon YYYY - Mon YYYY`, `Mon YYYY - Present`, or `YYYY - YYYY` when a period has year-only precision; the renderer computes "Present" from `end: null`, and dates the latest title from `positions[0].period` when positions exist (the earlier position's range sits on the Previously line).
 - Separators render as ASCII ` | ` in the resume; the site keeps `·`.
 - Bullets come from `resumeReceipts ?? receipts`.
 - Skills render every `stackGroups` entry including `resumeOnly` ones as `<p><b>Title:</b> items</p>`.

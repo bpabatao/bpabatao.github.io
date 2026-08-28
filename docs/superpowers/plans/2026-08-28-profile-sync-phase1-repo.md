@@ -20,7 +20,7 @@
 - Resume renders A4 by default (`@page { size: A4; margin: 14mm 16mm; }`), ASCII ` | ` separators, dates `Mon YYYY - Mon YYYY` / `Mon YYYY - Present` / `YYYY - YYYY`, two pages maximum, section order Summary, Professional Experience, Earlier Experience, Technical Skills, Education.
 - Scripts are Node 22 `.ts` files importing with explicit `.ts` extensions (`../src/data/content.ts`); `src/data/content.ts` has no imports; `src/lib/format.ts` uses only a top-level `import type` (fully erased by Node).
 - Python scripts use the standard library only.
-- Resume bullet limit 360 characters (markers stripped), site receipt limit 220, LinkedIn headline 220, About 2600, experience and project descriptions 2000, skills 50 entries.
+- Resume bullet limit 360 characters (markers stripped), site receipt limit 220, LinkedIn headline 220, About 2600, experience and project descriptions 2000, skills 100 entries.
 - One sentence per line in Markdown files.
 
 ---
@@ -1633,29 +1633,7 @@ if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.ur
 
 - [ ] **Step 4: Create the denylist outside the repo**
 
-```bash
-mkdir -p ~/.profile-sync && cat > ~/.profile-sync/denylist.txt <<'EOF'
-# profile-sync client denylist - never commit; one term per line, matched case-insensitively as a whole word
-Delta Utilities
-IPU
-MVU
-Moreno Valley
-NEP
-Nationwide Energy
-DelCo
-Del-Co
-Alex Renew
-AlexRenew
-Alexandria Renew
-Carmel
-Aruba
-Cary
-Tempe
-WTG
-Vertosoft
-EOF
-```
-Note: `Delta` alone is not listed because the resume never uses it bare and "delta" is a common word; `Delta Utilities` is.
+Create `~/.profile-sync/denylist.txt` with the 17 client terms from the /timesheet skill's client mapping, one per line (the file already exists on this machine); never commit it.
 
 - [ ] **Step 5: Run the tests and the real gate**
 
