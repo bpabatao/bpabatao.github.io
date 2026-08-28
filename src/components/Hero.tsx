@@ -10,14 +10,14 @@ export function Hero() {
         <p className="flex items-center gap-2 font-mono text-xs tracking-wide text-muted">
           <span className="status-dot size-2 shrink-0 rounded-full bg-ok" aria-hidden />
           <span className="status-text">
-            <span className="text-ok">OPERATIONAL</span> - 8 TENANTS · AWS · REMOTE (ITALY)
+            <span className="text-ok">{profile.statusLine.split(" - ")[0]}</span> - {profile.statusLine.split(" - ").slice(1).join(" - ")}
           </span>
         </p>
 
         <h1 className="mt-7 max-w-4xl font-display text-5xl leading-[1.04] font-semibold tracking-tight text-ink sm:text-6xl md:text-7xl">
-          <span className="hero-rise block">I build the platform</span>
+          <span className="hero-rise block">{profile.thesis.lead}</span>
           <span className="hero-rise block" style={{ animationDelay: "0.12s" }}>
-            other engineers <span className="text-accent">ship on.</span>
+            {profile.thesis.tail} <span className="text-accent">{profile.thesis.accent}</span>
           </span>
         </h1>
 
