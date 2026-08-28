@@ -14,8 +14,8 @@ function currentRole(r: Role): string {
   const loc = r.location ? ` - ${esc(r.location)}` : "";
   return [
     `<h3>${esc(r.title)}</h3>`,
-    `<div class="loc"><span class="co">${esc(r.company)}</span>${loc} | <span class="meta">${r.dates}</span></div>`,
-    ...r.previous.map((p) => `<div class="loc">Previously ${esc(p.title)} | <span class="meta">${p.dates}</span></div>`),
+    `<div class="loc"><span class="co">${esc(r.company)}</span>${loc} | <span class="meta">${esc(r.dates)}</span></div>`,
+    ...r.previous.map((p) => `<div class="loc">Previously ${esc(p.title)} | <span class="meta">${esc(p.dates)}</span></div>`),
     "<ul>",
     ...r.bullets.map(li),
     "</ul>",
@@ -27,7 +27,7 @@ function earlierRole(r: Role): string {
   const loc = parts.length ? ` (${esc(parts.join(", "))})` : "";
   return [
     `<h3>${esc(r.title)} - ${esc(r.company)}${loc}</h3>`,
-    `<div class="loc"><span class="meta">${r.dates}</span></div>`,
+    `<div class="loc"><span class="meta">${esc(r.dates)}</span></div>`,
     `<ul>${r.bullets.map((b) => li(b).trim()).join("")}</ul>`,
   ].join("\n");
 }
@@ -100,7 +100,7 @@ ${m.skills.map((s) => `  <p><b>${esc(s.title)}:</b> ${esc(s.items)}</p>`).join("
 </div>
 
 <h2>Education</h2>
-${m.education.map((e) => `<h3>${esc(e.title)}</h3>\n<div class="loc">${esc(e.detail)} | <span class="meta">${e.dates}</span></div>`).join("\n")}
+${m.education.map((e) => `<h3>${esc(e.title)}</h3>\n<div class="loc">${esc(e.detail)} | <span class="meta">${esc(e.dates)}</span></div>`).join("\n")}
 
 </body>
 </html>
