@@ -28,7 +28,7 @@ export const profile = {
   summary:
     "I build multi-tenant SaaS platforms end to end - the Terraform that provisions them, the API they run on, and the product customers actually use. Staff Software Engineer - 8+ years in software, 5+ hands-on with AWS, and ~3 years leading cloud platforms end to end: from AWS infrastructure-as-code to the shared backend services an entire product fleet runs on.",
   resumeSummary:
-    "I build multi-tenant SaaS platforms end to end - the Terraform that provisions them, the API they run on, and the product customers actually use. Staff Software Engineer - 8+ years in software, 5+ hands-on with AWS, and ~3 years leading cloud platforms end to end: from AWS infrastructure-as-code to the shared backend services an entire product fleet runs on. Near-sole author of a Terraform control-plane and internal developer platform that ships 8 multi-tenant client portals on ECS Fargate, and primary author (78%) of the core REST API those portals are built on. Operates ~$110K/year of multi-tenant portal infrastructure on AWS, turns it into self-service, and builds the products on it end to end - full-stack from React/TypeScript through Node/GraphQL - not just the infrastructure they run on.",
+    `I build multi-tenant SaaS platforms end to end - the Terraform that provisions them, the API they run on, and the product customers actually use. Staff Software Engineer - 8+ years in software, 5+ hands-on with AWS, and ~3 years leading cloud platforms end to end: from AWS infrastructure-as-code to the shared backend services an entire product fleet runs on. Near-sole author of a Terraform control-plane and internal developer platform that ships ${fleetPortals.length} multi-tenant client portals on ECS Fargate, and primary author (78%) of the core REST API those portals are built on. Operates ~$110K/year of multi-tenant portal infrastructure on AWS, turns it into self-service, and builds the products on it end to end - full-stack from React/TypeScript through Node/GraphQL - not just the infrastructure they run on.`,
   location: "Italy (Remote)",
   availability: "STAFF/LEAD PLATFORM ROLES · CONSULTING · AWS / TERRAFORM / MULTI-TENANT",
   updated: "2026-08-28",
@@ -102,7 +102,7 @@ export const currentJobs: Job[] = [
       { title: "Senior Full-Stack Engineer (Cloud)", period: { start: "2023-05", end: "2026-01" } },
     ],
     receipts: [
-      "Primary author (78%) of the core API middleware connecting 8 utility tenant portals to Oracle CCS via OAuth 2.0 - the auth, data-access, and integration patterns the whole fleet is built on.",
+      `Primary author (78%) of the core API middleware connecting ${fleetPortals.length} utility tenant portals to Oracle CCS via OAuth 2.0 - the auth, data-access, and integration patterns the whole fleet is built on.`,
       "Sole author of the internal developer platform: a Terraform control-plane (9 stacks, ~60 AWS resource types) with a Fastify/React dashboard that self-service provisions every client environment.",
       "De-facto technical lead of a 5-engineer team, reporting to the COO/CEO - set the platform standards the fleet adopts.",
       "Own ~$110K/yr of AWS across the production and test fleet - CI/CD, Datadog/CloudWatch observability, and FinOps tooling driving right-sizing and Fargate-Spot savings.",
@@ -110,13 +110,13 @@ export const currentJobs: Job[] = [
       "Owned production go-live readiness for 6 client launches.",
     ],
     resumeReceipts: [
-      "**Primary author (78%) of the core REST API middleware** connecting 8 utility tenant portals to Oracle CCS via OAuth 2.0 - the multi-tenant auth, data-access, and integration patterns the whole fleet is built on.",
+      `**Primary author (78%) of the core REST API middleware** connecting ${fleetPortals.length} utility tenant portals to Oracle CCS via OAuth 2.0 - the multi-tenant auth, data-access, and integration patterns the whole fleet is built on.`,
       "**Sole author of the internal developer platform:** a Terraform control-plane (9 stacks, ~60 AWS resource types) with a Fastify/React dashboard that self-service provisions and ships every client environment - Cognito, ECS Fargate, CloudFront, WAFv2, Secrets Manager, Route 53, ElastiCache, KMS - turning tenant onboarding into a templated, repeatable workflow.",
       "**De-facto technical lead of a 5-engineer team** - most senior hands-on engineer, reporting to the COO/CEO; set the platform standards the fleet adopts (provisioning modules, CI/CD, security guardrails).",
       "**Designed and built a multi-channel campaign manager** integrating Twilio (SMS + IVR voice) and AWS SES (email) with CSV recipient lists and templated messaging, replacing manual notification workflows.",
       "**Built an automated batch pipeline** syncing multi-account customers between Oracle CCS and Invoice Cloud in 5K-record batches - idempotency checks, error tracking, and automated success/failure email reporting.",
       "**Built the team's AI-augmented developer tooling** - an AWS Bedrock auto-remediation service (Claude via bedrock-runtime) that triages alerts and opens fix PRs, an automated Claude PR-reviewer in CI, an agentic AI-SDLC pipeline (Jira + GitHub, with human approval gates), and an LLM-maintained knowledge base built with Python data pipelines.",
-      "**Own and operate the multi-tenant portal infrastructure as sole platform engineer** - ~$110K/year of AWS across the 8-tenant production and test fleet - with CI/CD (Bitbucket Pipelines), Datadog / CloudWatch observability, on-call incident response, and cost-attribution tooling (Cost Explorer API) driving right-sizing, shared-ALB, and Fargate-Spot savings.",
+      `**Own and operate the multi-tenant portal infrastructure as sole platform engineer** - ~$110K/year of AWS across the ${fleetPortals.length}-tenant production and test fleet - with CI/CD (Bitbucket Pipelines), Datadog / CloudWatch observability, on-call incident response, and cost-attribution tooling (Cost Explorer API) driving right-sizing, shared-ALB, and Fargate-Spot savings.`,
       "**Owned production go-live readiness for 6 client launches** - primary engineer on four, core contributor on two - environment validation, deployment, rollback planning, and stabilization.",
     ],
     stack: ["TypeScript", "Fastify", "React", "Terraform", "AWS", "MongoDB", "Oracle CCS"],
@@ -271,14 +271,17 @@ export const secondaryProjects: SecondaryProject[] = [
   {
     title: "Campaign Manager",
     description: "Multi-channel notifications - Twilio SMS + IVR voice and AWS SES email with CSV lists and templated messaging.",
+    jobId: "hth",
   },
   {
     title: "CCS ↔ Invoice Cloud Sync",
     description: "Batch pipeline syncing multi-account customers in 5K-record batches - idempotent, tracked, self-reporting.",
+    jobId: "hth",
   },
   {
     title: "Bedrock Knowledge Base",
     description: "Pipeline converting Oracle CCS reference docs into LLM training data - validated JSONL to S3/Bedrock.",
+    jobId: "hth",
   },
   {
     title: "Tenant Go-Lives",
