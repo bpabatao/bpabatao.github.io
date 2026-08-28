@@ -87,6 +87,12 @@ export function narrativeFields(): { label: string; text: string }[] {
     out.push(...j.receipts.map((r, i) => ({ label: `${j.id}.receipts[${i}]`, text: plainText(r) })));
     out.push(...(j.resumeReceipts ?? []).map((r, i) => ({ label: `${j.id}.resumeReceipts[${i}]`, text: plainText(r) })));
   }
+  for (const c of cases) {
+    out.push({ label: `case ${c.slug} subtitle`, text: c.subtitle });
+    for (const section of c.sections) out.push(...section.paragraphs.map((p, i) => ({ label: `case ${c.slug} ${section.heading}[${i}]`, text: p })));
+    out.push(...c.outcomes.map((o, i) => ({ label: `case ${c.slug} outcome[${i}]`, text: o })));
+    out.push({ label: `case ${c.slug} meta`, text: `${c.meta.role} ${c.meta.ownership}` });
+  }
   return out;
 }
 
