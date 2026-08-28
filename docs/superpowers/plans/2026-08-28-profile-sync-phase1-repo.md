@@ -165,6 +165,19 @@ git commit -m "Format: shared period and bullet-lead helpers"
 **Interfaces:**
 - Produces (all exported from `src/data/content.ts`): `interface Period`, `fleetPortals: { key: string; tenant: string; url: string }[]`, `profile` with fields `name, role, headline, thesis, statusLine, summary, resumeSummary, location, availability, updated, atsKeywords, email, github, linkedin, siteUrl`, `metrics`, `principles`, `interface Job { id; company; tagline?; role; period: Period; location?; receipts; resumeReceipts?; stack? }`, `currentJobs`, `earlierJobs`, `credentials`, `Flagship`/`flagships`, `SecondaryProject`/`secondaryProjects`/`earlierProjects`, `interface StackGroup { title; span: 1 | 2; items: string[]; resumeOnly?: boolean }`, `stackGroups: StackGroup[]`.
 
+- [ ] **Step 0: Gate - the LinkedIn data export must be present (LinkedIn wins on conflicts)**
+
+Benedict exports it from LinkedIn (Settings > Data privacy > Get a copy of your data > Positions, Projects, Skills, Profile) and drops the unzipped CSVs into `~/.profile-sync/linkedin-export/`.
+
+```bash
+ls ~/.profile-sync/linkedin-export/
+head -3 ~/.profile-sync/linkedin-export/Positions.csv ~/.profile-sync/linkedin-export/Projects.csv
+wc -l ~/.profile-sync/linkedin-export/Skills.csv
+```
+Expected: `Positions.csv` (columns `Company Name,Title,Description,Location,Started On,Finished On`, dates like `May 2023`), `Projects.csv` (`Title,Description,Url,Started On,Finished On`), `Skills.csv` (`Name`, 53 rows), `Profile.csv`.
+If the folder is missing, STOP and ask Benedict for the export; do not guess dates.
+Use these CSVs as the source of truth for every title, date, employment type, location and project below; the values written into the code in Step 3 are what the 2026-08-28 screenshots showed and must be corrected wherever the CSV differs.
+
 - [ ] **Step 1: Write the failing data test**
 
 Create `scripts/content.test.ts`:
@@ -187,10 +200,14 @@ test("tenant count is derived from fleetPortals", () => {
   assert.equal(new Set(fleetPortals.map((p) => p.key)).size, fleetPortals.length);
 });
 
-test("headline and employer follow the spec", () => {
+test("headline, employer and promotion history follow the spec", () => {
   assert.equal(profile.role, "Staff Software Engineer");
   assert.equal(currentJobs[0].company, "ESC Partners / HometownHUB");
-  assert.equal(currentJobs[0].role, "Staff Software Engineer");
+  assert.equal(currentJobs[0].role, "Staff Software Engineer, Platform & Product");
+  assert.equal(currentJobs[0].positions?.[0].title, currentJobs[0].role);
+  assert.equal(currentJobs[0].positions?.length, 2);
+  assert.equal(currentJobs[0].period.start, "2023-05");
+  assert.ok(earlierJobs.some((j) => j.id === "basemap"));
   assert.match(profile.updated, /^\d{4}-\d{2}-\d{2}$/);
 });
 
@@ -267,14 +284,23 @@ export const metrics = [
 
 // principles: unchanged (copy lines 21-38 of the current file verbatim)
 
+/* Promotion history inside one employer, newest first. */
+export interface Position {
+  title: string;
+  period: Period;
+}
+
 export interface Job {
   id: string;
   company: string;
   /* resume-only descriptor rendered after the company name */
   tagline?: string;
+  /* latest title; equals positions[0].title when positions exist */
   role: string;
   period: Period;
   location?: string;
+  employmentType?: "Contract" | "Full-time" | "Freelance";
+  positions?: Position[];
   /* site + LinkedIn bullets; may open with a **lead** marker */
   receipts: string[];
   /* resume-only overlay; defaults to receipts */
@@ -286,9 +312,14 @@ export const currentJobs: Job[] = [
   {
     id: "hth",
     company: "ESC Partners / HometownHUB",
-    role: "Staff Software Engineer",
-    period: { start: "2023-06", end: null },
+    role: "Staff Software Engineer, Platform & Product",
+    period: { start: "2023-05", end: null },
     location: "New York, USA (Remote)",
+    employmentType: "Contract",
+    positions: [
+      { title: "Staff Software Engineer, Platform & Product", period: { start: "2025-09", end: null } },
+      { title: "Senior Full-Stack Engineer (Cloud)", period: { start: "2023-05", end: "2026-01" } },
+    ],
     receipts: [
       "Primary author (78%) of the core API middleware connecting 8 utility tenant portals to Oracle CCS via OAuth 2.0 - the auth, data-access, and integration patterns the whole fleet is built on.",
       "Sole author of the internal developer platform: a Terraform control-plane (9 stacks, ~60 AWS resource types) with a Fastify/React dashboard that self-service provisions every client environment.",
@@ -312,10 +343,11 @@ export const currentJobs: Job[] = [
   {
     id: "nmblr",
     company: "Nmblr",
-    tagline: "Biopharma Strategy & Collaboration Platform (freelance)",
-    role: "Senior Full-Stack Engineer",
+    tagline: "Biopharma Strategy & Collaboration Platform",
+    role: "Senior Full Stack Engineer",
     period: { start: "2024-03", end: null },
-    location: "Remote (freelance)",
+    location: "London, UK (Remote)",
+    employmentType: "Contract",
     receipts: [
       "One of 3 core engineers on an ISO 27001-certified biopharma strategy SaaS in private beta with enterprise pharma clients.",
       "Originated two subsystems from scratch: a DMMF-driven strategy clone engine and the Edge archive/restore isolation system.",
@@ -333,21 +365,34 @@ export const currentJobs: Job[] = [
 
 export const earlierJobs: Job[] = [
   {
-    id: "ordermentum",
-    company: "Ordermentum",
-    role: "Senior Software Engineer (contract)",
-    period: { start: "2022-09", end: "2023-02" },
-    receipts: ["Restaurant ordering and payment management for hospitality clients."],
-    resumeReceipts: ["Designed and deployed a restaurant ordering and payment management system for hospitality clients (Node.js, PostgreSQL, Docker, Kubernetes)."],
-  },
-  {
     id: "codev",
     company: "CoDev",
     role: "Senior Software Engineer",
     period: { start: "2022-03", end: "2023-05" },
     location: "Utah, USA / Remote",
-    receipts: ["GIS-based hunting/mapping systems and an internal talent-management portal."],
-    resumeReceipts: ["Built GIS-based hunting/mapping systems and an internal talent-management portal (JavaScript, Docker); improved reliability through rapid, iterative issue resolution."],
+    employmentType: "Full-time",
+    receipts: ["Internal talent-management portal; rapid, iterative issue resolution."],
+    resumeReceipts: ["Built an internal talent-management portal (JavaScript, Docker); improved reliability through rapid, iterative issue resolution."],
+  },
+  {
+    id: "ordermentum",
+    company: "Ordermentum",
+    role: "Full Stack Software Engineer",
+    period: { start: "2022-09", end: "2023-02" },
+    location: "New South Wales, Australia / Remote",
+    employmentType: "Contract",
+    receipts: ["Restaurant ordering and payment management for hospitality clients."],
+    resumeReceipts: ["Designed and deployed a restaurant ordering and payment management system for hospitality clients (Node.js, PostgreSQL, Docker, Kubernetes)."],
+  },
+  {
+    id: "basemap",
+    company: "BaseMap Inc",
+    role: "Senior Software Engineer",
+    period: { start: "2022-03", end: "2022-09" },
+    location: "Washington, USA / Remote",
+    employmentType: "Full-time",
+    receipts: ["GIS-based hunting and fishing mapping platform."],
+    resumeReceipts: ["Built GIS-based hunting and fishing mapping features (JavaScript, Docker) on a consumer GPS-maps platform."],
   },
   {
     id: "hcl",
@@ -355,6 +400,7 @@ export const earlierJobs: Job[] = [
     role: "Senior Software Engineer II",
     period: { start: "2020-02", end: "2022-03" },
     location: "New York, USA / Remote",
+    employmentType: "Full-time",
     receipts: ["Product features at scale on HCL DX; automated test suites; led code reviews."],
     resumeReceipts: ["Shipped product features at scale on HCL Digital Experience (Kubernetes-based); built and maintained automated test suites (Selenium) for unit, integration, and acceptance testing; led code reviews and knowledge transfer."],
   },
@@ -380,7 +426,27 @@ export const earlierJobs: Job[] = [
 
 // credentials: unchanged (lines 112-118)
 // Flagship + flagships: unchanged (lines 120-153)
-// SecondaryProject + secondaryProjects + earlierProjects: unchanged (lines 155-159, 174-240)
+
+export interface SecondaryProject {
+  title: string;
+  description: string;
+  url?: string;
+  /* LinkedIn project dates */
+  period?: Period;
+  /* "Associated with" employer - a Job.id */
+  jobId?: string;
+  /* exclude from the LinkedIn paste-pack */
+  linkedin?: false;
+}
+
+/* secondaryProjects and earlierProjects keep their current entries (lines 174-240) with these changes,
+   every period/jobId taken from Projects.csv (LinkedIn wins; omit `period` when the CSV has no row): */
+// secondaryProjects[0] "Nmblr":              period { start: "2024-03", end: null }, jobId: "nmblr"
+// secondaryProjects[4] "Tenant Go-Lives":    description: "Primary engineer on four tenant launches; core contributor on two." (client names removed)
+// earlierProjects[0]  "Ordermentum":         title: "Ordermentum Wholesale Food and Beverage Online Ordering System", period { start: "2022-09", end: "2023-02" }, jobId: "ordermentum"
+// earlierProjects[1]  "HCL Digital Experience": split into two entries as on LinkedIn - "HCL Digital Experience Content Composer" and "HCL Digital Experience Design Studio", both period { start: "2020-02", end: "2022-02" }, jobId: "hcl", same url
+// earlierProjects[2]  "Basemap":             title: "Basemap Hunting and Fishing GPS Maps", period { start: "2022-03", end: "2022-11" }, jobId: "basemap"
+// remaining entries:  jobId from the employer named in the description or in Projects.csv; add any Projects.csv row that has no site entry; list site-only projects in the PR body
 
 export interface StackGroup {
   title: string;
@@ -590,6 +656,20 @@ function Bullet({ text }: { text: string }) {
 ```
 
 In the current-jobs map: `key={job.company}` -> `key={job.id}`; `<div>{job.period}</div>` -> `<div>{formatPeriod(job.period)}</div>`; `<span>{r}</span>` -> `<Bullet text={r} />`.
+Directly after `<div className="mt-0.5 font-mono text-sm text-accent">{job.company}</div>` insert the promotion history:
+
+```tsx
+                {job.positions && job.positions.length > 1 && (
+                  <ul className="mt-1.5 space-y-0.5 font-mono text-[11px] text-muted">
+                    {job.positions.map((p) => (
+                      <li key={p.title}>
+                        {p.title} · {formatPeriod(p.period)}
+                      </li>
+                    ))}
+                  </ul>
+                )}
+```
+
 In the earlier-jobs map: `key={job.company}` -> `key={job.id}`; `{job.period}` -> `{formatPeriod(job.period)}`.
 
 - [ ] **Step 5: StackGrid.tsx - hide resume-only groups**
@@ -677,13 +757,15 @@ test("model uses ASCII separators, resume overlays and Present", () => {
   assert.ok(!m.roleLine.includes("·"), "roleLine must use | not ·");
   assert.equal(m.roleLine, m.roleLine.toUpperCase());
   assert.ok(m.contact.includes(" | ") && !m.contact.includes("https://"));
-  assert.equal(m.experience[0].title, "Staff Software Engineer");
+  assert.equal(m.experience[0].title, "Staff Software Engineer, Platform & Product");
   assert.equal(m.experience[0].company, "ESC Partners / HometownHUB");
-  assert.match(m.experience[0].dates, /^Jun 2023 - Present$/);
+  assert.match(m.experience[0].dates, /^May 2023 - Present$/);
+  assert.deepEqual(m.experience[0].previous, [{ title: "Senior Full-Stack Engineer (Cloud)", dates: "May 2023 - Jan 2026" }]);
   assert.equal(m.experience[0].bullets.length, 8);
   assert.equal(m.experience[0].bullets[0].lead, "Primary author (78%) of the core REST API middleware");
-  assert.equal(m.experience[1].company, "Nmblr - Biopharma Strategy & Collaboration Platform (freelance)");
-  assert.equal(m.earlier.length, 5);
+  assert.equal(m.experience[1].company, "Nmblr - Biopharma Strategy & Collaboration Platform");
+  assert.equal(m.earlier.length, 6);
+  assert.equal(m.earlier.find((r) => r.company === "Ordermentum")?.contract, true);
   assert.ok(m.skills.some((s) => s.title === "Practices"));
   assert.ok(!m.skills.some((s) => s.items.includes(" · ")), "skills items must be comma lists");
   assert.equal(m.education[0].dates, "2014 - 2018");
@@ -709,7 +791,16 @@ import { formatPeriod, splitLead } from "../src/lib/format.ts";
 
 export type Page = "a4" | "letter";
 export interface Bullet { lead: string | null; rest: string }
-export interface Role { title: string; company: string; location: string | null; dates: string; bullets: Bullet[] }
+export interface Role {
+  title: string;
+  company: string;
+  location: string | null;
+  dates: string;
+  contract: boolean;
+  /* earlier titles held at the same employer, newest first */
+  previous: { title: string; dates: string }[];
+  bullets: Bullet[];
+}
 export interface ResumeModel {
   name: string;
   role: string;
@@ -735,6 +826,8 @@ function role(job: Job): Role {
     company: job.tagline ? `${job.company} - ${job.tagline}` : job.company,
     location: job.location ?? null,
     dates: formatPeriod(job.period),
+    contract: job.employmentType === "Contract",
+    previous: (job.positions ?? []).slice(1).map((p) => ({ title: p.title, dates: formatPeriod(p.period) })),
     bullets: (job.resumeReceipts ?? job.receipts).map(splitLead),
   };
 }
@@ -805,8 +898,9 @@ test("html keeps the ATS contract", () => {
 });
 
 test("roles render in the two conventions with escaped text", () => {
-  assert.ok(html.includes("<h3>Staff Software Engineer</h3>\n<div class=\"loc\"><span class=\"co\">ESC Partners / HometownHUB</span> - New York, USA (Remote) | <span class=\"meta\">Jun 2023 - Present</span></div>"));
+  assert.ok(html.includes("<h3>Staff Software Engineer, Platform &amp; Product</h3>\n<div class=\"loc\"><span class=\"co\">ESC Partners / HometownHUB</span> - New York, USA (Remote) | <span class=\"meta\">May 2023 - Present</span></div>\n<div class=\"loc\">Previously Senior Full-Stack Engineer (Cloud) | <span class=\"meta\">May 2023 - Jan 2026</span></div>"));
   assert.ok(html.includes("<h3>Senior Software Engineer II - HCL Technologies (New York, USA / Remote)</h3>\n<div class=\"loc\"><span class=\"meta\">Feb 2020 - Mar 2022</span></div>"));
+  assert.ok(html.includes("<h3>Full Stack Software Engineer - Ordermentum (New South Wales, Australia / Remote, contract)</h3>"));
   assert.ok(html.includes("<li><b>Primary author (78%) of the core REST API middleware</b> connecting"));
   assert.ok(html.includes("Biopharma Strategy &amp; Collaboration Platform"));
   assert.ok(html.includes("<p><b>Practices:</b> Platform Engineering, "));
@@ -848,6 +942,7 @@ function currentRole(r: Role): string {
   return [
     `<h3>${esc(r.title)}</h3>`,
     `<div class="loc"><span class="co">${esc(r.company)}</span>${loc} | <span class="meta">${r.dates}</span></div>`,
+    ...r.previous.map((p) => `<div class="loc">Previously ${esc(p.title)} | <span class="meta">${p.dates}</span></div>`),
     "<ul>",
     ...r.bullets.map(li),
     "</ul>",
@@ -855,7 +950,8 @@ function currentRole(r: Role): string {
 }
 
 function earlierRole(r: Role): string {
-  const loc = r.location ? ` (${esc(r.location)})` : "";
+  const parts = [r.location, r.contract ? "contract" : null].filter(Boolean) as string[];
+  const loc = parts.length ? ` (${esc(parts.join(", "))})` : "";
   return [
     `<h3>${esc(r.title)} - ${esc(r.company)}${loc}</h3>`,
     `<div class="loc"><span class="meta">${r.dates}</span></div>`,
@@ -1212,23 +1308,33 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { LIMITS, bodyOf, buildLinkedinPack } from "./render-linkedin.ts";
 
-const pack = buildLinkedinPack();
+import { currentJobs, earlierJobs, earlierProjects, flagships, secondaryProjects } from "../src/data/content.ts";
 
-test("pack has every section with a paste header", () => {
-  const names = Object.keys(pack).sort();
-  assert.deepEqual(names, ["about.txt", "experience-hth.txt", "experience-nmblr.txt", "headline.txt", "projects-ai-sdlc.txt", "projects-control-plane.txt", "projects-core-api.txt", "skills.txt"]);
+const pack = buildLinkedinPack();
+const names = Object.keys(pack).sort();
+
+test("pack covers every job and every project with a paste header", () => {
+  for (const f of ["headline.txt", "about.txt", "skills.txt", "experience-hth.txt", "experience-basemap.txt", "projects-core-api.txt", "projects-nmblr.txt"]) assert.ok(names.includes(f), f);
+  assert.equal(names.filter((n) => n.startsWith("experience-")).length, currentJobs.length + earlierJobs.length);
+  assert.equal(names.filter((n) => n.startsWith("projects-")).length, flagships.length + [...secondaryProjects, ...earlierProjects].filter((p) => p.linkedin !== false).length);
   for (const [name, text] of Object.entries(pack)) assert.match(text.split("\n")[0], /^# updated \d{4}-\d{2}-\d{2} - paste into LinkedIn > /, name);
 });
 
-test("bodies respect LinkedIn limits", () => {
+test("bodies respect LinkedIn limits and render positions", () => {
+  assert.equal(LIMITS.skills, 100);
   assert.ok(bodyOf(pack["headline.txt"]).length <= LIMITS.headline);
   assert.ok(bodyOf(pack["about.txt"]).length <= LIMITS.about);
-  assert.ok(bodyOf(pack["experience-hth.txt"]).length <= LIMITS.description);
+  for (const n of names.filter((n) => n.startsWith("experience-") || n.startsWith("projects-"))) assert.ok(bodyOf(pack[n]).length <= LIMITS.description, n);
   assert.ok(bodyOf(pack["skills.txt"]).split("\n").length <= LIMITS.skills);
   assert.equal(bodyOf(pack["headline.txt"]), "Staff Software Engineer, Platform & Product | Multi-tenant SaaS | AWS · Terraform · TypeScript · agentic tooling");
-  assert.ok(!bodyOf(pack["experience-hth.txt"]).includes("**"), "lead markers must be stripped");
-  assert.ok(bodyOf(pack["experience-hth.txt"]).startsWith("Staff Software Engineer\nESC Partners / HometownHUB\nJun 2023 - Present"));
+  const hth = bodyOf(pack["experience-hth.txt"]);
+  assert.ok(!hth.includes("**"), "lead markers must be stripped");
+  assert.ok(hth.startsWith("## Staff Software Engineer, Platform & Product\nESC Partners / HometownHUB · Contract\nSep 2025 - Present\nNew York, USA (Remote)\n"));
+  assert.ok(hth.includes("\n## Senior Full-Stack Engineer (Cloud)\nESC Partners / HometownHUB · Contract\nMay 2023 - Jan 2026\n"));
+  assert.ok(bodyOf(pack["experience-basemap.txt"]).startsWith("## Senior Software Engineer\nBaseMap Inc · Full-time\nMar 2022 - Sep 2022\n"));
   assert.ok(bodyOf(pack["projects-core-api.txt"]).includes("https://bpabatao.github.io/case/core-api/"));
+  assert.ok(bodyOf(pack["projects-nmblr.txt"]).includes("Associated with: Nmblr"));
+  assert.ok(bodyOf(pack["projects-nmblr.txt"]).includes("Mar 2024 - Present"));
 });
 ```
 
@@ -1245,23 +1351,36 @@ Create `scripts/render-linkedin.ts`:
 import { mkdirSync, readdirSync, rmSync, writeFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
-import { currentJobs, flagships, profile, stackGroups } from "../src/data/content.ts";
+import { currentJobs, earlierJobs, earlierProjects, flagships, profile, secondaryProjects, stackGroups, type Job, type SecondaryProject } from "../src/data/content.ts";
 import { formatPeriod, plainText } from "../src/lib/format.ts";
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
-export const LIMITS = { headline: 220, about: 2600, description: 2000, skills: 50 } as const;
+export const LIMITS = { headline: 220, about: 2600, description: 2000, skills: 100 } as const;
 
 const header = (section: string) => `# updated ${profile.updated} - paste into LinkedIn > ${section}\n`;
 export const bodyOf = (file: string) => file.split("\n").slice(1).join("\n").trim();
+export const slugOf = (title: string) => title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "").slice(0, 60);
+const allJobs = () => [...currentJobs, ...earlierJobs];
 
 function about(): string {
   const now = currentJobs.map((j) => `${j.role}, ${j.company}: ${plainText(j.receipts[0])}`);
   return `${profile.summary}\n\nCurrently:\n${now.map((l) => `- ${l}`).join("\n")}`;
 }
 
-function experience(jobId: string): string {
-  const j = currentJobs.find((x) => x.id === jobId)!;
-  return [j.role, j.company, formatPeriod(j.period), "", ...j.receipts.map((r) => `- ${plainText(r)}`)].join("\n");
+/* One block per LinkedIn position; bullets belong to the latest position only. */
+function experience(j: Job): string {
+  const positions = j.positions?.length ? j.positions : [{ title: j.role, period: j.period }];
+  return positions
+    .map((p, i) => {
+      const head = [`## ${p.title}`, j.employmentType ? `${j.company} · ${j.employmentType}` : j.company, formatPeriod(p.period), j.location ?? ""].filter(Boolean);
+      return i === 0 ? [...head, "", ...j.receipts.map((r) => `- ${plainText(r)}`)].join("\n") : head.join("\n");
+    })
+    .join("\n\n");
+}
+
+function project(p: SecondaryProject): string {
+  const job = allJobs().find((j) => j.id === p.jobId);
+  return [p.title, p.period ? formatPeriod(p.period) : "", job ? `Associated with: ${job.company}` : "", "", p.description, p.url ?? ""].filter((l, i) => l || i === 3).join("\n");
 }
 
 function skills(): string {
@@ -1276,9 +1395,13 @@ export function buildLinkedinPack(): Record<string, string> {
     "about.txt": header("About") + about() + "\n",
     "skills.txt": header("Skills (one per line)") + skills() + "\n",
   };
-  for (const j of currentJobs) pack[`experience-${j.id}.txt`] = header(`Experience > ${j.company} > Description`) + experience(j.id) + "\n";
+  for (const j of allJobs()) pack[`experience-${j.id}.txt`] = header(`Experience > ${j.company} (one block per position)`) + experience(j) + "\n";
   for (const f of flagships) {
     pack[`projects-${f.slug}.txt`] = header(`Projects > ${f.title}`) + [f.title, f.outcome, `Ownership: ${f.ownership}`, `Stack: ${f.stack.join(", ")}`, `${profile.siteUrl}/case/${f.slug}/`].join("\n") + "\n";
+  }
+  for (const p of [...secondaryProjects, ...earlierProjects]) {
+    if (p.linkedin === false) continue;
+    pack[`projects-${slugOf(p.title)}.txt`] = header(`Projects > ${p.title}`) + project(p) + "\n";
   }
   for (const [name, text] of Object.entries(pack)) {
     const body = bodyOf(text);
@@ -1307,8 +1430,8 @@ Expected: `# pass 2`, `# fail 0`.
 
 - [ ] **Step 5: Generate the pack and commit**
 
-Run: `node scripts/render-linkedin.ts && ls linkedin && head -3 linkedin/about.txt`
-Expected: `wrote 8 files to linkedin/`; the About file starts with the `# updated 2026-08-28 - paste into LinkedIn > About` header.
+Run: `node scripts/render-linkedin.ts && ls linkedin | wc -l && head -3 linkedin/about.txt`
+Expected: `wrote N files to linkedin/` where N = 3 + 8 experience files + 3 flagship + every secondary/earlier project (about 28); the About file starts with the `# updated 2026-08-28 - paste into LinkedIn > About` header.
 
 ```bash
 git add scripts/render-linkedin.ts scripts/render-linkedin.test.ts linkedin
@@ -1380,7 +1503,7 @@ import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { homedir } from "node:os";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
-import { currentJobs, earlierJobs, flagships, profile } from "../src/data/content.ts";
+import { currentJobs, earlierJobs, earlierProjects, flagships, profile, secondaryProjects } from "../src/data/content.ts";
 import { cases } from "../src/data/cases.ts";
 import { plainText } from "../src/lib/format.ts";
 import { LIMITS, bodyOf } from "./render-linkedin.ts";
@@ -1452,13 +1575,14 @@ export function slugProblems(): string[] {
   return out;
 }
 
-/* Fields that feed the resume and the LinkedIn pack; fleetPortals and secondaryProjects are deliberately not here. */
+/* Fields that feed the resume and the LinkedIn pack; fleetPortals is deliberately not here. */
 export function narrativeFields(): { label: string; text: string }[] {
   const out = [
     { label: "profile.summary", text: profile.summary },
     { label: "profile.resumeSummary", text: profile.resumeSummary },
     { label: "profile.headline", text: profile.headline },
     ...flagships.map((f) => ({ label: `flagship ${f.slug}`, text: `${f.title} ${f.outcome}` })),
+    ...[...secondaryProjects, ...earlierProjects].filter((p) => p.linkedin !== false).map((p) => ({ label: `project ${p.title}`, text: `${p.title} ${p.description}` })),
   ];
   for (const j of [...currentJobs, ...earlierJobs]) {
     out.push(...j.receipts.map((r, i) => ({ label: `${j.id}.receipts[${i}]`, text: plainText(r) })));
@@ -1648,6 +1772,7 @@ gh pr create --base main --head profile-sync/init --title "Profile sync: single 
 
 - `src/data/content.ts` is now the single source of truth; resume HTML/PDF/docx and `linkedin/*.txt` are rendered from it (`npm run render`).
 - Headline is Staff Software Engineer everywhere; employer string is "ESC Partners / HometownHUB"; summary rebuilt from the LinkedIn About lead plus the resume metrics sentence.
+- LinkedIn wins on conflicts: HtH starts May 2023 with the promotion to Staff (Sep 2025) recorded as positions; BaseMap Inc is its own earlier role; Ordermentum is "Full Stack Software Engineer"; Nmblr is Contract, London (Remote). Projects carry LinkedIn dates and employer association; site-only projects: <list>.
 - Resume tenant lists anonymised ("8 utility tenant portals", "primary engineer on four, core contributor on two"); `fleetPortals` unchanged.
 - Tenant count derives from `fleetPortals` (7); hero status line, metrics and the core-API diagram follow it (stale `ipu` removed).
 - Resume-only skills merged into `stackGroups` (Kubernetes, OpenSearch, Python, REST APIs, S3, VPC, ALB, Elastic Beanstalk) plus a resume-only Practices row.
@@ -1671,9 +1796,9 @@ gh pr create --base main --head profile-sync/init --title "Profile sync: single 
 
 - [ ] headline.txt -> Intro > Headline
 - [ ] about.txt -> About
-- [ ] experience-hth.txt, experience-nmblr.txt -> Experience descriptions
+- [ ] experience-*.txt -> Experience (one block per position; 8 employers)
 - [ ] skills.txt -> Skills
-- [ ] projects-*.txt -> Projects
+- [ ] projects-*.txt -> Projects (3 case studies + every site project)
 EOF
 ```
 Expected: PR URL printed. Do not merge; Benedict reviews and merges.

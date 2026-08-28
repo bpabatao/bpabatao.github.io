@@ -59,6 +59,9 @@ It never publishes on its own: every change arrives as a pull request that Bened
 | Tenant count | Derived from `fleetPortals.length` (7 today, was a literal 8) | Verifiable by anyone; bumps when a fleet claim is confirmed. |
 | Summary text | LinkedIn About lead sentence + the resume metrics sentence, "Staff" for "Lead" | Most recent words, plus the numbers. |
 | Backfill timing | Last step of `--init`, interactive with progress | One-time; the `--init` PR does not wait on it. |
+| LinkedIn coverage | Every position (with promotion history and employment type) and every project, not just current roles and flagships | LinkedIn shows 2 positions under ESC Partners, 6 employers, 11 projects, 53 skills; the pack must be able to replace all of it. |
+| Conflicts between copies | LinkedIn wins at `--init` (HtH start May 2023, Staff since Sep 2025, BaseMap Inc as its own role, Ordermentum title, Nmblr location) | Most recently maintained copy, in Benedict's own words. |
+| LinkedIn source data | Benedict's LinkedIn data export (Positions.csv, Projects.csv, Skills.csv, Profile.csv) in `~/.profile-sync/linkedin-export/` | Exact text for all positions and projects; no browser automation, no ToS risk. |
 
 ## 3. Architecture
 
@@ -118,15 +121,28 @@ export const profile = {
   email, github, linkedin, siteUrl,     // unchanged
 } as const;
 
+export interface Position { title: string; period: Period }   // promotion history inside one employer
+
 export interface Job {
-  id: string;                           // stable key: "hth", "nmblr", "ordermentum", ...
+  id: string;                           // stable key: "hth", "nmblr", "basemap", ...
   company: string;
-  role: string;
-  period: { start: "2023-06", end: "2024-02" | null };   // "YYYY-MM" or "YYYY" when the month is unknown; null = Present
+  role: string;                         // latest title; equals positions[0].title when positions exist
+  period: { start: "2023-05", end: "2024-02" | null };   // "YYYY-MM" or "YYYY" when the month is unknown; null = Present
   location?: string;
+  employmentType?: "Contract" | "Full-time" | "Freelance";
+  positions?: Position[];               // newest first, e.g. Staff (2025-09 - Present), Senior Full-Stack (Cloud) (2023-05 - 2026-01)
   receipts: string[];                   // site + LinkedIn bullets
   resumeReceipts?: string[];            // resume-only overlay; defaults to receipts
   stack?: string[];
+}
+
+export interface SecondaryProject {
+  title: string;
+  description: string;
+  url?: string;
+  period?: Period;                      // LinkedIn project dates
+  jobId?: string;                       // "Associated with" employer
+  linkedin?: false;                     // exclude from the paste-pack
 }
 
 // stackGroups entries gain an optional flag:
@@ -277,7 +293,7 @@ Replacement text is `[redacted]`.
 | `/profile-sync --cron` | Unattended. No questions; `needs-word` claims land in the PR body. |
 | `/profile-sync --dry-run` | Harvest + draft + verify + dossier. No repo writes, no watermark advance. |
 | `/profile-sync --init` | One-time reconciliation PR (section 12), then the interactive full-history backfill. No evidence claims. |
-| `/profile-sync --check-linkedin` | Interactive only. Reads the live profile via the browser MCP attached to the logged-in Chrome and appends a drift list to the dossier. Falls back to a LinkedIn data export dropped in `~/.profile-sync/linkedin-export/`. |
+| `/profile-sync --check-linkedin` | Interactive only. Diffs `linkedin/*.txt` against the newest LinkedIn data export in `~/.profile-sync/linkedin-export/` (Positions.csv, Projects.csv, Skills.csv, Profile.csv) and appends a drift list to the dossier; warns when the export is older than 60 days. A live browser read is a follow-up (section 14). |
 
 ### 6.2 Pipeline (cron and interactive)
 
@@ -335,9 +351,9 @@ Replacement text is `[redacted]`.
 |---|---|---|
 | `headline.txt` | `profile.headline` | 220 chars |
 | `about.txt` | `profile.summary` + first receipts of current jobs | 2600 chars |
-| `experience-<jobId>.txt` | title, company, dates, `receipts` | 2000 chars per description |
-| `skills.txt` | flattened `stackGroups` items, deduplicated | 50 entries |
-| `projects-<slug>.txt` | one per `flagships` entry: title, outcome, ownership, stack, link to `/case/<slug>/` | 2000 chars |
+| `experience-<jobId>.txt` | one per job, current and earlier: each position (title, company, employment type, dates, location), bullets under the latest position | 2000 chars per description |
+| `skills.txt` | flattened `stackGroups` items, deduplicated | 100 entries (LinkedIn's maximum) |
+| `projects-<slug>.txt` | one per `flagships` entry (title, outcome, ownership, stack, link to `/case/<slug>/`) and one per `secondaryProjects`/`earlierProjects` entry with `linkedin !== false` (title, dates, "Associated with", description, url) | 2000 chars |
 
 Each file starts with a one-line header `# updated <profile.updated> - paste into LinkedIn > <section>`.
 
@@ -412,6 +428,7 @@ Renewals Benedict owns: `aws sso login --profile claude-sso` is not needed (the 
 
 ## 12. `--init` reconciliation (one PR, no evidence claims)
 
+0. Import Benedict's LinkedIn data export (`~/.profile-sync/linkedin-export/*.csv`): LinkedIn wins for titles, dates, employment types, locations and the project list. Known deltas: HtH starts 2023-05 with positions Staff Software Engineer, Platform & Product (2025-09 - Present) and Senior Full-Stack Engineer (Cloud) (2023-05 - 2026-01); BaseMap Inc becomes its own earlier role (Senior Software Engineer, Full-time, 2022-03 - 2022-09, Washington, USA / Remote) and CoDev keeps the internal-portal work; Ordermentum is "Full Stack Software Engineer" (Contract, New South Wales, Australia / Remote); Nmblr is Contract, "London, UK (Remote)". Projects gain `period` and `jobId` from Projects.csv; site-only projects stay and are listed in the PR body; LinkedIn-only projects are added. The "Tenant Go-Lives" description loses its client names ("Primary engineer on four tenant launches; core contributor on two").
 1. Extend `content.ts` per section 4.1; convert `Job.period` to the structured form; add `id` to every job; set `company` to "ESC Partners / HometownHUB" for the HtH role.
 2. Apply the Staff headline; rebuild `profile.summary` from the LinkedIn About lead sentence plus the resume metrics sentence (Benedict's own words).
 3. Replace the tenant name list in the HtH resume bullet with "8 utility tenants"; `fleetPortals` keeps its entries and gains `key`.
@@ -472,7 +489,7 @@ Body sections: purpose and gate; modes; the pipeline as numbered steps with the 
 ## 14. Follow-ups (not in this spec)
 
 - Recruiter-appeal audit and redesign of the site: own brainstorm and spec after this ships.
-- Spike: live LinkedIn read through the chrome-devtools MCP attached to the logged-in Chrome, to make `--check-linkedin` real.
+- Spike: live LinkedIn read through the chrome-devtools MCP attached to the logged-in Chrome, so `--check-linkedin` no longer needs a fresh data export.
 - Transcript mining (`*.jsonl`) once `.remember` proves insufficient; consider raising `cleanupPeriodDays` from 30 first.
 - Re-point the Atlassian MCP connector to `https://mcp.atlassian.com/v1/mcp` (SSE endpoint deprecated).
 - Fix the GitHub MCP plugin (`GITHUB_PERSONAL_ACCESS_TOKEN` unset); not needed by this skill, which uses `gh`.

@@ -89,6 +89,7 @@ Create `~/.claude/skills/profile-sync/reference/config.example.json`:
   "exclude_repos": ["maya", "maya-ai-base", "maya-ai-mvu", "maya-delta", "maya-pm", "esc-ai-backend", "email_delivery_report", "knowledge-base-ccs", "myhub-api-microservice-campaigns", "autoresearch", "plankton", "hth-customer-portals", "engineering-assistant", "bpabatao.github.io", "knowledge-base"],
   "personal_allow": ["penagent", "lexi-app"],
   "memory_root": "/Users/macbook-pro/.claude/projects",
+  "linkedin_export": "/Users/macbook-pro/.profile-sync/linkedin-export",
   "kb_log": "/Users/macbook-pro/projects/hth/knowledge-base/wiki/log.md",
   "draft_cursor_init": "2026-07-18T00:00:00Z",
   "tags": ["terraform", "cognito", "fastify", "idor", "pipeline", "cloudwatch", "bedrock", "graphql", "prisma", "ecs", "cloudfront", "waf", "oauth", "ccs", "security", "observability", "migration", "ci", "e2e", "mongodb", "postgres", "redis", "twilio", "ses", "lambda", "invoice cloud", "paystar", "paymentus", "rbac", "jwt", "cve", "cost"]
@@ -1649,7 +1650,7 @@ Spec: `REPO/docs/superpowers/specs/2026-08-28-profile-sync-design.md`.
 | `--cron` | Unattended. Never ask; `needs-word` claims go to the PR body only. |
 | `--dry-run` | Steps 1-6 only; write the dossier; no repo writes, no cursor advance. |
 | `--init` | One-time setup (section below), then the full-history backfill. |
-| `--check-linkedin` | Interactive only: read the live profile with the chrome-devtools MCP attached to the logged-in Chrome, diff against `linkedin/*.txt`, add a drift list to the dossier. Never in cron. |
+| `--check-linkedin` | Interactive only: read the newest `Positions.csv`, `Projects.csv`, `Skills.csv`, `Profile.csv` in `STATE/linkedin-export/`, diff titles, dates, descriptions, project list and skills against `linkedin/*.txt` and `content.ts`, add a drift list to the dossier; warn if the export is older than 60 days and ask Benedict for a fresh one. Never in cron. |
 
 ## Never
 
