@@ -132,7 +132,6 @@ export function CoreApiDiagram() {
 }
 
 const RESOURCES = ["cognito · ecs fargate · cloudfront · wafv2", "route 53 · elasticache · kms · secrets manager"];
-const FLEET = ["delta", "mvu", "nep", "delco", "alexrenew", "carmel", "aruba"];
 
 export function ControlPlaneDiagram() {
   return (
@@ -140,7 +139,7 @@ export function ControlPlaneDiagram() {
       <Line d="M320 68 V100" />
       <Line d="M320 172 V196" />
       <Line d="M80 196 H560" />
-      {FLEET.map((_, i) => (
+      {TENANTS.map((_, i) => (
         <Line key={i} d={`M${80 + i * 80} 196 V220`} />
       ))}
 
@@ -170,7 +169,7 @@ export function ControlPlaneDiagram() {
         </Label>
       </Box>
 
-      {FLEET.map((t, i) => (
+      {TENANTS.map((t, i) => (
         <Box key={t} x={44 + i * 80} y={220} w={72} h={28}>
           <Label x={80 + i * 80} y={235} size={8.5} color="var(--body)">
             {t}

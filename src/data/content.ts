@@ -26,9 +26,9 @@ export const profile = {
   thesis: { lead: "I build the platform", tail: "other engineers", accent: "ship on." },
   statusLine: `OPERATIONAL - ${fleetPortals.length} TENANTS · AWS · REMOTE (ITALY)`,
   summary:
-    "I build multi-tenant SaaS platforms end to end - the Terraform that provisions them, the API they run on, and the product customers actually use. Staff Software Engineer - 8+ years in software, 5+ hands-on with AWS, and ~3 years leading cloud platforms end to end: from AWS infrastructure-as-code to the shared backend services an entire product fleet runs on.",
+    "I build multi-tenant SaaS platforms end to end - the Terraform that provisions them, the API they run on, and the product customers actually use. Staff Software Engineer - 8+ years in software, 5+ hands-on with AWS, and ~3 years leading cloud platforms: from AWS infrastructure-as-code to the shared backend services an entire product fleet runs on.",
   resumeSummary:
-    `I build multi-tenant SaaS platforms end to end - the Terraform that provisions them, the API they run on, and the product customers actually use. Staff Software Engineer - 8+ years in software, 5+ hands-on with AWS, and ~3 years leading cloud platforms end to end: from AWS infrastructure-as-code to the shared backend services an entire product fleet runs on. Near-sole author of a Terraform control-plane and internal developer platform that ships ${fleetPortals.length} multi-tenant client portals on ECS Fargate, and primary author (78%) of the core REST API those portals are built on. Operates ~$110K/year of multi-tenant portal infrastructure on AWS, turns it into self-service, and builds the products on it end to end - full-stack from React/TypeScript through Node/GraphQL - not just the infrastructure they run on.`,
+    `I build multi-tenant SaaS platforms end to end - the Terraform that provisions them, the API they run on, and the product customers actually use. Staff Software Engineer - 8+ years in software, 5+ hands-on with AWS, and ~3 years leading cloud platforms: from AWS infrastructure-as-code to the shared backend services an entire product fleet runs on. Near-sole author of a Terraform control-plane and internal developer platform that ships ${fleetPortals.length} multi-tenant client portals on ECS Fargate, and primary author (78%) of the core REST API those portals are built on. Operates ~$110K/year of multi-tenant portal infrastructure on AWS, turns it into self-service, and builds the products on it - full-stack from React/TypeScript through Node/GraphQL - not just the infrastructure they run on.`,
   location: "Italy (Remote)",
   availability: "STAFF/LEAD PLATFORM ROLES · CONSULTING · AWS / TERRAFORM / MULTI-TENANT",
   updated: "2026-08-28",
@@ -226,7 +226,7 @@ export const flagships: Flagship[] = [
     slug: "core-api",
     title: "Multi-Tenant Core API",
     outcome:
-      "One API, eight utility portals. OAuth 2.0 into Oracle CCS, per-tenant behavior composed from config, and authorization gates on every endpoint.",
+      `One API, ${fleetPortals.length} utility portals. OAuth 2.0 into Oracle CCS, per-tenant behavior composed from config, and authorization gates on every endpoint.`,
     ownership: "PRIMARY AUTHOR · 78%",
     stack: ["Fastify 5", "TypeScript", "Zod", "MongoDB", "ECS Fargate"],
   },
@@ -286,6 +286,7 @@ export const secondaryProjects: SecondaryProject[] = [
   {
     title: "Tenant Go-Lives",
     description: "Primary engineer on four tenant launches; core contributor on two.",
+    jobId: "hth",
   },
 ];
 

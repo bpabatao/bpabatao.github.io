@@ -12,7 +12,7 @@ export const cases: CaseStudy[] = [
     slug: "core-api",
     title: "Multi-Tenant Core API",
     subtitle:
-      "The middleware eight utility-customer portals stand on - auth, data access, and Oracle CCS integration in one codebase.",
+      "The middleware every utility-customer portal in the fleet stands on - auth, data access, and Oracle CCS integration in one codebase.",
     meta: {
       role: "Primary author, architecture and security owner",
       period: "2023 - present",
@@ -23,7 +23,7 @@ export const cases: CaseStudy[] = [
       {
         heading: "Problem",
         paragraphs: [
-          "Eight utility companies - Delta, MVU, NEP, DelCo, Alex Renew, Carmel, Web Aruba, IPU - each needed a customer portal talking to Oracle Utilities CCS. The legacy server they inherited had authorization gaps and no clean way to vary behavior per tenant. Every new client meant forked code and re-audited security.",
+          "A fleet of utility companies each needed a customer portal talking to Oracle Utilities CCS. The legacy server they inherited had authorization gaps and no clean way to vary behavior per tenant. Every new client meant forked code and re-audited security.",
           "The rebuild had one mandate: a single API where a new tenant is configuration, not code, and where authorization failure is impossible to ship by accident.",
         ],
       },
@@ -43,7 +43,7 @@ export const cases: CaseStudy[] = [
       },
     ],
     outcomes: [
-      "8 tenants in production on one codebase - onboarding a tenant is config plus provisioning, not a fork.",
+      "Every production tenant on one codebase - onboarding a tenant is config plus provisioning, not a fork.",
       "Authorization is structural, not reviewed-in: the route contract enforces ownership checks on every endpoint.",
       "The integration patterns became the fleet standard other services adopt.",
     ],
@@ -101,7 +101,7 @@ export const cases: CaseStudy[] = [
       {
         heading: "Problem",
         paragraphs: [
-          "Five engineers, eight production tenants: triage, code review, and backlog grooming eat the week if you let them. The interesting question wasn't whether AI could draft a fix - it was how to wire it in so speed goes up while accountability stays exactly where it was.",
+          "Five engineers, every production tenant: triage, code review, and backlog grooming eat the week if you let them. The interesting question wasn't whether AI could draft a fix - it was how to wire it in so speed goes up while accountability stays exactly where it was.",
         ],
       },
       {

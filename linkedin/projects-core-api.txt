@@ -1,6 +1,6 @@
 # updated 2026-08-28 - paste into LinkedIn > Projects > Multi-Tenant Core API
 Multi-Tenant Core API
-One API, eight utility portals. OAuth 2.0 into Oracle CCS, per-tenant behavior composed from config, and authorization gates on every endpoint.
+One API, 7 utility portals. OAuth 2.0 into Oracle CCS, per-tenant behavior composed from config, and authorization gates on every endpoint.
 Ownership: PRIMARY AUTHOR · 78%
 Stack: Fastify 5, TypeScript, Zod, MongoDB, ECS Fargate
 https://bpabatao.github.io/case/core-api/

@@ -12,7 +12,7 @@ export const metadata: Metadata = {
     default: `${profile.name} - ${profile.role}`,
     template: `%s - ${profile.name}`,
   },
-  description: profile.summary,
+  description: profile.summary.split(". ")[0] + ".",
   alternates: { canonical: "/" },
   openGraph: {
     title: `${profile.name} - ${profile.role}`,
