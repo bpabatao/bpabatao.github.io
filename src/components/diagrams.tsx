@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { fleetPortals } from "@/data/content";
 
 /* Animated architecture diagrams. Packets ride CSS offset-path (globals.css);
    they are drawn before the boxes so they visibly enter and leave nodes. */
@@ -69,11 +70,11 @@ function Line({ d }: { d: string }) {
   return <path d={d} fill="none" stroke="var(--line)" strokeWidth={1} />;
 }
 
-const TENANTS = ["delta", "mvu", "nep", "delco", "alexrenew", "carmel", "aruba", "[client]"];
+const TENANTS = fleetPortals.map((t) => t.key);
 
 export function CoreApiDiagram() {
   return (
-    <svg viewBox="0 0 640 288" role="img" aria-label="Eight tenant portals connect through the core API to Oracle CCS over OAuth 2.0" className="block w-full">
+    <svg viewBox="0 0 640 288" role="img" aria-label={`${TENANTS.length} tenant portals connect through the core API to Oracle CCS over OAuth 2.0`} className="block w-full">
       {/* connectors first, packets under boxes */}
       {TENANTS.map((_, i) => (
         <Line key={i} d={`M${42 + i * 78} 40 V64`} />

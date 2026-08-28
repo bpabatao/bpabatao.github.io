@@ -10,7 +10,7 @@ export function StackGrid() {
         <Reveal>
           {/* one ruled grid, not a card wall - hairlines come from the gap-px line bg */}
           <div className="grid gap-px border border-line bg-line sm:grid-cols-2 md:grid-cols-4">
-            {stackGroups.map((group) => (
+            {stackGroups.filter((group) => !group.resumeOnly).map((group) => (
               <div key={group.title} className={`bg-bg p-5 ${group.span === 2 ? "md:col-span-2" : ""}`}>
                 <h3 className={`font-semibold ${group.title.startsWith("AI") ? "text-accent" : "text-ink"}`}>
                   {group.title}

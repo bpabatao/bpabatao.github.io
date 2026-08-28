@@ -1,4 +1,5 @@
 import { profile } from "@/data/content";
+import { shortMonthYear } from "@/lib/format";
 import { Reveal } from "./Reveal";
 import { SectionHeading } from "./SectionHeading";
 
@@ -11,7 +12,7 @@ export function Contact() {
           <p className="flex items-center gap-2 font-mono text-xs tracking-wide text-muted">
             <span className="status-dot size-2 shrink-0 rounded-full bg-ok" aria-hidden />
             <span className="text-ok">ACCEPTING</span>
-            <span>- STAFF/LEAD PLATFORM ROLES · CONSULTING · AWS / TERRAFORM / MULTI-TENANT</span>
+            <span>- {profile.availability}</span>
           </p>
           <a
             href={`mailto:${profile.email}`}
@@ -27,7 +28,7 @@ export function Contact() {
               linkedin ↗
             </a>
             <a className="link-sweep text-muted transition-colors hover:text-accent" href="/resume.pdf" target="_blank" rel="noopener">
-              resume.pdf · jul 2026 ↗
+              resume.pdf · {shortMonthYear(profile.updated)} ↗
             </a>
           </div>
         </Reveal>
