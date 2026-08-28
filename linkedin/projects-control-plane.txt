@@ -1,0 +1,6 @@
+# updated 2026-08-28 - paste into LinkedIn > Projects > Terraform Control-Plane & IDP
+Terraform Control-Plane & IDP
+Nine Terraform stacks and a provisioning dashboard that turn tenant onboarding into a templated workflow - Cognito to CloudFront, WAF to KMS.
+Ownership: SOLE AUTHOR
+Stack: Terraform, Fastify, React, ~60 AWS resource types
+https://bpabatao.github.io/case/control-plane/

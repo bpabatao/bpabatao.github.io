@@ -1,0 +1,5 @@
+# updated 2026-08-28 - paste into LinkedIn > Projects > Campaign Manager
+Campaign Manager
+Associated with: ESC Partners / HometownHUB
+
+Multi-channel notifications - Twilio SMS + IVR voice and AWS SES email with CSV lists and templated messaging.

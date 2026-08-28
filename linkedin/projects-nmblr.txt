@@ -1,0 +1,7 @@
+# updated 2026-08-28 - paste into LinkedIn > Projects > Nmblr
+Nmblr
+Mar 2024 - Present
+Associated with: Nmblr
+
+Biopharma strategy and real-time collaboration platform - clone engine, archive/restore, GraphQL subscriptions.
+https://nmblr.co
