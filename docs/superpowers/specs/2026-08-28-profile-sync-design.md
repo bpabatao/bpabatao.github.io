@@ -364,6 +364,7 @@ Fails with a non-zero exit on any of:
   Writes are limited to `~/.profile-sync/`, the `profile-sync/*` branch, and `gh pr create|edit`.
 - `allowed-tools` in SKILL.md whitelists exactly those commands plus `Edit` on `src/data/content.ts`; `git push origin main` is not on the list and the `deploy-guard` hook asks anyway.
 - Never force-push; never delete branches; never merge.
+- Never write to Jira, Confluence or Bitbucket: no issue create/edit/transition/comment/worklog, no page create/update, no PR create/approve/merge/comment, no pipeline trigger. The Atlassian tokens are full-permission, so the skill reaches them only through GET requests in `harvest.py` and lists the Atlassian MCP servers under `disallowed-tools`.
 - Attribution: A requires author match, C requires assignee match, colleague repos are excluded, F-only claims are `needs-word`.
 - Cron hygiene: PID lock, `--max-turns 40`, `--max-budget-usd 5`, start and exit stamps in the log, `status.json` per run, and a 14-day staleness warning in interactive runs.
 
