@@ -5,22 +5,26 @@ import { SectionHeading } from "./SectionHeading";
 
 function ProjectList({ label, projects }: { label: string; projects: SecondaryProject[] }) {
   return (
-    <Reveal className="mt-16">
-      <h3 className="font-mono text-xs tracking-wide text-muted uppercase">{label}</h3>
-      <div className="mt-6 grid gap-x-10 gap-y-7 sm:grid-cols-2">
-        {projects.map((p) => (
-          <div key={p.title}>
-            {p.url ? (
-              <a href={p.url} target="_blank" rel="noopener" className="font-medium text-ink transition-colors hover:text-accent">
-                {p.title} ↗
-              </a>
-            ) : (
-              <span className="font-medium text-ink">{p.title}</span>
-            )}
-            <p className="mt-1 text-sm leading-relaxed text-muted">{p.description}</p>
-          </div>
-        ))}
-      </div>
+    <Reveal className="mt-12">
+      <details className="group">
+        <summary className="cursor-pointer list-none font-mono text-sm text-muted transition-colors hover:text-accent">
+          <span className="inline-block transition-transform group-open:rotate-90">▸</span> {`${label.toLowerCase()} (${projects.length})`}
+        </summary>
+        <div className="mt-6 grid gap-x-10 gap-y-7 sm:grid-cols-2">
+          {projects.map((p) => (
+            <div key={p.title}>
+              {p.url ? (
+                <a href={p.url} target="_blank" rel="noopener" className="font-medium text-ink transition-colors hover:text-accent">
+                  {p.title} ↗<span className="sr-only"> (opens in new tab)</span>
+                </a>
+              ) : (
+                <span className="font-medium text-ink">{p.title}</span>
+              )}
+              <p className="mt-1 text-sm leading-relaxed text-muted">{p.description}</p>
+            </div>
+          ))}
+        </div>
+      </details>
     </Reveal>
   );
 }
@@ -39,6 +43,7 @@ export function Projects() {
             <Reveal key={p.slug} delay={i * 0.05}>
               <Link
                 href={`/case/${p.slug}/`}
+                data-goatcounter-click={`case-${p.slug}`}
                 className="group grid gap-4 border-t border-line py-9 transition-colors md:grid-cols-[1fr_auto] md:items-start first:border-t-0"
               >
                 <div>
@@ -81,7 +86,7 @@ export function Projects() {
                   rel="noopener"
                   className="font-mono text-xs break-all text-muted transition-colors hover:text-accent"
                 >
-                  {p.url.replace("https://", "")} ↗
+                  {p.url.replace("https://", "")} ↗<span className="sr-only"> (opens in new tab)</span>
                 </a>
               </div>
             ))}
