@@ -90,7 +90,7 @@ It renders HTML cards from `content.ts` and screenshots them with the installed 
 
 - `public/og.png` - home: name, `profile.role`, thesis, `statusLine`, the three stat values, in the site palette using the three local fonts loaded from `src/fonts/` over `file://`.
 - `public/og/<slug>.png` - one per `cases` entry: title, subtitle, ownership, stack; a new case gets a card automatically.
-- `resume/.og-source.json` (gitignored) records the card inputs; `check-profile` fails with `og cards stale - run npm run render` when the inputs derived from `content.ts` differ from that file. PNG bytes are not compared (Chrome stamps them), and the PNGs are committed only when the inputs changed.
+- `resume/og-source.json` (tracked, so the CI gate can compare it) records the card inputs; `check-profile` fails with `og cards stale - run npm run render` when the inputs derived from `content.ts` differ from that file. PNG bytes are not compared (Chrome stamps them), and the PNGs are committed only when the inputs changed.
 - `PDF_SKIPPED`-style behaviour when Chrome is missing: print `OG_SKIPPED` and continue.
 
 `src/app/case/[slug]/page.tsx` `generateMetadata` returns, per slug: `title`, `description`, `alternates.canonical: /case/<slug>/`, `openGraph.{url, title, description, images: ["/og/<slug>.png"], type: "article"}`, `twitter.{card: "summary_large_image", title, description, images}`.
@@ -143,8 +143,7 @@ Wording:
 | `scripts/render-og.ts`, `scripts/render-og.test.ts` | card renderer and tests |
 | `scripts/check-profile.ts` | og staleness check |
 | `package.json` | `render` includes `render-og`; `test` includes its test |
-| `public/og.png`, `public/og/*.png`, `public/favicon.ico` | generated assets |
-| `.gitignore` | `resume/.og-source.json` |
+| `public/og.png`, `public/og/*.png`, `public/favicon.ico`, `resume/og-source.json` | generated assets, tracked so the CI gate can compare them |
 | `.github/workflows/deploy.yml` | pass `NEXT_PUBLIC_GOATCOUNTER_CODE` from repository variables into the build |
 | `CLAUDE.md` | og cards are generated; never hand-edit |
 
