@@ -126,4 +126,45 @@ export const cases: CaseStudy[] = [
       "Packaged as config-driven tooling the whole team runs, not a personal script.",
     ],
   },
+  {
+    slug: "nmblr",
+    title: "Biopharma Strategy Platform",
+    subtitle:
+      "An ISO 27001-certified strategy SaaS for enterprise pharma - a schema-driven clone engine, dependency-aware archive/restore, and real-time collaboration.",
+    meta: {
+      role: "Originating engineer on two subsystems",
+      period: "2024 - present",
+      ownership: "1 of 3 core engineers",
+      stack: ["React", "TypeScript", "Node", "GraphQL", "Prisma", "PostgreSQL", "AWS"],
+    },
+    sections: [
+      {
+        heading: "Problem",
+        paragraphs: [
+          "Brand strategy in pharma is not one document. It is a graph of artefacts that teams finalise, reuse, and revise for years, and the two operations that matter most are the two that are easiest to get wrong: starting a new strategy from a finished one, and removing something other artefacts quietly depend on.",
+          "Copying by hand drifts the moment the schema moves. Deleting without knowing the dependents loses work that a regulated client cannot lose.",
+        ],
+      },
+      {
+        heading: "Constraints",
+        paragraphs: [
+          "The platform is ISO 27001 certified and in private beta with enterprise pharma clients, so destructive actions have to be reversible and every session has to be attributable. Three core engineers cover the whole product, which rules out subsystems that need a specialist to operate.",
+        ],
+      },
+      {
+        heading: "Architecture",
+        paragraphs: [
+          "Clone engine: the copy walks Prisma's DMMF, the generated data-model metadata, instead of hand-written per-model code. A new field or relation is cloned because the schema says so, not because someone remembered to add it.",
+          "Dependency subsystem: a registry describes which entities depend on which, exposed through its own GraphQL contract and resolver and rendered by a registry-driven modal. Finalised entities with dependents warn before an archive or a delete, and the archive then cascades across the dependents so a restore brings the whole set back together.",
+          "Edge brand-strategy module: Belief Shift, Narrative and competitive-landscape recap tabs, each with per-group finalise, and LLM-backed prompt generation instrumented with llm_event telemetry so generation is measurable rather than anecdotal.",
+          "Across the product: real-time collaboration over GraphQL subscriptions, OpenAI-backed generation features, and platform security work on OWASP/IDOR exposure and JWT sessions.",
+        ],
+      },
+    ],
+    outcomes: [
+      "Two subsystems originated from scratch and in the product: the clone engine and the Edge archive/restore isolation system.",
+      "Destructive actions on finalised work are warned about first, then cascade and reverse as a set instead of one entity at a time.",
+      "Cloning survives schema change: the model metadata drives the copy, so new fields travel without new code.",
+    ],
+  },
 ];

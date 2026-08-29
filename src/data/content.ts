@@ -236,6 +236,10 @@ export const credentials = [
 
 export interface Flagship {
   slug: string;
+  /* Which job this shipped under; drives the LinkedIn "Associated with" line. */
+  jobId: string;
+  /* Only where the start month is known; LinkedIn projects take a date range. */
+  period?: Period;
   title: string;
   outcome: string;
   ownership: string;
@@ -245,6 +249,7 @@ export interface Flagship {
 export const flagships: Flagship[] = [
   {
     slug: "core-api",
+    jobId: "hth",
     title: "Multi-Tenant Core API",
     outcome:
       `One API, ${fleetPortals.length} utility portals. OAuth 2.0 into Oracle CCS, per-tenant behavior composed from config, and authorization gates on every endpoint.`,
@@ -253,6 +258,7 @@ export const flagships: Flagship[] = [
   },
   {
     slug: "control-plane",
+    jobId: "hth",
     title: "Terraform Control-Plane & IDP",
     outcome:
       "Nine Terraform stacks and a provisioning dashboard that turn tenant onboarding into a templated workflow - Cognito to CloudFront, WAF to KMS.",
@@ -261,11 +267,22 @@ export const flagships: Flagship[] = [
   },
   {
     slug: "ai-sdlc",
+    jobId: "hth",
     title: "AI-Augmented SDLC",
     outcome:
       "Bedrock auto-remediation that opens fix PRs, a Claude reviewer in CI, and an agentic ticket-to-PR pipeline where humans keep every approval gate.",
     ownership: "SOLE AUTHOR",
     stack: ["AWS Bedrock", "Claude", "GitHub", "Jira"],
+  },
+  {
+    slug: "nmblr",
+    jobId: "nmblr",
+    period: { start: "2024-03", end: null },
+    title: "Biopharma Strategy Platform",
+    outcome:
+      "A DMMF-driven clone engine and a dependency-aware archive/restore system on an ISO 27001-certified strategy SaaS in private beta with enterprise pharma.",
+    ownership: "1 OF 3 CORE ENGINEERS",
+    stack: ["React", "TypeScript", "GraphQL", "Prisma", "PostgreSQL"],
   },
 ];
 
@@ -282,13 +299,6 @@ export interface SecondaryProject {
 }
 
 export const secondaryProjects: SecondaryProject[] = [
-  {
-    title: "Nmblr",
-    description: "Biopharma strategy and real-time collaboration platform - clone engine, archive/restore, GraphQL subscriptions.",
-    url: "https://nmblr.co",
-    period: { start: "2024-03", end: null },
-    jobId: "nmblr",
-  },
   {
     title: "Campaign Manager",
     description: "Multi-channel notifications - Twilio SMS + IVR voice and AWS SES email with CSV lists and templated messaging.",
