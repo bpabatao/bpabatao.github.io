@@ -3,8 +3,8 @@ import { MobileMenu } from "./MobileMenu";
 import { ThemeToggle } from "./ThemeToggle";
 
 const nav = [
-  { href: "/#work", label: "work" },
-  { href: "/#projects", label: "projects" },
+  { href: "/#projects", label: "work" },
+  { href: "/#work", label: "experience" },
   { href: "/#stack", label: "stack" },
   { href: "/#contact", label: "contact" },
 ];
