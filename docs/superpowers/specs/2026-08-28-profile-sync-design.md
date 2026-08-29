@@ -197,7 +197,7 @@ Key is `<source>:<scope>`; value type depends on the source.
 |---|---|
 | `github-pr:bpabatao` | ISO merged_at of newest item |
 | `bitbucket-pr:myhub-api` | ISO updated_on |
-| `git:hth/base-server` | commit SHA on the default branch |
+| `git:hth/base-server` | ISO author date (`%aI`) of the newest commit on the default branch |
 | `jira:esc-partners` | ISO resolutiondate |
 | `cloudtrail:hth:us-east-1` | ISO EventTime |
 | `pipeline:bb:myhub-api` | ISO created_on |
@@ -207,6 +207,7 @@ Key is `<source>:<scope>`; value type depends on the source.
 
 A watermark advances only after the run reaches a terminal `ok` or `nothing-new` status.
 A source that failed keeps its old watermark.
+The `git` cursor is a date, not a commit identity, so a commit authored before the cursor but merged into the default branch after it is not re-scanned by `git` - it is still captured by its PR (grade A) instead.
 
 Two cursors, not one.
 Harvest watermarks (above) say how far each source has been *read*.
@@ -291,7 +292,7 @@ Replacement text is `[redacted]`.
 |---|---|
 | `/profile-sync` | Interactive. Up to 5 `needs-word` claims are asked via AskUserQuestion before the PR; the rest go to the PR block. |
 | `/profile-sync --cron` | Unattended. No questions; `needs-word` claims land in the PR body. |
-| `/profile-sync --dry-run` | Harvest + draft + verify + dossier. No repo writes, no watermark advance. |
+| `/profile-sync --dry-run` | Harvest + draft + verify + dossier. Harvest watermarks still advance (ledger ids are idempotent, so re-harvesting the same window is harmless) - only the draft cursor and the repo are untouched. |
 | `/profile-sync --init` | One-time reconciliation PR (section 12), then the interactive full-history backfill. No evidence claims. |
 | `/profile-sync --check-linkedin` | Interactive only. Diffs `linkedin/*.txt` against the newest LinkedIn data export in `~/.profile-sync/linkedin-export/` (Positions.csv, Projects.csv, Skills.csv, Profile.csv) and appends a drift list to the dossier; warns when the export is older than 60 days. A live browser read is a follow-up (section 14). |
 
@@ -382,7 +383,7 @@ Fails with a non-zero exit on any of:
 - Never force-push; never delete branches; never merge.
 - Never write to Jira, Confluence or Bitbucket: no issue create/edit/transition/comment/worklog, no page create/update, no PR create/approve/merge/comment, no pipeline trigger. The Atlassian tokens are full-permission, so the skill reaches them only through GET requests in `harvest.py` and lists the Atlassian MCP servers under `disallowed-tools`.
 - Attribution: A requires author match, C requires assignee match, colleague repos are excluded, F-only claims are `needs-word`.
-- Cron hygiene: PID lock, `--max-turns 40`, `--max-budget-usd 5`, start and exit stamps in the log, `status.json` per run, and a 14-day staleness warning in interactive runs.
+- Cron hygiene: lock held for 3 hours from acquisition, released at the end of the run, `--max-turns 40`, `--max-budget-usd 15`, start and exit stamps in the log, `status.json` per run, and a 14-day staleness warning in interactive runs.
 
 ## 9. Error handling
 
@@ -415,7 +416,7 @@ Crontab entry, mirroring the existing knowledge-base job:
 
 ```
 # profile-sync - weekly Monday 08:30 local, after the 08:13 KB job.
-30 8 * * 1 cd /Users/macbook-pro/projects/personal/bpabatao.github.io && { /bin/date -u +'===== start \%Y-\%m-\%dT\%H:\%M:\%SZ'; /Users/macbook-pro/.local/bin/claude -p "/profile-sync --cron" --max-turns 40 --max-budget-usd 15; echo "===== exit $?"; python3 /Users/macbook-pro/.claude/skills/profile-sync/scripts/harvest.py unlock; git status --porcelain | grep -q . && git checkout -- . ; git checkout -q main; } >> /Users/macbook-pro/.profile-sync/logs/profile-sync.log 2>&1
+30 8 * * 1 cd /Users/macbook-pro/projects/personal/bpabatao.github.io && { /bin/date -u +'===== start \%Y-\%m-\%dT\%H:\%M:\%SZ'; /Users/macbook-pro/.local/bin/claude -p "/profile-sync --cron" --max-turns 40 --max-budget-usd 15 --disallowedTools "mcp__claude_ai_Atlassian,mcp__claude_ai_Atlassian_Rovo,mcp__plugin_github_github,mcp__claude_ai_Slack,mcp__claude_ai_Gmail,mcp__plugin_mongodb_mongodb"; echo "===== exit $?"; python3 /Users/macbook-pro/.claude/skills/profile-sync/scripts/harvest.py unlock; git status --porcelain | grep -q . && git checkout -- . ; git checkout -q main; } >> /Users/macbook-pro/.profile-sync/logs/profile-sync.log 2>&1
 ```
 
 No `--model` flag: the run uses the account default (Fable 5 today), capped at $15 and 40 turns.
