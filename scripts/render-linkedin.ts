@@ -47,7 +47,8 @@ export function buildLinkedinPack(): Record<string, string> {
   };
   for (const j of allJobs()) pack[`experience-${j.id}.txt`] = header(`Experience > ${j.company} (one block per position)`) + experience(j) + "\n";
   for (const f of flagships) {
-    pack[`projects-${f.slug}.txt`] = header(`Projects > ${f.title}`) + [f.title, f.outcome, `Ownership: ${f.ownership}`, `Stack: ${f.stack.join(", ")}`, `${profile.siteUrl}/case/${f.slug}/`].join("\n") + "\n";
+    const job = allJobs().find((j) => j.id === f.jobId);
+    pack[`projects-${f.slug}.txt`] = header(`Projects > ${f.title}`) + [f.title, f.period ? formatPeriod(f.period) : "", job ? `Associated with: ${job.company}` : "", f.outcome, `Ownership: ${f.ownership}`, `Stack: ${f.stack.join(", ")}`, `${profile.siteUrl}/case/${f.slug}/`].filter(Boolean).join("\n") + "\n";
   }
   for (const p of [...secondaryProjects, ...earlierProjects]) {
     if (p.linkedin === false) continue;
