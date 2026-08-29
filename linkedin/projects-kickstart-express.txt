@@ -1,5 +1,7 @@
 # updated 2026-08-28 - paste into LinkedIn > Projects > Kickstart Express
 Kickstart Express
-Associated with: Halcyon Digital
+Oct 2018 - Mar 2019
+Associated with: Halcyon Digital Media Design
 
-Parcel delivery mobile app for customers and riders (React Native).
+Package delivery mobile and web app for customers and riders, published on Google Play (Ionic, Adonis, AWS, Socket.io).
+https://play.google.com/store/apps/details?id=com.topserve.kickstart

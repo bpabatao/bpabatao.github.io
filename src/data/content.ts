@@ -80,7 +80,9 @@ export interface Job {
   role: string;
   period: Period;
   location?: string;
-  employmentType?: "Contract" | "Full-time" | "Freelance";
+  employmentType?: "Contract" | "Full-time" | "Freelance" | "Internship";
+  /* exclude from the resume; the site and the LinkedIn pack still show it */
+  resume?: false;
   positions?: Position[];
   /* site + LinkedIn bullets; may open with a **lead** marker */
   receipts: string[];
@@ -159,7 +161,7 @@ export const earlierJobs: Job[] = [
     id: "ordermentum",
     company: "Ordermentum",
     role: "Full Stack Software Engineer",
-    period: { start: "2022-09", end: "2023-02" },
+    period: { start: "2022-09", end: "2023-03" },
     location: "New South Wales, Australia / Remote",
     employmentType: "Contract",
     receipts: ["Restaurant ordering and payment management for hospitality clients."],
@@ -179,7 +181,7 @@ export const earlierJobs: Job[] = [
     id: "hcl",
     company: "HCL Technologies",
     role: "Senior Software Engineer II",
-    period: { start: "2020-02", end: "2022-03" },
+    period: { start: "2020-02", end: "2022-04" },
     location: "New York, USA / Remote",
     employmentType: "Full-time",
     receipts: ["Product features at scale on HCL DX; automated test suites; led code reviews."],
@@ -188,20 +190,30 @@ export const earlierJobs: Job[] = [
   {
     id: "zencomputes",
     company: "Zencomputes",
-    role: "Software Developer",
-    period: { start: "2019", end: "2020" },
+    role: "Full Stack Developer",
+    period: { start: "2019-03", end: "2020-02" },
     location: "Singapore",
     receipts: ["Full-stack development, Singapore."],
     resumeReceipts: ["Full-stack web development for studio and commerce clients (React, Node.js)."],
   },
   {
     id: "halcyon",
-    company: "Halcyon Digital",
-    role: "Mobile App Developer",
-    period: { start: "2018", end: "2019" },
+    company: "Halcyon Digital Media Design",
+    role: "Mobile Application Developer",
+    period: { start: "2018-03", end: "2019-03" },
     location: "Philippines",
     receipts: ["Mobile applications, Philippines."],
     resumeReceipts: ["Built customer and rider mobile applications (React Native)."],
+  },
+  {
+    id: "8layer",
+    company: "8Layer Technologies",
+    role: "Software Developer Internship",
+    period: { start: "2017-11", end: "2018-03" },
+    location: "Metro Manila, Philippines",
+    employmentType: "Internship",
+    resume: false,
+    receipts: ["Software development internship."],
   },
 ];
 
@@ -295,21 +307,21 @@ export const earlierProjects: SecondaryProject[] = [
     title: "Ordermentum Wholesale Food and Beverage Online Ordering System",
     description: "Wholesale food and beverage ordering and payments platform (contract).",
     url: "https://ordermentum.com",
-    period: { start: "2022-09", end: "2023-02" },
+    period: { start: "2022-09", end: "2023-03" },
     jobId: "ordermentum",
   },
   {
     title: "HCL Digital Experience Content Composer",
-    description: "Enterprise digital-experience platform - product features and test automation at scale.",
-    url: "https://www.hcl-software.com/dx",
-    period: { start: "2020-02", end: "2022-02" },
+    description: "Content authoring for the enterprise digital-experience platform - product features and test automation at scale.",
+    url: "https://www.hcltechsw.com/dx/home",
+    period: { start: "2020-02", end: "2022-03" },
     jobId: "hcl",
   },
   {
     title: "HCL Digital Experience Design Studio",
-    description: "Enterprise digital-experience platform - product features and test automation at scale.",
-    url: "https://www.hcl-software.com/dx",
-    period: { start: "2020-02", end: "2022-02" },
+    description: "Page and layout design tooling for the enterprise digital-experience platform - product features and test automation at scale.",
+    url: "https://www.hcltechsw.com/wps/portal/products/dx/home",
+    period: { start: "2020-02", end: "2022-03" },
     jobId: "hcl",
   },
   {
@@ -321,14 +333,22 @@ export const earlierProjects: SecondaryProject[] = [
   },
   {
     title: "Hope Technik",
-    description: "Click-and-collect AGV system - web and control UI.",
+    description: "Click-and-collect AGV system - IoT mobile app driving a robotic arm to fetch shop supplies, with a web tracker for job completion (React, React Native, Python).",
     url: "https://www.hopetechnik.com/product/click-and-collect-system/",
+    period: { start: "2019-03", end: "2020-02" },
     jobId: "zencomputes",
   },
   {
-    title: "Bambini Photography",
-    description: "Portrait studio site and booking.",
+    title: "Soon Beng Huat Metal and Hardware Trading",
+    description: "Web application for buying and selling metal scrap (React, Express).",
+    period: { start: "2019-04", end: "2020-02" },
+    jobId: "zencomputes",
+  },
+  {
+    title: "Bambini International",
+    description: "Photography, franchise and services web platform - portrait studio site and booking (React, Express).",
     url: "https://bambiniphoto.sg",
+    period: { start: "2019-06", end: "2020-02" },
     jobId: "zencomputes",
   },
   {
@@ -338,18 +358,23 @@ export const earlierProjects: SecondaryProject[] = [
   },
   {
     title: "Kickstart Express",
-    description: "Parcel delivery mobile app for customers and riders (React Native).",
+    description: "Package delivery mobile and web app for customers and riders, published on Google Play (Ionic, Adonis, AWS, Socket.io).",
+    url: "https://play.google.com/store/apps/details?id=com.topserve.kickstart",
+    period: { start: "2018-10", end: "2019-03" },
     jobId: "halcyon",
   },
   {
-    title: "Luckyah · Soon Beng Huat",
-    description: "Scrap and metal trading management systems.",
-    jobId: "zencomputes",
+    title: "Luckyah",
+    description: "E-commerce marketplace app with raffles, messaging and a wallet on Android and iOS, published on Google Play (Ionic, Adonis, Socket.io).",
+    url: "https://play.google.com/store/apps/details?id=com.luckyah.app",
+    period: { start: "2018-04", end: "2019-03" },
+    jobId: "halcyon",
   },
   {
-    title: "Sobida Motors",
-    description: "Marketing site for a truck manufacturer.",
-    jobId: "zencomputes",
+    title: "Sobida",
+    description: "Offline truck-delivery report mobile app (Ionic, SQLite).",
+    period: { start: "2018-05", end: "2018-07" },
+    jobId: "halcyon",
   },
 ];
 
