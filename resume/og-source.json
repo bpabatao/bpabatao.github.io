@@ -1,0 +1,34 @@
+[
+  {
+    "file": "og.png",
+    "kicker": "OPERATIONAL - 7 TENANTS · AWS · REMOTE (ITALY)",
+    "title": "I build the platform other engineers",
+    "accent": "ship on.",
+    "body": "Benedict Pabatao · Staff Software Engineer",
+    "foot": "8+ years in software   ·   7 tenant portals   ·   78% core API authorship   ·   $110K/yr AWS under management"
+  },
+  {
+    "file": "og/core-api.png",
+    "kicker": "~/case/core-api",
+    "title": "Multi-Tenant Core API",
+    "accent": "",
+    "body": "The middleware every utility-customer portal in the fleet stands on - auth, data access, and Oracle CCS integration in one codebase.",
+    "foot": "78% of commits · Fastify 5 · TypeScript (strict) · Zod · MongoDB"
+  },
+  {
+    "file": "og/control-plane.png",
+    "kicker": "~/case/control-plane",
+    "title": "Terraform Control-Plane & IDP",
+    "accent": "",
+    "body": "The internal developer platform that provisions, ships, and cost-tracks every client environment in the fleet.",
+    "foot": "Sole author · Terraform · Fastify 5 · React 18 · TypeScript"
+  },
+  {
+    "file": "og/ai-sdlc.png",
+    "kicker": "~/case/ai-sdlc",
+    "title": "AI-Augmented SDLC",
+    "accent": "",
+    "body": "Agentic tooling that drains the toil out of a small team running a large fleet - with humans keeping every approval gate.",
+    "foot": "Sole author · AWS Bedrock (Claude) · GitHub · Jira · Claude Code plugins"
+  }
+]
