@@ -5,9 +5,9 @@ import { SectionHeading } from "./SectionHeading";
 
 export function Contact() {
   return (
-    <section id="contact" className="border-t border-line">
+    <section id="contact" aria-labelledby="contact-heading" className="border-t border-line">
       <div className="mx-auto w-full max-w-5xl px-6 py-20">
-        <SectionHeading title="Contact" annotation="async-first · CET" />
+        <SectionHeading id="contact" title="Contact" annotation="async-first · CET" />
         <Reveal>
           <p className="flex items-center gap-2 font-mono text-xs tracking-wide text-muted">
             <span className="status-dot size-2 shrink-0 rounded-full bg-ok" aria-hidden />

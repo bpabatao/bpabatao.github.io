@@ -43,3 +43,20 @@ test("external links announce new tab", () => {
   const hints = rendered.match(/\(opens in new tab\)/g) ?? [];
   assert.equal(hints.length, blanks.length, `${blanks.length} target=_blank links, ${hints.length} hints`);
 });
+
+test("theme toggle accessible name is its visible label", () => {
+  assert.ok(!home.includes('aria-label="Toggle color theme"'));
+  assert.ok(home.includes(">light mode<") && home.includes(">dark mode<"));
+});
+
+test("every section is labelled by its heading", () => {
+  for (const id of ["projects", "work", "approach", "stack", "contact"]) {
+    assert.ok(home.includes(`id="${id}" aria-labelledby="${id}-heading"`) || home.includes(`aria-labelledby="${id}-heading" id="${id}"`), id);
+    assert.ok(home.includes(`id="${id}-heading"`), `${id}-heading`);
+  }
+});
+
+test("fonts ship as woff2 only", () => {
+  assert.ok(!existsSync(resolve(ROOT, "src/fonts/Satoshi-Variable.ttf")));
+  assert.ok(existsSync(resolve(ROOT, "src/fonts/Satoshi-Variable.woff2")));
+});
