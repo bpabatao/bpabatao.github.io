@@ -50,7 +50,7 @@ It never publishes on its own: every change arrives as a pull request that Bened
 | Personal repos | `penagent` and `lexi-app` produce always-`needs-word` candidates; `hth-customer-portals` is excluded | Personal projects are curation, not evidence; the monorepo is client-derived. |
 | Cron secrets | Keychain items with env fallback | Cron never sources `.zshrc`; Keychain is readable non-interactively (verified 2026-08-28). |
 | Notification | GitHub's PR notification only | Zero code; `status.json` and the log are the fallback. |
-| Cron model | Default model, `--max-budget-usd 5`, `--max-turns 40` | Harvest is scripted; drafting quality over cost. |
+| Cron model | Default model, `--max-budget-usd 15`, `--max-turns 40` | Harvest is scripted; drafting quality over cost. |
 | LinkedIn pack | Also `projects-<slug>.txt` from the three flagships | Same data, LinkedIn has a Projects section. |
 | Cadence | Weekly, Monday 08:30 | Quiet weeks are silent; one open PR at a time. |
 | docx | `resume/resume.docx`, repo only | The site links the PDF; the docx is for ATS forms. |
@@ -415,10 +415,10 @@ Crontab entry, mirroring the existing knowledge-base job:
 
 ```
 # profile-sync - weekly Monday 08:30 local, after the 08:13 KB job.
-30 8 * * 1 cd /Users/macbook-pro/projects/personal/bpabatao.github.io && { /bin/date -u +'===== start \%Y-\%m-\%dT\%H:\%M:\%SZ'; /Users/macbook-pro/.local/bin/claude -p "/profile-sync --cron" --max-turns 40 --max-budget-usd 5; echo "===== exit $?"; } >> /Users/macbook-pro/.profile-sync/logs/profile-sync.log 2>&1
+30 8 * * 1 cd /Users/macbook-pro/projects/personal/bpabatao.github.io && { /bin/date -u +'===== start \%Y-\%m-\%dT\%H:\%M:\%SZ'; /Users/macbook-pro/.local/bin/claude -p "/profile-sync --cron" --max-turns 40 --max-budget-usd 15; echo "===== exit $?"; python3 /Users/macbook-pro/.claude/skills/profile-sync/scripts/harvest.py unlock; git status --porcelain | grep -q . && git checkout -- . ; git checkout -q main; } >> /Users/macbook-pro/.profile-sync/logs/profile-sync.log 2>&1
 ```
 
-No `--model` flag: the run uses the account default (Fable 5 today), capped at $5 and 40 turns.
+No `--model` flag: the run uses the account default (Fable 5 today), capped at $15 and 40 turns.
 
 Why not the alternatives: Desktop routines need the app awake; Cloud Routines run on a fresh clone with no local evidence; session `/loop` dies with the session.
 
