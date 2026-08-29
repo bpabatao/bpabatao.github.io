@@ -1,10 +1,10 @@
 import { execFileSync } from "node:child_process";
-import { existsSync, mkdirSync, readFileSync, renameSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync, renameSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { cases } from "../src/data/cases.ts";
-import { fleetPortals, metrics, profile } from "../src/data/content.ts";
+import { metrics, profile } from "../src/data/content.ts";
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const CHROME = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome";
@@ -59,11 +59,12 @@ h1 { font-family: Clash, sans-serif; font-weight: 600; font-size: 72px; line-hei
 h1 span { color: #ff5500; }
 .body { margin-top: 26px; font-size: 30px; color: #c3c8ce; max-width: 1000px; line-height: 1.35; }
 .foot { margin-top: auto; font-family: Mono, monospace; font-size: 22px; color: #9ba1a8; }
+.foot span { white-space: nowrap; }
 </style></head><body><div class="grid"></div><div class="wrap">
 <div class="kicker">${c.kicker.startsWith("OPERATIONAL") ? `<b>OPERATIONAL</b>${esc(c.kicker.slice("OPERATIONAL".length))}` : esc(c.kicker)}</div>
 <h1>${esc(c.title)}${c.accent ? ` <span>${esc(c.accent)}</span>` : ""}</h1>
 <div class="body">${esc(c.body)}</div>
-<div class="foot">${esc(c.foot)}</div>
+<div class="foot">${c.foot.split(/\s+·\s+/).map((s) => `<span>${esc(s)}</span>`).join(" · ")}</div>
 </div></body></html>`;
 }
 
@@ -80,10 +81,14 @@ function screenshot(html: string, out: string, width: number, height: number): b
   const tmp = resolve(tmpdir(), `og-${Date.now()}-${Math.random().toString(16).slice(2)}.html`);
   writeFileSync(tmp, html);
   mkdirSync(dirname(out), { recursive: true });
-  execFileSync(CHROME, ["--headless=new", "--disable-gpu", "--hide-scrollbars", `--window-size=${width},${height}`, `--screenshot=${out}`, pathToFileURL(tmp).href], { stdio: ["ignore", "ignore", "inherit"], timeout: 60_000 });
-  const size = pngSize(readFileSync(out));
-  if (size.width !== width || size.height !== height) throw new Error(`${out}: expected ${width}x${height}, got ${size.width}x${size.height}`);
-  return true;
+  try {
+    execFileSync(CHROME, ["--headless=new", "--disable-gpu", "--hide-scrollbars", `--window-size=${width},${height}`, `--screenshot=${out}`, pathToFileURL(tmp).href], { stdio: ["ignore", "ignore", "inherit"], timeout: 60_000 });
+    const size = pngSize(readFileSync(out));
+    if (size.width !== width || size.height !== height) throw new Error(`${out}: expected ${width}x${height}, got ${size.width}x${size.height}`);
+    return true;
+  } finally {
+    rmSync(tmp, { force: true });
+  }
 }
 
 function faviconHtml(): string {
