@@ -21,7 +21,16 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const cs = cases.find((c) => c.slug === slug);
-  return cs ? { title: cs.title, description: cs.subtitle } : {};
+  if (!cs) return {};
+  const url = `/case/${cs.slug}/`;
+  const image = `/og/${cs.slug}.png`;
+  return {
+    title: cs.title,
+    description: cs.subtitle,
+    alternates: { canonical: url },
+    openGraph: { url, title: cs.title, description: cs.subtitle, images: [image], type: "article" },
+    twitter: { card: "summary_large_image", title: cs.title, description: cs.subtitle, images: [image] },
+  };
 }
 
 export default async function CasePage({ params }: Props) {
