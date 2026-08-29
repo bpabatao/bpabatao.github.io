@@ -52,7 +52,7 @@ export function buildResumeModel(page: Page = "a4"): ResumeModel {
     contact: [profile.location, profile.email, bare(profile.linkedin), bare(profile.github), bare(profile.siteUrl)].join(" | "),
     summary: profile.resumeSummary,
     experience: currentJobs.map(role),
-    earlier: earlierJobs.map(role),
+    earlier: earlierJobs.filter((j) => j.resume !== false).map(role),
     skills: stackGroups.map((g) => ({ title: g.title, items: g.items.map((i) => i.replace(/\s*·\s*/g, ", ")).join(", ") })),
     education: credentials.map((c) => ({ title: c.title, detail: c.detail, dates: c.period })),
     keywords: [...profile.atsKeywords],

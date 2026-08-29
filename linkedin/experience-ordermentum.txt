@@ -1,7 +1,7 @@
 # updated 2026-08-28 - paste into LinkedIn > Experience > Ordermentum (one block per position)
 ## Full Stack Software Engineer
 Ordermentum · Contract
-Sep 2022 - Feb 2023
+Sep 2022 - Mar 2023
 New South Wales, Australia / Remote
 
 - Restaurant ordering and payment management for hospitality clients.

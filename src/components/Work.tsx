@@ -18,7 +18,7 @@ export function Work() {
   return (
     <section id="work" className="border-t border-line">
       <div className="mx-auto w-full max-w-5xl px-6 py-20">
-        <SectionHeading title="Experience" annotation="2018 - present" />
+        <SectionHeading title="Experience" annotation={`${earlierJobs[earlierJobs.length - 1].period.start.slice(0, 4)} - present`} />
         <div className="space-y-14">
           {currentJobs.map((job, i) => (
             <Reveal key={job.id} delay={i * 0.05} className="grid gap-4 md:grid-cols-[190px_1fr] md:gap-8">

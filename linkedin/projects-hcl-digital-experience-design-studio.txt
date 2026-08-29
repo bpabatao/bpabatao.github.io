@@ -1,7 +1,7 @@
 # updated 2026-08-28 - paste into LinkedIn > Projects > HCL Digital Experience Design Studio
 HCL Digital Experience Design Studio
-Feb 2020 - Feb 2022
+Feb 2020 - Mar 2022
 Associated with: HCL Technologies
 
-Enterprise digital-experience platform - product features and test automation at scale.
-https://www.hcl-software.com/dx
+Page and layout design tooling for the enterprise digital-experience platform - product features and test automation at scale.
+https://www.hcltechsw.com/wps/portal/products/dx/home

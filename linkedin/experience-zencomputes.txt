@@ -1,7 +1,7 @@
 # updated 2026-08-28 - paste into LinkedIn > Experience > Zencomputes (one block per position)
-## Software Developer
+## Full Stack Developer
 Zencomputes
-2019 - 2020
+Mar 2019 - Feb 2020
 Singapore
 
 - Full-stack development, Singapore.
