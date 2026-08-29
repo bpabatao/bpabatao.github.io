@@ -13,7 +13,7 @@ export function Footer() {
             rel="noopener"
             className="link-sweep transition-colors hover:text-accent"
           >
-            source ↗
+            source ↗<span className="sr-only"> (opens in new tab)</span>
           </a>
         </span>
       </div>

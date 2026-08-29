@@ -101,7 +101,7 @@ export const cases: CaseStudy[] = [
       {
         heading: "Problem",
         paragraphs: [
-          "Five engineers, every production tenant: triage, code review, and backlog grooming eat the week if you let them. The interesting question wasn't whether AI could draft a fix - it was how to wire it in so speed goes up while accountability stays exactly where it was.",
+          "Five engineers, one fleet: triage, code review, and backlog grooming eat the week if you let them. The interesting question wasn't whether AI could draft a fix - it was how to wire it in so speed goes up while accountability stays exactly where it was.",
         ],
       },
       {

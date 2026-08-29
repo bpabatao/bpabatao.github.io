@@ -135,7 +135,12 @@ const RESOURCES = ["cognito · ecs fargate · cloudfront · wafv2", "route 53 ·
 
 export function ControlPlaneDiagram() {
   return (
-    <svg viewBox="0 0 640 288" role="img" aria-label="The provisioning dashboard drives the Terraform control-plane, which provisions seven tenant environments" className="block w-full">
+    <svg
+      viewBox="0 0 640 288"
+      role="img"
+      aria-label={`The provisioning dashboard drives the Terraform control-plane, which provisions ${TENANTS.length} tenant environments`}
+      className="block w-full"
+    >
       <Line d="M320 68 V100" />
       <Line d="M320 172 V196" />
       <Line d="M80 196 H560" />
