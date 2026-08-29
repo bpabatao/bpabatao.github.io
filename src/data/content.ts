@@ -18,6 +18,8 @@ export const fleetPortals: { key: string; tenant: string; url: string }[] = [
   { key: "aruba", tenant: "Web Aruba", url: "https://webcare.webaruba.com" },
 ];
 
+const MARKETS = "US and EU teams";
+
 export const profile = {
   name: "Benedict Pabatao",
   role: "Staff Software Engineer",
@@ -31,6 +33,8 @@ export const profile = {
     `I build multi-tenant SaaS platforms end to end - the Terraform that provisions them, the API they run on, and the product customers actually use. Staff Software Engineer - 8+ years in software, 5+ hands-on with AWS, and ~3 years leading cloud platforms: from AWS infrastructure-as-code to the shared backend services an entire product fleet runs on. Near-sole author of a Terraform control-plane and internal developer platform that ships ${fleetPortals.length} multi-tenant client portals on ECS Fargate, and primary author (78%) of the core REST API those portals are built on. Operates ~$110K/year of multi-tenant portal infrastructure on AWS, turns it into self-service, and builds the products on it - full-stack from React/TypeScript through Node/GraphQL - not just the infrastructure they run on.`,
   location: "Italy (Remote)",
   availability: "STAFF/LEAD PLATFORM ROLES · CONSULTING · AWS / TERRAFORM / MULTI-TENANT",
+  availabilityLine: `Open to Staff / Lead platform roles · Remote from Italy (CET), async-first · ${MARKETS}`,
+  markets: MARKETS,
   updated: "2026-08-29",
   atsKeywords: ["Staff", "REST", "Python", "Kubernetes", "Terraform", "AWS", "TypeScript", "multi-tenant", "OAuth", "CI/CD", "React", "Node", "GraphQL", "IDOR"],
   email: "jajapabatao@gmail.com",
@@ -394,7 +398,7 @@ export const stackGroups: StackGroup[] = [
     title: "Cloud & Infra",
     span: 2,
     items: [
-      "AWS - ECS Fargate, CloudFront, Cognito, RDS, ElastiCache, KMS, Secrets Manager, WAFv2, SES, S3, Route 53, VPC, ALB, Elastic Beanstalk, Bedrock",
+      "AWS - ECS Fargate, CloudFront, Cognito, RDS, ElastiCache, KMS, Secrets Manager, WAFv2, SES, S3, Route 53, VPC, ALB, Elastic Beanstalk",
       "Terraform",
       "Docker · Kubernetes",
       "Linux · OpenSearch",
@@ -437,7 +441,7 @@ export const stackGroups: StackGroup[] = [
     items: [
       "Datadog RUM/APM · CloudWatch · Sentry",
       "Structured logging",
-      "OWASP/IDOR · JWT · WAF · Snyk",
+      "OWASP/IDOR · JWT · WAFv2 · Snyk",
     ],
   },
   {

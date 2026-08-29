@@ -3,6 +3,8 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches: [main]
+  pull_request:
+    branches: [main]
   workflow_dispatch:
 
 permissions:
@@ -11,7 +13,7 @@ permissions:
   id-token: write
 
 concurrency:
-  group: pages
+  group: pages-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
@@ -26,12 +28,19 @@ jobs:
       - run: npm ci
       - run: npm run check -- --ci
       - run: npm run build
+        env:
+          NEXT_PUBLIC_GOATCOUNTER_CODE: ${{ vars.NEXT_PUBLIC_GOATCOUNTER_CODE }}
+      - run: NODE_OPTIONS=--disable-warning=MODULE_TYPELESS_PACKAGE_JSON node scripts/site.test.ts
+        env:
+          NEXT_PUBLIC_GOATCOUNTER_CODE: ${{ vars.NEXT_PUBLIC_GOATCOUNTER_CODE }}
       - uses: actions/upload-pages-artifact@v3
+        if: github.event_name != 'pull_request'
         with:
           path: out
 
   deploy:
     needs: build
+    if: github.event_name != 'pull_request'
     runs-on: ubuntu-latest
     environment:
       name: github-pages

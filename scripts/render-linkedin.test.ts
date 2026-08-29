@@ -30,3 +30,9 @@ test("bodies respect LinkedIn limits and render positions", () => {
   assert.ok(bodyOf(pack["projects-nmblr.txt"]).includes("Associated with: Nmblr"));
   assert.ok(bodyOf(pack["projects-nmblr.txt"]).includes("Mar 2024 - Present"));
 });
+
+test("skills.txt lists Bedrock and WAF once", () => {
+  const skills = bodyOf(pack["skills.txt"]).split("\n");
+  assert.equal(skills.filter((s) => /bedrock/i.test(s)).length, 1);
+  assert.equal(skills.filter((s) => /^WAF/i.test(s)).length, 1);
+});
