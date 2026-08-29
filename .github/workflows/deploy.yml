@@ -28,6 +28,9 @@ jobs:
       - run: npm run build
         env:
           NEXT_PUBLIC_GOATCOUNTER_CODE: ${{ vars.NEXT_PUBLIC_GOATCOUNTER_CODE }}
+      - run: NODE_OPTIONS=--disable-warning=MODULE_TYPELESS_PACKAGE_JSON node scripts/site.test.ts
+        env:
+          NEXT_PUBLIC_GOATCOUNTER_CODE: ${{ vars.NEXT_PUBLIC_GOATCOUNTER_CODE }}
       - uses: actions/upload-pages-artifact@v3
         with:
           path: out

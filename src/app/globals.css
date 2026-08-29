@@ -349,7 +349,8 @@ h3 {
 
 /* Print: light, quiet, everything expanded - the resume PDF stays the primary document */
 @media print {
-  :root {
+  :root,
+  :root.light {
     --bg: #ffffff;
     --surface: #ffffff;
     --surface-2: #f2f2f2;
