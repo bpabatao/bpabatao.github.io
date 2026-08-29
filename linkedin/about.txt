@@ -1,4 +1,4 @@
-# updated 2026-08-28 - paste into LinkedIn > About
+# updated 2026-08-29 - paste into LinkedIn > About
 I build multi-tenant SaaS platforms end to end - the Terraform that provisions them, the API they run on, and the product customers actually use. Staff Software Engineer - 8+ years in software, 5+ hands-on with AWS, and ~3 years leading cloud platforms: from AWS infrastructure-as-code to the shared backend services an entire product fleet runs on.
 
 Currently:
