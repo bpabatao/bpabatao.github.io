@@ -31,9 +31,10 @@ function ProjectList({ label, projects }: { label: string; projects: SecondaryPr
 
 export function Projects() {
   return (
-    <section id="projects" className="border-t border-line">
+    <section id="projects" aria-labelledby="projects-heading" className="border-t border-line">
       <div className="mx-auto w-full max-w-5xl px-6 py-20">
         <SectionHeading
+          id="projects"
           title="Selected work"
           annotation={`${flagships.length} case studies · ${fleetPortals.length} portals · ${secondaryProjects.length + earlierProjects.length} more`}
         />
