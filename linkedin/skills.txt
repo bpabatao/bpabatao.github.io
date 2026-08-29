@@ -1,4 +1,4 @@
-# updated 2026-08-28 - paste into LinkedIn > Skills (one per line)
+# updated 2026-08-29 - paste into LinkedIn > Skills (one per line)
 AWS
 ECS Fargate
 CloudFront

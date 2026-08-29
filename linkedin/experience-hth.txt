@@ -1,4 +1,4 @@
-# updated 2026-08-28 - paste into LinkedIn > Experience > ESC Partners / HometownHUB (one block per position)
+# updated 2026-08-29 - paste into LinkedIn > Experience > ESC Partners / HometownHUB (one block per position)
 ## Staff Software Engineer, Platform & Product
 ESC Partners / HometownHUB · Contract
 Sep 2025 - Present
@@ -10,6 +10,9 @@ New York, USA (Remote)
 - Own ~$110K/yr of AWS across the production and test fleet - CI/CD, Datadog/CloudWatch observability, and FinOps tooling driving right-sizing and Fargate-Spot savings.
 - Built the team's AI tooling: Bedrock auto-remediation that opens fix PRs, a Claude PR reviewer in CI, and an agentic AI-SDLC pipeline with human approval gates.
 - Owned production go-live readiness for 6 client launches.
+- Closed an SSN identity-verification gap enabling account takeover - fixed wrong-person matches on ~2.4% of accounts, added attempt lockout, and ZIP-based disambiguation against the brute-forceable last-4 space.
+- Built a fleet-wide customer-interaction audit trail: a capture hook mapping authenticated actions and page views, tenant-scoped/IDOR-safe admin history API with CSV export and rate limiting, and 90-day retention.
+- Designed and shipped a multi-account usage-extract feature (backend API + frontend modal) letting multi-account customers export combined billed usage as one CSV, closing an admin-bypass IDOR gap found in review.
 
 ## Senior Full-Stack Engineer (Cloud)
 ESC Partners / HometownHUB · Contract

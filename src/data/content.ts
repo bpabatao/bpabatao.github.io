@@ -31,7 +31,7 @@ export const profile = {
     `I build multi-tenant SaaS platforms end to end - the Terraform that provisions them, the API they run on, and the product customers actually use. Staff Software Engineer - 8+ years in software, 5+ hands-on with AWS, and ~3 years leading cloud platforms: from AWS infrastructure-as-code to the shared backend services an entire product fleet runs on. Near-sole author of a Terraform control-plane and internal developer platform that ships ${fleetPortals.length} multi-tenant client portals on ECS Fargate, and primary author (78%) of the core REST API those portals are built on. Operates ~$110K/year of multi-tenant portal infrastructure on AWS, turns it into self-service, and builds the products on it - full-stack from React/TypeScript through Node/GraphQL - not just the infrastructure they run on.`,
   location: "Italy (Remote)",
   availability: "STAFF/LEAD PLATFORM ROLES · CONSULTING · AWS / TERRAFORM / MULTI-TENANT",
-  updated: "2026-08-28",
+  updated: "2026-08-29",
   atsKeywords: ["Staff", "REST", "Python", "Kubernetes", "Terraform", "AWS", "TypeScript", "multi-tenant", "OAuth", "CI/CD", "React", "Node", "GraphQL", "IDOR"],
   email: "jajapabatao@gmail.com",
   github: "https://github.com/bpabatao",
@@ -110,6 +110,9 @@ export const currentJobs: Job[] = [
       "Own ~$110K/yr of AWS across the production and test fleet - CI/CD, Datadog/CloudWatch observability, and FinOps tooling driving right-sizing and Fargate-Spot savings.",
       "Built the team's AI tooling: Bedrock auto-remediation that opens fix PRs, a Claude PR reviewer in CI, and an agentic AI-SDLC pipeline with human approval gates.",
       "Owned production go-live readiness for 6 client launches.",
+      "Closed an SSN identity-verification gap enabling account takeover - fixed wrong-person matches on ~2.4% of accounts, added attempt lockout, and ZIP-based disambiguation against the brute-forceable last-4 space.",
+      "Built a fleet-wide customer-interaction audit trail: a capture hook mapping authenticated actions and page views, tenant-scoped/IDOR-safe admin history API with CSV export and rate limiting, and 90-day retention.",
+      "Designed and shipped a multi-account usage-extract feature (backend API + frontend modal) letting multi-account customers export combined billed usage as one CSV, closing an admin-bypass IDOR gap found in review.",
     ],
     resumeReceipts: [
       `**Primary author (78%) of the core REST API middleware** connecting ${fleetPortals.length} utility tenant portals to Oracle CCS via OAuth 2.0 - the multi-tenant auth, data-access, and integration patterns the whole fleet is built on.`,
@@ -135,6 +138,8 @@ export const currentJobs: Job[] = [
       "One of 3 core engineers on an ISO 27001-certified biopharma strategy SaaS in private beta with enterprise pharma clients.",
       "Originated two subsystems from scratch: a DMMF-driven strategy clone engine and the Edge archive/restore isolation system.",
       "Contributed to real-time collaboration (GraphQL subscriptions), OpenAI-backed generation features, and platform security (OWASP/IDOR, JWT sessions).",
+      "Originated a data-dependency subsystem - GraphQL contract, resolver, registry-driven modal - that warns before archiving or deleting finalised entities with dependents, then cascades the archive/restore across them.",
+      "Built out the Edge brand-strategy module - Belief Shift, Narrative, and competitive-landscape recap tabs with per-group finalise - and instrumented its LLM-backed prompt generation with llm_event telemetry.",
     ],
     resumeReceipts: [
       "One of 3 core engineers on an ISO 27001-certified biopharma strategy SaaS (React/TypeScript, Node/GraphQL/Prisma, AWS Elastic Beanstalk), reporting to the CEO; private beta with enterprise pharma clients.",
