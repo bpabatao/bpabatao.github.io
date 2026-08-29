@@ -1,0 +1,64 @@
+# updated 2026-08-28 - paste into LinkedIn > Skills (one per line)
+AWS
+ECS Fargate
+CloudFront
+Cognito
+RDS
+ElastiCache
+KMS
+Secrets Manager
+WAFv2
+SES
+S3
+Route 53
+VPC
+ALB
+Elastic Beanstalk
+Bedrock
+Terraform
+Docker
+Kubernetes
+Linux
+OpenSearch
+Internal Developer Platform
+Multi-tenant provisioning
+Bitbucket Pipelines
+GitHub Actions
+FinOps
+Cost Explorer
+AWS Bedrock (Claude)
+AIOps auto-remediation
+Agentic SDLC pipelines
+AI code review
+LLM knowledge bases
+Node.js
+Fastify
+Express
+TypeScript
+Python
+REST APIs
+GraphQL
+Prisma
+PostgreSQL
+MongoDB
+Redis/BullMQ
+Oracle Utilities CCS
+Invoice Cloud
+Datadog RUM/APM
+CloudWatch
+Sentry
+Structured logging
+OWASP/IDOR
+JWT
+WAF
+Snyk
+React
+Redux
+Styled Components
+Tailwind
+Next.js
+Platform Engineering
+Infrastructure-as-Code
+System Design & Architecture
+Security & Compliance
+Incident Response

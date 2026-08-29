@@ -1,0 +1,5 @@
+# updated 2026-08-28 - paste into LinkedIn > Projects > Bedrock Knowledge Base
+Bedrock Knowledge Base
+Associated with: ESC Partners / HometownHUB
+
+Pipeline converting Oracle CCS reference docs into LLM training data - validated JSONL to S3/Bedrock.

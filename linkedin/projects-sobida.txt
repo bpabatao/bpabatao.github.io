@@ -1,0 +1,6 @@
+# updated 2026-08-28 - paste into LinkedIn > Projects > Sobida
+Sobida
+May 2018 - Jul 2018
+Associated with: Halcyon Digital Media Design
+
+Offline truck-delivery report mobile app (Ionic, SQLite).

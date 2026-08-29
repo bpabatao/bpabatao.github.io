@@ -1,0 +1,7 @@
+# updated 2026-08-28 - paste into LinkedIn > Projects > Hope Technik
+Hope Technik
+Mar 2019 - Feb 2020
+Associated with: Zencomputes
+
+Click-and-collect AGV system - IoT mobile app driving a robotic arm to fetch shop supplies, with a web tracker for job completion (React, React Native, Python).
+https://www.hopetechnik.com/product/click-and-collect-system/

@@ -1,0 +1,17 @@
+# updated 2026-08-28 - paste into LinkedIn > Experience > ESC Partners / HometownHUB (one block per position)
+## Staff Software Engineer, Platform & Product
+ESC Partners / HometownHUB · Contract
+Sep 2025 - Present
+New York, USA (Remote)
+
+- Primary author (78%) of the core API middleware connecting 7 utility tenant portals to Oracle CCS via OAuth 2.0 - the auth, data-access, and integration patterns the whole fleet is built on.
+- Sole author of the internal developer platform: a Terraform control-plane (9 stacks, ~60 AWS resource types) with a Fastify/React dashboard that self-service provisions every client environment.
+- De-facto technical lead of a 5-engineer team, reporting to the COO/CEO - set the platform standards the fleet adopts.
+- Own ~$110K/yr of AWS across the production and test fleet - CI/CD, Datadog/CloudWatch observability, and FinOps tooling driving right-sizing and Fargate-Spot savings.
+- Built the team's AI tooling: Bedrock auto-remediation that opens fix PRs, a Claude PR reviewer in CI, and an agentic AI-SDLC pipeline with human approval gates.
+- Owned production go-live readiness for 6 client launches.
+
+## Senior Full-Stack Engineer (Cloud)
+ESC Partners / HometownHUB · Contract
+May 2023 - Jan 2026
+New York, USA (Remote)

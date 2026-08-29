@@ -19,3 +19,7 @@ npm-debug.log*
 .vscode
 
 *.tsbuildinfo
+
+# profile-sync intermediates
+resume/.model.json
+resume/resume-letter.*

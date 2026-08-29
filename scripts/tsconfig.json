@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "strict": true,
+    "noEmit": true,
+    "allowImportingTsExtensions": true,
+    "skipLibCheck": true,
+    "types": ["node"],
+    "baseUrl": "..",
+    "paths": { "@/*": ["src/*"] }
+  },
+  "include": ["./*.ts", "../src/data/*.ts", "../src/lib/format.ts"]
+}

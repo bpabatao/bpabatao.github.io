@@ -1,0 +1,2 @@
+# updated 2026-08-28 - paste into LinkedIn > Intro > Headline
+Staff Software Engineer, Platform & Product | Multi-tenant SaaS | AWS · Terraform · TypeScript · agentic tooling
