@@ -4,4 +4,3 @@ Apr 2018 - Mar 2019
 Associated with: Halcyon Digital Media Design
 
 E-commerce marketplace app with raffles, messaging and a wallet on Android and iOS, published on Google Play (Ionic, Adonis, Socket.io).
-https://play.google.com/store/apps/details?id=com.luckyah.app
