@@ -1,4 +1,4 @@
-# updated 2026-08-28 - paste into LinkedIn > Projects > Multi-Tenant Core API
+# updated 2026-08-29 - paste into LinkedIn > Projects > Multi-Tenant Core API
 Multi-Tenant Core API
 One API, 7 utility portals. OAuth 2.0 into Oracle CCS, per-tenant behavior composed from config, and authorization gates on every endpoint.
 Ownership: PRIMARY AUTHOR · 78%
