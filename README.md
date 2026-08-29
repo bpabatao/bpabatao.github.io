@@ -20,4 +20,4 @@ npm start       # serve out/ locally
 
 Content lives in `src/data/` (typed). Deploys automatically on push to `main`.
 
-Resume (`resume/`, `public/resume.pdf`) and the LinkedIn paste-pack (`linkedin/`) are generated from it: `npm run render && npm run check`.
+Resume (`resume/`, `public/resume.pdf`), the LinkedIn paste-pack (`linkedin/`), the share cards (`public/og.png`, `public/og/`) and `public/favicon.ico` are generated from it: `npm run render && npm run check`.

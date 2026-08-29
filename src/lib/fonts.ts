@@ -8,7 +8,7 @@ export const clash = localFont({
 });
 
 export const satoshi = localFont({
-  src: "../fonts/Satoshi-Variable.ttf",
+  src: "../fonts/Satoshi-Variable.woff2",
   variable: "--font-satoshi",
   weight: "300 900",
   display: "swap",

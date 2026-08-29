@@ -25,24 +25,33 @@ export function Hero() {
           {profile.summary}
         </p>
 
+        <p className="hero-fade mt-4 max-w-2xl leading-relaxed text-ink" style={{ animationDelay: "0.28s" }}>
+          {profile.availabilityLine}
+        </p>
+
         <div className="hero-fade mt-9 flex flex-wrap items-center gap-4" style={{ animationDelay: "0.35s" }}>
           <a
             href="/resume.pdf"
             target="_blank"
             rel="noopener"
+            data-goatcounter-click="resume"
             className="rounded-sm bg-accent px-5 py-2.5 font-mono text-sm font-medium text-accent-contrast transition-opacity hover:opacity-85"
           >
-            view resume ↗
+            view resume ↗<span className="sr-only"> (opens in new tab)</span>
+          </a>
+          <a
+            href={`mailto:${profile.email}`}
+            data-goatcounter-click="email"
+            className="rounded-sm border border-line px-5 py-2.5 font-mono text-sm font-medium text-ink transition-colors hover:border-accent hover:text-accent"
+          >
+            email me
           </a>
           <div className="flex gap-4 font-mono text-sm">
             <a className="link-sweep text-muted transition-colors hover:text-accent" href={profile.github} target="_blank" rel="noopener">
-              github ↗
+              github ↗<span className="sr-only"> (opens in new tab)</span>
             </a>
-            <a className="link-sweep text-muted transition-colors hover:text-accent" href={profile.linkedin} target="_blank" rel="noopener">
-              linkedin ↗
-            </a>
-            <a className="link-sweep text-muted transition-colors hover:text-accent" href={`mailto:${profile.email}`}>
-              email
+            <a className="link-sweep text-muted transition-colors hover:text-accent" href={profile.linkedin} target="_blank" rel="noopener" data-goatcounter-click="linkedin">
+              linkedin ↗<span className="sr-only"> (opens in new tab)</span>
             </a>
           </div>
         </div>

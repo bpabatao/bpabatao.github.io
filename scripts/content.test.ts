@@ -37,3 +37,15 @@ test("a Practices group exists and is resume-only", () => {
   const practices = stackGroups.find((g) => g.title === "Practices");
   assert.equal(practices?.resumeOnly, true);
 });
+
+test("hero availability line carries remote, CET and the markets", () => {
+  assert.equal(profile.markets, "US and EU teams");
+  assert.equal(profile.availabilityLine, "Open to Staff / Lead platform roles · Remote from Italy (CET), async-first · US and EU teams");
+  assert.ok(profile.availabilityLine.endsWith(profile.markets));
+});
+
+test("stack items name each technology once", () => {
+  const items = stackGroups.flatMap((g) => g.items.flatMap((i) => i.split(/\s*(?:·|,|\s-\s)\s*/)));
+  assert.ok(!items.includes("Bedrock"), "bare Bedrock duplicates AWS Bedrock (Claude)");
+  assert.ok(!items.includes("WAF"), "bare WAF duplicates WAFv2");
+});
