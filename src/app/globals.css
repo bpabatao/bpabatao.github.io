@@ -346,3 +346,49 @@ h3 {
     transition-duration: 0.01ms !important;
   }
 }
+
+/* Print: light, quiet, everything expanded - the resume PDF stays the primary document */
+@media print {
+  :root {
+    --bg: #ffffff;
+    --surface: #ffffff;
+    --surface-2: #f2f2f2;
+    --line: #d0d0d0;
+    --ink: #000000;
+    --body: #222222;
+    --muted: #555555;
+    --accent: #b33d00;
+    --accent-contrast: #ffffff;
+    --ok: #15803d;
+    color-scheme: light;
+  }
+  header,
+  .scroll-progress,
+  .hero-grid,
+  .mobile-menu,
+  [popovertarget],
+  button {
+    display: none !important;
+  }
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  a[href^="http"]::after {
+    content: " (" attr(href) ")";
+    font-size: 0.8em;
+    color: var(--muted);
+  }
+  section,
+  article,
+  details {
+    break-inside: avoid;
+  }
+  .sr-only {
+    display: none !important;
+  }
+}

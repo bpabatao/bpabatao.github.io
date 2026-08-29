@@ -34,6 +34,8 @@ export const viewport: Viewport = {
 
 /* Dark-first by design - light is an explicit opt-in via the toggle */
 const themeInit = `try{if(localStorage.getItem("theme")==="light")document.documentElement.classList.add("light")}catch(e){}`;
+const printInit = `window.addEventListener("beforeprint",()=>{document.querySelectorAll("details").forEach(d=>{d.open=true})})`;
+const goatcounter = process.env.NEXT_PUBLIC_GOATCOUNTER_CODE;
 
 const jsonLd = {
   "@context": "https://schema.org",
@@ -50,6 +52,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
     <html lang="en" suppressHydrationWarning className={`${clash.variable} ${satoshi.variable} ${jetbrains.variable}`}>
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeInit }} />
+        <script dangerouslySetInnerHTML={{ __html: printInit }} />
       </head>
       <body>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
@@ -57,6 +60,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <Header />
         {children}
         <Footer />
+        {goatcounter && <script data-goatcounter={`https://${goatcounter}.goatcounter.com/count`} async src="/gc/count.js" />}
       </body>
     </html>
   );
