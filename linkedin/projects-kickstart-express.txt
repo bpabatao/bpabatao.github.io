@@ -4,4 +4,3 @@ Oct 2018 - Mar 2019
 Associated with: Halcyon Digital Media Design
 
 Package delivery mobile and web app for customers and riders, published on Google Play (Ionic, Adonis, AWS, Socket.io).
-https://play.google.com/store/apps/details?id=com.topserve.kickstart

@@ -359,14 +359,12 @@ export const earlierProjects: SecondaryProject[] = [
   {
     title: "Kickstart Express",
     description: "Package delivery mobile and web app for customers and riders, published on Google Play (Ionic, Adonis, AWS, Socket.io).",
-    url: "https://play.google.com/store/apps/details?id=com.topserve.kickstart",
     period: { start: "2018-10", end: "2019-03" },
     jobId: "halcyon",
   },
   {
     title: "Luckyah",
     description: "E-commerce marketplace app with raffles, messaging and a wallet on Android and iOS, published on Google Play (Ionic, Adonis, Socket.io).",
-    url: "https://play.google.com/store/apps/details?id=com.luckyah.app",
     period: { start: "2018-04", end: "2019-03" },
     jobId: "halcyon",
   },
