@@ -1,0 +1,6 @@
+# updated 2026-08-28 - paste into LinkedIn > Projects > Soon Beng Huat Metal and Hardware Trading
+Soon Beng Huat Metal and Hardware Trading
+Apr 2019 - Feb 2020
+Associated with: Zencomputes
+
+Web application for buying and selling metal scrap (React, Express).

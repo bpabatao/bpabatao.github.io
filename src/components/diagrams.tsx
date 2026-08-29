@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { fleetPortals } from "@/data/content";
 
 /* Animated architecture diagrams. Packets ride CSS offset-path (globals.css);
    they are drawn before the boxes so they visibly enter and leave nodes. */
@@ -69,22 +70,23 @@ function Line({ d }: { d: string }) {
   return <path d={d} fill="none" stroke="var(--line)" strokeWidth={1} />;
 }
 
-const TENANTS = ["delta", "mvu", "nep", "delco", "alexrenew", "carmel", "aruba", "[client]"];
+const TENANTS = fleetPortals.map((t) => t.key);
+const LAST_X = 42 + (TENANTS.length - 1) * 78;
 
 export function CoreApiDiagram() {
   return (
-    <svg viewBox="0 0 640 288" role="img" aria-label="Eight tenant portals connect through the core API to Oracle CCS over OAuth 2.0" className="block w-full">
+    <svg viewBox="0 0 640 288" role="img" aria-label={`${TENANTS.length} tenant portals connect through the core API to Oracle CCS over OAuth 2.0`} className="block w-full">
       {/* connectors first, packets under boxes */}
       {TENANTS.map((_, i) => (
         <Line key={i} d={`M${42 + i * 78} 40 V64`} />
       ))}
-      <Line d="M42 64 H588" />
+      <Line d={`M42 64 H${LAST_X}`} />
       <Line d="M320 64 V96" />
       <Line d="M320 184 V232" />
 
       <Packet d="M42 40 V64 H320 V96" dur="3.2s" />
       <Packet d="M432 40 V64 H320 V96" dur="3.2s" delay="1.1s" />
-      <Packet d="M588 40 V64 H320 V96" dur="3.2s" delay="2.2s" />
+      <Packet d={`M${LAST_X} 40 V64 H320 V96`} dur="3.2s" delay="2.2s" />
       <Packet d="M320 184 V232" dur="1.8s" delay="0.5s" />
       <circle
         r={3.5}
@@ -130,7 +132,6 @@ export function CoreApiDiagram() {
 }
 
 const RESOURCES = ["cognito · ecs fargate · cloudfront · wafv2", "route 53 · elasticache · kms · secrets manager"];
-const FLEET = ["delta", "mvu", "nep", "delco", "alexrenew", "carmel", "aruba"];
 
 export function ControlPlaneDiagram() {
   return (
@@ -138,7 +139,7 @@ export function ControlPlaneDiagram() {
       <Line d="M320 68 V100" />
       <Line d="M320 172 V196" />
       <Line d="M80 196 H560" />
-      {FLEET.map((_, i) => (
+      {TENANTS.map((_, i) => (
         <Line key={i} d={`M${80 + i * 80} 196 V220`} />
       ))}
 
@@ -168,7 +169,7 @@ export function ControlPlaneDiagram() {
         </Label>
       </Box>
 
-      {FLEET.map((t, i) => (
+      {TENANTS.map((t, i) => (
         <Box key={t} x={44 + i * 80} y={220} w={72} h={28}>
           <Label x={80 + i * 80} y={235} size={8.5} color="var(--body)">
             {t}

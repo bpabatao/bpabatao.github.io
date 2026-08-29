@@ -1,8 +1,10 @@
+import { profile } from "@/data/content";
+
 export function Footer() {
   return (
     <footer className="border-t border-line">
       <div className="mx-auto flex w-full max-w-5xl flex-wrap items-center justify-between gap-2 px-6 py-6 font-mono text-xs text-muted">
-        <span>© 2026 Benedict Pabatao</span>
+        <span>© {new Date().getFullYear()} {profile.name}</span>
         <span>
           next.js · github pages ·{" "}
           <a

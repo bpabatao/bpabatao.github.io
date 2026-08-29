@@ -9,15 +9,14 @@ import "./globals.css";
 export const metadata: Metadata = {
   metadataBase: new URL(profile.siteUrl),
   title: {
-    default: "Benedict Pabatao - Lead Platform Engineer",
-    template: "%s - Benedict Pabatao",
+    default: `${profile.name} - ${profile.role}`,
+    template: `%s - ${profile.name}`,
   },
-  description:
-    "Lead Platform Engineer. 8+ years in software, 5+ on AWS. Terraform control-plane, multi-tenant APIs, and AI-augmented tooling - owned end to end.",
+  description: profile.summary.split(". ")[0] + ".",
   alternates: { canonical: "/" },
   openGraph: {
-    title: "Benedict Pabatao - Lead Platform Engineer",
-    description: "I build the platform other engineers ship on.",
+    title: `${profile.name} - ${profile.role}`,
+    description: `${profile.thesis.lead} ${profile.thesis.tail} ${profile.thesis.accent}`,
     url: profile.siteUrl,
     siteName: "Benedict Pabatao",
     images: ["/og.png"],

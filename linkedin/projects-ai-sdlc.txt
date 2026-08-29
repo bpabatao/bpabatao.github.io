@@ -1,0 +1,6 @@
+# updated 2026-08-28 - paste into LinkedIn > Projects > AI-Augmented SDLC
+AI-Augmented SDLC
+Bedrock auto-remediation that opens fix PRs, a Claude reviewer in CI, and an agentic ticket-to-PR pipeline where humans keep every approval gate.
+Ownership: SOLE AUTHOR
+Stack: AWS Bedrock, Claude, GitHub, Jira
+https://bpabatao.github.io/case/ai-sdlc/

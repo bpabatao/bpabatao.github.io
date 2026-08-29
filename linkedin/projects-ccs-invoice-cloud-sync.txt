@@ -1,0 +1,5 @@
+# updated 2026-08-28 - paste into LinkedIn > Projects > CCS ↔ Invoice Cloud Sync
+CCS ↔ Invoice Cloud Sync
+Associated with: ESC Partners / HometownHUB
+
+Batch pipeline syncing multi-account customers in 5K-record batches - idempotent, tracked, self-reporting.
