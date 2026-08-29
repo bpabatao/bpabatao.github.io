@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { cases } from "@/data/cases";
+import { profile } from "@/data/content";
 import { AiSdlcDiagram, ControlPlaneDiagram, CoreApiDiagram } from "@/components/diagrams";
 
 const diagrams = {
@@ -9,6 +10,8 @@ const diagrams = {
   "control-plane": ControlPlaneDiagram,
   "ai-sdlc": AiSdlcDiagram,
 } as const;
+
+const headingId = (heading: string) => `${heading.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "")}-heading`;
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -28,7 +31,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title: cs.title,
     description: cs.subtitle,
     alternates: { canonical: url },
-    openGraph: { url, title: cs.title, description: cs.subtitle, images: [image], type: "article" },
+    openGraph: { url, title: cs.title, description: cs.subtitle, images: [image], type: "article", siteName: profile.name },
     twitter: { card: "summary_large_image", title: cs.title, description: cs.subtitle, images: [image] },
   };
 }
@@ -73,8 +76,8 @@ export default async function CasePage({ params }: Props) {
       </div>
 
       {cs.sections.map((section) => (
-        <section key={section.heading} className="mt-12">
-          <h2 className="font-display text-2xl font-semibold tracking-tight text-ink">{section.heading}</h2>
+        <section key={section.heading} aria-labelledby={headingId(section.heading)} className="mt-12">
+          <h2 id={headingId(section.heading)} className="font-display text-2xl font-semibold tracking-tight text-ink">{section.heading}</h2>
           {section.paragraphs.map((p) => (
             <p key={p.slice(0, 32)} className="mt-4 leading-relaxed">
               {p}
@@ -83,8 +86,8 @@ export default async function CasePage({ params }: Props) {
         </section>
       ))}
 
-      <section className="mt-12">
-        <h2 className="font-display text-2xl font-semibold tracking-tight text-ink">Outcome</h2>
+      <section aria-labelledby="outcome-heading" className="mt-12">
+        <h2 id="outcome-heading" className="font-display text-2xl font-semibold tracking-tight text-ink">Outcome</h2>
         <ul className="mt-4 space-y-2.5">
           {cs.outcomes.map((o) => (
             <li key={o} className="flex gap-3 leading-relaxed">

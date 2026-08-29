@@ -85,7 +85,7 @@ export function Projects() {
                   href={p.url}
                   target="_blank"
                   rel="noopener"
-                  className="font-mono text-xs break-all text-muted transition-colors hover:text-accent"
+                  className="no-print-url font-mono text-xs break-all text-muted transition-colors hover:text-accent"
                 >
                   {p.url.replace("https://", "")} ↗<span className="sr-only"> (opens in new tab)</span>
                 </a>
