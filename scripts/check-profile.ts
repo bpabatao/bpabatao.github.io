@@ -7,6 +7,7 @@ import { cases } from "../src/data/cases.ts";
 import { plainText } from "../src/lib/format.ts";
 import { LIMITS, bodyOf, buildLinkedinPack } from "./render-linkedin.ts";
 import { pdfPageCount, renderHtml } from "./render-resume.ts";
+import { cardInputs, pngSize } from "./render-og.ts";
 import { buildResumeModel } from "./resume-model.ts";
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
@@ -108,6 +109,18 @@ function main(argv: string[]): void {
 
   const committed = resolve(ROOT, "resume/resume.html");
   if (existsSync(committed) && readFileSync(committed, "utf8") !== html) problems.push("resume/resume.html is stale - run npm run render");
+  const ogSource = resolve(ROOT, "resume/og-source.json");
+  const ogWant = JSON.stringify(cardInputs(), null, 2) + "\n";
+  if (!existsSync(ogSource) || readFileSync(ogSource, "utf8") !== ogWant) problems.push("og cards stale - run npm run render");
+  for (const c of cardInputs()) {
+    const cardFile = resolve(ROOT, "public", c.file);
+    if (!existsSync(cardFile)) problems.push(`missing share card public/${c.file} - run npm run render`);
+    else {
+      const { width, height } = pngSize(readFileSync(cardFile));
+      if (width !== 1200 || height !== 630) problems.push(`share card public/${c.file} is ${width}x${height}, expected 1200x630 - run npm run render`);
+    }
+  }
+  if (!existsSync(resolve(ROOT, "public/favicon.ico"))) problems.push("missing public/favicon.ico - run npm run render");
   const pdf = resolve(ROOT, "public/resume.pdf");
   if (existsSync(pdf) && pdfPageCount(readFileSync(pdf)) > 2) problems.push("public/resume.pdf has more than 2 pages");
 

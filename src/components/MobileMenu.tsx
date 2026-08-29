@@ -33,9 +33,10 @@ export function MobileMenu({ links }: { links: readonly { href: string; label: s
           target="_blank"
           rel="noopener"
           onClick={close}
+          data-goatcounter-click="resume"
           className="block border-t border-line px-3 py-2.5 font-mono text-sm text-accent"
         >
-          resume.pdf ↗
+          resume.pdf ↗<span className="sr-only"> (opens in new tab)</span>
         </a>
       </div>
     </div>

@@ -4,9 +4,9 @@ import { SectionHeading } from "./SectionHeading";
 
 export function StackGrid() {
   return (
-    <section id="stack" className="border-t border-line">
+    <section id="stack" aria-labelledby="stack-heading" className="border-t border-line">
       <div className="mx-auto w-full max-w-5xl px-6 py-20">
-        <SectionHeading title="Capabilities" annotation="cloud → frontend" />
+        <SectionHeading id="stack" title="Capabilities" annotation="cloud → frontend" />
         <Reveal>
           {/* one ruled grid, not a card wall - hairlines come from the gap-px line bg */}
           <div className="grid gap-px border border-line bg-line sm:grid-cols-2 md:grid-cols-4">
