@@ -70,3 +70,19 @@ test("each case page owns its canonical and share card", () => {
     assert.ok(html.includes('name="twitter:card" content="summary_large_image"'), `${c.slug} twitter card`);
   }
 });
+
+test("analytics script is vendored and absent without the env var", () => {
+  assert.ok(!home.includes("gc.zgo.at"), "never load the counter from the CDN");
+  if (process.env.NEXT_PUBLIC_GOATCOUNTER_CODE) {
+    assert.ok(home.includes(`https://${process.env.NEXT_PUBLIC_GOATCOUNTER_CODE}.goatcounter.com/count`));
+    assert.ok(home.includes('src="/gc/count.js"'));
+  } else {
+    assert.ok(!home.includes("goatcounter"));
+  }
+});
+
+test("print rules and beforeprint hook ship", () => {
+  const css = readFileSync(resolve(ROOT, "src/app/globals.css"), "utf8");
+  assert.ok(css.includes("@media print"));
+  assert.ok(home.includes("beforeprint"));
+});

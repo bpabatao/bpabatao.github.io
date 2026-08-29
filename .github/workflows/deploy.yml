@@ -26,6 +26,8 @@ jobs:
       - run: npm ci
       - run: npm run check -- --ci
       - run: npm run build
+        env:
+          NEXT_PUBLIC_GOATCOUNTER_CODE: ${{ vars.NEXT_PUBLIC_GOATCOUNTER_CODE }}
       - uses: actions/upload-pages-artifact@v3
         with:
           path: out
