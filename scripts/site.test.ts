@@ -60,3 +60,13 @@ test("fonts ship as woff2 only", () => {
   assert.ok(!existsSync(resolve(ROOT, "src/fonts/Satoshi-Variable.ttf")));
   assert.ok(existsSync(resolve(ROOT, "src/fonts/Satoshi-Variable.woff2")));
 });
+
+test("each case page owns its canonical and share card", () => {
+  for (const c of cases) {
+    const html = readFileSync(resolve(ROOT, `out/case/${c.slug}/index.html`), "utf8");
+    assert.ok(html.includes(`<link rel="canonical" href="${profile.siteUrl}/case/${c.slug}/"`), `${c.slug} canonical`);
+    assert.ok(html.includes(`property="og:image" content="${profile.siteUrl}/og/${c.slug}.png"`), `${c.slug} og:image`);
+    assert.ok(html.includes(`property="og:url" content="${profile.siteUrl}/case/${c.slug}/"`), `${c.slug} og:url`);
+    assert.ok(html.includes('name="twitter:card" content="summary_large_image"'), `${c.slug} twitter card`);
+  }
+});
