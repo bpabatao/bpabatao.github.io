@@ -280,3 +280,99 @@ export function AiSdlcDiagram() {
     </svg>
   );
 }
+
+export function NmblrDiagram() {
+  return (
+    <svg
+      viewBox="0 0 640 288"
+      role="img"
+      aria-label="A DMMF-driven clone engine copies a finalised strategy, and a dependency registry cascades archive and restore across dependent entities"
+      className="block w-full"
+    >
+      {/* clone row */}
+      <Line d="M174 36 H245" />
+      <Line d="M395 36 H466" />
+      <Line d="M320 56 V100" />
+      {/* cascade bus */}
+      <Line d="M320 156 V190" />
+      <Line d="M100 190 H540" />
+      <Line d="M100 190 V224" />
+      <Line d="M320 190 V224" />
+      <Line d="M540 190 V224" />
+
+      <Packet d="M174 36 H245" dur="1.6s" />
+      <Packet d="M395 36 H466" dur="1.6s" delay="0.8s" />
+      <Packet d="M320 56 V100" dur="1.4s" delay="1.6s" />
+      <Packet d="M320 156 V190 H100 V224" dur="2.4s" delay="0.2s" />
+      <Packet d="M320 156 V190 H320 V224" dur="2.4s" delay="0.9s" />
+      <Packet d="M320 156 V190 H540 V224" dur="2.4s" delay="1.6s" />
+      <circle
+        r={3.5}
+        fill="var(--ok)"
+        className="packet"
+        style={{ offsetPath: 'path("M100 224 V190 H320 V156")', animationDuration: "2.4s", animationDelay: "2.3s" }}
+      />
+
+      <Box x={24} y={16} w={150} h={40}>
+        <Label x={99} y={31} size={10.5} color="var(--ink)" weight={600}>
+          finalised strategy
+        </Label>
+        <Label x={99} y={45} size={9}>
+          the source of truth
+        </Label>
+      </Box>
+
+      <Box x={245} y={16} w={150} h={40}>
+        <Label x={320} y={31} size={10.5} color="var(--ink)" weight={600}>
+          clone engine
+        </Label>
+        <Label x={320} y={45} size={9} color="var(--accent)">
+          walks prisma dmmf
+        </Label>
+      </Box>
+
+      <Box x={466} y={16} w={150} h={40}>
+        <Label x={541} y={31} size={10.5} color="var(--ink)" weight={600}>
+          new strategy
+        </Label>
+        <Label x={541} y={45} size={9}>
+          schema-complete copy
+        </Label>
+      </Box>
+
+      <Box x={220} y={100} w={200} h={56}>
+        <Label x={320} y={118} size={12} color="var(--ink)" weight={600}>
+          dependency registry
+        </Label>
+        <Label x={320} y={136} size={9.5}>
+          warns before archive or delete
+        </Label>
+        <Label x={320} y={148} size={9.5}>
+          graphql contract + resolver
+        </Label>
+      </Box>
+
+      <Label x={334} y={176} size={9} color="var(--accent)" anchor="start">
+        archive cascades
+      </Label>
+      <Label x={306} y={176} size={9} color="var(--ok)" anchor="end">
+        restore returns
+      </Label>
+
+      {[
+        { x: 30, cx: 100, label: "belief shift" },
+        { x: 250, cx: 320, label: "narrative" },
+        { x: 470, cx: 540, label: "landscape recap" },
+      ].map((e) => (
+        <Box key={e.label} x={e.x} y={224} w={140} h={40}>
+          <Label x={e.cx} y={239} size={10.5} color="var(--ink)" weight={600}>
+            {e.label}
+          </Label>
+          <Label x={e.cx} y={253} size={9}>
+            per-group finalise
+          </Label>
+        </Box>
+      ))}
+    </svg>
+  );
+}

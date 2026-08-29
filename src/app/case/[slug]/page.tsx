@@ -3,12 +3,13 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { cases } from "@/data/cases";
 import { profile } from "@/data/content";
-import { AiSdlcDiagram, ControlPlaneDiagram, CoreApiDiagram } from "@/components/diagrams";
+import { AiSdlcDiagram, ControlPlaneDiagram, CoreApiDiagram, NmblrDiagram } from "@/components/diagrams";
 
 const diagrams = {
   "core-api": CoreApiDiagram,
   "control-plane": ControlPlaneDiagram,
   "ai-sdlc": AiSdlcDiagram,
+  "nmblr": NmblrDiagram,
 } as const;
 
 const headingId = (heading: string) => `${heading.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "")}-heading`;
