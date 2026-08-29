@@ -7,12 +7,12 @@ import { cases } from "../src/data/cases.ts";
 import { profile } from "../src/data/content.ts";
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
+if (!existsSync(resolve(ROOT, "out/index.html"))) throw new Error("out/index.html missing - run npm run build first");
 const home = readFileSync(resolve(ROOT, "out/index.html"), "utf8");
 const order = (ids: string[]) => ids.map((id) => home.indexOf(`id="${id}"`));
-
-test("built home page exists", () => {
-  assert.ok(existsSync(resolve(ROOT, "out/index.html")), "run npm run build first");
-});
+const escapeRe = (s: string) => s.replace(/[.*+?^${}()|[\]\\/]/g, "\\$&");
+const hasTag = (html: string, tag: string, attrs: Record<string, string>) =>
+  new RegExp(`<${tag}\\b` + Object.entries(attrs).map(([k, v]) => `(?=[^>]*\\b${k}="${escapeRe(v)}")`).join("") + "[^>]*>").test(html);
 
 test("sections appear in the recruiter order", () => {
   const pos = order(["projects", "work", "approach", "stack", "contact"]);
@@ -64,10 +64,10 @@ test("fonts ship as woff2 only", () => {
 test("each case page owns its canonical and share card", () => {
   for (const c of cases) {
     const html = readFileSync(resolve(ROOT, `out/case/${c.slug}/index.html`), "utf8");
-    assert.ok(html.includes(`<link rel="canonical" href="${profile.siteUrl}/case/${c.slug}/"`), `${c.slug} canonical`);
-    assert.ok(html.includes(`property="og:image" content="${profile.siteUrl}/og/${c.slug}.png"`), `${c.slug} og:image`);
-    assert.ok(html.includes(`property="og:url" content="${profile.siteUrl}/case/${c.slug}/"`), `${c.slug} og:url`);
-    assert.ok(html.includes('name="twitter:card" content="summary_large_image"'), `${c.slug} twitter card`);
+    assert.ok(hasTag(html, "link", { rel: "canonical", href: `${profile.siteUrl}/case/${c.slug}/` }), `${c.slug} canonical`);
+    assert.ok(hasTag(html, "meta", { property: "og:image", content: `${profile.siteUrl}/og/${c.slug}.png` }), `${c.slug} og:image`);
+    assert.ok(hasTag(html, "meta", { property: "og:url", content: `${profile.siteUrl}/case/${c.slug}/` }), `${c.slug} og:url`);
+    assert.ok(hasTag(html, "meta", { name: "twitter:card", content: "summary_large_image" }), `${c.slug} twitter card`);
   }
 });
 

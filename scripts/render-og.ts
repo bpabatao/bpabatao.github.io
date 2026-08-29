@@ -64,7 +64,7 @@ h1 span { color: #ff5500; }
 <div class="kicker">${c.kicker.startsWith("OPERATIONAL") ? `<b>OPERATIONAL</b>${esc(c.kicker.slice("OPERATIONAL".length))}` : esc(c.kicker)}</div>
 <h1>${esc(c.title)}${c.accent ? ` <span>${esc(c.accent)}</span>` : ""}</h1>
 <div class="body">${esc(c.body)}</div>
-<div class="foot">${c.foot.split(/\s+·\s+/).map((s) => `<span>${esc(s)}</span>`).join(" · ")}</div>
+<div class="foot">${c.foot.split(/\s+·\s+/).map((s, i) => `<span>${i ? "· " : ""}${esc(s)}</span>`).join(" ")}</div>
 </div></body></html>`;
 }
 
@@ -101,7 +101,7 @@ function main(argv: string[]): void {
   const source = resolve(ROOT, "resume/og-source.json");
   const previous = existsSync(source) ? readFileSync(source, "utf8") : "";
   const next = JSON.stringify(cards, null, 2) + "\n";
-  const allPresent = cards.every((c) => existsSync(resolve(ROOT, "public", c.file)));
+  const allPresent = cards.every((c) => existsSync(resolve(ROOT, "public", c.file))) && existsSync(resolve(ROOT, "public/favicon.ico"));
   if (previous === next && allPresent && !argv.includes("--force")) {
     console.log("og cards up to date");
     return;
@@ -115,7 +115,7 @@ function main(argv: string[]): void {
     console.log(`wrote public/${c.file}`);
   }
   const favicon = resolve(ROOT, "public/favicon.ico");
-  if (!existsSync(favicon)) {
+  if (!existsSync(favicon) || argv.includes("--force")) {
     /* Chrome's --screenshot flag rejects a .ico extension outright; render PNG bytes, then commit them under the .ico name. */
     const faviconPng = resolve(ROOT, "public/favicon.ico.png");
     if (screenshot(faviconHtml(), faviconPng, 32, 32)) {

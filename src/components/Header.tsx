@@ -2,6 +2,7 @@ import Link from "next/link";
 import { MobileMenu } from "./MobileMenu";
 import { ThemeToggle } from "./ThemeToggle";
 
+/* Labels read for recruiters; ids stay stable for deep links (#projects is "work", #work is "experience") */
 const nav = [
   { href: "/#projects", label: "work" },
   { href: "/#work", label: "experience" },

@@ -113,7 +113,7 @@ Print:
 - The resume PDF remains the primary document; this only makes a printed home page readable.
 
 Analytics (GoatCounter):
-- `layout.tsx` renders `<script data-goatcounter="https://<code>.goatcounter.com/count" async src="//gc.zgo.at/count.js">` only when `NEXT_PUBLIC_GOATCOUNTER_CODE` is set at build time; local builds and CI builds without the variable ship no script.
+- `layout.tsx` renders `<script data-goatcounter="https://<code>.goatcounter.com/count" async src="/gc/count.js">` only when `NEXT_PUBLIC_GOATCOUNTER_CODE` is set at build time; `public/gc/count.js` is GoatCounter's ISC-licensed `count.js`, vendored (sha256 recorded in the commit that added it) so no third-party script ever executes; local builds and CI builds without the variable ship no script.
 - Click events via `data-goatcounter-click`: `resume` (hero and Contact resume links), `email` (hero button and Contact email), `linkedin` (hero and Contact), `case-<slug>` on each case-study link.
 - No cookies, no personal data, no consent banner.
 - Prerequisite Benedict owns: create the free GoatCounter account, choose the code, add it as a repository variable for the deploy workflow (`NEXT_PUBLIC_GOATCOUNTER_CODE`) and locally when wanted.
@@ -154,7 +154,7 @@ Wording:
 - New tests: `render-og.test.ts` (card HTML carries `profile.role`, the derived tenant count and every case slug; PNG header parses to 1200x630), `content.test.ts` extended for the two new fields, a metadata test rendering `generateMetadata` per slug asserting canonical and `og:image`.
 - Lighthouse floor on the built `out/` served locally: mobile >= 97, desktop 100, accessibility 100, `label-content-name-mismatch` absent.
 - After deploy: `/og.png` and `/og/<slug>.png` return 200 at 1200x630; each case page's HTML carries its own canonical and `og:image`.
-- Analytics: `grep gc.zgo.at out/index.html` empty without the variable and present with it; the click attributes present exactly where section 6 lists them.
+- Analytics: `grep gc.zgo.at out/index.html` is always empty; `grep 'src="/gc/count.js"' out/index.html` is empty without the variable and present with it; the click attributes present exactly where section 6 lists them.
 - Print: Chrome `--print-to-pdf` of the built home page, one PDF for Benedict to eyeball.
 - profile-sync regression: `npm run render && npm run check` twice in a row leaves the tree clean.
 

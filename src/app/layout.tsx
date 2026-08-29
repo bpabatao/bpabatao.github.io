@@ -18,7 +18,7 @@ export const metadata: Metadata = {
     title: `${profile.name} - ${profile.role}`,
     description: `${profile.thesis.lead} ${profile.thesis.tail} ${profile.thesis.accent}`,
     url: profile.siteUrl,
-    siteName: "Benedict Pabatao",
+    siteName: profile.name,
     images: ["/og.png"],
     type: "website",
   },
@@ -34,7 +34,7 @@ export const viewport: Viewport = {
 
 /* Dark-first by design - light is an explicit opt-in via the toggle */
 const themeInit = `try{if(localStorage.getItem("theme")==="light")document.documentElement.classList.add("light")}catch(e){}`;
-const printInit = `window.addEventListener("beforeprint",()=>{document.querySelectorAll("details").forEach(d=>{d.open=true})})`;
+const printInit = `(()=>{let o=[];window.addEventListener("beforeprint",()=>{o=[...document.querySelectorAll("details:not([open])")];o.forEach(d=>{d.open=true})});window.addEventListener("afterprint",()=>{o.forEach(d=>{d.open=false});o=[]})})()`;
 const goatcounter = process.env.NEXT_PUBLIC_GOATCOUNTER_CODE;
 
 const jsonLd = {

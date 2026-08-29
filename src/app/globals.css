@@ -379,7 +379,7 @@ h3 {
     opacity: 1 !important;
     transform: none !important;
   }
-  a[href^="http"]::after {
+  a[href^="http"]:not(.no-print-url)::after {
     content: " (" attr(href) ")";
     font-size: 0.8em;
     color: var(--muted);
