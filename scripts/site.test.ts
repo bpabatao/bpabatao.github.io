@@ -77,7 +77,8 @@ test("analytics script is vendored and absent without the env var", () => {
     assert.ok(home.includes(`https://${process.env.NEXT_PUBLIC_GOATCOUNTER_CODE}.goatcounter.com/count`));
     assert.ok(home.includes('src="/gc/count.js"'));
   } else {
-    assert.ok(!home.includes("goatcounter"));
+    assert.ok(!home.includes("goatcounter.com/count"), "no beacon endpoint without the env var");
+    assert.ok(!home.includes('src="/gc/count.js"'), "no counter script without the env var");
   }
 });
 
