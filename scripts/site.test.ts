@@ -87,3 +87,13 @@ test("print rules and beforeprint hook ship", () => {
   assert.ok(css.includes("@media print"));
   assert.ok(home.includes("beforeprint"));
 });
+
+test("share cards declare their size, alt text and type so unfurlers do not guess", () => {
+  const pages = [home, ...cases.map((c) => readFileSync(resolve(ROOT, `out/case/${c.slug}/index.html`), "utf8"))];
+  for (const html of pages) {
+    assert.ok(hasTag(html, "meta", { property: "og:image:width", content: "1200" }), "og:image:width");
+    assert.ok(hasTag(html, "meta", { property: "og:image:height", content: "630" }), "og:image:height");
+    assert.ok(hasTag(html, "meta", { property: "og:image:type", content: "image/png" }), "og:image:type");
+    assert.match(html, /property="og:image:alt" content="[^"]+"/, "og:image:alt is present and non-empty");
+  }
+});
