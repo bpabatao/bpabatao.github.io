@@ -174,4 +174,124 @@ export const cases: CaseStudy[] = [
       "Cloning survives schema change: the model metadata drives the copy, so new fields travel without new code.",
     ],
   },
+  {
+    slug: "ccs-kb",
+    title: "CCS Knowledge Base Agent",
+    subtitle:
+      "A retrieval agent over utility billing systems that answers from curated documentation first and only reaches for generated SQL behind a flag.",
+    meta: {
+      role: "Sole author",
+      period: "2026",
+      ownership: "Sole author",
+      stack: ["AWS Bedrock", "RetrieveAndGenerate", "Fargate", "S3", "Oracle CCS", "TypeScript"],
+    },
+    sections: [
+      {
+        heading: "Problem",
+        paragraphs: [
+          "Answering a question about a utility account meant knowing which of several tenant systems held the answer, which schema it used, and which of its account types applied. That knowledge lived with a handful of people, and the questions arrived constantly.",
+          "A language model over the data is the obvious idea and the dangerous one. On billing records the failure mode is not a bad sentence, it is a confident wrong number, or a claim that something does not exist when the query simply missed it.",
+        ],
+      },
+      {
+        heading: "Constraints",
+        paragraphs: [
+          "The corpus describes real customers, including person identifiers such as SSN fields, so the schema had to be modelled explicitly rather than left for the model to infer. Tenants must never see each other's data, and an answer that cannot be grounded has to say so instead of guessing.",
+        ],
+      },
+      {
+        heading: "Architecture",
+        paragraphs: [
+          "Curated first. Questions route through Bedrock's RetrieveAndGenerate over a curated corpus - an account-type catalog covering collective, secondary, usage, registration and service states - and answers cite the source they came from, with a badge marking whether that source is authoritative for the environment being asked about.",
+          "Generated SQL is the fallback, not the default. It sits behind an environment flag and a separate grantable permission, so a deployment can run the agent with the SQL path entirely off. A source selector lets the asker choose documentation, live data, or automatic.",
+          "The guardrails are the product. The prompt forbids claiming absence - the model may not say a thing does not exist merely because a lookup returned nothing - and is guarded against inventing terms, confusing environments, or mislabelling a count column. Tenant routing is explicit, scoped per tenant family, so a question can only reach the data it is entitled to.",
+          "The corpus does not go stale: a scheduled Fargate task refreshes it, with the task role scoped to exactly the S3 and Bedrock actions that refresh needs.",
+        ],
+      },
+    ],
+    outcomes: [
+      "Answers arrive with citations and an authoritative-source badge, so a reader can tell grounded fact from generated text.",
+      "The generated-SQL path ships off by default and turns on per environment behind its own permission.",
+      "The agent refuses to claim something is absent - the failure mode that quietly misleads is the one it is built to avoid.",
+    ],
+  },
+  {
+    slug: "observability",
+    title: "Observability & Accountability",
+    subtitle:
+      "The platform that makes a small team's fleet legible: who did what, which accounts look wrong, and what an incident actually cost.",
+    meta: {
+      role: "Sole author",
+      period: "2026",
+      ownership: "Sole author",
+      stack: ["MongoDB", "Datadog", "CloudWatch", "WAFv2", "Fastify", "React"],
+    },
+    sections: [
+      {
+        heading: "Problem",
+        paragraphs: [
+          "A fleet of tenant portals produced plenty of logs and very little answerable truth. Which admin changed that account? Is this login pattern normal? Is that error rate real or is it the same benign auth failure counted a thousand times? Every question meant someone reading raw streams.",
+        ],
+      },
+      {
+        heading: "Constraints",
+        paragraphs: [
+          "Utility customer data, so retention and access are not free choices. The dashboard had to be usable during an incident by whoever was on call, not only by its author, and it had to run inside the same cost envelope as everything else on the platform.",
+        ],
+      },
+      {
+        heading: "Architecture",
+        paragraphs: [
+          "Capture is universal: a wrapper records calls out to identity, mail, payment and billing providers alike, so an event exists whether the failure was ours or theirs, with payloads deep-redacted so tokens and provider passwords never reach the store.",
+          "Accountability is tiered. Admin writes record which fields actually changed and are kept for a year; admin reads and impersonated sessions are captured too, attributed to the acting admin, and kept for ninety days. The tiers are deliberate - the trail that answers 'who changed this' outlives the one that answers 'who looked'.",
+          "Signal beats volume: benign authentication failures, account lockouts and revoked tokens are folded into an expected class so the error rate means something, an account-to-IP fan-out view surfaces anomalies, and an alert fires on the email-reversal pattern that precedes account takeover. Per-pattern batch analysis replaced per-event analysis so the AI spend tracks patterns, not traffic.",
+          "It stays fast under load: a composite index on tenant, environment, user and timestamp cut the sessions view 43x, and Bedrock spend is attributed to its own client in the cost dashboard so AI cost is visible next to everything else.",
+        ],
+      },
+    ],
+    outcomes: [
+      "Every admin action, read or write, is attributable to the person who took it.",
+      "The error rate reflects real failures, and account anomalies surface as a view instead of a hunch.",
+      "One index took the busiest view from slow to instant, and AI spend is attributed rather than absorbed.",
+    ],
+  },
+  {
+    slug: "identity",
+    title: "Identity & Access",
+    subtitle:
+      "Closing the paths that let someone reach an account that was not theirs - at the front door, in the browser, and in the console.",
+    meta: {
+      role: "Primary author",
+      period: "2026",
+      ownership: "Primary author",
+      stack: ["AWS Cognito", "Oracle CCS", "Terraform", "IAM", "Fastify", "TypeScript"],
+    },
+    sections: [
+      {
+        heading: "Problem",
+        paragraphs: [
+          "Three separate ways existed to end up somewhere you should not be. Identity verification at registration matched on data thin enough to hit the wrong person. The browser held credentials to talk to the identity provider directly. And engineer and pipeline access to AWS had grown by accretion rather than design.",
+        ],
+      },
+      {
+        heading: "Constraints",
+        paragraphs: [
+          "Real utility customers register through this flow, so a fix that locks out legitimate people is not a fix. The portals are multi-tenant and the same identity plumbing serves all of them, which means a change lands everywhere at once.",
+        ],
+      },
+      {
+        heading: "Architecture",
+        paragraphs: [
+          "At the front door: an identity-verification gap that enabled account takeover was closed - wrong-person matches on roughly 2.4% of accounts fixed, attempt lockout added, and ZIP-based disambiguation put in front of the brute-forceable last-four space.",
+          "In the browser: direct client-side access to the identity provider was removed, so email and password changes go through the API instead of from the page. A build-time content-security policy injects environment-aware provider URLs, and the real client IP is forwarded to the provider so its adaptive threat protection sees the actual source rather than the load balancer - with an alarm when that forwarding falls back.",
+          "In the console: route permissions moved from scattered checks to one declarative config behind a global guard, with every destructive operation permission-gated. IAM roles are recorded in Terraform as the source of truth - least-privilege developer policy, per-client task roles, deploy roles named and documented rather than inherited.",
+        ],
+      },
+    ],
+    outcomes: [
+      "The registration path no longer matches the wrong person, and repeated attempts are locked out.",
+      "No page holds identity-provider credentials, and threat protection sees the true client IP.",
+      "Permissions are declared in one place and enforced by a global guard, and every role lives in Terraform.",
+    ],
+  },
 ];
