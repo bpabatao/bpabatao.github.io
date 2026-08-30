@@ -38,5 +38,29 @@
     "accent": "",
     "body": "An ISO 27001-certified strategy SaaS for enterprise pharma - a schema-driven clone engine, dependency-aware archive/restore, and real-time collaboration.",
     "foot": "1 of 3 core engineers · React · TypeScript · Node · GraphQL"
+  },
+  {
+    "file": "og/ccs-kb.png",
+    "kicker": "~/case/ccs-kb",
+    "title": "CCS Knowledge Base Agent",
+    "accent": "",
+    "body": "A retrieval agent over utility billing systems that answers from curated documentation first and only reaches for generated SQL behind a flag.",
+    "foot": "Sole author · AWS Bedrock · RetrieveAndGenerate · Fargate · S3"
+  },
+  {
+    "file": "og/observability.png",
+    "kicker": "~/case/observability",
+    "title": "Observability & Accountability",
+    "accent": "",
+    "body": "The platform that makes a small team's fleet legible: who did what, which accounts look wrong, and what an incident actually cost.",
+    "foot": "Sole author · MongoDB · Datadog · CloudWatch · WAFv2"
+  },
+  {
+    "file": "og/identity.png",
+    "kicker": "~/case/identity",
+    "title": "Identity & Access",
+    "accent": "",
+    "body": "Closing the paths that let someone reach an account that was not theirs - at the front door, in the browser, and in the console.",
+    "foot": "Primary author · AWS Cognito · Oracle CCS · Terraform · IAM"
   }
 ]

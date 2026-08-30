@@ -1,0 +1,7 @@
+# updated 2026-08-29 - paste into LinkedIn > Projects > Observability & Accountability
+Observability & Accountability
+Associated with: ESC Partners / HometownHUB
+Universal capture with redacted payloads, tiered audit retention, account-to-IP anomaly views, and a takeover alert - so a five-engineer team can answer who did what.
+Ownership: SOLE AUTHOR
+Stack: MongoDB, Datadog, CloudWatch, WAFv2, React
+https://bpabatao.github.io/case/observability/

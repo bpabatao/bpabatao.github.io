@@ -376,3 +376,257 @@ export function NmblrDiagram() {
     </svg>
   );
 }
+
+export function CcsKbDiagram() {
+  return (
+    <svg
+      viewBox="0 0 640 288"
+      role="img"
+      aria-label="A question routes through the knowledge-base agent to a curated corpus first, with generated SQL against tenant-scoped CCS only as a flagged fallback"
+      className="block w-full"
+    >
+      <Line d="M150 34 H230" />
+      <Line d="M410 34 H490" />
+      <Line d="M320 52 V80" />
+      <Line d="M180 80 H460" />
+      <Line d="M180 80 V112" />
+      <Line d="M460 80 V112" />
+      <Line d="M180 168 V214" />
+      <Line d="M460 168 V214" />
+
+      <Packet d="M150 34 H230" dur="1.4s" />
+      <Packet d="M320 52 V80 H180 V112" dur="2.2s" delay="0.5s" />
+      <Packet d="M320 52 V80 H460 V112" dur="2.2s" delay="2.6s" />
+      <Packet d="M460 168 V214" dur="1.4s" delay="1.2s" />
+      <Packet d="M180 214 V168" dur="1.8s" delay="2.2s" />
+      <circle
+        r={3.5}
+        fill="var(--ok)"
+        className="packet"
+        style={{ offsetPath: 'path("M410 34 H490")', animationDuration: "1.4s", animationDelay: "1.6s" }}
+      />
+
+      <Box x={20} y={16} w={130} h={36}>
+        <Label x={85} y={34} size={10.5} color="var(--ink)" weight={600}>
+          question
+        </Label>
+      </Box>
+
+      <Box x={230} y={16} w={180} h={36}>
+        <Label x={320} y={34} size={11} color="var(--ink)" weight={600}>
+          kb agent
+        </Label>
+      </Box>
+
+      <Box x={490} y={16} w={130} h={36}>
+        <Label x={555} y={28} size={10.5} color="var(--ink)" weight={600}>
+          answer
+        </Label>
+        <Label x={555} y={42} size={8.5} color="var(--ok)">
+          cited + badged
+        </Label>
+      </Box>
+
+      <Box x={110} y={112} w={140} h={56}>
+        <Label x={180} y={130} size={10.5} color="var(--ink)" weight={600}>
+          curated corpus
+        </Label>
+        <Label x={180} y={146} size={8.5}>
+          retrieve + generate
+        </Label>
+        <Label x={180} y={158} size={8.5} color="var(--ok)">
+          default path
+        </Label>
+      </Box>
+
+      <Box x={390} y={112} w={140} h={56}>
+        <Label x={460} y={130} size={10.5} color="var(--ink)" weight={600}>
+          generated sql
+        </Label>
+        <Label x={460} y={146} size={8.5} color="var(--accent)">
+          flag + permission
+        </Label>
+        <Label x={460} y={158} size={8.5}>
+          off by default
+        </Label>
+      </Box>
+
+      <Box x={110} y={214} w={140} h={44}>
+        <Label x={180} y={230} size={10} color="var(--ink)" weight={600}>
+          s3 corpus
+        </Label>
+        <Label x={180} y={245} size={8.5}>
+          scheduled refresh
+        </Label>
+      </Box>
+
+      <Box x={390} y={214} w={140} h={44}>
+        <Label x={460} y={230} size={10} color="var(--ink)" weight={600}>
+          oracle ccs
+        </Label>
+        <Label x={460} y={245} size={8.5}>
+          tenant-scoped
+        </Label>
+      </Box>
+
+      <Label x={320} y={196} size={9} color="var(--muted)">
+        never claims absence
+      </Label>
+    </svg>
+  );
+}
+
+export function ObservabilityDiagram() {
+  const TIERS = [
+    { x: 30, cx: 115, name: "admin writes", keep: "365 days" },
+    { x: 235, cx: 320, name: "admin reads", keep: "90 days" },
+    { x: 440, cx: 525, name: "telemetry", keep: "90 days" },
+  ];
+  return (
+    <svg
+      viewBox="0 0 640 288"
+      role="img"
+      aria-label="Portals, the core API and outbound providers feed one capture layer that redacts payloads, raises anomaly alerts, and writes to retention tiers"
+      className="block w-full"
+    >
+      <Line d="M90 48 V72" />
+      <Line d="M320 48 V72" />
+      <Line d="M550 48 V72" />
+      <Line d="M90 72 H550" />
+      <Line d="M280 72 V96" />
+      <Line d="M370 122 H420" />
+      <Line d="M280 148 V172" />
+      <Line d="M115 172 H525" />
+      {TIERS.map((t) => (
+        <Line key={t.name} d={`M${t.cx} 172 V196`} />
+      ))}
+
+      <Packet d="M90 48 V72 H280 V96" dur="2.4s" />
+      <Packet d="M320 48 V72 H280 V96" dur="2.4s" delay="0.8s" />
+      <Packet d="M550 48 V72 H280 V96" dur="2.4s" delay="1.6s" />
+      {TIERS.map((t, i) => (
+        <Packet key={t.name} d={`M280 148 V172 H${t.cx} V196`} dur="2.2s" delay={`${0.4 + i * 0.6}s`} />
+      ))}
+      <circle
+        r={3.5}
+        fill="var(--ok)"
+        className="packet"
+        style={{ offsetPath: 'path("M370 122 H420")', animationDuration: "1.6s", animationDelay: "1.2s" }}
+      />
+
+      {[
+        { x: 30, cx: 90, label: "tenant portals" },
+        { x: 260, cx: 320, label: "core api" },
+        { x: 490, cx: 550, label: "providers" },
+      ].map((n) => (
+        <Box key={n.label} x={n.x} y={16} w={120} h={32}>
+          <Label x={n.cx} y={33} size={10} color="var(--body)">
+            {n.label}
+          </Label>
+        </Box>
+      ))}
+
+      <Box x={190} y={96} w={180} h={52}>
+        <Label x={280} y={114} size={11} color="var(--ink)" weight={600}>
+          capture layer
+        </Label>
+        <Label x={280} y={131} size={9}>
+          deep-redacted payloads
+        </Label>
+      </Box>
+
+      <Box x={420} y={96} w={170} h={52}>
+        <Label x={505} y={114} size={10.5} color="var(--ink)" weight={600}>
+          account to ip fan-out
+        </Label>
+        <Label x={505} y={131} size={9} color="var(--ok)">
+          takeover alert
+        </Label>
+      </Box>
+
+      {TIERS.map((t) => (
+        <Box key={t.name} x={t.x} y={196} w={170} h={44}>
+          <Label x={t.cx} y={212} size={10} color="var(--ink)" weight={600}>
+            {t.name}
+          </Label>
+          <Label x={t.cx} y={227} size={9} color="var(--accent)">
+            kept {t.keep}
+          </Label>
+        </Box>
+      ))}
+
+      <Label x={320} y={262} size={9}>
+        benign auth failures folded out, so the error rate means something
+      </Label>
+    </svg>
+  );
+}
+
+export function IdentityDiagram() {
+  return (
+    <svg
+      viewBox="0 0 640 288"
+      role="img"
+      aria-label="The browser no longer reaches the identity provider directly; every identity call goes through the API, which forwards the real client IP and gates registration on verification with lockout"
+      className="block w-full"
+    >
+      {/* the path that was removed */}
+      <path d="M84 130 L470 96" fill="none" stroke="var(--line)" strokeWidth={1} strokeDasharray="4 4" />
+      <Line d="M144 152 H250" />
+      <Line d="M390 145 L470 96" />
+      <Line d="M390 160 L470 200" />
+
+      <Packet d="M144 152 H250" dur="1.6s" />
+      <Packet d="M390 145 L470 96" dur="1.6s" delay="0.8s" />
+      <Packet d="M390 160 L470 200" dur="1.6s" delay="1.4s" />
+
+      <g>
+        <line x1={271} y1={107} x2={283} y2={119} stroke="var(--muted)" strokeWidth={1.5} />
+        <line x1={283} y1={107} x2={271} y2={119} stroke="var(--muted)" strokeWidth={1.5} />
+      </g>
+      <Label x={293} y={113} size={9} anchor="start">
+        no direct access
+      </Label>
+
+      <Box x={24} y={130} w={120} h={44}>
+        <Label x={84} y={146} size={10.5} color="var(--ink)" weight={600}>
+          browser
+        </Label>
+        <Label x={84} y={161} size={8.5}>
+          holds no credentials
+        </Label>
+      </Box>
+
+      <Box x={250} y={130} w={140} h={44}>
+        <Label x={320} y={146} size={11} color="var(--ink)" weight={600}>
+          core api
+        </Label>
+        <Label x={320} y={161} size={8.5} color="var(--accent)">
+          permissions declared once
+        </Label>
+      </Box>
+
+      <Box x={470} y={74} w={146} h={44}>
+        <Label x={543} y={90} size={10.5} color="var(--ink)" weight={600}>
+          cognito
+        </Label>
+        <Label x={543} y={105} size={8.5}>
+          real client ip forwarded
+        </Label>
+      </Box>
+
+      <Box x={470} y={178} w={146} h={44}>
+        <Label x={543} y={194} size={10.5} color="var(--ink)" weight={600}>
+          oracle ccs
+        </Label>
+        <Label x={543} y={209} size={8.5}>
+          identity verification
+        </Label>
+      </Box>
+
+      <Label x={320} y={244} size={9}>
+        registration: lockout on repeat attempts, zip disambiguation on the last-four space
+      </Label>
+    </svg>
+  );
+}
