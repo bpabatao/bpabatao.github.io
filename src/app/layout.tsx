@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import type { ReactNode } from "react";
 import { clash, satoshi, jetbrains } from "@/lib/fonts";
 import { profile } from "@/data/content";
+import { ogImage } from "@/lib/og";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import "./globals.css";
@@ -19,10 +20,10 @@ export const metadata: Metadata = {
     description: `${profile.thesis.lead} ${profile.thesis.tail} ${profile.thesis.accent}`,
     url: profile.siteUrl,
     siteName: profile.name,
-    images: ["/og.png"],
+    images: [ogImage("/og.png", `${profile.name} - ${profile.role}`)],
     type: "website",
   },
-  twitter: { card: "summary_large_image" },
+  twitter: { card: "summary_large_image", images: [ogImage("/og.png", `${profile.name} - ${profile.role}`)] },
 };
 
 export const viewport: Viewport = {

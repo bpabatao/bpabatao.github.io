@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { cases } from "@/data/cases";
+import { ogImage } from "@/lib/og";
 import { profile } from "@/data/content";
 import { AiSdlcDiagram, ControlPlaneDiagram, CoreApiDiagram, NmblrDiagram } from "@/components/diagrams";
 
@@ -27,7 +28,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const cs = cases.find((c) => c.slug === slug);
   if (!cs) return {};
   const url = `/case/${cs.slug}/`;
-  const image = `/og/${cs.slug}.png`;
+  const image = ogImage(`/og/${cs.slug}.png`, cs.title);
   return {
     title: cs.title,
     description: cs.subtitle,
