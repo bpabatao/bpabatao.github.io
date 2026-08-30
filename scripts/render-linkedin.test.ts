@@ -1,7 +1,8 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { LIMITS, bodyOf, buildLinkedinPack } from "./render-linkedin.ts";
+import { LIMITS, bodyOf, buildLinkedinPack, experience, header } from "./render-linkedin.ts";
 
+import type { Job } from "../src/data/content.ts";
 import { currentJobs, earlierJobs, earlierProjects, flagships, secondaryProjects } from "../src/data/content.ts";
 
 const pack = buildLinkedinPack();
@@ -35,4 +36,17 @@ test("skills.txt lists Bedrock and WAF once", () => {
   const skills = bodyOf(pack["skills.txt"]).split("\n");
   assert.equal(skills.filter((s) => /bedrock/i.test(s)).length, 1);
   assert.equal(skills.filter((s) => /^WAF/i.test(s)).length, 1);
+});
+
+test("a position description that overflows LinkedIn's cap keeps the top receipts and says what it dropped", () => {
+  const fat: Job = {
+    ...currentJobs[0],
+    positions: undefined,
+    receipts: Array.from({ length: 30 }, (_, i) => `Receipt ${i} ${"x".repeat(180)}`),
+  };
+  const body = bodyOf(header("Experience") + experience(fat));
+  assert.ok(body.length <= LIMITS.description, `${body.length} chars`);
+  assert.ok(body.includes("Receipt 0 "), "keeps the first receipt");
+  assert.match(body, /- \d+ more at https:\/\//, "names what did not fit");
+  assert.ok(!body.includes("Receipt 29 "), "drops the tail");
 });
