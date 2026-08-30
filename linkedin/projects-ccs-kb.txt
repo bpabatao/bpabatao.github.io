@@ -1,0 +1,7 @@
+# updated 2026-08-29 - paste into LinkedIn > Projects > CCS Knowledge Base Agent
+CCS Knowledge Base Agent
+Associated with: ESC Partners / HometownHUB
+A Bedrock retrieval agent over utility billing systems: curated documentation first, generated SQL only behind a flag, and a prompt that refuses to claim something is absent.
+Ownership: SOLE AUTHOR
+Stack: AWS Bedrock, Fargate, S3, Oracle CCS, TypeScript
+https://bpabatao.github.io/case/ccs-kb/

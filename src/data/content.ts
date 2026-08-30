@@ -241,6 +241,8 @@ export interface Flagship {
   jobId: string;
   /* Only where the start month is known; LinkedIn projects take a date range. */
   period?: Period;
+  /* Featured cases get a full card on the home page; the rest sit in the compact index below them. */
+  featured?: boolean;
   title: string;
   outcome: string;
   ownership: string;
@@ -250,6 +252,7 @@ export interface Flagship {
 export const flagships: Flagship[] = [
   {
     slug: "core-api",
+    featured: true,
     jobId: "hth",
     title: "Multi-Tenant Core API",
     outcome:
@@ -259,6 +262,7 @@ export const flagships: Flagship[] = [
   },
   {
     slug: "control-plane",
+    featured: true,
     jobId: "hth",
     title: "Terraform Control-Plane & IDP",
     outcome:
@@ -284,6 +288,34 @@ export const flagships: Flagship[] = [
       "A DMMF-driven clone engine and a dependency-aware archive/restore system on an ISO 27001-certified strategy SaaS in private beta with enterprise pharma.",
     ownership: "1 OF 3 CORE ENGINEERS",
     stack: ["React", "TypeScript", "GraphQL", "Prisma", "PostgreSQL"],
+  },
+  {
+    slug: "ccs-kb",
+    jobId: "hth",
+    featured: true,
+    title: "CCS Knowledge Base Agent",
+    outcome:
+      "A Bedrock retrieval agent over utility billing systems: curated documentation first, generated SQL only behind a flag, and a prompt that refuses to claim something is absent.",
+    ownership: "SOLE AUTHOR",
+    stack: ["AWS Bedrock", "Fargate", "S3", "Oracle CCS", "TypeScript"],
+  },
+  {
+    slug: "observability",
+    jobId: "hth",
+    title: "Observability & Accountability",
+    outcome:
+      "Universal capture with redacted payloads, tiered audit retention, account-to-IP anomaly views, and a takeover alert - so a five-engineer team can answer who did what.",
+    ownership: "SOLE AUTHOR",
+    stack: ["MongoDB", "Datadog", "CloudWatch", "WAFv2", "React"],
+  },
+  {
+    slug: "identity",
+    jobId: "hth",
+    title: "Identity & Access",
+    outcome:
+      "Closed an account-takeover path at registration, took identity-provider credentials out of the browser, and moved route permissions into one declarative guard.",
+    ownership: "PRIMARY AUTHOR",
+    stack: ["AWS Cognito", "Oracle CCS", "Terraform", "IAM", "Fastify"],
   },
 ];
 
