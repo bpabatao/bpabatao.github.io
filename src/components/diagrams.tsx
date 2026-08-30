@@ -84,9 +84,10 @@ export function CoreApiDiagram() {
       <Line d="M320 64 V96" />
       <Line d="M320 184 V232" />
 
-      <Packet d="M42 40 V64 H320 V96" dur="3.2s" />
-      <Packet d="M432 40 V64 H320 V96" dur="3.2s" delay="1.1s" />
-      <Packet d={`M${LAST_X} 40 V64 H320 V96`} dur="3.2s" delay="2.2s" />
+      {/* one packet per tenant, evenly staggered - the count is the point */}
+      {TENANTS.map((t, i) => (
+        <Packet key={t} d={`M${42 + i * 78} 40 V64 H320 V96`} dur="3.2s" delay={`${((i * 3.2) / TENANTS.length).toFixed(2)}s`} />
+      ))}
       <Packet d="M320 184 V232" dur="1.8s" delay="0.5s" />
       <circle
         r={3.5}
@@ -149,9 +150,9 @@ export function ControlPlaneDiagram() {
       ))}
 
       <Packet d="M320 68 V100" dur="2s" />
-      <Packet d="M320 172 V196 H80 V220" dur="2.6s" delay="0.9s" />
-      <Packet d="M320 172 V220" dur="2.6s" delay="1.5s" />
-      <Packet d="M320 172 V196 H560 V220" dur="2.6s" delay="2.1s" />
+      {TENANTS.map((t, i) => (
+        <Packet key={t} d={`M320 172 V196 H${80 + i * 80} V220`} dur="2.6s" delay={`${(0.6 + (i * 2.2) / TENANTS.length).toFixed(2)}s`} />
+      ))}
 
       <Box x={140} y={12} w={360} h={56}>
         <Label x={320} y={34} size={11} color="var(--ink)" weight={600}>
