@@ -38,6 +38,8 @@ export const cases: CaseStudy[] = [
         paragraphs: [
           "Fastify 5 on Node 22, ESM-only, TypeScript strict with no `any`. Zod validates every input at the boundary; responses use one fixed envelope so clients never parse ad-hoc shapes.",
           "Tenant behavior is composed from a base configuration plus per-tenant overrides, assembled by strategy factories - the request path never branches on tenant name. Authorization is enforced as a route-level gate: every endpoint proves the caller owns the account it touches before any data access, which is what kills IDOR as a class.",
+          "Accountability does not stop at the customer. Admin reads and impersonated sessions are audited as well as writes, attributed to the acting admin, with field-level capture of what a write actually changed and deep redaction so tokens and provider passwords never reach the log. Admin writes are kept for a year, admin reads for ninety days.",
+          "Where the billing system of record and the payment provider disagree, a detection-only reconciler surfaces the drift instead of silently writing to either, and the account-linking path guards against duplicate registrations and signup conflicts.",
           "An 80% coverage gate and OWASP checks run in CI; Bitbucket Pipelines builds to ECR and deploys to ECS Fargate behind a shared ALB.",
         ],
       },
@@ -45,6 +47,7 @@ export const cases: CaseStudy[] = [
     outcomes: [
       "Every production tenant on one codebase - onboarding a tenant is config plus provisioning, not a fork.",
       "Authorization is structural, not reviewed-in: the route contract enforces ownership checks on every endpoint.",
+      "Every admin action, read or write, is attributable to the person who took it.",
       "The integration patterns became the fleet standard other services adopt.",
     ],
   },
@@ -77,12 +80,16 @@ export const cases: CaseStudy[] = [
         paragraphs: [
           "Nine Terraform stacks covering ~60 AWS resource types: Cognito user pools, ECS Fargate services, CloudFront distributions, WAFv2, Route 53, ElastiCache, KMS, Secrets Manager. Tenant environments are instantiated from templated modules - the same shape every time.",
           "On top sits a Fastify + React dashboard that runs Terraform plans and applies, detects drift against live state, enforces tag compliance, and attributes cost per client through the Cost Explorer API. Right-sizing, the shared ALB, and Fargate Spot all came out of that same cost data.",
+          "Delivery is gated rather than trusted. A blocking Snyk scan runs ahead of build and deploy on every pipeline across 14 repositories, and deploys authenticate through keyless OIDC - piloted on one environment, then rolled through the test fleet and production - so no long-lived AWS credentials sit in CI.",
+          "The same pipelines got faster while getting stricter: esbuild transpile for the Docker build, lint and scanning in parallel, cache mounts and fail-fast took a run from about ten minutes to six and ended the twenty-minute build hangs. On the observability side a single composite index on the sessions view - tenant, environment, user, timestamp - cut its query time 43x, and RUM sampling was tuned to keep session replay on every error without paying for it on every session.",
         ],
       },
     ],
     outcomes: [
       "Tenant onboarding went from days of manual assembly to a templated, repeatable workflow.",
       "~$110K/yr of AWS runs with per-client cost attribution and continuous drift detection.",
+      "Every pipeline in the fleet blocks on a supply-chain scan, and deploys carry no long-lived AWS credentials.",
+      "A pipeline run costs about six minutes instead of ten, with the twenty-minute build hangs gone.",
       "6 client launches shipped through the platform - environment validation, deployment, rollback planning.",
     ],
   },

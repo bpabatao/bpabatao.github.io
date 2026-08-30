@@ -7,7 +7,7 @@ import { formatPeriod, plainText } from "../src/lib/format.ts";
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 export const LIMITS = { headline: 220, about: 2600, description: 2000, skills: 100 } as const;
 
-const header = (section: string) => `# updated ${profile.updated} - paste into LinkedIn > ${section}\n`;
+export const header = (section: string) => `# updated ${profile.updated} - paste into LinkedIn > ${section}\n`;
 export const bodyOf = (file: string) => file.split("\n").slice(1).join("\n").trim();
 export const slugOf = (title: string) => title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "").slice(0, 60);
 const allJobs = () => [...currentJobs, ...earlierJobs];
@@ -18,12 +18,28 @@ function about(): string {
 }
 
 /* One block per LinkedIn position; bullets belong to the latest position only. */
-function experience(j: Job): string {
+export function experience(j: Job): string {
   const positions = j.positions?.length ? j.positions : [{ title: j.role, period: j.period }];
   return positions
     .map((p, i) => {
       const head = [`## ${p.title}`, j.employmentType ? `${j.company} · ${j.employmentType}` : j.company, formatPeriod(p.period), j.location ?? ""].filter(Boolean);
-      return i === 0 ? [...head, "", ...j.receipts.map((r) => `- ${plainText(r)}`)].join("\n") : head.join("\n");
+      if (i !== 0) return head.join("\n");
+      /* LinkedIn caps a position description at LIMITS.description. Fit what we can, in order,
+         and say plainly what did not fit rather than throwing or dropping it silently. */
+      const bullets = j.receipts.map((r) => `- ${plainText(r)}`);
+      const base = [...head, ""].join("\n").length;
+      const kept: string[] = [];
+      let used = base;
+      for (const b of bullets) {
+        const tail = bullets.length - kept.length - 1;
+        const reserve = tail > 0 ? `\n- ${tail} more at ${profile.siteUrl}`.length : 0;
+        if (used + 1 + b.length + reserve > LIMITS.description) break;
+        kept.push(b);
+        used += 1 + b.length;
+      }
+      const dropped = bullets.length - kept.length;
+      if (dropped > 0) kept.push(`- ${dropped} more at ${profile.siteUrl}`);
+      return [...head, "", ...kept].join("\n");
     })
     .join("\n\n");
 }
