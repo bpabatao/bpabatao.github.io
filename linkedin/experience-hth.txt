@@ -9,6 +9,7 @@ New York, USA (Remote)
 - De-facto technical lead of a 5-engineer team, reporting to the COO/CEO - set the platform standards the fleet adopts.
 - Own ~$110K/yr of AWS across the production and test fleet - CI/CD, Datadog/CloudWatch observability, and FinOps tooling driving right-sizing and Fargate-Spot savings.
 - Built the team's AI tooling: Bedrock auto-remediation that opens fix PRs, a Claude PR reviewer in CI, and an agentic AI-SDLC pipeline with human approval gates.
+- Made the Snyk supply-chain gate real across 14 repositories, then rolled keyless OIDC deploys - replacing long-lived AWS credentials in CI - through pilot, all test envs, and prod on 4 of them.
 - Owned production go-live readiness for 6 client launches.
 - Closed an SSN identity-verification gap enabling account takeover - fixed wrong-person matches on ~2.4% of accounts, added attempt lockout, and ZIP-based disambiguation against the brute-forceable last-4 space.
 - Built a fleet-wide customer-interaction audit trail: a capture hook mapping authenticated actions and page views, tenant-scoped/IDOR-safe admin history API with CSV export and rate limiting, and 90-day retention.
