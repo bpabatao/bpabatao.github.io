@@ -55,7 +55,8 @@ export function denylistHits(text: string, terms: readonly string[], label: stri
    tracked text file - source, comments, tests, docs, generated JSON - is scanned. The repo is public. */
 const TEXT_EXT = /\.(ts|tsx|js|mjs|json|md|txt|yml|yaml|css|html|svg|py)$/;
 export function trackedTextFiles(): { label: string; text: string }[] {
-  const files = execFileSync("git", ["ls-files"], { cwd: ROOT, encoding: "utf8" }).split("\n").filter((f) => TEXT_EXT.test(f));
+  // a tracked file can be deleted on disk with the deletion not yet committed; scan what exists
+  const files = execFileSync("git", ["ls-files"], { cwd: ROOT, encoding: "utf8" }).split("\n").filter((f) => TEXT_EXT.test(f) && existsSync(resolve(ROOT, f)));
   return files.map((f) => {
     let text = readFileSync(resolve(ROOT, f), "utf8");
     if (f === "src/data/content.ts") text = text.replace(/export const fleetPortals[^=]*=\s*\[[\s\S]*?\n\];/, "/* fleetPortals: the one allowed place */");

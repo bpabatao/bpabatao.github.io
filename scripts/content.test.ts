@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { currentJobs, earlierJobs, fleetPortals, metrics, profile, stackGroups } from "../src/data/content.ts";
+import { currentJobs, earlierJobs, earlierProjects, fleetPortals, metrics, profile, stackGroups } from "../src/data/content.ts";
 import { formatPeriod, plainText } from "../src/lib/format.ts";
 
 test("every job has a unique id and a parseable period", () => {
@@ -22,7 +22,9 @@ test("headline, employer and promotion history follow the spec", () => {
   assert.equal(currentJobs[0].positions?.[0].title, currentJobs[0].role);
   assert.equal(currentJobs[0].positions?.length, 2);
   assert.equal(currentJobs[0].period.start, "2023-05");
-  assert.ok(earlierJobs.some((j) => j.id === "basemap"));
+  // BaseMap was a client of the CoDev agency, not an employer: it is a project under codev, never a job
+  assert.ok(!earlierJobs.some((j) => j.id === "basemap"));
+  assert.ok(earlierProjects.some((p) => p.title.startsWith("Basemap") && p.jobId === "codev"));
   assert.match(profile.updated, /^\d{4}-\d{2}-\d{2}$/);
 });
 

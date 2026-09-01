@@ -1,7 +1,7 @@
 # updated 2026-08-29 - paste into LinkedIn > Projects > Basemap Hunting and Fishing GPS Maps
 Basemap Hunting and Fishing GPS Maps
 Mar 2022 - Nov 2022
-Associated with: BaseMap Inc
+Associated with: CoDev
 
 GIS mapping and hunting platform.
 https://www.basemap.com

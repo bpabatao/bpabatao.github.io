@@ -2,6 +2,6 @@
 ## Full Stack Software Engineer
 Ordermentum · Contract
 Sep 2022 - Mar 2023
-New South Wales, Australia / Remote
+NSW, Australia / Remote
 
 - Restaurant ordering and payment management for hospitality clients.

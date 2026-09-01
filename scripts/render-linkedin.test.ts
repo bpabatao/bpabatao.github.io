@@ -9,7 +9,7 @@ const pack = buildLinkedinPack();
 const names = Object.keys(pack).sort();
 
 test("pack covers every job and every project with a paste header", () => {
-  for (const f of ["headline.txt", "about.txt", "skills.txt", "experience-hth.txt", "experience-basemap.txt", "projects-core-api.txt", "projects-nmblr.txt"]) assert.ok(names.includes(f), f);
+  for (const f of ["headline.txt", "about.txt", "skills.txt", "experience-hth.txt", "experience-codev.txt", "projects-core-api.txt", "projects-nmblr.txt"]) assert.ok(names.includes(f), f);
   assert.equal(names.filter((n) => n.startsWith("experience-")).length, currentJobs.length + earlierJobs.length);
   assert.equal(names.filter((n) => n.startsWith("projects-")).length, flagships.length + [...secondaryProjects, ...earlierProjects].filter((p) => p.linkedin !== false).length);
   for (const [name, text] of Object.entries(pack)) assert.match(text.split("\n")[0], /^# updated \d{4}-\d{2}-\d{2} - paste into LinkedIn > /, name);
@@ -25,8 +25,9 @@ test("bodies respect LinkedIn limits and render positions", () => {
   const hth = bodyOf(pack["experience-hth.txt"]);
   assert.ok(!hth.includes("**"), "lead markers must be stripped");
   assert.ok(hth.startsWith("## Staff Software Engineer, Platform & Product\nESC Partners / HometownHUB · Contract\nSep 2025 - Present\nNew York, USA (Remote)\n"));
-  assert.ok(hth.includes("\n## Senior Full-Stack Engineer (Cloud)\nESC Partners / HometownHUB · Contract\nMay 2023 - Jan 2026\n"));
-  assert.ok(bodyOf(pack["experience-basemap.txt"]).startsWith("## Senior Software Engineer\nBaseMap Inc · Full-time\nMar 2022 - Sep 2022\n"));
+  assert.ok(hth.includes("\n## Senior Full-Stack Engineer (Cloud)\nESC Partners / HometownHUB · Contract\nMay 2023 - Aug 2025\n"));
+  assert.ok(!("experience-basemap.txt" in pack), "BaseMap is a CoDev client engagement, not a position");
+  assert.ok(bodyOf(pack["projects-basemap-hunting-and-fishing-gps-maps.txt"]).includes("Associated with: CoDev"));
   assert.ok(bodyOf(pack["projects-core-api.txt"]).includes("https://bpabatao.github.io/case/core-api/"));
   assert.ok(bodyOf(pack["projects-nmblr.txt"]).includes("Associated with: Nmblr"));
   assert.ok(bodyOf(pack["projects-nmblr.txt"]).includes("Mar 2024 - Present"));

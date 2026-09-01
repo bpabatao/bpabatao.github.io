@@ -10,26 +10,27 @@ const CHROME = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome";
 const esc = (s: string) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 const li = (b: Bullet) => (b.lead ? `  <li><b>${esc(b.lead)}</b> ${esc(b.rest)}</li>` : `  <li>${esc(b.rest)}</li>`);
 
+/* Two concurrent "Present" roles read as double employment unless each says it is a contract. */
 function currentRole(r: Role): string {
   const loc = r.location ? ` - ${esc(r.location)}` : "";
+  const kind = r.contract ? " (contract)" : "";
   return [
+    `<section class="role">`,
     `<h3>${esc(r.title)}</h3>`,
-    `<div class="loc"><span class="co">${esc(r.company)}</span>${loc} | <span class="meta">${esc(r.dates)}</span></div>`,
+    `<div class="loc"><span class="co">${esc(r.company)}</span>${kind}${loc} | <span class="meta">${esc(r.dates)}</span></div>`,
     ...r.previous.map((p) => `<div class="loc">Previously ${esc(p.title)} | <span class="meta">${esc(p.dates)}</span></div>`),
     "<ul>",
     ...r.bullets.map(li),
     "</ul>",
+    `</section>`,
   ].join("\n");
 }
 
+/* Pre-2023 roles earn one line each: they establish tenure, not the Staff platform case. */
 function earlierRole(r: Role): string {
   const parts = [r.location, r.contract ? "contract" : null].filter(Boolean) as string[];
   const loc = parts.length ? ` (${esc(parts.join(", "))})` : "";
-  return [
-    `<h3>${esc(r.title)} - ${esc(r.company)}${loc}</h3>`,
-    `<div class="loc"><span class="meta">${esc(r.dates)}</span></div>`,
-    `<ul>${r.bullets.map((b) => li(b).trim()).join("")}</ul>`,
-  ].join("\n");
+  return `<p class="earlier"><b>${esc(r.title)}</b> - ${esc(r.company)}${loc} | <span class="meta">${esc(r.dates)}</span></p>`;
 }
 
 /* The template is the July 2026 ATS-safe resume verbatim: single column, linear flow,
@@ -66,6 +67,8 @@ export function renderHtml(m: ResumeModel): string {
     margin: 12pt 0 6pt;
   }
   h3 { font-size: 10.5pt; margin-top: 8pt; }
+  .role { break-inside: avoid; }
+  .earlier { margin: 3pt 0 0; font-size: 9.5pt; }
   .co { color: #c44400; font-weight: 600; }
   .meta { font-size: 8.5pt; color: #555; font-family: "SF Mono", Menlo, Consolas, monospace; font-weight: 400; }
   .loc { font-size: 8.8pt; color: #555; margin-bottom: 3pt; }
