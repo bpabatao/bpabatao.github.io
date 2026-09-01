@@ -30,7 +30,7 @@ export const profile = {
   summary:
     "I build multi-tenant SaaS platforms end to end - the Terraform that provisions them, the API they run on, and the product customers actually use. Staff Software Engineer - 8+ years in software, 5+ hands-on with AWS, and ~3 years leading cloud platforms: from AWS infrastructure-as-code to the shared backend services an entire product fleet runs on.",
   resumeSummary:
-    `I build multi-tenant SaaS platforms end to end - the Terraform that provisions them, the API they run on, and the product customers actually use. Staff Software Engineer - 8+ years in software, 5+ hands-on with AWS, and ~3 years leading cloud platforms: from AWS infrastructure-as-code to the shared backend services an entire product fleet runs on. Primary author of the Terraform control-plane the fleet's provisioning is consolidating onto, and of both generations of the core REST API the ${fleetPortals.length} multi-tenant client portals run on - 58% of v1, 78% of v2. Operates ~$110K/year of multi-tenant portal infrastructure on AWS, turns it into self-service, and builds the products on it - full-stack from React/TypeScript through Node/GraphQL - not just the infrastructure they run on.`,
+    `Staff Software Engineer - I build the platform other engineers ship on. 8+ years in software, 5+ on AWS, ~3 leading a multi-tenant SaaS platform: primary author (93%) of the Terraform control-plane the fleet is migrating onto, primary author of both generations of the core REST API behind ${fleetPortals.length} utility client portals (58% of v1, 78% of v2), and its operator - CI/CD, observability, on-call, cost.`,
   location: "Italy (Remote)",
   availability: "STAFF/LEAD PLATFORM ROLES · CONSULTING · AWS / TERRAFORM / MULTI-TENANT",
   availabilityLine: `Open to Staff / Lead platform roles · Remote from Italy (CET), async-first · ${MARKETS}`,
@@ -105,7 +105,7 @@ export const currentJobs: Job[] = [
     employmentType: "Contract",
     positions: [
       { title: "Staff Software Engineer, Platform & Product", period: { start: "2025-09", end: null } },
-      { title: "Senior Full-Stack Engineer (Cloud)", period: { start: "2023-05", end: "2026-01" } },
+      { title: "Senior Full-Stack Engineer (Cloud)", period: { start: "2023-05", end: "2025-08" } },
     ],
     receipts: [
       "Primary author of both generations of the fleet's core API - 58% of v1, which still serves most of the fleet, 78% of v2, which serves the first two - and of the auth, data-access and Oracle CCS patterns both share.",
@@ -127,6 +127,8 @@ export const currentJobs: Job[] = [
       "**Built an automated batch pipeline** syncing multi-account customers between Oracle CCS and Invoice Cloud in 5K-record batches - idempotency checks, error tracking, and automated success/failure email reporting.",
       "**Built, measured and pruned the team's AI tooling** - kept a Claude PR reviewer in CI on the core API and backend, shelved a Bedrock auto-remediation service that was never wired to a live alarm, shipped a Bedrock knowledge-base agent (curated-first retrieval, flagged SQL fallback), and designed a ticket-to-PR pipeline with human gates, not yet live.",
       `**Own and operate the multi-tenant portal infrastructure as sole platform engineer** - ~$110K/year of AWS across the ${fleetPortals.length}-tenant production and test fleet - with CI/CD (Bitbucket Pipelines), Datadog / CloudWatch observability, on-call incident response, and cost-attribution tooling (Cost Explorer API) driving right-sizing, shared-ALB, and Fargate-Spot savings.`,
+      "**Shipped the fix for an SSN identity-verification gap enabling account takeover** - the last-four plus street match resolved to the wrong person on ~2.4% of one tenant's accounts - as attempt lockout plus ZIP-based disambiguation against the brute-forceable last-4 space, flag-gated for per-tenant rollout.",
+      "**Built the fleet-wide interaction audit trail** - a capture hook for authenticated actions and page views, a tenant-scoped, IDOR-safe admin history API with CSV export and rate limiting - then extended it to admin reads and impersonated sessions attributed to the acting admin; one composite index took its sessions view from 102 seconds to 2.4.",
       "**Owned production go-live readiness for 6 client launches** - primary engineer on four, core contributor on two - environment validation, deployment, rollback planning, and stabilization.",
     ],
     stack: ["TypeScript", "Fastify", "React", "Terraform", "AWS", "MongoDB", "Oracle CCS"],
@@ -160,11 +162,12 @@ export const earlierJobs: Job[] = [
   {
     id: "codev",
     company: "CoDev",
+    tagline: "agency; embedded with client BaseMap",
     role: "Senior Software Engineer",
     period: { start: "2022-03", end: "2023-05" },
     location: "Utah, USA / Remote",
     employmentType: "Full-time",
-    receipts: ["Internal talent-management portal; rapid, iterative issue resolution."],
+    receipts: ["Agency engineer: built the internal talent-management portal, then embedded with client BaseMap on GIS hunting and fishing map features for a consumer GPS platform."],
     resumeReceipts: ["Built an internal talent-management portal (JavaScript, Docker); improved reliability through rapid, iterative issue resolution."],
   },
   {
@@ -172,20 +175,10 @@ export const earlierJobs: Job[] = [
     company: "Ordermentum",
     role: "Full Stack Software Engineer",
     period: { start: "2022-09", end: "2023-03" },
-    location: "New South Wales, Australia / Remote",
+    location: "NSW, Australia / Remote",
     employmentType: "Contract",
     receipts: ["Restaurant ordering and payment management for hospitality clients."],
     resumeReceipts: ["Designed and deployed a restaurant ordering and payment management system for hospitality clients (Node.js, PostgreSQL, Docker, Kubernetes)."],
-  },
-  {
-    id: "basemap",
-    company: "BaseMap Inc",
-    role: "Senior Software Engineer",
-    period: { start: "2022-03", end: "2022-09" },
-    location: "Washington, USA / Remote",
-    employmentType: "Full-time",
-    receipts: ["GIS-based hunting and fishing mapping platform."],
-    resumeReceipts: ["Built GIS-based hunting and fishing mapping features (JavaScript, Docker) on a consumer GPS-maps platform."],
   },
   {
     id: "hcl",
@@ -381,7 +374,7 @@ export const earlierProjects: SecondaryProject[] = [
     description: "GIS mapping and hunting platform.",
     url: "https://www.basemap.com",
     period: { start: "2022-03", end: "2022-11" },
-    jobId: "basemap",
+    jobId: "codev",
   },
   {
     title: "Hope Technik",
