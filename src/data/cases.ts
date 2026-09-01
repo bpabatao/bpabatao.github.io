@@ -39,7 +39,8 @@ export const cases: CaseStudy[] = [
           "Fastify 5 on Node 22, ESM-only, TypeScript strict with no `any`. Zod validates every input at the boundary; responses use one fixed envelope so clients never parse ad-hoc shapes.",
           "Tenant behavior is composed from a base configuration plus per-tenant overrides, assembled by strategy factories - the request path never branches on tenant name. Authorization is enforced as a route-level gate: every endpoint proves the caller owns the account it touches before any data access, which is what kills IDOR as a class.",
           "Accountability does not stop at the customer. Admin reads and impersonated sessions are audited as well as writes, attributed to the acting admin, with field-level capture of what a write actually changed and deep redaction so tokens and provider passwords never reach the log. Admin writes are kept for a year, admin reads for ninety days.",
-          "Where the billing system of record and the payment provider disagree, a detection-only reconciler surfaces the drift instead of silently writing to either, and the account-linking path guards against duplicate registrations and signup conflicts.",
+          "Where the billing system of record and the payment provider disagree, a detection-only reconciler surfaces the drift instead of silently writing to either, and the account-linking path guards against duplicate registrations and signup conflicts. Small guards pay: enforcing the ten-digit account number on every sign-in form removed about 215 CCS errors a day that partial or oversized numbers had been generating.",
+          "The integration runs in both directions. Where the fix belongs on the CCS side, I write the IWS change specification - request and response examples, tenant scope, blast radius - and the vendor team implements it; the portal side lands in step.",
           "An 80% coverage gate and OWASP checks run in CI; Bitbucket Pipelines builds to ECR and deploys to ECS Fargate behind a shared ALB.",
         ],
       },
@@ -125,6 +126,13 @@ export const cases: CaseStudy[] = [
           "Shelved - auto-remediation: an AWS Bedrock service (Claude via bedrock-runtime) built to triage production alerts, correlate them with recent changes, and open fix PRs. Never wired to a live alarm, it had zero invocations in the 30 days measured and 12 of its 13 remediation runs had failed; it was shelved in August 2026 on that evidence.",
           "Designed - delivery: an agentic pipeline from the ticket queue to GitHub - plan, branch, implement in an isolated worktree, open a draft PR - with three human approval gates between intent and merge. Dry-run on one ticket, not yet run live.",
           "Shipped - knowledge: the Bedrock knowledge-base agent over Oracle CCS documentation and data, curated-first with a flagged SQL fallback; it has its own case study.",
+        ],
+      },
+      {
+        heading: "When it went wrong",
+        paragraphs: [
+          "In August 2026 I found that three of the tooling's public Lambda Function URLs - the auto-fix, the ECS rollback, and the Bitbucket bridge - fell back to a bearer token hardcoded in the source and never overridden live, so the URL plus a value anyone with repository access could read was enough to invoke them.",
+          "The fix was the boring one: per-function secrets, the fallback removed, credentials rotated, the change written up. It is the reason the auto-fix's shelving a few days later was an easy call - a tool that is not earning its keep should not also be an attack surface.",
         ],
       },
     ],
@@ -243,7 +251,7 @@ export const cases: CaseStudy[] = [
       {
         heading: "Architecture",
         paragraphs: [
-          "Capture is universal: a wrapper records calls out to identity, mail, payment and billing providers alike, so an event exists whether the failure was ours or theirs, with payloads deep-redacted so tokens and provider passwords never reach the store.",
+          "Capture is universal: a wrapper records calls out to identity, mail, payment and billing providers alike, so an event exists whether the failure was ours or theirs, with payloads deep-redacted so tokens and provider passwords never reach the store. Measured, not estimated: 156,656 events a day, 1.8 KB each, about 35 GB at steady state.",
           "Accountability is tiered. Admin writes record which fields actually changed and are kept for a year; admin reads and impersonated sessions are captured too, attributed to the acting admin, and kept for ninety days. The tiers are deliberate - the trail that answers 'who changed this' outlives the one that answers 'who looked'.",
           "Signal beats volume: benign authentication failures, account lockouts and revoked tokens are folded into an expected class so the error rate means something, an account-to-IP fan-out view surfaces anomalies, and an alert fires on the email-reversal pattern that precedes account takeover. Per-pattern batch analysis replaced per-event analysis so the AI spend tracks patterns, not traffic.",
           "It stays fast under load: a composite index on tenant, environment, user and timestamp cut the sessions view 43x, and Bedrock spend is attributed to its own client in the cost dashboard so AI cost is visible next to everything else.",
@@ -285,7 +293,7 @@ export const cases: CaseStudy[] = [
         paragraphs: [
           "At the front door: the fix for an identity-verification gap that enabled account takeover - the last-four plus street match resolved to the wrong person on roughly 2.4% of one tenant's accounts - shipped as attempt lockout plus ZIP-based disambiguation, flag-gated so it is enabled tenant by tenant rather than switched on fleet-wide.",
           "In the browser: direct client-side access to the identity provider was removed, so email and password changes go through the API instead of from the page. A build-time content-security policy injects environment-aware provider URLs, and the real client IP is forwarded to the provider so its adaptive threat protection sees the actual source rather than the load balancer - with an alarm when that forwarding falls back.",
-          "In the console: route permissions moved from scattered checks to one declarative config behind a global guard, with every destructive operation permission-gated. IAM roles are recorded in Terraform as the source of truth - least-privilege developer policy, per-client task roles, deploy roles named and documented rather than inherited.",
+          "In the console: route permissions moved from scattered checks to one declarative config behind a global guard, with every destructive operation permission-gated. IAM roles are recorded in Terraform as the source of truth - least-privilege developer policy, per-client task roles, deploy roles named and documented rather than inherited - down to a colleague's entire IAM footprint, bootstrapped into the stack and maintained there when a policy turned out to belong to a pipeline user rather than a person.",
         ],
       },
     ],
