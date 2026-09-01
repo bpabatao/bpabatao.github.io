@@ -1,3 +1,4 @@
+import { execFileSync } from "node:child_process";
 import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { homedir } from "node:os";
 import { dirname, resolve } from "node:path";
@@ -48,6 +49,18 @@ export function keywordGaps(text: string, keywords: readonly string[]): string[]
 export function denylistHits(text: string, terms: readonly string[], label: string): string[] {
   const hay = strip(text);
   return terms.filter((t) => new RegExp(`(^|[^A-Za-z])${t.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}($|[^A-Za-z])`, "i").test(hay)).map((t) => `${label}: ${t}`);
+}
+
+/* Client and tenant names may appear in exactly one place: the fleetPortals list. Every other
+   tracked text file - source, comments, tests, docs, generated JSON - is scanned. The repo is public. */
+const TEXT_EXT = /\.(ts|tsx|js|mjs|json|md|txt|yml|yaml|css|html|svg|py)$/;
+export function trackedTextFiles(): { label: string; text: string }[] {
+  const files = execFileSync("git", ["ls-files"], { cwd: ROOT, encoding: "utf8" }).split("\n").filter((f) => TEXT_EXT.test(f));
+  return files.map((f) => {
+    let text = readFileSync(resolve(ROOT, f), "utf8");
+    if (f === "src/data/content.ts") text = text.replace(/export const fleetPortals[^=]*=\s*\[[\s\S]*?\n\];/, "/* fleetPortals: the one allowed place */");
+    return { label: f, text };
+  });
 }
 
 export function tokenHits(text: string, label: string): string[] {
@@ -143,6 +156,7 @@ function main(argv: string[]): void {
       problems.push(...denylistHits(html, terms, "resume.html"));
       const dir = resolve(ROOT, "linkedin");
       if (existsSync(dir)) for (const f of readdirSync(dir).filter((f) => f.endsWith(".txt"))) problems.push(...denylistHits(readFileSync(resolve(dir, f), "utf8"), terms, `linkedin/${f}`));
+      for (const { label, text } of trackedTextFiles()) problems.push(...denylistHits(text, terms, label));
     }
   }
   if (argv.includes("--require-fresh") && profile.updated !== new Date().toISOString().slice(0, 10)) problems.push(`profile.updated is ${profile.updated}, expected today`);
