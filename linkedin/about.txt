@@ -2,5 +2,5 @@
 I build multi-tenant SaaS platforms end to end - the Terraform that provisions them, the API they run on, and the product customers actually use. Staff Software Engineer - 8+ years in software, 5+ hands-on with AWS, and ~3 years leading cloud platforms: from AWS infrastructure-as-code to the shared backend services an entire product fleet runs on.
 
 Currently:
-- Staff Software Engineer, Platform & Product, ESC Partners / HometownHUB: Primary author (78%) of the core API middleware connecting 7 utility tenant portals to Oracle CCS via OAuth 2.0 - the auth, data-access, and integration patterns the whole fleet is built on.
+- Staff Software Engineer, Platform & Product, ESC Partners / HometownHUB: Primary author of both generations of the fleet's core API - 58% of v1, which still serves most of the fleet, 78% of v2, which serves the first two - and of the auth, data-access and Oracle CCS patterns both share.
 - Senior Full Stack Engineer, Nmblr: One of 3 core engineers on an ISO 27001-certified biopharma strategy SaaS in private beta with enterprise pharma clients.

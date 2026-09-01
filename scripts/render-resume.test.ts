@@ -19,7 +19,7 @@ test("roles render in the two conventions with escaped text", () => {
   assert.ok(html.includes("<h3>Staff Software Engineer, Platform &amp; Product</h3>\n<div class=\"loc\"><span class=\"co\">ESC Partners / HometownHUB</span> - New York, USA (Remote) | <span class=\"meta\">Sep 2025 - Present</span></div>\n<div class=\"loc\">Previously Senior Full-Stack Engineer (Cloud) | <span class=\"meta\">May 2023 - Jan 2026</span></div>"));
   assert.ok(html.includes("<h3>Senior Software Engineer II - HCL Technologies (New York, USA / Remote)</h3>\n<div class=\"loc\"><span class=\"meta\">Feb 2020 - Apr 2022</span></div>"));
   assert.ok(html.includes("<h3>Full Stack Software Engineer - Ordermentum (New South Wales, Australia / Remote, contract)</h3>"));
-  assert.ok(html.includes("<li><b>Primary author (78%) of the core REST API middleware</b> connecting"));
+  assert.ok(html.includes("<li><b>Primary author of both generations of the fleet's core REST API</b> - 58% of v1"));
   assert.ok(html.includes("Biopharma Strategy &amp; Collaboration Platform"));
   assert.ok(html.includes("<p><b>Practices:</b> Platform Engineering, "));
 });

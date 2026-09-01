@@ -12,25 +12,25 @@ export const cases: CaseStudy[] = [
     slug: "core-api",
     title: "Multi-Tenant Core API",
     subtitle:
-      "The middleware every utility-customer portal in the fleet stands on - auth, data access, and Oracle CCS integration in one codebase.",
+      "The middleware every utility-customer portal in the fleet stands on - two generations of it, and the migration from one to the other.",
     meta: {
-      role: "Primary author, architecture and security owner",
+      role: "Primary author of both generations, architecture and security owner",
       period: "2023 - present",
-      ownership: "78% of commits",
+      ownership: "58% of v1 · 78% of v2",
       stack: ["Fastify 5", "TypeScript (strict)", "Zod", "MongoDB", "AWS SDK v3", "ECS Fargate", "Vitest"],
     },
     sections: [
       {
         heading: "Problem",
         paragraphs: [
-          "A fleet of utility companies each needed a customer portal talking to Oracle Utilities CCS. The legacy server they inherited had authorization gaps and no clean way to vary behavior per tenant. Every new client meant forked code and re-audited security.",
-          "The rebuild had one mandate: a single API where a new tenant is configuration, not code, and where authorization failure is impossible to ship by accident.",
+          "A fleet of utility companies each needed a customer portal talking to Oracle Utilities CCS. The v1 server I inherited when I joined in 2023 - an Express codebase that predates me, 58% mine by commit today - had authorization gaps and no clean way to vary behavior per tenant. Every new client meant forked code and re-audited security.",
+          "The v2 rebuild, started in early 2026, had one mandate: a single API where a new tenant is configuration, not code, and where authorization failure is impossible to ship by accident. Two tenants run production on it today, both launched on it; the rest of the fleet still runs on v1 and moves one tenant at a time.",
         ],
       },
       {
         heading: "Constraints",
         paragraphs: [
-          "Utility customers pay bills through this thing - it has to be up and it has to be right. Oracle CCS is the system of record, reached over OAuth 2.0 with per-tenant credentials. The team is small, so the architecture had to make the secure path the easy path.",
+          "Utility customers pay bills through this thing - it has to be up and it has to be right. Oracle CCS is the system of record, reached over OAuth 2.0 with per-tenant credentials. The team is small, so the architecture had to make the secure path the easy path - and the migration cannot pause billing, so both generations run side by side, the portals carry interceptors for either backend, and a tenant moves only when its parity checks pass.",
         ],
       },
       {
@@ -45,7 +45,7 @@ export const cases: CaseStudy[] = [
       },
     ],
     outcomes: [
-      "Every production tenant on one codebase - onboarding a tenant is config plus provisioning, not a fork.",
+      "On v2 a tenant is config plus provisioning, not a fork; two tenants launched on it, the first v1-to-v2 cutover is certified and awaiting DNS, and v1 stays patched and audited until the last one moves.",
       "Authorization is structural, not reviewed-in: the route contract enforces ownership checks on every endpoint.",
       "Billing drift surfaces through a detection-only reconciler instead of a silent write to either system.",
       "The integration patterns became the fleet standard other services adopt.",
@@ -57,16 +57,16 @@ export const cases: CaseStudy[] = [
     subtitle:
       "The internal developer platform that provisions, ships, and cost-tracks every client environment in the fleet.",
     meta: {
-      role: "Sole author and operator",
-      period: "2023 - present",
-      ownership: "Sole author",
+      role: "Primary author and operator",
+      period: "2026 - present",
+      ownership: "93% of commits",
       stack: ["Terraform", "Fastify 5", "React 18", "TypeScript", "MongoDB", "AWS SDK v3", "ECS Fargate"],
     },
     sections: [
       {
         heading: "Problem",
         paragraphs: [
-          "Client environments were hand-assembled: console clicks, tribal knowledge, drift nobody could see, and an AWS bill nobody could attribute. Onboarding a tenant took days of a senior engineer's attention and produced an environment subtly unlike the last one.",
+          "Client environments were hand-assembled: per-portal Terraform where it existed, console clicks where it did not, drift nobody could see, and an AWS bill nobody could attribute. Onboarding a tenant took days of a senior engineer's attention and produced an environment subtly unlike the last one.",
         ],
       },
       {
@@ -78,29 +78,30 @@ export const cases: CaseStudy[] = [
       {
         heading: "Architecture",
         paragraphs: [
-          "Nine Terraform stacks covering ~60 AWS resource types: Cognito user pools, ECS Fargate services, CloudFront distributions, WAFv2, Route 53, ElastiCache, KMS, Secrets Manager. Tenant environments are instantiated from templated modules - the same shape every time.",
+          "Nine Terraform stacks covering ~60 AWS resource types: Cognito user pools, ECS Fargate services, CloudFront distributions, WAFv2, Route 53, ElastiCache, KMS, Secrets Manager. Tenant environments are instantiated from templated modules - the same shape every time. The modules were imported from the fleet's earlier per-portal Terraform in March 2026 and consolidated; a colleague contributed the other 7% of commits - Entra ID SSO for the admin portal, the monitoring tab, and the production backend deploy path.",
+          "Where it stands: the control-plane state owns one live tenant, the shared ALB and WAF, and the next tenant's pre-provisioned stack. The live fleet still runs on its earlier per-portal Terraform and is being brought under the control-plane tenant by tenant, so the same environment is provisioned the same way whether it is the first or the last.",
           "On top sits a Fastify + React dashboard that runs Terraform plans and applies, detects drift against live state, enforces tag compliance, and attributes cost per client through the Cost Explorer API. Right-sizing, the shared ALB, and Fargate Spot all came out of that same cost data.",
-          "Delivery is gated rather than trusted. Blocking Snyk scans were rolled across the portal pipelines - scan first, ahead of build and deploy - and deploys authenticate through keyless OIDC, piloted on one environment and then rolled through the test fleet and production, so no long-lived AWS credentials sit in CI.",
+          "Delivery is gated rather than trusted. Blocking Snyk scans were rolled across the portal pipelines - scan first, ahead of build and deploy - and deploys authenticate through keyless OIDC, piloted on one environment and then rolled through the test fleet and production, so the deploy path holds no long-lived AWS credentials.",
           "The pipelines got faster while getting stricter. The admin portal's run went from about ten minutes to six by merging lint into the build and running the security scan in parallel; the core API's went from twelve to seven with esbuild transpile, cache-mounted installs and fail-fast, and the twenty-minute build hangs ended when the stale registry cache was dropped.",
         ],
       },
     ],
     outcomes: [
-      "Tenant onboarding went from days of manual assembly to a templated, repeatable workflow.",
+      "Tenant onboarding for new launches runs through the control-plane's templated modules and a written runbook; existing tenants are migrating onto the same state.",
       "~$110K/yr of AWS runs with per-client cost attribution and continuous drift detection.",
       "Portal pipelines block on a supply-chain scan before they build, and deploys carry no long-lived AWS credentials.",
       "Pipeline runs dropped from about ten minutes to six on the admin portal and twelve to seven on the core API, and the twenty-minute build hangs are gone.",
-      "6 client launches shipped through the platform - environment validation, deployment, rollback planning.",
+      "6 client launches owned end to end - environment validation, deployment, rollback planning - on the provisioning this platform consolidates.",
     ],
   },
   {
     slug: "ai-sdlc",
     title: "AI-Augmented SDLC",
     subtitle:
-      "Agentic tooling that drains the toil out of a small team running a large fleet - with humans keeping every approval gate.",
+      "Four AI tools built for a small team running a large fleet - one kept, one shelved on evidence, one designed and not yet run live, one shipped into its own case study - with humans keeping every approval gate.",
     meta: {
       role: "Sole author",
-      period: "2024 - present",
+      period: "2026 - present",
       ownership: "Sole author",
       stack: ["AWS Bedrock (Claude)", "GitHub", "Jira", "Claude Code plugins", "Python", "S3/JSONL"],
     },
@@ -114,23 +115,23 @@ export const cases: CaseStudy[] = [
       {
         heading: "Approach",
         paragraphs: [
-          "Every pipeline is built around human gates. Agents propose; people approve. State lives in labels on the ticket and PR, so any step is inspectable and reversible, and nothing merges without a named human owning the decision.",
+          "Every pipeline is built around human gates. Agents propose; people approve. State lives in labels on the ticket and PR, so any step is inspectable and reversible, and nothing merges without a named human owning the decision. The same rule applies to the tools themselves: each one is measured, and one that does not earn its keep is shelved rather than invested in further.",
         ],
       },
       {
         heading: "Architecture",
         paragraphs: [
-          "Auto-remediation: an AWS Bedrock service (Claude via bedrock-runtime) triages production alerts, correlates them with recent changes, and opens a fix PR for review.",
-          "Review: a Claude-based PR reviewer runs in CI on the core API and backend repositories, ahead of the human pass; it was pulled from the portal pipelines when it proved unreliable there.",
-          "Delivery: an agentic pipeline connects the ticket queue to GitHub - plan, branch, implement in an isolated worktree, open a draft PR - with three human approval gates between intent and merge.",
-          "Knowledge: an LLM-maintained knowledge base, including a pipeline that converts Oracle CCS reference documentation into validated training data for Bedrock.",
+          "Kept - review: a Claude-based PR reviewer runs in CI on the core API and backend repositories, ahead of the human pass. It was pulled from the five portal pipelines when it crashed on their builds; keeping it only where it worked was the decision.",
+          "Shelved - auto-remediation: an AWS Bedrock service (Claude via bedrock-runtime) built to triage production alerts, correlate them with recent changes, and open fix PRs. Never wired to a live alarm, it had zero invocations in the 30 days measured and 12 of its 13 remediation runs had failed; it was shelved in August 2026 on that evidence.",
+          "Designed - delivery: an agentic pipeline from the ticket queue to GitHub - plan, branch, implement in an isolated worktree, open a draft PR - with three human approval gates between intent and merge. Dry-run on one ticket, not yet run live.",
+          "Shipped - knowledge: the Bedrock knowledge-base agent over Oracle CCS documentation and data, curated-first with a flagged SQL fallback; it has its own case study.",
         ],
       },
     ],
     outcomes: [
-      "Alert-to-fix-PR and ticket-to-draft-PR run without an engineer driving - engineers review instead of type.",
+      "The reviewer runs on every core API and backend pull request ahead of the human pass; the knowledge-base agent answers Oracle CCS questions from curated documentation and data.",
+      "The auto-fix was shelved on measured evidence rather than kept alive because it was clever - the decision to stop is the result.",
       "Every merge still has a named human approver; the state machine makes each step auditable.",
-      "Packaged as config-driven tooling the whole team runs, not a personal script.",
     ],
   },
   {

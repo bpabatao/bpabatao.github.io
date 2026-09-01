@@ -1,7 +1,7 @@
 # updated 2026-08-29 - paste into LinkedIn > Projects > Terraform Control-Plane & IDP
 Terraform Control-Plane & IDP
 Associated with: ESC Partners / HometownHUB
-Nine Terraform stacks and a provisioning dashboard that turn tenant onboarding into a templated workflow - Cognito to CloudFront, WAF to KMS.
-Ownership: SOLE AUTHOR
+Nine Terraform stacks and a provisioning dashboard that turn tenant onboarding into a templated workflow - Cognito to CloudFront, WAF to KMS - with the fleet migrating onto it tenant by tenant.
+Ownership: PRIMARY AUTHOR · 93%
 Stack: Terraform, Fastify, React, ~60 AWS resource types
 https://bpabatao.github.io/case/control-plane/

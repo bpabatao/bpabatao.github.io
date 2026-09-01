@@ -30,7 +30,7 @@ export const profile = {
   summary:
     "I build multi-tenant SaaS platforms end to end - the Terraform that provisions them, the API they run on, and the product customers actually use. Staff Software Engineer - 8+ years in software, 5+ hands-on with AWS, and ~3 years leading cloud platforms: from AWS infrastructure-as-code to the shared backend services an entire product fleet runs on.",
   resumeSummary:
-    `I build multi-tenant SaaS platforms end to end - the Terraform that provisions them, the API they run on, and the product customers actually use. Staff Software Engineer - 8+ years in software, 5+ hands-on with AWS, and ~3 years leading cloud platforms: from AWS infrastructure-as-code to the shared backend services an entire product fleet runs on. Near-sole author of a Terraform control-plane and internal developer platform that ships ${fleetPortals.length} multi-tenant client portals on ECS Fargate, and primary author (78%) of the core REST API those portals are built on. Operates ~$110K/year of multi-tenant portal infrastructure on AWS, turns it into self-service, and builds the products on it - full-stack from React/TypeScript through Node/GraphQL - not just the infrastructure they run on.`,
+    `I build multi-tenant SaaS platforms end to end - the Terraform that provisions them, the API they run on, and the product customers actually use. Staff Software Engineer - 8+ years in software, 5+ hands-on with AWS, and ~3 years leading cloud platforms: from AWS infrastructure-as-code to the shared backend services an entire product fleet runs on. Primary author of the Terraform control-plane the fleet's provisioning is consolidating onto, and of both generations of the core REST API the ${fleetPortals.length} multi-tenant client portals run on - 58% of v1, 78% of v2. Operates ~$110K/year of multi-tenant portal infrastructure on AWS, turns it into self-service, and builds the products on it - full-stack from React/TypeScript through Node/GraphQL - not just the infrastructure they run on.`,
   location: "Italy (Remote)",
   availability: "STAFF/LEAD PLATFORM ROLES · CONSULTING · AWS / TERRAFORM / MULTI-TENANT",
   availabilityLine: `Open to Staff / Lead platform roles · Remote from Italy (CET), async-first · ${MARKETS}`,
@@ -46,7 +46,7 @@ export const profile = {
 export const metrics = [
   { value: "8+", label: "years in software" },
   { value: String(fleetPortals.length), label: "tenant portals" },
-  { value: "78%", label: "core API authorship" },
+  { value: "78%", label: "core API v2 authorship" },
   { value: "$110K/yr", label: "AWS under management" },
 ] as const;
 
@@ -108,24 +108,24 @@ export const currentJobs: Job[] = [
       { title: "Senior Full-Stack Engineer (Cloud)", period: { start: "2023-05", end: "2026-01" } },
     ],
     receipts: [
-      `Primary author (78%) of the core API middleware connecting ${fleetPortals.length} utility tenant portals to Oracle CCS via OAuth 2.0 - the auth, data-access, and integration patterns the whole fleet is built on.`,
-      "Sole author of the internal developer platform: a Terraform control-plane (9 stacks, ~60 AWS resource types) with a Fastify/React dashboard that self-service provisions every client environment.",
+      "Primary author of both generations of the fleet's core API - 58% of v1, which still serves most of the fleet, 78% of v2, which serves the first two - and of the auth, data-access and Oracle CCS patterns both share.",
+      "Primary author (93%) of the internal developer platform: a Terraform control-plane (9 stacks, ~60 AWS resource types) with a Fastify/React dashboard, onto which the fleet's provisioning is migrating tenant by tenant.",
       "De-facto technical lead of a 5-engineer team, reporting to the COO/CEO - set the platform standards the fleet adopts.",
       "Own ~$110K/yr of AWS across the production and test fleet - CI/CD, Datadog/CloudWatch observability, and FinOps tooling driving right-sizing and Fargate-Spot savings.",
-      "Built the team's AI tooling: Bedrock auto-remediation that opens fix PRs, a Claude PR reviewer in CI, and an agentic AI-SDLC pipeline with human approval gates.",
-      "Rolled blocking Snyk gates across the portal pipelines, then keyless OIDC deploys - pilot, test envs, prod on 4 repositories - taking long-lived AWS credentials out of CI.",
+      "Built and measured the team's AI tooling: kept the Claude PR reviewer on the core API and backend, shelved the Bedrock auto-fix after 30 days without a live invocation, shipped the knowledge-base agent.",
+      "Rolled blocking Snyk gates across the portal pipelines, then keyless OIDC deploys - pilot, test envs, prod on 4 repositories - taking long-lived AWS credentials out of the deploy path.",
       "Owned production go-live readiness for 6 client launches.",
       "Shipped the fix for an SSN identity-verification gap enabling account takeover - wrong-person matches on ~2.4% of one tenant's accounts - as attempt lockout plus ZIP disambiguation, flag-gated for per-tenant rollout.",
       "Built a fleet-wide customer-interaction audit trail: a capture hook mapping authenticated actions and page views, tenant-scoped/IDOR-safe admin history API with CSV export and rate limiting, and 90-day retention.",
       "Designed and shipped a multi-account usage-extract feature (backend API + frontend modal) letting multi-account customers export combined billed usage as one CSV, closing an admin-bypass IDOR gap found in review.",
     ],
     resumeReceipts: [
-      `**Primary author (78%) of the core REST API middleware** connecting ${fleetPortals.length} utility tenant portals to Oracle CCS via OAuth 2.0 - the multi-tenant auth, data-access, and integration patterns the whole fleet is built on.`,
-      "**Sole author of the internal developer platform:** a Terraform control-plane (9 stacks, ~60 AWS resource types) with a Fastify/React dashboard that self-service provisions and ships every client environment - Cognito, ECS Fargate, CloudFront, WAFv2, Secrets Manager, Route 53, ElastiCache, KMS - turning tenant onboarding into a templated, repeatable workflow.",
+      "**Primary author of both generations of the fleet's core REST API** - 58% of v1, which still serves most of the fleet, and 78% of v2, which serves the first two tenants - owning the multi-tenant auth, data-access and Oracle CCS (OAuth 2.0) integration patterns both generations share.",
+      "**Primary author (93%) of the internal developer platform:** a Terraform control-plane (9 stacks, ~60 AWS resource types - Cognito, ECS Fargate, CloudFront, WAFv2, Secrets Manager, Route 53, ElastiCache, KMS) with a Fastify/React dashboard that plans, applies and cost-attributes; the fleet's per-portal provisioning is consolidating onto it tenant by tenant.",
       "**De-facto technical lead of a 5-engineer team** - most senior hands-on engineer, reporting to the COO/CEO; set the platform standards the fleet adopts (provisioning modules, CI/CD, security guardrails).",
-      "**Rolled blocking Snyk gates across the portal pipelines** - scan first, ahead of build and deploy - then keyless OIDC deploys through pilot, all test environments, and production on 4 repositories, taking long-lived AWS credentials out of CI.",
+      "**Rolled blocking Snyk gates across the portal pipelines** - scan first, ahead of build and deploy - then keyless OIDC deploys through pilot, all test environments, and production on 4 repositories, taking long-lived AWS credentials out of the deploy path.",
       "**Built an automated batch pipeline** syncing multi-account customers between Oracle CCS and Invoice Cloud in 5K-record batches - idempotency checks, error tracking, and automated success/failure email reporting.",
-      "**Built the team's AI-augmented developer tooling** - an AWS Bedrock auto-remediation service (Claude via bedrock-runtime) that triages alerts and opens fix PRs, an automated Claude PR-reviewer in CI, an agentic AI-SDLC pipeline (Jira + GitHub, with human approval gates), and an LLM-maintained knowledge base built with Python data pipelines.",
+      "**Built, measured and pruned the team's AI tooling** - kept a Claude PR reviewer in CI on the core API and backend, shelved a Bedrock auto-remediation service that was never wired to a live alarm, shipped a Bedrock knowledge-base agent (curated-first retrieval, flagged SQL fallback), and designed a ticket-to-PR pipeline with human gates, not yet live.",
       `**Own and operate the multi-tenant portal infrastructure as sole platform engineer** - ~$110K/year of AWS across the ${fleetPortals.length}-tenant production and test fleet - with CI/CD (Bitbucket Pipelines), Datadog / CloudWatch observability, on-call incident response, and cost-attribution tooling (Cost Explorer API) driving right-sizing, shared-ALB, and Fargate-Spot savings.`,
       "**Owned production go-live readiness for 6 client launches** - primary engineer on four, core contributor on two - environment validation, deployment, rollback planning, and stabilization.",
     ],
@@ -256,8 +256,8 @@ export const flagships: Flagship[] = [
     jobId: "hth",
     title: "Multi-Tenant Core API",
     outcome:
-      `One API, ${fleetPortals.length} utility portals. OAuth 2.0 into Oracle CCS, per-tenant behavior composed from config, and authorization gates on every endpoint.`,
-    ownership: "PRIMARY AUTHOR · 78%",
+      "Two generations of one fleet API - v1 still serving most of the fleet, v2 serving the first two - with OAuth 2.0 into Oracle CCS, per-tenant behavior composed from config, and authorization gates on every endpoint.",
+    ownership: "PRIMARY AUTHOR · 58% V1 / 78% V2",
     stack: ["Fastify 5", "TypeScript", "Zod", "MongoDB", "ECS Fargate"],
   },
   {
@@ -266,8 +266,8 @@ export const flagships: Flagship[] = [
     jobId: "hth",
     title: "Terraform Control-Plane & IDP",
     outcome:
-      "Nine Terraform stacks and a provisioning dashboard that turn tenant onboarding into a templated workflow - Cognito to CloudFront, WAF to KMS.",
-    ownership: "SOLE AUTHOR",
+      "Nine Terraform stacks and a provisioning dashboard that turn tenant onboarding into a templated workflow - Cognito to CloudFront, WAF to KMS - with the fleet migrating onto it tenant by tenant.",
+    ownership: "PRIMARY AUTHOR · 93%",
     stack: ["Terraform", "Fastify", "React", "~60 AWS resource types"],
   },
   {
@@ -275,7 +275,7 @@ export const flagships: Flagship[] = [
     jobId: "hth",
     title: "AI-Augmented SDLC",
     outcome:
-      "Bedrock auto-remediation that opens fix PRs, a Claude reviewer in CI, and an agentic ticket-to-PR pipeline where humans keep every approval gate.",
+      "Three AI tools built and measured: a Claude reviewer kept where it earned its place, a Bedrock auto-fix shelved on evidence, and a ticket-to-PR pipeline designed with human gates and not yet run live.",
     ownership: "SOLE AUTHOR",
     stack: ["AWS Bedrock", "Claude", "GitHub", "Jira"],
   },
