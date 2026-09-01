@@ -41,7 +41,10 @@ test("skills.txt lists Bedrock and WAF once", () => {
 test("a position description that overflows LinkedIn's cap keeps the top receipts and says what it dropped", () => {
   const fat: Job = {
     ...currentJobs[0],
-    positions: undefined,
+    positions: [
+      { title: "Staff Software Engineer", period: { start: "2025-09", end: null } },
+      { title: "Senior Engineer", period: { start: "2023-05", end: "2025-08" } },
+    ],
     receipts: Array.from({ length: 30 }, (_, i) => `Receipt ${i} ${"x".repeat(180)}`),
   };
   const body = bodyOf(header("Experience") + experience(fat));
@@ -49,4 +52,5 @@ test("a position description that overflows LinkedIn's cap keeps the top receipt
   assert.ok(body.includes("Receipt 0 "), "keeps the first receipt");
   assert.match(body, /- \d+ more at https:\/\//, "names what did not fit");
   assert.ok(!body.includes("Receipt 29 "), "drops the tail");
+  assert.ok(body.includes("## Senior Engineer"), "the earlier position header survives and is counted");
 });

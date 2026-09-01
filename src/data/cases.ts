@@ -47,7 +47,7 @@ export const cases: CaseStudy[] = [
     outcomes: [
       "Every production tenant on one codebase - onboarding a tenant is config plus provisioning, not a fork.",
       "Authorization is structural, not reviewed-in: the route contract enforces ownership checks on every endpoint.",
-      "Every admin action, read or write, is attributable to the person who took it.",
+      "Billing drift surfaces through a detection-only reconciler instead of a silent write to either system.",
       "The integration patterns became the fleet standard other services adopt.",
     ],
   },
@@ -80,16 +80,16 @@ export const cases: CaseStudy[] = [
         paragraphs: [
           "Nine Terraform stacks covering ~60 AWS resource types: Cognito user pools, ECS Fargate services, CloudFront distributions, WAFv2, Route 53, ElastiCache, KMS, Secrets Manager. Tenant environments are instantiated from templated modules - the same shape every time.",
           "On top sits a Fastify + React dashboard that runs Terraform plans and applies, detects drift against live state, enforces tag compliance, and attributes cost per client through the Cost Explorer API. Right-sizing, the shared ALB, and Fargate Spot all came out of that same cost data.",
-          "Delivery is gated rather than trusted. A blocking Snyk scan runs ahead of build and deploy on every pipeline across 14 repositories, and deploys authenticate through keyless OIDC - piloted on one environment, then rolled through the test fleet and production - so no long-lived AWS credentials sit in CI.",
-          "The same pipelines got faster while getting stricter: esbuild transpile for the Docker build, lint and scanning in parallel, cache mounts and fail-fast took a run from about ten minutes to six and ended the twenty-minute build hangs. On the observability side a single composite index on the sessions view - tenant, environment, user, timestamp - cut its query time 43x, and RUM sampling was tuned to keep session replay on every error without paying for it on every session.",
+          "Delivery is gated rather than trusted. Blocking Snyk scans were rolled across the portal pipelines - scan first, ahead of build and deploy - and deploys authenticate through keyless OIDC, piloted on one environment and then rolled through the test fleet and production, so no long-lived AWS credentials sit in CI.",
+          "The pipelines got faster while getting stricter. The admin portal's run went from about ten minutes to six by merging lint into the build and running the security scan in parallel; the core API's went from twelve to seven with esbuild transpile, cache-mounted installs and fail-fast, and the twenty-minute build hangs ended when the stale registry cache was dropped.",
         ],
       },
     ],
     outcomes: [
       "Tenant onboarding went from days of manual assembly to a templated, repeatable workflow.",
       "~$110K/yr of AWS runs with per-client cost attribution and continuous drift detection.",
-      "Every pipeline in the fleet blocks on a supply-chain scan, and deploys carry no long-lived AWS credentials.",
-      "A pipeline run costs about six minutes instead of ten, with the twenty-minute build hangs gone.",
+      "Portal pipelines block on a supply-chain scan before they build, and deploys carry no long-lived AWS credentials.",
+      "Pipeline runs dropped from about ten minutes to six on the admin portal and twelve to seven on the core API, and the twenty-minute build hangs are gone.",
       "6 client launches shipped through the platform - environment validation, deployment, rollback planning.",
     ],
   },
@@ -121,7 +121,7 @@ export const cases: CaseStudy[] = [
         heading: "Architecture",
         paragraphs: [
           "Auto-remediation: an AWS Bedrock service (Claude via bedrock-runtime) triages production alerts, correlates them with recent changes, and opens a fix PR for review.",
-          "Review: a Claude-based PR reviewer runs in CI on every pull request, ahead of the human pass.",
+          "Review: a Claude-based PR reviewer runs in CI on the core API and backend repositories, ahead of the human pass; it was pulled from the portal pipelines when it proved unreliable there.",
           "Delivery: an agentic pipeline connects the ticket queue to GitHub - plan, branch, implement in an isolated worktree, open a draft PR - with three human approval gates between intent and merge.",
           "Knowledge: an LLM-maintained knowledge base, including a pipeline that converts Oracle CCS reference documentation into validated training data for Bedrock.",
         ],
@@ -203,7 +203,7 @@ export const cases: CaseStudy[] = [
         heading: "Architecture",
         paragraphs: [
           "Curated first. Questions route through Bedrock's RetrieveAndGenerate over a curated corpus - an account-type catalog covering collective, secondary, usage, registration and service states - and answers cite the source they came from, with a badge marking whether that source is authoritative for the environment being asked about.",
-          "Generated SQL is the fallback, not the default. It sits behind an environment flag and a separate grantable permission, so a deployment can run the agent with the SQL path entirely off. A source selector lets the asker choose documentation, live data, or automatic.",
+          "Generated SQL is the fallback, not the default. It sits behind an environment kill-switch and a separate grantable permission - flip the switch and the agent runs curated-only - and a source selector lets the asker choose documentation, live data, or automatic.",
           "The guardrails are the product. The prompt forbids claiming absence - the model may not say a thing does not exist merely because a lookup returned nothing - and is guarded against inventing terms, confusing environments, or mislabelling a count column. Tenant routing is explicit, scoped per tenant family, so a question can only reach the data it is entitled to.",
           "The corpus does not go stale: a scheduled Fargate task refreshes it, with the task role scoped to exactly the S3 and Bedrock actions that refresh needs.",
         ],
@@ -211,7 +211,7 @@ export const cases: CaseStudy[] = [
     ],
     outcomes: [
       "Answers arrive with citations and an authoritative-source badge, so a reader can tell grounded fact from generated text.",
-      "The generated-SQL path ships off by default and turns on per environment behind its own permission.",
+      "The generated-SQL path sits behind an environment kill-switch and its own grantable permission, so any deployment can run curated-only with one flag.",
       "The agent refuses to claim something is absent - the failure mode that quietly misleads is the one it is built to avoid.",
     ],
   },
@@ -252,7 +252,7 @@ export const cases: CaseStudy[] = [
     outcomes: [
       "Every admin action, read or write, is attributable to the person who took it.",
       "The error rate reflects real failures, and account anomalies surface as a view instead of a hunch.",
-      "One index took the busiest view from slow to instant, and AI spend is attributed rather than absorbed.",
+      "One composite index took the sessions view from 102 seconds to 2.4 - 43x, measured live - and AI spend is attributed rather than absorbed.",
     ],
   },
   {
@@ -282,14 +282,14 @@ export const cases: CaseStudy[] = [
       {
         heading: "Architecture",
         paragraphs: [
-          "At the front door: an identity-verification gap that enabled account takeover was closed - wrong-person matches on roughly 2.4% of accounts fixed, attempt lockout added, and ZIP-based disambiguation put in front of the brute-forceable last-four space.",
+          "At the front door: the fix for an identity-verification gap that enabled account takeover - the last-four plus street match resolved to the wrong person on roughly 2.4% of one tenant's accounts - shipped as attempt lockout plus ZIP-based disambiguation, flag-gated so it is enabled tenant by tenant rather than switched on fleet-wide.",
           "In the browser: direct client-side access to the identity provider was removed, so email and password changes go through the API instead of from the page. A build-time content-security policy injects environment-aware provider URLs, and the real client IP is forwarded to the provider so its adaptive threat protection sees the actual source rather than the load balancer - with an alarm when that forwarding falls back.",
           "In the console: route permissions moved from scattered checks to one declarative config behind a global guard, with every destructive operation permission-gated. IAM roles are recorded in Terraform as the source of truth - least-privilege developer policy, per-client task roles, deploy roles named and documented rather than inherited.",
         ],
       },
     ],
     outcomes: [
-      "The registration path no longer matches the wrong person, and repeated attempts are locked out.",
+      "The registration fix ships flag-gated per tenant - attempt lockout and ZIP disambiguation - enabled realm by realm rather than switched on fleet-wide.",
       "No page holds identity-provider credentials, and threat protection sees the true client IP.",
       "Permissions are declared in one place and enforced by a global guard, and every role lives in Terraform.",
     ],
