@@ -13,7 +13,7 @@ test("model uses ASCII separators, resume overlays and Present", () => {
   assert.match(m.experience[0].dates, /^Sep 2025 - Present$/);
   assert.deepEqual(m.experience[0].previous, [{ title: "Senior Full-Stack Engineer (Cloud)", dates: "May 2023 - Jan 2026" }]);
   assert.equal(m.experience[0].bullets.length, 8);
-  assert.equal(m.experience[0].bullets[0].lead, "Primary author (78%) of the core REST API middleware");
+  assert.equal(m.experience[0].bullets[0].lead, "Primary author of both generations of the fleet's core REST API");
   assert.equal(m.experience[1].company, "Nmblr - Biopharma Strategy & Collaboration Platform");
   assert.equal(m.earlier.length, 6);
   assert.equal(m.earlier.find((r) => r.company === "Ordermentum")?.contract, true);

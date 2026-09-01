@@ -4,16 +4,16 @@ ESC Partners / HometownHUB · Contract
 Sep 2025 - Present
 New York, USA (Remote)
 
-- Primary author (78%) of the core API middleware connecting 7 utility tenant portals to Oracle CCS via OAuth 2.0 - the auth, data-access, and integration patterns the whole fleet is built on.
-- Sole author of the internal developer platform: a Terraform control-plane (9 stacks, ~60 AWS resource types) with a Fastify/React dashboard that self-service provisions every client environment.
+- Primary author of both generations of the fleet's core API - 58% of v1, which still serves most of the fleet, 78% of v2, which serves the first two - and of the auth, data-access and Oracle CCS patterns both share.
+- Primary author (93%) of the internal developer platform: a Terraform control-plane (9 stacks, ~60 AWS resource types) with a Fastify/React dashboard, onto which the fleet's provisioning is migrating tenant by tenant.
 - De-facto technical lead of a 5-engineer team, reporting to the COO/CEO - set the platform standards the fleet adopts.
 - Own ~$110K/yr of AWS across the production and test fleet - CI/CD, Datadog/CloudWatch observability, and FinOps tooling driving right-sizing and Fargate-Spot savings.
-- Built the team's AI tooling: Bedrock auto-remediation that opens fix PRs, a Claude PR reviewer in CI, and an agentic AI-SDLC pipeline with human approval gates.
-- Rolled blocking Snyk gates across the portal pipelines, then keyless OIDC deploys - pilot, test envs, prod on 4 repositories - taking long-lived AWS credentials out of CI.
+- Built and measured the team's AI tooling: kept the Claude PR reviewer on the core API and backend, shelved the Bedrock auto-fix after 30 days without a live invocation, shipped the knowledge-base agent.
+- Rolled blocking Snyk gates across the portal pipelines, then keyless OIDC deploys - pilot, test envs, prod on 4 repositories - taking long-lived AWS credentials out of the deploy path.
 - Owned production go-live readiness for 6 client launches.
 - Shipped the fix for an SSN identity-verification gap enabling account takeover - wrong-person matches on ~2.4% of one tenant's accounts - as attempt lockout plus ZIP disambiguation, flag-gated for per-tenant rollout.
 - Built a fleet-wide customer-interaction audit trail: a capture hook mapping authenticated actions and page views, tenant-scoped/IDOR-safe admin history API with CSV export and rate limiting, and 90-day retention.
-- Designed and shipped a multi-account usage-extract feature (backend API + frontend modal) letting multi-account customers export combined billed usage as one CSV, closing an admin-bypass IDOR gap found in review.
+- 1 more at https://bpabatao.github.io
 
 ## Senior Full-Stack Engineer (Cloud)
 ESC Partners / HometownHUB · Contract
