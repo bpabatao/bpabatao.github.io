@@ -20,28 +20,26 @@ function about(): string {
 /* One block per LinkedIn position; bullets belong to the latest position only. */
 export function experience(j: Job): string {
   const positions = j.positions?.length ? j.positions : [{ title: j.role, period: j.period }];
-  return positions
-    .map((p, i) => {
-      const head = [`## ${p.title}`, j.employmentType ? `${j.company} · ${j.employmentType}` : j.company, formatPeriod(p.period), j.location ?? ""].filter(Boolean);
-      if (i !== 0) return head.join("\n");
-      /* LinkedIn caps a position description at LIMITS.description. Fit what we can, in order,
-         and say plainly what did not fit rather than throwing or dropping it silently. */
-      const bullets = j.receipts.map((r) => `- ${plainText(r)}`);
-      const base = [...head, ""].join("\n").length;
-      const kept: string[] = [];
-      let used = base;
-      for (const b of bullets) {
-        const tail = bullets.length - kept.length - 1;
-        const reserve = tail > 0 ? `\n- ${tail} more at ${profile.siteUrl}`.length : 0;
-        if (used + 1 + b.length + reserve > LIMITS.description) break;
-        kept.push(b);
-        used += 1 + b.length;
-      }
-      const dropped = bullets.length - kept.length;
-      if (dropped > 0) kept.push(`- ${dropped} more at ${profile.siteUrl}`);
-      return [...head, "", ...kept].join("\n");
-    })
-    .join("\n\n");
+  const heads = positions.map((p) =>
+    [`## ${p.title}`, j.employmentType ? `${j.company} · ${j.employmentType}` : j.company, formatPeriod(p.period), j.location ?? ""].filter(Boolean).join("\n"),
+  );
+  /* LinkedIn caps a position description at LIMITS.description. Every header - the latest
+     position and each earlier one - is fixed cost; the bullets get whatever is left, in order,
+     and the file says plainly what did not fit rather than throwing or dropping it silently. */
+  const bullets = j.receipts.map((r) => `- ${plainText(r)}`);
+  const fixed = heads.join("\n\n").length + 1; // +1: the blank line before the bullets
+  const kept: string[] = [];
+  let used = fixed;
+  for (const b of bullets) {
+    const tail = bullets.length - kept.length - 1;
+    const reserve = tail > 0 ? `\n- ${tail} more at ${profile.siteUrl}`.length : 0;
+    if (used + 1 + b.length + reserve > LIMITS.description) break;
+    kept.push(b);
+    used += 1 + b.length;
+  }
+  const dropped = bullets.length - kept.length;
+  if (dropped > 0) kept.push(`- ${dropped} more at ${profile.siteUrl}`);
+  return [[heads[0], "", ...kept].join("\n"), ...heads.slice(1)].join("\n\n");
 }
 
 function project(p: SecondaryProject): string {

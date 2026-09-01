@@ -448,7 +448,7 @@ export function CcsKbDiagram() {
           flag + permission
         </Label>
         <Label x={460} y={158} size={8.5}>
-          off by default
+          kill-switch to curated-only
         </Label>
       </Box>
 
