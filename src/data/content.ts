@@ -6,7 +6,7 @@ export interface Period {
 
 /* Tenant portals live in production on the core API + control-plane.
    Public production URLs only - internal/test domains never ship here.
-   IPU intentionally absent until it launches.
+   One signed tenant intentionally absent until it launches.
    `key` feeds the case-study diagram; tenant count everywhere derives from this list. */
 export const fleetPortals: { key: string; tenant: string; url: string }[] = [
   { key: "delta", tenant: "Delta Utilities", url: "https://mydu.com" },
