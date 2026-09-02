@@ -1,6 +1,14 @@
 # updated 2026-08-29 - paste into LinkedIn > Skills (one per line)
 AWS
+Terraform
+TypeScript
+Platform Engineering
+Multi-tenant provisioning
+Internal Developer Platform
 ECS Fargate
+System Design & Architecture
+Infrastructure-as-Code
+Node.js
 CloudFront
 Cognito
 RDS
@@ -14,13 +22,10 @@ Route 53
 VPC
 ALB
 Elastic Beanstalk
-Terraform
 Docker
 Kubernetes
 Linux
 OpenSearch
-Internal Developer Platform
-Multi-tenant provisioning
 Bitbucket Pipelines
 GitHub Actions
 FinOps
@@ -30,10 +35,8 @@ AIOps auto-remediation
 Agentic SDLC pipelines
 AI code review
 LLM knowledge bases
-Node.js
 Fastify
 Express
-TypeScript
 Python
 REST APIs
 GraphQL
@@ -55,8 +58,5 @@ Redux
 Styled Components
 Tailwind
 Next.js
-Platform Engineering
-Infrastructure-as-Code
-System Design & Architecture
 Security & Compliance
 Incident Response
