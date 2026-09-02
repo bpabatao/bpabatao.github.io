@@ -9,8 +9,6 @@ on:
 
 permissions:
   contents: read
-  pages: write
-  id-token: write
 
 concurrency:
   group: pages-${{ github.ref }}
@@ -41,6 +39,10 @@ jobs:
   deploy:
     needs: build
     if: github.event_name != 'pull_request'
+    # the only job that publishes; the PR-triggered build job gets read-only
+    permissions:
+      pages: write
+      id-token: write
     runs-on: ubuntu-latest
     environment:
       name: github-pages
