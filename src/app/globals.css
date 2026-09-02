@@ -40,7 +40,7 @@
   --ink: #141619;
   --body: #3a4046;
   --muted: #5f666e;
-  --accent: #c24100;
+  --accent: #b83d00;
   --accent-contrast: #ffffff;
   --ok: #15803d;
   color-scheme: light;
@@ -332,17 +332,35 @@ h3 {
   }
 }
 
+.skip-link {
+  position: absolute;
+  left: 1rem;
+  top: -100%;
+  z-index: 100;
+  padding: 0.5rem 0.75rem;
+  background: var(--accent);
+  color: var(--accent-contrast);
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+}
+.skip-link:focus {
+  top: 1rem;
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
   }
-  .status-dot {
+  .status-dot,
+  .portal-dot {
     animation: none;
   }
+  /* infinite animations must stop, not restart every 0.01ms */
   *,
   *::before,
   *::after {
     animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
 }

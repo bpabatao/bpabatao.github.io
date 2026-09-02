@@ -97,3 +97,13 @@ test("share cards declare their size, alt text and type so unfurlers do not gues
     assert.match(html, /property="og:image:alt" content="[^"]+"/, "og:image:alt is present and non-empty");
   }
 });
+
+test("a skip link precedes the header and targets the main landmark on every page", () => {
+  const pages = [home, ...cases.map((c) => readFileSync(resolve(ROOT, `out/case/${c.slug}/index.html`), "utf8"))];
+  for (const html of pages) {
+    const skip = html.indexOf('class="skip-link"');
+    const header = html.indexOf("<header");
+    assert.ok(skip > 0 && header > 0 && skip < header, "skip link is the first focusable thing");
+    assert.ok(html.includes('href="#main"') && html.includes('id="main"'), "skip link target exists");
+  }
+});

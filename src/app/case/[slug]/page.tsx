@@ -49,7 +49,7 @@ export default async function CasePage({ params }: Props) {
   const Diagram = diagrams[cs.slug as keyof typeof diagrams];
 
   return (
-    <main className="mx-auto w-full max-w-3xl px-6 py-16">
+    <main id="main" className="mx-auto w-full max-w-3xl px-6 py-16">
       <Link href="/#projects" className="font-mono text-xs text-muted transition-colors hover:text-accent">
         ← back to index
       </Link>
