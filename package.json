@@ -12,7 +12,7 @@
     "test": "NODE_OPTIONS=--disable-warning=MODULE_TYPELESS_PACKAGE_JSON node scripts/format.test.ts && NODE_OPTIONS=--disable-warning=MODULE_TYPELESS_PACKAGE_JSON node scripts/content.test.ts && NODE_OPTIONS=--disable-warning=MODULE_TYPELESS_PACKAGE_JSON node scripts/resume-model.test.ts && NODE_OPTIONS=--disable-warning=MODULE_TYPELESS_PACKAGE_JSON node scripts/render-resume.test.ts && NODE_OPTIONS=--disable-warning=MODULE_TYPELESS_PACKAGE_JSON node scripts/render-linkedin.test.ts && NODE_OPTIONS=--disable-warning=MODULE_TYPELESS_PACKAGE_JSON node scripts/check-profile.test.ts && NODE_OPTIONS=--disable-warning=MODULE_TYPELESS_PACKAGE_JSON node scripts/render-og.test.ts && python3 scripts/docx.py --selftest"
   },
   "dependencies": {
-    "next": "^15.5.20",
+    "next": "^16.3.4",
     "react": "^19.2.7",
     "react-dom": "^19.2.7"
   },
