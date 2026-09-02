@@ -1,6 +1,11 @@
 # updated 2026-08-29 - paste into LinkedIn > About
-I build multi-tenant SaaS platforms end to end - the Terraform that provisions them, the API they run on, and the product customers actually use. Staff Software Engineer - 8+ years in software, 5+ hands-on with AWS, and ~3 years leading cloud platforms: from AWS infrastructure-as-code to the shared backend services an entire product fleet runs on.
+Staff Software Engineer - I build the platform other engineers ship on. 8+ years in software, 5+ on AWS, ~3 leading a multi-tenant SaaS platform: primary author (93%) of the Terraform control-plane the fleet is migrating onto, primary author of both generations of the core REST API behind 7 utility client portals (58% of v1, 78% of v2), and its operator - CI/CD, observability, on-call, cost.
 
 Currently:
-- Staff Software Engineer, Platform & Product, ESC Partners / HometownHUB: De-facto technical lead of a 5-engineer team, reporting to the COO/CEO: set the standards the fleet adopts, specify the CCS-side (IWS) changes the vendor team implements, own the team's AWS access as Terraform.
-- Senior Full Stack Engineer, Nmblr: One of 3 core engineers on an ISO 27001-certified biopharma strategy SaaS in private beta with enterprise pharma clients.
+
+- Staff Software Engineer, Platform & Product, ESC Partners / HometownHUB: De-facto technical lead of a 5-engineer team, reporting to the COO/CEO: set the standards the fleet adopts, specify the CCS-side (IWS) changes the vendor team implements, own the team's AWS access as Terraform. Own ~$110K/yr of AWS across the production and test fleet - CI/CD, Datadog/CloudWatch observability, and FinOps tooling driving right-sizing and Fargate-Spot savings. Owned production go-live readiness for 6 client launches.
+- Senior Full Stack Engineer, Nmblr: One of 3 core engineers on an ISO 27001-certified biopharma strategy SaaS in private beta with enterprise pharma clients. Originated two subsystems from scratch: a DMMF-driven strategy clone engine and the Edge archive/restore isolation system. Contributed to real-time collaboration (GraphQL subscriptions), OpenAI-backed generation features, and platform security (OWASP/IDOR, JWT sessions).
+
+How I work: Boring, proven tech. Clever is what someone decodes at 3am. Standard library before a dependency, a dependency before a framework. Root cause, not symptom. Bugs get reproduced end to end before they get fixed. One guard in the shared path beats a patch in every caller. Security is the default. Every endpoint ships with authorization checks. IDOR is assumed possible until proven otherwise. Smallest change that works. Tight scope, flagged adjacencies, verified before commit. The best code is the code never written.
+
+Open to Staff / Lead platform roles - Remote from Italy (CET), async-first, US and EU teams
