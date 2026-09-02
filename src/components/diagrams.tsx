@@ -6,7 +6,7 @@ import { fleetPortals } from "@/data/content";
 
 const mono = "var(--font-jetbrains), ui-monospace, monospace";
 
-function Packet({ d, dur, delay = "0s", approve = false }: { d: string; dur: string; delay?: string; approve?: boolean }) {
+export function Packet({ d, dur, delay = "0s", approve = false }: { d: string; dur: string; delay?: string; approve?: boolean }) {
   return (
     <circle
       r={3.5}
@@ -21,7 +21,7 @@ function Packet({ d, dur, delay = "0s", approve = false }: { d: string; dur: str
   );
 }
 
-function Box({
+export function Box({
   x,
   y,
   w,
@@ -42,7 +42,7 @@ function Box({
   );
 }
 
-function Label({
+export function Label({
   x,
   y,
   size = 10,
@@ -66,11 +66,11 @@ function Label({
   );
 }
 
-function Line({ d }: { d: string }) {
+export function Line({ d }: { d: string }) {
   return <path d={d} fill="none" stroke="var(--line)" strokeWidth={1} />;
 }
 
-const TENANTS = fleetPortals.map((t) => t.key);
+export const TENANTS = fleetPortals.map((t) => t.key);
 const LAST_X = 42 + (TENANTS.length - 1) * 78;
 
 /* One sentence per diagram: the SVG's accessible name on every screen, and the visible caption on phones,
@@ -78,7 +78,7 @@ const LAST_X = 42 + (TENANTS.length - 1) * 78;
 export const captions = {
   "core-api": `${TENANTS.length} tenant portals connect through the core API to Oracle CCS over OAuth 2.0`,
   "control-plane": `The provisioning dashboard drives the Terraform control-plane, which provisions ${TENANTS.length} tenant environments`,
-  "ai-sdlc": "Alerts flow through Bedrock triage to fix PRs and human review; tickets flow through planning and two human gates to merge",
+  "ai-sdlc": "Alerts were routed through Bedrock triage to fix PRs and human review, a lane shelved in August 2026; tickets flow through planning and two human gates to a merge, designed and dry-run",
   "nmblr": "A DMMF-driven clone engine copies a finalised strategy, and a dependency registry cascades archive and restore across dependent entities",
   "ccs-kb": "A question routes through the knowledge-base agent to a curated corpus first, with generated SQL against tenant-scoped CCS only as a flagged fallback",
   "observability": "Portals, the core API and outbound providers feed one capture layer that redacts payloads, raises anomaly alerts, and writes to retention tiers",
@@ -144,7 +144,7 @@ export function CoreApiDiagram() {
   );
 }
 
-const RESOURCES = ["cognito · ecs fargate · cloudfront · wafv2", "route 53 · elasticache · kms · secrets manager"];
+export const RESOURCES = ["cognito · ecs fargate · cloudfront · wafv2", "route 53 · elasticache · kms · secrets manager"];
 
 export function ControlPlaneDiagram() {
   return (
@@ -202,7 +202,7 @@ export function ControlPlaneDiagram() {
   );
 }
 
-function Gate({ x, y }: { x: number; y: number }) {
+export function Gate({ x, y }: { x: number; y: number }) {
   return (
     <g>
       <rect
@@ -225,7 +225,7 @@ export function AiSdlcDiagram() {
   return (
     <svg viewBox="0 0 640 240" role="img" aria-label={captions["ai-sdlc"]} className="block w-full">
       <Label x={8} y={26} size={9} anchor="start">
-        AUTO-REMEDIATION
+        AUTO-REMEDIATION · shelved aug 2026
       </Label>
       <Label x={8} y={106} size={9} anchor="start">
         TICKET → MERGE
