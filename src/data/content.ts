@@ -113,7 +113,7 @@ export const currentJobs: Job[] = [
       "De-facto technical lead of a 5-engineer team, reporting to the COO/CEO: set the standards the fleet adopts, specify the CCS-side (IWS) changes the vendor team implements, own the team's AWS access as Terraform.",
       "Own ~$110K/yr of AWS across the production and test fleet - CI/CD, Datadog/CloudWatch observability, and FinOps tooling driving right-sizing and Fargate-Spot savings.",
       "Owned production go-live readiness for 6 client launches.",
-      "Primary author of both generations of the fleet's core API - 58% of v1, which still serves most of the fleet, 78% of v2, which serves the first two - and of the auth, data-access and Oracle CCS patterns both share.",
+      "Primary author of both generations of the fleet's core API - 58% of v1, serving all seven launched tenants; 78% of v2, in production for the first ahead of its cutover - and the auth and Oracle CCS patterns both share.",
       "Primary author (93%) of the internal developer platform: a Terraform control-plane (9 stacks, ~60 AWS resource types) with a Fastify/React dashboard, onto which the fleet's provisioning is migrating tenant by tenant.",
       "Rolled blocking Snyk gates across the portal pipelines, then keyless OIDC deploys - pilot, test envs, prod on 4 repositories - taking long-lived AWS credentials out of the deploy path.",
       "Shipped the fix for an SSN identity-verification gap enabling account takeover - wrong-person matches on ~2.4% of one tenant's accounts - as attempt lockout plus ZIP disambiguation, flag-gated for per-tenant rollout.",
@@ -122,7 +122,7 @@ export const currentJobs: Job[] = [
       "Designed and shipped a multi-account usage-extract feature (backend API + frontend modal) letting multi-account customers export combined billed usage as one CSV, closing an admin-bypass IDOR gap found in review.",
     ],
     resumeReceipts: [
-      "**Primary author of both generations of the fleet's core REST API** - 58% of v1, which still serves most of the fleet, and 78% of v2, which serves the first two tenants - owning the multi-tenant auth, data-access and Oracle CCS (OAuth 2.0) integration patterns both generations share.",
+      "**Primary author of both generations of the fleet's core REST API** - 58% of v1, which serves all seven launched tenants, and 78% of v2, in production for the first tenant ahead of its cutover - owning the multi-tenant auth, data-access and Oracle CCS (OAuth 2.0) integration patterns both generations share.",
       "**Primary author (93%) of the internal developer platform:** a Terraform control-plane (9 stacks, ~60 AWS resource types - Cognito, ECS Fargate, CloudFront, WAFv2, Secrets Manager, Route 53, ElastiCache, KMS) with a Fastify/React dashboard that plans, applies and cost-attributes; the fleet's per-portal provisioning is consolidating onto it tenant by tenant.",
       "**De-facto technical lead of a 5-engineer team** - most senior hands-on engineer, reporting to the COO/CEO; set the platform standards the fleet adopts (provisioning modules, CI/CD, security guardrails).",
       "**Rolled blocking Snyk gates across the portal pipelines** - scan first, ahead of build and deploy - then keyless OIDC deploys through pilot, all test environments, and production on 4 repositories, taking long-lived AWS credentials out of the deploy path.",
@@ -251,7 +251,7 @@ export const flagships: Flagship[] = [
     jobId: "hth",
     title: "Multi-Tenant Core API",
     outcome:
-      "Two generations of one fleet API - v1 still serving most of the fleet, v2 serving the first two - with OAuth 2.0 into Oracle CCS, per-tenant behavior composed from config, and authorization gates on every endpoint.",
+      "Two generations of one fleet API - v1 serving all seven launched tenants, v2 in production for the first ahead of its cutover - with OAuth 2.0 into Oracle CCS, per-tenant behavior composed from config, and authorization gates on every endpoint.",
     ownership: "PRIMARY AUTHOR · 58% V1 / 78% V2",
     stack: ["Fastify 5", "TypeScript", "Zod", "MongoDB", "ECS Fargate"],
   },

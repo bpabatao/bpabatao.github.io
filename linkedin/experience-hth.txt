@@ -7,7 +7,7 @@ New York, USA (Remote)
 - De-facto technical lead of a 5-engineer team, reporting to the COO/CEO: set the standards the fleet adopts, specify the CCS-side (IWS) changes the vendor team implements, own the team's AWS access as Terraform.
 - Own ~$110K/yr of AWS across the production and test fleet - CI/CD, Datadog/CloudWatch observability, and FinOps tooling driving right-sizing and Fargate-Spot savings.
 - Owned production go-live readiness for 6 client launches.
-- Primary author of both generations of the fleet's core API - 58% of v1, which still serves most of the fleet, 78% of v2, which serves the first two - and of the auth, data-access and Oracle CCS patterns both share.
+- Primary author of both generations of the fleet's core API - 58% of v1, serving all seven launched tenants; 78% of v2, in production for the first ahead of its cutover - and the auth and Oracle CCS patterns both share.
 - Primary author (93%) of the internal developer platform: a Terraform control-plane (9 stacks, ~60 AWS resource types) with a Fastify/React dashboard, onto which the fleet's provisioning is migrating tenant by tenant.
 - Rolled blocking Snyk gates across the portal pipelines, then keyless OIDC deploys - pilot, test envs, prod on 4 repositories - taking long-lived AWS credentials out of the deploy path.
 - Shipped the fix for an SSN identity-verification gap enabling account takeover - wrong-person matches on ~2.4% of one tenant's accounts - as attempt lockout plus ZIP disambiguation, flag-gated for per-tenant rollout.

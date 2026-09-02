@@ -57,7 +57,7 @@
 <div class="loc"><span class="co">ESC Partners / HometownHUB</span> (contract) - New York, USA (Remote) | <span class="meta">Sep 2025 - Present</span></div>
 <div class="loc">Previously Senior Full-Stack Engineer (Cloud) | <span class="meta">May 2023 - Aug 2025</span></div>
 <ul>
-  <li><b>Primary author of both generations of the fleet's core REST API</b> - 58% of v1, which still serves most of the fleet, and 78% of v2, which serves the first two tenants - owning the multi-tenant auth, data-access and Oracle CCS (OAuth 2.0) integration patterns both generations share.</li>
+  <li><b>Primary author of both generations of the fleet's core REST API</b> - 58% of v1, which serves all seven launched tenants, and 78% of v2, in production for the first tenant ahead of its cutover - owning the multi-tenant auth, data-access and Oracle CCS (OAuth 2.0) integration patterns both generations share.</li>
   <li><b>Primary author (93%) of the internal developer platform:</b> a Terraform control-plane (9 stacks, ~60 AWS resource types - Cognito, ECS Fargate, CloudFront, WAFv2, Secrets Manager, Route 53, ElastiCache, KMS) with a Fastify/React dashboard that plans, applies and cost-attributes; the fleet's per-portal provisioning is consolidating onto it tenant by tenant.</li>
   <li><b>De-facto technical lead of a 5-engineer team</b> - most senior hands-on engineer, reporting to the COO/CEO; set the platform standards the fleet adopts (provisioning modules, CI/CD, security guardrails).</li>
   <li><b>Rolled blocking Snyk gates across the portal pipelines</b> - scan first, ahead of build and deploy - then keyless OIDC deploys through pilot, all test environments, and production on 4 repositories, taking long-lived AWS credentials out of the deploy path.</li>
