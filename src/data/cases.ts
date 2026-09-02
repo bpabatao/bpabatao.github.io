@@ -24,7 +24,7 @@ export const cases: CaseStudy[] = [
         heading: "Problem",
         paragraphs: [
           "A fleet of utility companies each needed a customer portal talking to Oracle Utilities CCS. The v1 server I inherited when I joined in 2023 - an Express codebase that predates me, 58% mine by commit today - had authorization gaps and no clean way to vary behavior per tenant. Every new client meant forked code and re-audited security.",
-          "The v2 rebuild, started in early 2026, had one mandate: a single API where a new tenant is configuration, not code, and where authorization failure is impossible to ship by accident. Two tenants run production on it today, both launched on it; the rest of the fleet still runs on v1 and moves one tenant at a time.",
+          "The v2 rebuild, started in early 2026, had one mandate: a single API where a new tenant is configuration, not code, and where authorization failure is impossible to ship by accident. All seven launched tenants still run production on v1 today. v2 runs in production for the first tenant beside its v1 service, certified and waiting on the DNS cutover; a second tenant's v2 stack is provisioned and idle. The fleet moves one tenant at a time.",
         ],
       },
       {
@@ -46,7 +46,7 @@ export const cases: CaseStudy[] = [
       },
     ],
     outcomes: [
-      "On v2 a tenant is config plus provisioning, not a fork; two tenants launched on it, the first v1-to-v2 cutover is certified and awaiting DNS, and v1 stays patched and audited until the last one moves.",
+      "On v2 a tenant is config plus provisioning, not a fork; the first tenant's v2 runs beside its v1 with the cutover certified and awaiting DNS, a second stack is provisioned, and v1 stays patched and audited until the last one moves.",
       "Authorization is structural, not reviewed-in: the route contract enforces ownership checks on every endpoint.",
       "Billing drift surfaces through a detection-only reconciler instead of a silent write to either system.",
       "The integration patterns became the fleet standard other services adopt.",
@@ -80,7 +80,7 @@ export const cases: CaseStudy[] = [
         heading: "Architecture",
         paragraphs: [
           "Nine Terraform stacks covering ~60 AWS resource types: Cognito user pools, ECS Fargate services, CloudFront distributions, WAFv2, Route 53, ElastiCache, KMS, Secrets Manager. Tenant environments are instantiated from templated modules - the same shape every time. The modules were imported from the fleet's earlier per-portal Terraform in March 2026 and consolidated; a colleague contributed the other 7% of commits - Entra ID SSO for the admin portal, the monitoring tab, and the production backend deploy path.",
-          "Where it stands: the control-plane state owns one live tenant, the shared ALB and WAF, and the next tenant's pre-provisioned stack. The live fleet still runs on its earlier per-portal Terraform and is being brought under the control-plane tenant by tenant, so the same environment is provisioned the same way whether it is the first or the last.",
+          "Where it stands: the control-plane state owns one deployed tenant awaiting launch, the shared ALB and WAF, and the first migrating tenant's v2 stack, now running beside its v1. The live fleet still runs on its earlier per-portal Terraform and is being brought under the control-plane tenant by tenant, so the same environment is provisioned the same way whether it is the first or the last.",
           "On top sits a Fastify + React dashboard that runs Terraform plans and applies, detects drift against live state, enforces tag compliance, and attributes cost per client through the Cost Explorer API. Right-sizing, the shared ALB, and Fargate Spot all came out of that same cost data.",
           "Delivery is gated rather than trusted. Blocking Snyk scans were rolled across the portal pipelines - scan first, ahead of build and deploy - and deploys authenticate through keyless OIDC, piloted on one environment and then rolled through the test fleet and production, so the deploy path holds no long-lived AWS credentials.",
           "The pipelines got faster while getting stricter. The admin portal's run went from about ten minutes to six by merging lint into the build and running the security scan in parallel; the core API's went from twelve to seven with esbuild transpile, cache-mounted installs and fail-fast, and the twenty-minute build hangs ended when the stale registry cache was dropped.",
