@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 import { cases } from "@/data/cases";
 import { ogImage } from "@/lib/og";
 import { profile } from "@/data/content";
-import { AiSdlcDiagram, CcsKbDiagram, ControlPlaneDiagram, CoreApiDiagram, IdentityDiagram, NmblrDiagram, ObservabilityDiagram } from "@/components/diagrams";
+import { AiSdlcDiagram, CcsKbDiagram, ControlPlaneDiagram, CoreApiDiagram, IdentityDiagram, NmblrDiagram, ObservabilityDiagram, captions } from "@/components/diagrams";
 
 const diagrams = {
   "core-api": CoreApiDiagram,
@@ -74,11 +74,13 @@ export default async function CasePage({ params }: Props) {
         ))}
       </dl>
 
-      <div className="mt-10 overflow-x-auto border border-line bg-surface p-6">
-        <div className="min-w-[560px]">
+      {/* The diagram needs ~560px to keep its labels legible; on phones the caption carries the meaning. */}
+      <figure className="mt-10 border border-line bg-surface p-6">
+        <div className="hidden sm:block">
           <Diagram />
         </div>
-      </div>
+        <figcaption className="font-mono text-xs leading-relaxed text-muted sm:hidden">{captions[cs.slug as keyof typeof captions]}</figcaption>
+      </figure>
 
       {cs.sections.map((section) => (
         <section key={section.heading} aria-labelledby={headingId(section.heading)} className="mt-12">

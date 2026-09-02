@@ -15,7 +15,7 @@ function ProjectList({ label, projects }: { label: string; projects: SecondaryPr
             <div key={p.title}>
               {p.url ? (
                 <a href={p.url} target="_blank" rel="noopener" className="font-medium text-ink transition-colors hover:text-accent">
-                  {p.title} ↗<span className="sr-only"> (opens in new tab)</span>
+                  {p.title}<span className="whitespace-nowrap"> ↗</span><span className="sr-only"> (opens in new tab)</span>
                 </a>
               ) : (
                 <span className="font-medium text-ink">{p.title}</span>
@@ -41,11 +41,11 @@ export function Projects() {
 
         <div>
           {flagships.filter((p) => p.featured).map((p, i) => (
-            <Reveal key={p.slug} delay={i * 0.05}>
+            <Reveal key={p.slug} delay={i * 0.05} className="border-t border-line first:border-t-0">
               <Link
                 href={`/case/${p.slug}/`}
                 data-goatcounter-click={`case-${p.slug}`}
-                className="group grid gap-4 border-t border-line py-9 transition-colors md:grid-cols-[1fr_auto] md:items-start first:border-t-0"
+                className="group grid gap-4 py-9 transition-colors md:grid-cols-[1fr_auto] md:items-start"
               >
                 <div>
                   <h3 className="font-display text-2xl font-semibold tracking-tight text-ink transition-colors group-hover:text-accent">
@@ -107,9 +107,9 @@ export function Projects() {
                   href={p.url}
                   target="_blank"
                   rel="noopener"
-                  className="no-print-url font-mono text-xs break-all text-muted transition-colors hover:text-accent"
+                  className="no-print-url font-mono text-xs break-words text-muted transition-colors hover:text-accent"
                 >
-                  {p.url.replace("https://", "")} ↗<span className="sr-only"> (opens in new tab)</span>
+                  {p.url.replace("https://", "")}<span className="whitespace-nowrap"> ↗</span><span className="sr-only"> (opens in new tab)</span>
                 </a>
               </div>
             ))}
