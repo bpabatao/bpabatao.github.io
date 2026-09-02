@@ -7,7 +7,7 @@ export function Hero() {
     <section className="relative overflow-hidden">
       <div className="hero-grid pointer-events-none absolute inset-0" aria-hidden />
       <div className="relative mx-auto w-full max-w-5xl px-6 pt-24 pb-16 sm:pt-32 sm:pb-20">
-        <p className="flex items-center gap-2 font-mono text-xs tracking-wide text-muted">
+        <p className="flex items-center gap-2 font-mono text-[11px] tracking-wide text-muted sm:text-xs">
           <span className="status-dot size-2 shrink-0 rounded-full bg-ok" aria-hidden />
           <span className="status-text">
             <span className="text-ok">{profile.statusLine.split(" - ")[0]}</span> - {profile.statusLine.split(" - ").slice(1).join(" - ")}
@@ -22,7 +22,7 @@ export function Hero() {
         </h1>
 
         <p className="hero-fade mt-6 max-w-2xl text-lg leading-relaxed" style={{ animationDelay: "0.2s" }}>
-          {profile.summary}
+          {profile.heroLine}
         </p>
 
         <p className="hero-fade mt-4 max-w-2xl leading-relaxed text-ink" style={{ animationDelay: "0.28s" }}>

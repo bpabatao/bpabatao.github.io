@@ -73,9 +73,21 @@ function Line({ d }: { d: string }) {
 const TENANTS = fleetPortals.map((t) => t.key);
 const LAST_X = 42 + (TENANTS.length - 1) * 78;
 
+/* One sentence per diagram: the SVG's accessible name on every screen, and the visible caption on phones,
+   where a 640-unit canvas cannot carry 9px labels. Derived counts stay derived. */
+export const captions = {
+  "core-api": `${TENANTS.length} tenant portals connect through the core API to Oracle CCS over OAuth 2.0`,
+  "control-plane": `The provisioning dashboard drives the Terraform control-plane, which provisions ${TENANTS.length} tenant environments`,
+  "ai-sdlc": "Alerts flow through Bedrock triage to fix PRs and human review; tickets flow through planning and two human gates to merge",
+  "nmblr": "A DMMF-driven clone engine copies a finalised strategy, and a dependency registry cascades archive and restore across dependent entities",
+  "ccs-kb": "A question routes through the knowledge-base agent to a curated corpus first, with generated SQL against tenant-scoped CCS only as a flagged fallback",
+  "observability": "Portals, the core API and outbound providers feed one capture layer that redacts payloads, raises anomaly alerts, and writes to retention tiers",
+  "identity": "The browser no longer reaches the identity provider directly; every identity call goes through the API, which forwards the real client IP and gates registration on verification with lockout",
+} as const;
+
 export function CoreApiDiagram() {
   return (
-    <svg viewBox="0 0 640 288" role="img" aria-label={`${TENANTS.length} tenant portals connect through the core API to Oracle CCS over OAuth 2.0`} className="block w-full">
+    <svg viewBox="0 0 640 288" role="img" aria-label={captions["core-api"]} className="block w-full">
       {/* connectors first, packets under boxes */}
       {TENANTS.map((_, i) => (
         <Line key={i} d={`M${42 + i * 78} 40 V64`} />
@@ -139,7 +151,7 @@ export function ControlPlaneDiagram() {
     <svg
       viewBox="0 0 640 288"
       role="img"
-      aria-label={`The provisioning dashboard drives the Terraform control-plane, which provisions ${TENANTS.length} tenant environments`}
+      aria-label={captions["control-plane"]}
       className="block w-full"
     >
       <Line d="M320 68 V100" />
@@ -211,7 +223,7 @@ function Gate({ x, y }: { x: number; y: number }) {
 
 export function AiSdlcDiagram() {
   return (
-    <svg viewBox="0 0 640 240" role="img" aria-label="Alerts flow through Bedrock triage to fix PRs and human review; tickets flow through planning and two human gates to merge" className="block w-full">
+    <svg viewBox="0 0 640 240" role="img" aria-label={captions["ai-sdlc"]} className="block w-full">
       <Label x={8} y={26} size={9} anchor="start">
         AUTO-REMEDIATION
       </Label>
@@ -287,7 +299,7 @@ export function NmblrDiagram() {
     <svg
       viewBox="0 0 640 288"
       role="img"
-      aria-label="A DMMF-driven clone engine copies a finalised strategy, and a dependency registry cascades archive and restore across dependent entities"
+      aria-label={captions["nmblr"]}
       className="block w-full"
     >
       {/* clone row */}
@@ -383,7 +395,7 @@ export function CcsKbDiagram() {
     <svg
       viewBox="0 0 640 288"
       role="img"
-      aria-label="A question routes through the knowledge-base agent to a curated corpus first, with generated SQL against tenant-scoped CCS only as a flagged fallback"
+      aria-label={captions["ccs-kb"]}
       className="block w-full"
     >
       <Line d="M150 34 H230" />
@@ -487,7 +499,7 @@ export function ObservabilityDiagram() {
     <svg
       viewBox="0 0 640 288"
       role="img"
-      aria-label="Portals, the core API and outbound providers feed one capture layer that redacts payloads, raises anomaly alerts, and writes to retention tiers"
+      aria-label={captions["observability"]}
       className="block w-full"
     >
       <Line d="M90 48 V72" />
@@ -568,7 +580,7 @@ export function IdentityDiagram() {
     <svg
       viewBox="0 0 640 288"
       role="img"
-      aria-label="The browser no longer reaches the identity provider directly; every identity call goes through the API, which forwards the real client IP and gates registration on verification with lockout"
+      aria-label={captions["identity"]}
       className="block w-full"
     >
       {/* the path that was removed */}

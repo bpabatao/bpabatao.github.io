@@ -33,6 +33,8 @@ export const profile = {
     `Staff Software Engineer - I build the platform other engineers ship on. 8+ years in software, 5+ on AWS, ~3 leading a multi-tenant SaaS platform: primary author (93%) of the Terraform control-plane the fleet is migrating onto, primary author of both generations of the core REST API behind ${fleetPortals.length} utility client portals (58% of v1, 78% of v2), and its operator - CI/CD, observability, on-call, cost.`,
   location: "Italy (Remote)",
   availability: "STAFF/LEAD PLATFORM ROLES · CONSULTING · AWS / TERRAFORM / MULTI-TENANT",
+  /* The hero gets one sentence; `summary` is the long form for LinkedIn and the resume block. */
+  heroLine: "The Terraform that provisions a multi-tenant utility SaaS, the API it runs on, and the product customers use - built and operated end to end.",
   availabilityLine: `Open to Staff / Lead platform roles · Remote from Italy (CET), async-first · ${MARKETS}`,
   markets: MARKETS,
   updated: "2026-08-29",
