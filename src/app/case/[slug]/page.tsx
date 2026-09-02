@@ -5,6 +5,7 @@ import { cases } from "@/data/cases";
 import { ogImage } from "@/lib/og";
 import { profile } from "@/data/content";
 import { AiSdlcDiagram, CcsKbDiagram, ControlPlaneDiagram, CoreApiDiagram, IdentityDiagram, NmblrDiagram, ObservabilityDiagram, captions } from "@/components/diagrams";
+import { portraits } from "@/components/diagrams-portrait";
 
 const diagrams = {
   "core-api": CoreApiDiagram,
@@ -47,6 +48,7 @@ export default async function CasePage({ params }: Props) {
   if (!cs) notFound();
 
   const Diagram = diagrams[cs.slug as keyof typeof diagrams];
+  const Portrait = portraits[cs.slug as keyof typeof portraits];
 
   return (
     <main id="main" className="mx-auto w-full max-w-3xl px-6 py-16">
@@ -74,12 +76,15 @@ export default async function CasePage({ params }: Props) {
         ))}
       </dl>
 
-      {/* The diagram needs ~560px to keep its labels legible; on phones the caption carries the meaning. */}
+      {/* Landscape needs ~560px for legible labels; phones get the portrait layout of the same diagram. */}
       <figure className="mt-10 border border-line bg-surface p-6">
         <div className="hidden sm:block">
           <Diagram />
         </div>
-        <figcaption className="font-mono text-xs leading-relaxed text-muted sm:hidden">{captions[cs.slug as keyof typeof captions]}</figcaption>
+        <div className="mx-auto max-w-xs sm:hidden">
+          <Portrait />
+        </div>
+        <figcaption className="mt-4 font-mono text-xs leading-relaxed text-muted sm:hidden">{captions[cs.slug as keyof typeof captions]}</figcaption>
       </figure>
 
       {cs.sections.map((section) => (
