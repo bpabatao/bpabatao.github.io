@@ -73,7 +73,7 @@ export const cases: CaseStudy[] = [
       {
         heading: "Constraints",
         paragraphs: [
-          "One platform engineer - me - operating ~$110K/yr of AWS across production and test fleets, alongside feature work. The platform had to be self-service enough that provisioning doesn't need its author in the room, and observable enough that drift and cost anomalies surface themselves.",
+          "One platform engineer - me - operating the AWS across production and test fleets, alongside feature work. The platform had to be self-service enough that provisioning doesn't need its author in the room, and observable enough that drift and cost anomalies surface themselves.",
         ],
       },
       {
@@ -89,7 +89,7 @@ export const cases: CaseStudy[] = [
     ],
     outcomes: [
       "Tenant onboarding for new launches runs through the control-plane's templated modules and a written runbook; existing tenants are migrating onto the same state.",
-      "~$110K/yr of AWS runs with per-client cost attribution and continuous drift detection.",
+      "The fleet's AWS runs with per-client cost attribution and continuous drift detection.",
       "Portal pipelines block on a supply-chain scan before they build, and deploys carry no long-lived AWS credentials.",
       "Pipeline runs dropped from about ten minutes to six on the admin portal and twelve to seven on the core API, and the twenty-minute build hangs are gone.",
       "6 client launches owned end to end - environment validation, deployment, rollback planning - on the provisioning this platform consolidates.",
