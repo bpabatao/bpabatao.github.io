@@ -49,7 +49,7 @@ export const metrics = [
   { value: "8+", label: "years in software" },
   { value: String(fleetPortals.length), label: "tenant portals" },
   { value: "78%", label: "core API v2 authorship" },
-  { value: "$110K/yr", label: "AWS under management" },
+  { value: "93%", label: "control-plane authorship" },
 ] as const;
 
 export const principles = [
@@ -111,7 +111,7 @@ export const currentJobs: Job[] = [
     ],
     receipts: [
       "De-facto technical lead of a 5-engineer team, reporting to the COO/CEO: set the standards the fleet adopts, specify the CCS-side (IWS) changes the vendor team implements, own the team's AWS access as Terraform.",
-      "Own ~$110K/yr of AWS across the production and test fleet - CI/CD, Datadog/CloudWatch observability, and FinOps tooling driving right-sizing and Fargate-Spot savings.",
+      "Sole platform engineer for the multi-tenant AWS fleet - production and test - running CI/CD, Datadog/CloudWatch observability, and FinOps tooling that drives right-sizing and Fargate-Spot savings.",
       "Owned production go-live readiness for 6 client launches.",
       "Primary author of both generations of the fleet's core API - 58% of v1, serving all seven launched tenants; 78% of v2, in production for the first ahead of its cutover - and the auth and Oracle CCS patterns both share.",
       "Primary author (93%) of the internal developer platform: a Terraform control-plane (9 stacks, ~60 AWS resource types) with a Fastify/React dashboard, onto which the fleet's provisioning is migrating tenant by tenant.",
@@ -128,7 +128,7 @@ export const currentJobs: Job[] = [
       "**Rolled blocking Snyk gates across the portal pipelines** - scan first, ahead of build and deploy - then keyless OIDC deploys through pilot, all test environments, and production on 4 repositories, taking long-lived AWS credentials out of the deploy path.",
       "**Built an automated batch pipeline** syncing multi-account customers between Oracle CCS and Invoice Cloud in 5K-record batches - idempotency checks, error tracking, and automated success/failure email reporting.",
       "**Built, measured and pruned the team's AI tooling** - kept a Claude PR reviewer in CI on the core API and backend, shelved a Bedrock auto-remediation service that was never wired to a live alarm, shipped a Bedrock knowledge-base agent (curated-first retrieval, flagged SQL fallback), and designed a ticket-to-PR pipeline with human gates, not yet live.",
-      `**Own and operate the multi-tenant portal infrastructure as sole platform engineer** - ~$110K/year of AWS across the ${fleetPortals.length}-tenant production and test fleet - with CI/CD (Bitbucket Pipelines), Datadog / CloudWatch observability, on-call incident response, and cost-attribution tooling (Cost Explorer API) driving right-sizing, shared-ALB, and Fargate-Spot savings.`,
+      `**Own and operate the multi-tenant portal infrastructure as sole platform engineer** - the ${fleetPortals.length}-tenant production and test fleet - with CI/CD (Bitbucket Pipelines), Datadog / CloudWatch observability, on-call incident response, and cost-attribution tooling (Cost Explorer API) driving right-sizing, shared-ALB, and Fargate-Spot savings.`,
       "**Shipped the fix for an SSN identity-verification gap enabling account takeover** - the last-four plus street match resolved to the wrong person on ~2.4% of one tenant's accounts - as attempt lockout plus ZIP-based disambiguation against the brute-forceable last-4 space, flag-gated for per-tenant rollout.",
       "**Built the fleet-wide interaction audit trail** - a capture hook for authenticated actions and page views, a tenant-scoped, IDOR-safe admin history API with CSV export and rate limiting - then extended it to admin reads and impersonated sessions attributed to the acting admin; one composite index took its sessions view from 102 seconds to 2.4.",
       "**Owned production go-live readiness for 6 client launches** - primary engineer on four, core contributor on two - environment validation, deployment, rollback planning, and stabilization.",
