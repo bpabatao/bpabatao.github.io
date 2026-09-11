@@ -16,7 +16,7 @@ test("html keeps the ATS contract", () => {
 });
 
 test("roles render in the two conventions with escaped text", () => {
-  assert.ok(html.includes("<h3>Staff Software Engineer, Platform &amp; Product</h3>\n<div class=\"loc\"><span class=\"co\">ESC Partners / HometownHUB</span> (contract) - New York, USA (Remote) | <span class=\"meta\">Sep 2025 - Present</span></div>\n<div class=\"loc\">Previously Senior Full-Stack Engineer (Cloud) | <span class=\"meta\">May 2023 - Aug 2025</span></div>"));
+  assert.ok(html.includes("<h3>Staff Software Engineer, Platform &amp; Product</h3>\n<div class=\"loc\"><span class=\"co\">ESC Partners / HometownHUB</span> (contract) - New York, USA (Remote) | <span class=\"meta\">May 2023 - Present</span></div>\n<div class=\"loc\">Staff Software Engineer, Platform &amp; Product | <span class=\"meta\">Sep 2025 - Present</span></div>\n<div class=\"loc\">Previously Senior Full-Stack Engineer (Cloud) | <span class=\"meta\">May 2023 - Aug 2025</span></div>"));
   assert.ok(html.includes('<p class="earlier"><b>Senior Software Engineer II</b> - HCL Technologies (New York, USA / Remote) | <span class="meta">Feb 2020 - Apr 2022</span></p>'));
   // earlier roles are one line each: no heading, no bullets
   assert.ok(html.includes('<p class="earlier"><b>Full Stack Software Engineer</b> - Ordermentum (NSW, Australia / Remote, contract) | <span class="meta">Sep 2022 - Mar 2023</span></p>'));

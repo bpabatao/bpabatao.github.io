@@ -7,7 +7,10 @@ export interface Role {
   title: string;
   company: string;
   location: string | null;
+  /* full tenure at this employer, across every title held */
   dates: string;
+  /* span of the current title, when it is not the whole tenure */
+  currentTitleDates: string | null;
   contract: boolean;
   /* earlier titles held at the same employer, newest first */
   previous: { title: string; dates: string }[];
@@ -37,7 +40,11 @@ function role(job: Job): Role {
     title: job.role,
     company: job.tagline ? `${job.company} - ${job.tagline}` : job.company,
     location: job.location ?? null,
-    dates: formatPeriod(job.positions?.[0]?.period ?? job.period),
+    /* The employer line carries the FULL tenure, not just the current title's span.
+       ATS parsers bind one date range per employer block and drop the "Previously"
+       sub-line, so using positions[0] made a 3-year relationship parse as ~1 year. */
+    dates: formatPeriod(job.period),
+    currentTitleDates: job.positions && job.positions.length > 1 ? formatPeriod(job.positions[0].period) : null,
     contract: job.employmentType === "Contract",
     previous: (job.positions ?? []).slice(1).map((p) => ({ title: p.title, dates: formatPeriod(p.period) })),
     bullets: (job.resumeReceipts ?? job.receipts).map(splitLead),

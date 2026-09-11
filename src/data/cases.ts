@@ -92,7 +92,7 @@ export const cases: CaseStudy[] = [
       "The fleet's AWS runs with per-client cost attribution and continuous drift detection.",
       "Portal pipelines block on a supply-chain scan before they build, and deploys carry no long-lived AWS credentials.",
       "Pipeline runs dropped from about ten minutes to six on the admin portal and twelve to seven on the core API, and the twenty-minute build hangs are gone.",
-      "6 client launches owned end to end - environment validation, deployment, rollback planning - on the provisioning this platform consolidates.",
+      "Go-live readiness owned for 6 client launches - primary engineer on four, core contributor on two - environment validation, deployment, rollback planning, on the provisioning this platform consolidates.",
     ],
   },
   {

@@ -11,7 +11,6 @@ Infrastructure-as-Code
 Node.js
 CloudFront
 Cognito
-RDS
 ElastiCache
 KMS
 Secrets Manager
@@ -21,20 +20,18 @@ S3
 Route 53
 VPC
 ALB
+IAM
 Elastic Beanstalk
 Docker
-Kubernetes
 Linux
-OpenSearch
 Bitbucket Pipelines
 GitHub Actions
 FinOps
 Cost Explorer
 AWS Bedrock (Claude)
-AIOps auto-remediation
-Agentic SDLC pipelines
-AI code review
-LLM knowledge bases
+AI code review in CI
+LLM knowledge bases (RAG)
+Evaluating and retiring AI tooling
 Fastify
 Express
 Python
@@ -43,16 +40,22 @@ GraphQL
 Prisma
 PostgreSQL
 MongoDB
-Redis/BullMQ
+Zod
+Vitest
+Playwright
 Oracle Utilities CCS
 Invoice Cloud
 Datadog RUM/APM
 CloudWatch
 Sentry
 Structured logging
+Session Replay
 OWASP/IDOR
 JWT
+OAuth 2.0
+OIDC
 Snyk
+Pentest remediation
 React
 Redux
 Styled Components

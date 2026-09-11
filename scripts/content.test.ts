@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { currentJobs, earlierJobs, earlierProjects, fleetPortals, metrics, profile, stackGroups } from "../src/data/content.ts";
+import { currentJobs, earlierJobs, earlierProjects, fleetPortals, fleetSize, metrics, profile, stackGroups } from "../src/data/content.ts";
 import { formatPeriod, plainText } from "../src/lib/format.ts";
 
 test("every job has a unique id and a parseable period", () => {
@@ -11,7 +11,11 @@ test("every job has a unique id and a parseable period", () => {
 
 test("tenant count is derived from fleetPortals", () => {
   assert.equal(profile.statusLine, `OPERATIONAL - ${fleetPortals.length} TENANTS · AWS · REMOTE (ITALY)`);
-  assert.equal(metrics.find((m) => m.label === "tenant portals")?.value, String(fleetPortals.length));
+  /* the fleet tile names the whole fleet and the live subset; both stay derived */
+  const fleetTile = metrics.find((m) => m.label.startsWith("tenant fleet"));
+  assert.equal(fleetTile?.value, String(fleetSize));
+  assert.equal(fleetTile?.label, `tenant fleet, ${fleetPortals.length} live`);
+  assert.ok(fleetSize >= fleetPortals.length, "fleet cannot be smaller than the launched subset");
   assert.equal(new Set(fleetPortals.map((p) => p.key)).size, fleetPortals.length);
 });
 

@@ -30,7 +30,7 @@ export const profile = {
   summary:
     "I build multi-tenant SaaS platforms end to end - the Terraform that provisions them, the API they run on, and the product customers actually use. Staff Software Engineer - 8+ years in software, 5+ hands-on with AWS, and ~3 years leading cloud platforms: from AWS infrastructure-as-code to the shared backend services an entire product fleet runs on.",
   resumeSummary:
-    `Staff Software Engineer - I build the platform other engineers ship on. 8+ years in software, 5+ on AWS, ~3 leading a multi-tenant SaaS platform: primary author (93%) of the Terraform control-plane the fleet is migrating onto, primary author of both generations of the core REST API behind ${fleetPortals.length} utility client portals (58% of v1, 78% of v2), and its operator - CI/CD, observability, on-call, cost.`,
+    `Staff Software Engineer - I build the platform other engineers ship on. 8+ years in software, 5+ on AWS, ~3 leading a multi-tenant SaaS platform: primary author (93%) of the Terraform control-plane the fleet is migrating onto, primary author of the core REST API behind ${fleetPortals.length} live utility client portals (58% of the v1 serving them today) and of its v2 successor (78%), now in production for the first tenant ahead of its cutover - and its operator: CI/CD, observability, on-call, cost.`,
   location: "Italy (Remote)",
   availability: "STAFF/LEAD PLATFORM ROLES · CONSULTING · AWS / TERRAFORM / MULTI-TENANT",
   /* The hero gets one sentence; `summary` is the long form for LinkedIn and the resume block. */
@@ -38,17 +38,21 @@ export const profile = {
   availabilityLine: `Open to Staff / Lead platform roles · Remote from Italy (CET), async-first · ${MARKETS}`,
   markets: MARKETS,
   updated: "2026-09-11",
-  atsKeywords: ["Staff", "REST", "Python", "Kubernetes", "Terraform", "AWS", "TypeScript", "multi-tenant", "OAuth", "CI/CD", "React", "Node", "GraphQL", "IDOR"],
+  atsKeywords: ["Staff", "REST", "Python", "IAM", "Terraform", "AWS", "TypeScript", "multi-tenant", "OAuth", "CI/CD", "React", "Node", "GraphQL", "IDOR"],
   email: "jajapabatao@gmail.com",
   github: "https://github.com/bpabatao",
   linkedin: "https://linkedin.com/in/benedict-pabatao",
   siteUrl: "https://bpabatao.github.io",
 } as const;
 
+/* Tenants under the platform, launched and in onboarding. `fleetPortals` stays the
+   public, nameable subset (the launched ones); this is the fleet the work spans. */
+export const fleetSize = 11;
+
 export const metrics = [
   { value: "8+", label: "years in software" },
-  { value: String(fleetPortals.length), label: "tenant portals" },
-  { value: "78%", label: "core API v2 authorship" },
+  { value: String(fleetSize), label: `tenant fleet, ${fleetPortals.length} live` },
+  { value: "58/78%", label: "core API authorship, v1/v2" },
   { value: "93%", label: "control-plane authorship" },
 ] as const;
 
@@ -113,7 +117,7 @@ export const currentJobs: Job[] = [
       "De-facto technical lead of a 5-engineer team, reporting to the COO/CEO: set the standards the fleet adopts, specify the CCS-side (IWS) changes the vendor team implements, own the team's AWS access as Terraform.",
       "Sole platform engineer for the multi-tenant AWS fleet - production and test - running CI/CD, Datadog/CloudWatch observability, and FinOps tooling that drives right-sizing and Fargate-Spot savings.",
       "Owned production go-live readiness for 6 client launches.",
-      "Built a secured admin sign-in-as-customer flow: single-use code redeemed for a scoped session token on 7 allowlisted routes, replacing an admin token read from the URL and reused indefinitely; deployed to a test env.",
+      "Rebuilt admin sign-in-as-customer twice: a URL-borne token replaced by a server-side exchange, shipped to production fleet-wide, then a single-use code redeemed for a scoped session token on 7 allowlisted routes.",
       "Added a CCS ownership check to admin account linking, where a CSR could previously link any account Invoice Cloud accepted with no owner verification: the link now blocks and audits on a NOT_OWNED verdict from CCS.",
       "Cut admin-portal CI time: vitest to a threads pool (~10.5min test step to ~3-4min) and dropped redundant reruns from 21 deploy-branch build steps (~47% of a 14min pipeline), leaving the PR-gate suite as the test gate.",
       "Primary author of both generations of the fleet's core API - 58% of v1, serving all seven launched tenants; 78% of v2, in production for the first ahead of its cutover - and the auth and Oracle CCS patterns both share.",
@@ -129,7 +133,7 @@ export const currentJobs: Job[] = [
       "**Primary author (93%) of the internal developer platform:** a Terraform control-plane (9 stacks, ~60 AWS resource types - Cognito, ECS Fargate, CloudFront, WAFv2, Secrets Manager, Route 53, ElastiCache, KMS) with a Fastify/React dashboard that plans, applies and cost-attributes; the fleet's per-portal provisioning is consolidating onto it tenant by tenant.",
       "**De-facto technical lead of a 5-engineer team** - most senior hands-on engineer, reporting to the COO/CEO; set the platform standards the fleet adopts (provisioning modules, CI/CD, security guardrails).",
       "**Rolled blocking Snyk gates across the portal pipelines** - scan first, ahead of build and deploy - then keyless OIDC deploys through pilot, all test environments, and production on 4 repositories, taking long-lived AWS credentials out of the deploy path.",
-      "**Built an automated batch pipeline** syncing multi-account customers between Oracle CCS and Invoice Cloud in 5K-record batches - idempotency checks, error tracking, and automated success/failure email reporting.",
+      "**Own the reconciliation between two systems of record** - a detection-only CCS/Invoice Cloud reconciler running four times daily in production as a scheduled Lambda, with per-tenant population queries, pre-flight link checks returning a reasoned verdict, and split-identity healing; it replaced the batch sync I built and retired.",
       "**Built, measured and pruned the team's AI tooling** - kept a Claude PR reviewer in CI on the core API and backend, shelved a Bedrock auto-remediation service that was never wired to a live alarm, shipped a Bedrock knowledge-base agent (curated-first retrieval, flagged SQL fallback), and designed a ticket-to-PR pipeline with human gates, not yet live.",
       `**Own and operate the multi-tenant portal infrastructure as sole platform engineer** - the ${fleetPortals.length}-tenant production and test fleet - with CI/CD (Bitbucket Pipelines), Datadog / CloudWatch observability, on-call incident response, and cost-attribution tooling (Cost Explorer API) driving right-sizing, shared-ALB, and Fargate-Spot savings.`,
       "**Shipped the fix for an SSN identity-verification gap enabling account takeover** - the last-four plus street match resolved to the wrong person on ~2.4% of one tenant's accounts - as attempt lockout plus ZIP-based disambiguation against the brute-forceable last-4 space, flag-gated for per-tenant rollout.",
@@ -204,8 +208,8 @@ export const earlierJobs: Job[] = [
     role: "Full Stack Developer",
     period: { start: "2019-03", end: "2020-02" },
     location: "Singapore",
-    receipts: ["Full-stack development, Singapore."],
-    resumeReceipts: ["Full-stack web development for studio and commerce clients (React, Node.js)."],
+    receipts: ["Full-stack development, Singapore - deployed and ran the client applications on AWS Elastic Beanstalk."],
+    resumeReceipts: ["Full-stack web development for studio and commerce clients (React, Node.js), deployed and operated on AWS Elastic Beanstalk."],
   },
   {
     id: "halcyon",
@@ -276,7 +280,7 @@ export const flagships: Flagship[] = [
     jobId: "hth",
     title: "AI-Augmented SDLC",
     outcome:
-      "Three AI tools built and measured: a Claude reviewer kept where it earned its place, a Bedrock auto-fix shelved on evidence, and a ticket-to-PR pipeline designed with human gates and not yet run live.",
+      "Four AI tools built and measured: a Claude reviewer kept where it earned its place, a Bedrock auto-fix shelved on evidence, a knowledge-base agent shipped, and a ticket-to-PR pipeline designed with human gates and not yet run live.",
     ownership: "SOLE AUTHOR",
     stack: ["AWS Bedrock", "Claude", "GitHub", "Jira"],
   },
@@ -339,8 +343,8 @@ export const secondaryProjects: SecondaryProject[] = [
     jobId: "hth",
   },
   {
-    title: "CCS ↔ Invoice Cloud Sync",
-    description: "Batch pipeline syncing multi-account customers in 5K-record batches - idempotent, tracked, self-reporting.",
+    title: "CCS ↔ Invoice Cloud Reconciler",
+    description: "Detection-only reconciler between two systems of record - scheduled Lambda, four runs a day, per-tenant population queries, reasoned link verdicts.",
     jobId: "hth",
   },
   {
@@ -442,10 +446,10 @@ export const stackGroups: StackGroup[] = [
     title: "Cloud & Infra",
     span: 2,
     items: [
-      "AWS - ECS Fargate, CloudFront, Cognito, RDS, ElastiCache, KMS, Secrets Manager, WAFv2, SES, S3, Route 53, VPC, ALB, Elastic Beanstalk",
+      "AWS - ECS Fargate, CloudFront, Cognito, ElastiCache, KMS, Secrets Manager, WAFv2, SES, S3, Route 53, VPC, ALB, IAM, Elastic Beanstalk",
       "Terraform",
-      "Docker · Kubernetes",
-      "Linux · OpenSearch",
+      "Docker",
+      "Linux",
     ],
   },
   {
@@ -463,9 +467,9 @@ export const stackGroups: StackGroup[] = [
     span: 1,
     items: [
       "AWS Bedrock (Claude)",
-      "AIOps auto-remediation",
-      "Agentic SDLC pipelines",
-      "AI code review · LLM knowledge bases",
+      "AI code review in CI",
+      "LLM knowledge bases (RAG)",
+      "Evaluating and retiring AI tooling",
     ],
   },
   {
@@ -475,7 +479,8 @@ export const stackGroups: StackGroup[] = [
       "Node.js - Fastify, Express",
       "TypeScript · Python",
       "REST APIs · GraphQL · Prisma",
-      "PostgreSQL · MongoDB · Redis/BullMQ",
+      "PostgreSQL · MongoDB",
+      "Zod · Vitest · Playwright",
       "Oracle Utilities CCS · Invoice Cloud",
     ],
   },
@@ -484,8 +489,9 @@ export const stackGroups: StackGroup[] = [
     span: 1,
     items: [
       "Datadog RUM/APM · CloudWatch · Sentry",
-      "Structured logging",
-      "OWASP/IDOR · JWT · WAFv2 · Snyk",
+      "Structured logging · Session Replay",
+      "OWASP/IDOR · JWT · OAuth 2.0 · OIDC",
+      "IAM · WAFv2 · Snyk · Pentest remediation",
     ],
   },
   {

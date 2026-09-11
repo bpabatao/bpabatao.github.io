@@ -18,6 +18,7 @@ function currentRole(r: Role): string {
     `<section class="role">`,
     `<h3>${esc(r.title)}</h3>`,
     `<div class="loc"><span class="co">${esc(r.company)}</span>${kind}${loc} | <span class="meta">${esc(r.dates)}</span></div>`,
+    ...(r.currentTitleDates ? [`<div class="loc">${esc(r.title)} | <span class="meta">${esc(r.currentTitleDates)}</span></div>`] : []),
     ...r.previous.map((p) => `<div class="loc">Previously ${esc(p.title)} | <span class="meta">${esc(p.dates)}</span></div>`),
     "<ul>",
     ...r.bullets.map(li),

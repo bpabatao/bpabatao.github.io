@@ -1,0 +1,5 @@
+# updated 2026-09-11 - paste into LinkedIn > Projects > CCS ↔ Invoice Cloud Reconciler
+CCS ↔ Invoice Cloud Reconciler
+Associated with: ESC Partners / HometownHUB
+
+Detection-only reconciler between two systems of record - scheduled Lambda, four runs a day, per-tenant population queries, reasoned link verdicts.
