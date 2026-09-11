@@ -41,8 +41,11 @@ def body(m):
     p.append(para([run("Professional Experience")], "Heading2"))
     for r in m["experience"]:
         p.append(para([run(r["title"])], "Heading3"))
-        loc = f" - {r['location']}" if r.get("location") else ""
+        parts = [x for x in [r.get("location"), "contract" if r.get("contract") else None] if x]
+        loc = f" - {', '.join(parts)}" if parts else ""
         p.append(para([run(r["company"], bold=True), run(f"{loc} | {r['dates']}")]))
+        if r.get("currentTitleDates"):
+            p.append(para([run(f"{r['title']} | {r['currentTitleDates']}")]))
         for prev in r.get("previous", []):
             p.append(para([run(f"Previously {prev['title']} | {prev['dates']}")]))
         p += [bullet(b) for b in r["bullets"]]
@@ -120,7 +123,7 @@ def _selftest():
     model = {
         "name": "Test Person", "role": "Engineer", "roleLine": "ENGINEER | AWS", "contact": "a | b",
         "summary": "Sum & more", "page": "letter",
-        "experience": [{"title": "T", "company": "C", "location": "L", "dates": "Jan 2020 - Present", "contract": False,
+        "experience": [{"title": "T", "company": "C", "location": "L", "dates": "Jan 2020 - Present", "contract": True,
                         "previous": [{"title": "Old Title", "dates": "Jan 2019 - Dec 2019"}],
                         "bullets": [{"lead": "Did X:", "rest": "then Y"}, {"lead": None, "rest": "plain"}]}],
         "earlier": [{"title": "T2", "company": "C2", "location": "L2", "contract": True, "dates": "2019 - 2020", "bullets": [{"lead": None, "rest": "old"}]}],
@@ -141,6 +144,9 @@ def _selftest():
     assert 'w:w="12240" w:h="15840"' in doc
     assert "Previously Old Title | Jan 2019 - Dec 2019" in doc
     assert ", contract)" in doc
+    # the current-role line must carry the contract marker too - without it the DOCX
+    # (the format most ATS ingest) shows concurrent roles as permanent ones.
+    assert "L, contract | Jan 2020 - Present" in doc
     assert doc.count('w:val="Heading1"') == 1
     assert doc.count('w:val="Heading3"') == 3, doc.count('w:val="Heading3"')
     print("docx selftest ok")

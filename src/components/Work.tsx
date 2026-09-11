@@ -32,7 +32,12 @@ export function Work() {
               </div>
               <div>
                 <h3 className="text-xl font-semibold text-ink">{job.role}</h3>
-                <div className="mt-0.5 font-mono text-sm text-accent">{job.company}</div>
+                <div className="mt-0.5 font-mono text-sm text-accent">
+                  {job.company}
+                  {job.employmentType && (
+                    <span className="text-muted"> · {job.employmentType.toLowerCase()}</span>
+                  )}
+                </div>
                 {job.positions && job.positions.length > 1 && (
                   <ul className="mt-1.5 space-y-0.5 font-mono text-[11px] text-muted">
                     {job.positions.map((p) => (
@@ -69,7 +74,11 @@ export function Work() {
                   <div className="font-mono text-xs text-muted md:pt-0.5">{formatPeriod(job.period)}</div>
                   <div>
                     <span className="font-medium text-ink">{job.role}</span>
-                    <span className="text-muted"> - {job.company}. </span>
+                    <span className="text-muted">
+                      {" - "}
+                      {job.company}
+                      {job.employmentType ? ` (${job.employmentType.toLowerCase()})` : ""}.{" "}
+                    </span>
                     <span className="text-muted">{job.receipts[0]}</span>
                   </div>
                 </div>
