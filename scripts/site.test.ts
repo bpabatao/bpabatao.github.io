@@ -4,7 +4,7 @@ import { existsSync, readFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { cases } from "../src/data/cases.ts";
-import { profile } from "../src/data/content.ts";
+import { currentJobs, profile } from "../src/data/content.ts";
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 if (!existsSync(resolve(ROOT, "out/index.html"))) throw new Error("out/index.html missing - run npm run build first");
@@ -31,7 +31,9 @@ test("hero carries the availability line and two buttons", () => {
 test("early project lists are collapsed", () => {
   assert.ok(home.includes("also shipped ("));
   assert.ok(home.includes("earlier work ("));
-  assert.equal((home.match(/<details/g) ?? []).length, 3, "earlier roles + also shipped + earlier work");
+  const folds = currentJobs.filter((j) => j.receipts.length > 8).length;
+  assert.equal((home.match(/<details/g) ?? []).length, 3 + folds, "earlier roles + also shipped + earlier work + receipt folds");
+  assert.equal((home.match(/>show \d+ more</g) ?? []).length, folds, "every current job past the cap folds its tail");
 });
 
 test("external links announce new tab", () => {
