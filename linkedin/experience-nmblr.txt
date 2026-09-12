@@ -8,7 +8,7 @@ London, UK (Remote)
 - Originated two subsystems from scratch: a DMMF-driven strategy clone engine and the Edge archive/restore isolation system.
 - Built the in-house observability layer - an Apollo plugin emits one structured obs_event per GraphQL operation to CloudWatch, errClass splits fault from noise, dashboards cover staging and prod - then removed New Relic.
 - Serialized rating upserts behind a Postgres advisory lock, killed a duplicate-groups race in a sync resolver, blocked re-entrant AI generation calls, and added double-press guards plus stale-poll reconciliation.
-- Extracted a FinalisedFloater primitive plus style-guide entry, wired it to one page, then 6, and rolled it onto bespoke finalise panels across the app; a shared useFloatingMenu hook cut ~170 duplicated dropdown lines.
+- Originated a data-dependency subsystem - GraphQL contract, resolver, registry-driven modal - that warns before archiving or deleting finalised entities with dependents, then cascades the archive/restore across them.
 - Evolved the schema against live customer data - idempotent backfills in an ordered pipeline with an audit gate, repair scripts, a string-encoded key swapped for a real foreign key, and an index pinned to stop drift.
 - Contributed to real-time collaboration (GraphQL subscriptions), OpenAI-backed generation features, and platform security (OWASP/IDOR, JWT sessions).
 - Rebuilt an Edge communications-strategy tab as a per-brand-value tile grid - new Prisma columns, per-field AI drafting, and a collaboration thread per field, with writes scoped to the strategy's own rows.
