@@ -11,7 +11,7 @@ New York, USA (Remote)
 - Primary author (93%) of the internal developer platform: a Terraform control-plane (9 stacks, ~60 AWS resource types) with a Fastify/React dashboard, onto which the fleet's provisioning is migrating tenant by tenant.
 - Closed pentest findings in severity-labelled batches across 6 external test rounds - 60 findings triaged, false positives refuted - from IDOR and unauthenticated endpoints to URL-borne tokens and missing rate limits.
 - Built the runtime feature-flag platform: a database-backed reader replacing build-time env vars, SSE push with fail-open, wired into 6 v1 admin consoles and 4 portals, shipped flag-gated per tenant with parity tests.
-- Built the drift-repair program behind the reconciler: duplicate/missing/split-identity classification, an unregister-then-relink merge endpoint, and a signup guard for one tenant's 107 duplicate registrations.
+- Shipped the fix for an SSN identity-verification gap enabling account takeover - wrong-person matches on ~2.4% of one tenant's accounts - as attempt lockout plus ZIP disambiguation, flag-gated for per-tenant rollout.
 - 13 more at https://bpabatao.github.io
 
 ## Senior Full-Stack Engineer (Cloud)
