@@ -8,7 +8,10 @@ function ProjectList({ label, projects }: { label: string; projects: SecondaryPr
     <Reveal className="mt-12">
       <details className="group">
         <summary className="cursor-pointer list-none font-mono text-sm text-muted transition-colors hover:text-accent">
-          <span className="inline-block transition-transform group-open:rotate-90">▸</span> {`${label.toLowerCase()} (${projects.length})`}
+          <span className="inline-block transition-transform group-open:rotate-90" aria-hidden>
+            ▸
+          </span>{" "}
+          {`${label.toLowerCase()} (${projects.length})`}
         </summary>
         <div className="mt-6 grid gap-x-10 gap-y-7 sm:grid-cols-2">
           {projects.map((p) => (
