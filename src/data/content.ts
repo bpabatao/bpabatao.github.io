@@ -117,8 +117,6 @@ export const currentJobs: Job[] = [
       "De-facto technical lead of a 5-engineer team, reporting to the COO/CEO: set the standards the fleet adopts, specify the CCS-side (IWS) changes the vendor team implements, own the team's AWS access as Terraform.",
       "Sole platform engineer for the multi-tenant AWS fleet - production and test - running CI/CD, Datadog/CloudWatch observability, and FinOps tooling that drives right-sizing and Fargate-Spot savings.",
       "Owned production go-live readiness for 6 client launches.",
-      "Replaced a locked single-month picker on a tenant portal's daily usage view with an arbitrary date range - 92-day cap, bounded at today - re-keying the chart, usage series, CSV export and weather overlay off the range.",
-      "Restored the v1 signup, quick-pay and cloudpay contracts on a tenant's test portal after a develop merge pulled v2-bound rewrites onto a v1 backend, crashing registration - three surfaces spoke the wrong contract.",
       "Primary author of both generations of the fleet's core API - 58% of v1, serving all seven launched tenants; 78% of v2, in production for the first ahead of its cutover - and the auth and Oracle CCS patterns both share.",
       "Primary author (93%) of the internal developer platform: a Terraform control-plane (9 stacks, ~60 AWS resource types) with a Fastify/React dashboard, onto which the fleet's provisioning is migrating tenant by tenant.",
       "Closed pentest findings in severity-labelled batches across 6 external test rounds - 60 findings triaged, false positives refuted - from IDOR and unauthenticated endpoints to URL-borne tokens and missing rate limits.",
@@ -138,6 +136,7 @@ export const currentJobs: Job[] = [
       "Added a CCS ownership check to admin account linking, where a CSR could previously link any account Invoice Cloud accepted with no owner verification: the link now blocks and audits on a NOT_OWNED verdict from CCS.",
       "Cut admin-portal CI time: vitest to a threads pool (~10.5min test step to ~3-4min) and dropped redundant reruns from 21 deploy-branch build steps (~47% of a 14min pipeline), leaving the PR-gate suite as the test gate.",
       "Designed and shipped a multi-account usage-extract feature (backend API + frontend modal) letting multi-account customers export combined billed usage as one CSV, closing an admin-bypass IDOR gap found in review.",
+      "Ported the arbitrary date-range daily-usage view to another tenant portal - 92-day cap, bounded at today - re-keying the chart, usage series, CSV export and weather overlay off the selected range.",
     ],
     resumeReceipts: [
       "**Primary author of both generations of the fleet's core REST API** - 58% of v1, which serves all seven launched tenants, and 78% of v2, in production for the first tenant ahead of its cutover - owning the multi-tenant auth, data-access and Oracle CCS (OAuth 2.0) integration patterns both generations share.",
