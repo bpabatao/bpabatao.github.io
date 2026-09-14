@@ -7,12 +7,12 @@ New York, USA (Remote)
 - De-facto technical lead of a 5-engineer team, reporting to the COO/CEO: set the standards the fleet adopts, specify the CCS-side (IWS) changes the vendor team implements, own the team's AWS access as Terraform.
 - Sole platform engineer for the multi-tenant AWS fleet - production and test - running CI/CD, Datadog/CloudWatch observability, and FinOps tooling that drives right-sizing and Fargate-Spot savings.
 - Owned production go-live readiness for 6 client launches.
+- Replaced a locked single-month picker on a tenant portal's daily usage view with an arbitrary date range - 92-day cap, bounded at today - re-keying the chart, usage series, CSV export and weather overlay off the range.
+- Restored the v1 signup, quick-pay and cloudpay contracts on a tenant's test portal after a develop merge pulled v2-bound rewrites onto a v1 backend, crashing registration - three surfaces spoke the wrong contract.
 - Primary author of both generations of the fleet's core API - 58% of v1, serving all seven launched tenants; 78% of v2, in production for the first ahead of its cutover - and the auth and Oracle CCS patterns both share.
 - Primary author (93%) of the internal developer platform: a Terraform control-plane (9 stacks, ~60 AWS resource types) with a Fastify/React dashboard, onto which the fleet's provisioning is migrating tenant by tenant.
 - Closed pentest findings in severity-labelled batches across 6 external test rounds - 60 findings triaged, false positives refuted - from IDOR and unauthenticated endpoints to URL-borne tokens and missing rate limits.
-- Built the runtime feature-flag platform: a database-backed reader replacing build-time env vars, SSE push with fail-open, wired into 6 v1 admin consoles and 4 portals, shipped flag-gated per tenant with parity tests.
-- Shipped the fix for an SSN identity-verification gap enabling account takeover - wrong-person matches on ~2.4% of one tenant's accounts - as attempt lockout plus ZIP disambiguation, flag-gated for per-tenant rollout.
-- 14 more at https://bpabatao.github.io
+- 16 more at https://bpabatao.github.io
 
 ## Senior Full-Stack Engineer (Cloud)
 ESC Partners / HometownHUB · Contract
