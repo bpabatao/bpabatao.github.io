@@ -1,4 +1,4 @@
-# updated 2026-09-11 - paste into LinkedIn > Experience > ESC Partners / HometownHUB (one block per position)
+# updated 2026-09-14 - paste into LinkedIn > Experience > ESC Partners / HometownHUB (one block per position)
 ## Staff Software Engineer, Platform & Product
 ESC Partners / HometownHUB · Contract
 Sep 2025 - Present
@@ -12,7 +12,7 @@ New York, USA (Remote)
 - Closed pentest findings in severity-labelled batches across 6 external test rounds - 60 findings triaged, false positives refuted - from IDOR and unauthenticated endpoints to URL-borne tokens and missing rate limits.
 - Built the runtime feature-flag platform: a database-backed reader replacing build-time env vars, SSE push with fail-open, wired into 6 v1 admin consoles and 4 portals, shipped flag-gated per tenant with parity tests.
 - Shipped the fix for an SSN identity-verification gap enabling account takeover - wrong-person matches on ~2.4% of one tenant's accounts - as attempt lockout plus ZIP disambiguation, flag-gated for per-tenant rollout.
-- 13 more at https://bpabatao.github.io
+- 14 more at https://bpabatao.github.io
 
 ## Senior Full-Stack Engineer (Cloud)
 ESC Partners / HometownHUB · Contract

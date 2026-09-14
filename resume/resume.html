@@ -79,7 +79,7 @@
   <li><b>Originated two subsystems from scratch:</b> a DMMF-driven strategy clone engine (automated deep-clone of entire strategies) and the Edge archive/restore isolation system.</li>
   <li><b>Serialized concurrent writes and killed data races:</b> wrapped rating upserts in a transaction behind a Postgres advisory lock (pg_advisory_xact_lock), fixed a duplicate-row race in a GraphQL sync resolver, blocked re-entrant AI generation calls, made optimistic cache creates idempotent by id, and reconciled stale polls that hid new rows.</li>
   <li><b>Built the in-house observability layer:</b> an Apollo plugin emitting one structured obs_event per GraphQL operation to CloudWatch, an errClass fault/reject/noise scheme, staging and production dashboards, Beanstalk logs streamed to CloudWatch, Sentry hardened (tunnel, sourcemaps, gated replay) - then removed a dead-pipe New Relic billing ~$176/month.</li>
-  <li>Contributed to real-time collaboration (GraphQL subscriptions), OpenAI-backed generation features, and platform security (OWASP/IDOR, JWT sessions).</li>
+  <li>Contributed to real-time collaboration (GraphQL subscriptions), OpenAI-backed generation features, and platform security (OWASP/IDOR, JWT sessions); built AI Context Configuration - a per-strategy, per-user assistant response mode only a non-external strategy lead can choose, clamped on read and refused on write otherwise - plus help-centre retrieval.</li>
 </ul>
 </section>
 
