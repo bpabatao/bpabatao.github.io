@@ -136,6 +136,7 @@ export const currentJobs: Job[] = [
       "Added a CCS ownership check to admin account linking, where a CSR could previously link any account Invoice Cloud accepted with no owner verification: the link now blocks and audits on a NOT_OWNED verdict from CCS.",
       "Cut admin-portal CI time: vitest to a threads pool (~10.5min test step to ~3-4min) and dropped redundant reruns from 21 deploy-branch build steps (~47% of a 14min pipeline), leaving the PR-gate suite as the test gate.",
       "Designed and shipped a multi-account usage-extract feature (backend API + frontend modal) letting multi-account customers export combined billed usage as one CSV, closing an admin-bypass IDOR gap found in review.",
+      "Ported the arbitrary date-range daily-usage view to another tenant portal - 92-day cap, bounded at today - re-keying the chart, usage series, CSV export and weather overlay off the selected range.",
     ],
     resumeReceipts: [
       "**Primary author of both generations of the fleet's core REST API** - 58% of v1, which serves all seven launched tenants, and 78% of v2, in production for the first tenant ahead of its cutover - owning the multi-tenant auth, data-access and Oracle CCS (OAuth 2.0) integration patterns both generations share.",
