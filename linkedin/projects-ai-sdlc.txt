@@ -1,4 +1,4 @@
-# updated 2026-09-11 - paste into LinkedIn > Projects > AI-Augmented SDLC
+# updated 2026-09-14 - paste into LinkedIn > Projects > AI-Augmented SDLC
 AI-Augmented SDLC
 Associated with: ESC Partners / HometownHUB
 Four AI tools built and measured: a Claude reviewer kept where it earned its place, a Bedrock auto-fix shelved on evidence, a knowledge-base agent shipped, and a ticket-to-PR pipeline designed with human gates and not yet run live.

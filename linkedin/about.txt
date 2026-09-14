@@ -1,4 +1,4 @@
-# updated 2026-09-11 - paste into LinkedIn > About
+# updated 2026-09-14 - paste into LinkedIn > About
 Staff Software Engineer - I build the platform other engineers ship on. 8+ years in software, 5+ on AWS, ~3 leading a multi-tenant SaaS platform: primary author (93%) of the Terraform control-plane the fleet is migrating onto, primary author of the core REST API behind 7 live utility client portals (58% of the v1 serving them today) and of its v2 successor (78%), now in production for the first tenant ahead of its cutover - and its operator: CI/CD, observability, on-call, cost.
 
 Currently:
