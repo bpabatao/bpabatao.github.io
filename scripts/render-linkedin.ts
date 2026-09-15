@@ -1,7 +1,7 @@
 import { mkdirSync, readdirSync, rmSync, writeFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
-import { currentJobs, earlierJobs, earlierProjects, flagships, principles, profile, secondaryProjects, stackGroups, type Job, type SecondaryProject } from "../src/data/content.ts";
+import { currentJobs, earlierJobs, earlierProjects, flagships, profile, secondaryProjects, stackGroups, type Job, type SecondaryProject } from "../src/data/content.ts";
 import { formatPeriod, plainText } from "../src/lib/format.ts";
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
@@ -12,13 +12,13 @@ export const bodyOf = (file: string) => file.split("\n").slice(1).join("\n").tri
 export const slugOf = (title: string) => title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "").slice(0, 60);
 const allJobs = () => [...currentJobs, ...earlierJobs];
 
-/* LinkedIn allows 2,600 characters here; the old About used 800. Everything below already exists in
-   content.ts - the resume summary, the top three receipts per current role, the operating principles,
-   the availability line - so nothing is claimed on LinkedIn that the site does not claim. */
+/* LinkedIn allows 2,600 characters here. Everything below already exists in content.ts - the resume
+   summary and the top three receipts per current role - so nothing is claimed on LinkedIn that the site
+   does not claim. The operating principles and the availability line stay on the site only: Benedict
+   removed both from LinkedIn on 2026-09-15 (Open to work is set recruiters-only there). */
 function about(): string {
   const now = currentJobs.map((j) => `- ${j.role}, ${j.company}: ${j.receipts.slice(0, 3).map(plainText).join(" ")}`);
-  const how = principles.map((p) => `${p.lead} ${p.tail}`).join(" ");
-  return [profile.resumeSummary, "Currently:", now.join("\n"), `How I work: ${how}`, profile.availabilityLine.replace(" · ", " - ").replace(" · ", ", ")].join("\n\n");
+  return [profile.resumeSummary, "Currently:", now.join("\n")].join("\n\n");
 }
 
 /* One block per LinkedIn position; bullets belong to the latest position only. */
