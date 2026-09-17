@@ -1,4 +1,4 @@
-# updated 2026-09-14 - paste into LinkedIn > Projects > Identity & Access
+# updated 2026-09-17 - paste into LinkedIn > Projects > Identity & Access
 Identity & Access
 Associated with: ESC Partners / HometownHUB
 Closed an account-takeover path at registration, took identity-provider credentials out of the browser, and moved route permissions into one declarative guard.

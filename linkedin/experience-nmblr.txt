@@ -1,4 +1,4 @@
-# updated 2026-09-14 - paste into LinkedIn > Experience > Nmblr (one block per position)
+# updated 2026-09-17 - paste into LinkedIn > Experience > Nmblr (one block per position)
 ## Senior Full Stack Engineer
 Nmblr · Contract
 Mar 2024 - Present
@@ -12,5 +12,5 @@ London, UK (Remote)
 - Originated a data-dependency subsystem - GraphQL contract, resolver, registry-driven modal - that warns before archiving or deleting finalised entities with dependents, then cascades the archive/restore across them.
 - Evolved the schema against live customer data - idempotent backfills in an ordered pipeline with an audit gate, repair scripts, a string-encoded key swapped for a real foreign key, and an index pinned to stop drift.
 - Contributed to real-time collaboration (GraphQL subscriptions), OpenAI-backed generation features, and platform security (OWASP/IDOR, JWT sessions).
-- Rebuilt an Edge communications-strategy tab as a per-brand-value tile grid - new Prisma columns, per-field AI drafting, and a collaboration thread per field, with writes scoped to the strategy's own rows.
-- 3 more at https://bpabatao.github.io
+- Extended the observability layer to log companyName and userEmail per obs_event and surface account, brand, time and email on the dashboards, so error triage can name the account, brand and user behind a fault.
+- 6 more at https://bpabatao.github.io
