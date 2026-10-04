@@ -26,7 +26,7 @@ export function cardInputs(): Card[] {
   return [
     {
       file: "og.png",
-      kicker: profile.statusLine,
+      kicker: "~/bpabatao",
       title: `${profile.thesis.lead} ${profile.thesis.tail}`,
       accent: profile.thesis.accent,
       body: `${profile.name} · ${profile.role}`,
@@ -54,14 +54,13 @@ body { width: 1200px; height: 630px; background: #0b0c0e; color: #e8eaed; font-f
 .grid { position: absolute; inset: 0; background-image: linear-gradient(to right, #24272b 1px, transparent 1px), linear-gradient(to bottom, #24272b 1px, transparent 1px); background-size: 48px 48px; opacity: .35; mask-image: linear-gradient(to bottom, black, transparent 80%); }
 .wrap { position: relative; padding: 72px 80px; display: flex; flex-direction: column; height: 630px; box-sizing: border-box; }
 .kicker { font-family: Mono, monospace; font-size: 22px; color: #9ba1a8; letter-spacing: .04em; }
-.kicker b { color: #4ade80; font-weight: 400; }
 h1 { font-family: Clash, sans-serif; font-weight: 600; font-size: 72px; line-height: 1.04; letter-spacing: -.01em; margin: 28px 0 0; max-width: 1040px; }
 h1 span { color: #ff5500; }
 .body { margin-top: 26px; font-size: 30px; color: #c3c8ce; max-width: 1000px; line-height: 1.35; }
 .foot { margin-top: auto; font-family: Mono, monospace; font-size: 22px; color: #9ba1a8; }
 .foot span { white-space: nowrap; }
 </style></head><body><div class="grid"></div><div class="wrap">
-<div class="kicker">${c.kicker.startsWith("OPERATIONAL") ? `<b>OPERATIONAL</b>${esc(c.kicker.slice("OPERATIONAL".length))}` : esc(c.kicker)}</div>
+<div class="kicker">${esc(c.kicker)}</div>
 <h1>${esc(c.title)}${c.accent ? ` <span>${esc(c.accent)}</span>` : ""}</h1>
 <div class="body">${esc(c.body)}</div>
 <div class="foot">${c.foot.split(/\s+·\s+/).map((s, i) => `<span>${i ? "· " : ""}${esc(s)}</span>`).join(" ")}</div>

@@ -15,7 +15,7 @@ const hasTag = (html: string, tag: string, attrs: Record<string, string>) =>
   new RegExp(`<${tag}\\b` + Object.entries(attrs).map(([k, v]) => `(?=[^>]*\\b${k}="${escapeRe(v)}")`).join("") + "[^>]*>").test(html);
 
 test("sections appear in the recruiter order", () => {
-  const pos = order(["projects", "work", "approach", "stack", "contact"]);
+  const pos = order(["projects", "work", "stack", "contact"]);
   assert.ok(pos.every((p) => p > 0), `missing section id: ${pos}`);
   assert.deepEqual([...pos].sort((a, b) => a - b), pos);
 });
@@ -28,12 +28,19 @@ test("hero carries the availability line and two buttons", () => {
   for (const c of cases) assert.ok(home.includes(`data-goatcounter-click="case-${c.slug}"`), c.slug);
 });
 
-test("early project lists are collapsed", () => {
-  assert.ok(home.includes("also shipped ("));
-  assert.ok(home.includes("earlier work ("));
-  const folds = currentJobs.filter((j) => j.receipts.length > 8).length;
-  assert.equal((home.match(/<details/g) ?? []).length, 3 + folds, "earlier roles + also shipped + earlier work + receipt folds");
+test("experience shows a short head per role and folds the rest", () => {
+  // also shipped / earlier work live in the LinkedIn pack only
+  assert.ok(!home.includes("also shipped (") && !home.includes("earlier work ("));
+  const tails = currentJobs.map((j) => j.receipts.length - (j.lede ? 1 : 0) - (j.visible ?? 6));
+  for (const t of tails) assert.ok(t <= 6, `fold holds at most 6, got ${t}`);
+  const folds = tails.filter((t) => t > 0).length;
+  assert.equal((home.match(/<details/g) ?? []).length, 1 + folds, "earlier roles + receipt folds");
   assert.equal((home.match(/>show \d+ more</g) ?? []).length, folds, "every current job past the cap folds its tail");
+});
+
+test("no ambient status gimmicks ship", () => {
+  for (const gone of ["OPERATIONAL", "ACCEPTING", "status-dot", "portal-dot", "status-text"]) assert.ok(!home.includes(gone), gone);
+  assert.equal((home.match(/<h1[\s>]/g) ?? []).length, 1, "home has one h1");
 });
 
 test("external links announce new tab", () => {
@@ -62,7 +69,7 @@ test("theme toggle accessible name is its visible label", () => {
 });
 
 test("every section is labelled by its heading", () => {
-  for (const id of ["projects", "work", "approach", "stack", "contact"]) {
+  for (const id of ["projects", "work", "stack", "contact"]) {
     assert.ok(home.includes(`id="${id}" aria-labelledby="${id}-heading"`) || home.includes(`aria-labelledby="${id}-heading" id="${id}"`), id);
     assert.ok(home.includes(`id="${id}-heading"`), `${id}-heading`);
   }

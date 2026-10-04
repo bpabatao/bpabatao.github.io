@@ -1,12 +1,12 @@
-import { Box, Label, Line, Packet, RESOURCES, TENANTS, captions } from "./diagrams";
+import { Box, GhostBox, Label, Line, Packet, RESOURCES, TENANTS, captions } from "./diagrams";
 
 /* The landscape Gate puts its label underneath; in a vertical chain the next box covers it. */
-function GateBeside({ x, y }: { x: number; y: number }) {
+function GateBeside({ x, y, label = "human gate", anchor = "start" }: { x: number; y: number; label?: string; anchor?: "start" | "end" }) {
   return (
     <g>
       <rect x={-11} y={-11} width={22} height={22} transform={`translate(${x} ${y}) rotate(45)`} fill="var(--surface-2)" stroke="var(--accent)" />
-      <Label x={x + 22} y={y} size={8.5} color="var(--accent)" anchor="start">
-        human gate
+      <Label x={anchor === "start" ? x + 22 : x - 22} y={y} size={8.5} color="var(--accent)" anchor={anchor}>
+        {label}
       </Label>
     </g>
   );
@@ -94,15 +94,13 @@ export function ControlPlanePortrait() {
   return (
     <svg viewBox="0 0 320 424" role="img" aria-label={captions["control-plane"]} className="block w-full">
       <Line d="M160 56 V88" />
-      <Line d={`M160 152 V${lastCy}`} />
+      <Line dashed d={`M160 152 V${lastCy}`} />
       {rows.map((y, i) => (
-        <Line key={i} d={`M160 ${y + 11} H180`} />
+        <Line dashed key={i} d={`M160 ${y + 11} H180`} />
       ))}
 
+      {/* no packets to the tenants: the live fleet still runs on its earlier per-portal Terraform */}
       <Packet d="M160 56 V88" dur="2s" />
-      {rows.map((y, i) => (
-        <Packet key={i} d={`M160 152 V${y + 11} H180`} dur="2.6s" delay={`${(0.6 + (i * 2.2) / TENANTS.length).toFixed(2)}s`} />
-      ))}
 
       <Box x={40} y={12} w={240} h={44}>
         <Label x={160} y={28} size={10.5} color="var(--ink)" weight={600}>
@@ -133,59 +131,65 @@ export function ControlPlanePortrait() {
         </Box>
       ))}
       <Label x={148} y={rows[3] + 11} size={8.5} anchor="end">
-        {TENANTS.length} production
+        {TENANTS.length} live
       </Label>
       <Label x={148} y={rows[3] + 24} size={8.5} anchor="end">
         tenants
       </Label>
       <Label x={160} y={412} size={8.5}>
-        migrating tenant by tenant
+        dashed: migrating onto it, tenant by tenant
       </Label>
     </svg>
   );
 }
 
 export function AiSdlcPortrait() {
-  const stage = (y: number, text: string, color = "var(--body)") => (
-    <Box x={90} y={y} w={140} h={28}>
-      <Label x={160} y={y + 15} size={9.5} color={color}>
+  const cols = [12, 114, 216];
+  const node = (col: number, y: number, text: string, color = "var(--body)") => (
+    <Box x={cols[col]} y={y} w={92} h={28}>
+      <Label x={cols[col] + 46} y={y + 15} size={9} color={color}>
         {text}
       </Label>
     </Box>
   );
   return (
-    <svg viewBox="0 0 320 484" role="img" aria-label={captions["ai-sdlc"]} className="block w-full">
-      <Label x={12} y={20} size={9} anchor="start">
-        AUTO-REMEDIATION · shelved aug 2026
+    <svg viewBox="0 0 320 356" role="img" aria-label={captions["ai-sdlc"]} className="block w-full">
+      <Label x={12} y={14} size={9} anchor="start" color="var(--ok)">
+        RUNS IN CI · kept
       </Label>
-      <Line d="M160 60 V76" />
-      <Line d="M160 104 V120" />
-      <Line d="M160 148 V164" />
-      <Packet d="M160 32 V192" dur="5s" />
-      {stage(32, "alert")}
-      {stage(76, "bedrock triage")}
-      {stage(120, "fix pr")}
-      {stage(164, "human review")}
+      <Line d="M104 40 H114 M206 40 H216" />
+      <Packet d="M12 40 H308" dur="4.5s" />
+      {node(0, 26, "pull request")}
+      {node(1, 26, "claude reviewer", "var(--ink)")}
+      {node(2, 26, "human review")}
 
-      <Label x={12} y={226} size={9} anchor="start">
-        TICKET → MERGE
+      <Label x={12} y={80} size={9} anchor="start" color="var(--ok)">
+        SHIPPED · knowledge base
       </Label>
-      <Line d="M160 266 V282" />
-      <Line d="M160 310 V318" />
-      <Line d="M160 340 V348" />
-      <Line d="M160 376 V384" />
-      <Line d="M160 406 V414" />
-      <Packet d="M160 238 V442" dur="6.5s" delay="1s" approve />
-      {stage(238, "ticket")}
-      {stage(282, "plan")}
-      <GateBeside x={160} y={329} />
-      {stage(348, "draft pr")}
-      <GateBeside x={160} y={395} />
-      {stage(414, "merge", "var(--ok)")}
+      <Line d="M104 106 H114 M206 106 H216" />
+      <Packet d="M12 106 H308" dur="5s" delay="1s" />
+      {node(0, 92, "question")}
+      {node(1, 92, "kb agent", "var(--ink)")}
+      {node(2, 92, "curated first")}
 
-      <Label x={160} y={466} size={8.5}>
-        every step reversible · humans own every gate
+      <Label x={12} y={146} size={9} anchor="start">
+        DESIGNED · dry-run only
       </Label>
+      <Line d="M104 172 H114 M206 172 H216 M262 186 V203 M262 225 V240" />
+      {node(0, 158, "ticket")}
+      {node(1, 158, "plan")}
+      {node(2, 158, "draft pr")}
+      <GateBeside x={262} y={214} label="human gates" anchor="end" />
+      {node(2, 240, "merge")}
+
+      <Label x={12} y={294} size={9} anchor="start">
+        SHELVED · aug 2026
+      </Label>
+      <GhostBox x={12} y={306} w={296} h={28}>
+        <Label x={160} y={321} size={9}>
+          bedrock auto-remediation · 12 of 13 failed
+        </Label>
+      </GhostBox>
     </svg>
   );
 }
@@ -381,7 +385,7 @@ export function ObservabilityPortrait() {
     { name: "telemetry", keep: "90 days" },
   ];
   return (
-    <svg viewBox="0 0 320 356" role="img" aria-label={captions["observability"]} className="block w-full">
+    <svg viewBox="0 0 320 316" role="img" aria-label={captions["observability"]} className="block w-full">
       {cols.map((c) => (
         <Line key={c.cx} d={`M${c.cx} 40 V64`} />
       ))}
@@ -416,11 +420,8 @@ export function ObservabilityPortrait() {
       ))}
 
       <Box x={40} y={96} w={240} h={48}>
-        <Label x={160} y={113} size={11} color="var(--ink)" weight={600}>
+        <Label x={160} y={121} size={11} color="var(--ink)" weight={600}>
           capture layer
-        </Label>
-        <Label x={160} y={130} size={9}>
-          deep-redacted on v2 · 156,656 events/day
         </Label>
       </Box>
       <Box x={40} y={168} w={240} h={44}>
@@ -442,9 +443,6 @@ export function ObservabilityPortrait() {
           </Label>
         </Box>
       ))}
-      <Label x={160} y={336} size={8.5}>
-        benign auth failures folded out of the error rate
-      </Label>
     </svg>
   );
 }
@@ -468,6 +466,12 @@ export function IdentityPortrait() {
         <line x1={294} y1={114} x2={306} y2={126} stroke="var(--muted)" strokeWidth={1.5} />
         <line x1={306} y1={114} x2={294} y2={126} stroke="var(--muted)" strokeWidth={1.5} />
       </g>
+      <Label x={296} y={20} size={8.5} anchor="end">
+        before
+      </Label>
+      <Label x={166} y={76} size={8.5} color="var(--accent)" anchor="start">
+        after
+      </Label>
       <Label x={288} y={84} size={8.5} anchor="end">
         no direct access
       </Label>

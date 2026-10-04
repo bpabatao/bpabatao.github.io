@@ -1,5 +1,5 @@
-# updated 2026-10-04 - paste into LinkedIn > Projects > CCS Knowledge Base Agent
-CCS Knowledge Base Agent
+# updated 2026-10-04 - paste into LinkedIn > Projects > Billing-Data Knowledge Agent
+Billing-Data Knowledge Agent
 Associated with: ESC Partners / HometownHUB
 A Bedrock retrieval agent over utility billing systems: curated documentation first, generated SQL only behind a flag, and a prompt that refuses to claim something is absent.
 Ownership: SOLE AUTHOR

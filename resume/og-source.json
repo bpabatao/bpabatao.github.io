@@ -1,11 +1,11 @@
 [
   {
     "file": "og.png",
-    "kicker": "OPERATIONAL - 7 TENANTS · AWS · REMOTE (ITALY)",
+    "kicker": "~/bpabatao",
     "title": "I build the platform other engineers",
     "accent": "ship on.",
     "body": "Benedict Pabatao · Staff Software Engineer, Platform & Product",
-    "foot": "8+ years in software   ·   11 tenant fleet, 7 live   ·   58% · 76% core API authorship · v1 · v2   ·   93% control-plane authorship   ·   43x sessions view, measured live"
+    "foot": "7 live 11-tenant fleet   ·   93% control-plane, primary author   ·   2 core API generations, primary author   ·   43x faster sessions view (102s to 2.4s)"
   },
   {
     "file": "og/core-api.png",
@@ -18,7 +18,7 @@
   {
     "file": "og/control-plane.png",
     "kicker": "~/case/control-plane",
-    "title": "Terraform Control-Plane & IDP",
+    "title": "Terraform Control-Plane & Internal Developer Platform",
     "accent": "",
     "body": "The internal developer platform that provisions new client environments, cost-tracks the fleet, and is absorbing the rest tenant by tenant.",
     "foot": "93% of commits · Terraform · Fastify 5 · React 18 · TypeScript"
@@ -42,9 +42,9 @@
   {
     "file": "og/ccs-kb.png",
     "kicker": "~/case/ccs-kb",
-    "title": "CCS Knowledge Base Agent",
+    "title": "Billing-Data Knowledge Agent",
     "accent": "",
-    "body": "A retrieval agent over utility billing systems that answers from curated documentation first and only reaches for generated SQL behind a flag.",
+    "body": "A retrieval agent over Oracle Utilities CCS billing systems that answers from curated documentation first and only reaches for generated SQL behind a flag.",
     "foot": "Sole author · AWS Bedrock · RetrieveAndGenerate · Fargate · S3"
   },
   {

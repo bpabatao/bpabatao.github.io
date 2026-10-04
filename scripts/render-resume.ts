@@ -10,15 +10,22 @@ const CHROME = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome";
 const esc = (s: string) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 const li = (b: Bullet) => (b.lead ? `  <li><b>${esc(b.lead)}</b> ${esc(b.rest)}</li>` : `  <li>${esc(b.rest)}</li>`);
 
-/* Two concurrent "Present" roles read as double employment unless each says it is a contract. */
+const dates = (d: string) => `<span class="meta">${esc(d)}</span>`;
+
+/* Employer first, then each title with its own dates (a standard stacked role). The employer
+   line keeps the FULL tenure: ATS parsers bind one range per employer block, and a stacked
+   title alone made a 3-year relationship parse as its latest title's span. */
 function currentRole(r: Role): string {
-  const loc = r.location ? ` - ${esc(r.location)}` : "";
+  const tagline = r.tagline ? ` - ${esc(r.tagline)}` : "";
   const kind = r.contract ? " (contract)" : "";
+  const loc = r.location ? ` - ${esc(r.location)}` : "";
+  const titles = r.currentTitleDates
+    ? [{ title: r.title, dates: r.currentTitleDates }, ...r.previous].map((p) => `<h3 class="row"><span>${esc(p.title)}</span> ${dates(p.dates)}</h3>`)
+    : [`<h3>${esc(r.title)}</h3>`];
   return [
     `<section class="role">`,
-    `<h3>${esc(r.title)}</h3>`,
-    `<div class="loc"><span class="co">${esc(r.company)}</span>${kind}${loc} | <span class="meta">${esc(r.dates)}</span></div>`,
-    ...(titleHistory(r) ? [`<div class="loc">${titleHistory(r)}</div>`] : []),
+    `<div class="row employer"><span><span class="co">${esc(r.company)}</span>${tagline}${kind}${loc}</span> ${dates(r.dates)}</div>`,
+    ...titles,
     "<ul>",
     ...r.bullets.map(li),
     "</ul>",
@@ -26,20 +33,12 @@ function currentRole(r: Role): string {
   ].join("\n");
 }
 
-/* The h3 already names the current title; its span and the earlier titles share one line. */
-function titleHistory(r: Role): string {
-  return [
-    ...(r.currentTitleDates ? [`Current title: <span class="meta">${esc(r.currentTitleDates)}</span>`] : []),
-    ...r.previous.map((p) => `Previously ${esc(p.title)}: <span class="meta">${esc(p.dates)}</span>`),
-  ].join(" | ");
-}
-
 /* Pre-2023 roles earn one line each: they establish tenure, not the Staff platform case. */
 function earlierRole(r: Role): string {
-  const parts = [r.location, r.contract ? "contract" : null].filter(Boolean) as string[];
-  const loc = parts.length ? ` (${esc(parts.join(", "))})` : "";
+  const company = `${esc(r.company)}${r.tagline ? ` (${esc(r.tagline)})` : ""}${r.contract ? " (contract)" : ""}`;
+  const loc = r.location ? ` - ${esc(r.location)}` : "";
   const stack = r.stack.length ? ` (${esc(r.stack.join(", "))})` : "";
-  return `<p class="earlier"><b>${esc(r.title)}</b> - ${esc(r.company)}${loc} | <span class="meta">${esc(r.dates)}</span>${stack}</p>`;
+  return `<p class="earlier row"><span><b>${esc(r.title)}</b> - ${company}${loc}${stack}</span> ${dates(r.dates)}</p>`;
 }
 
 /* The template is the July 2026 ATS-safe resume verbatim: single column, linear flow,
@@ -65,8 +64,8 @@ export function renderHtml(m: ResumeModel): string {
     max-width: 178mm;
   }
   h1 { font-size: 20pt; letter-spacing: -0.01em; color: #111; }
-  .role-line { font-size: 9.5pt; font-weight: 600; color: #c44400; margin-top: 2pt; }
-  .contact { font-size: 9pt; color: #444; margin-top: 4pt; font-family: "SF Mono", Menlo, Consolas, monospace; }
+  .role-line { font-size: 10pt; font-weight: 600; color: #c44400; margin-top: 2pt; }
+  .contact { font-size: 9pt; color: #444; margin-top: 4pt; }
   h2 {
     font-size: 10pt;
     text-transform: uppercase;
@@ -75,11 +74,15 @@ export function renderHtml(m: ResumeModel): string {
     padding-bottom: 2pt;
     margin: 12pt 0 6pt;
   }
-  h3 { font-size: 10.5pt; margin-top: 8pt; }
-  .role { break-inside: avoid; }
-  .earlier { margin: 3pt 0 0; font-size: 9.5pt; }
-  .co { color: #c44400; font-weight: 600; }
-  .meta { white-space: nowrap; font-size: 8.5pt; color: #555; font-family: "SF Mono", Menlo, Consolas, monospace; font-weight: 400; }
+  h3 { font-size: 10pt; margin-top: 2pt; }
+  .row { display: flex; justify-content: space-between; align-items: baseline; gap: 10pt; }
+  .employer { margin-top: 9pt; font-size: 9pt; color: #555; }
+  /* a role may split between bullets, never inside one or right after its header */
+  li { break-inside: avoid; }
+  .employer, h3 { break-after: avoid; }
+  .earlier { margin: 3pt 0 0; font-size: 9.4pt; }
+  .co { color: #111; font-weight: 700; font-size: 10.5pt; }
+  .meta { white-space: nowrap; font-size: 8.8pt; color: #555; font-variant-numeric: tabular-nums; font-weight: 400; }
   .loc { font-size: 8.8pt; color: #555; margin-bottom: 3pt; }
   ul { padding-left: 12pt; margin: 3pt 0 6pt; }
   li { margin: 2.2pt 0; }

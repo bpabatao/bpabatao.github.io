@@ -14,7 +14,7 @@ test("one card for home and one per case", () => {
 test("home card carries role and derived tenant count", () => {
   const html = cardHtml(cardInputs()[0]);
   assert.ok(html.includes(profile.role.replace(/&/g, "&amp;")));
-  assert.ok(html.includes(`${fleetPortals.length} TENANTS`));
+  assert.ok(html.includes(`${fleetPortals.length} live`), "tenant count comes from the metric tiles");
   assert.ok(html.includes("width: 1200px") && html.includes("height: 630px"));
   assert.ok(!html.includes("Lead Platform Engineer"));
 });

@@ -1,17 +1,14 @@
 # updated 2026-10-04 - paste into LinkedIn > Experience > Nmblr (one block per position)
-## Senior Full Stack Engineer
+## Senior Full-Stack Engineer
 Nmblr · Contract
 Mar 2024 - Present
 London, UK (Remote)
 
 - One of 3 core engineers on an ISO 27001-certified biopharma strategy SaaS in private beta with enterprise pharma clients.
-- Originated two subsystems from scratch: a DMMF-driven strategy clone engine and the Edge archive/restore isolation system.
-- Built the in-house observability layer - an Apollo plugin emits one structured obs_event per GraphQL operation to CloudWatch, errClass splits fault from noise, dashboards cover staging and prod - then removed New Relic.
-- Built AI Context Configuration for the AI assistant - a per-strategy, per-user response mode that only a non-external strategy lead can choose (clamped on read, refused on write otherwise) and help-centre retrieval.
+- Originated two subsystems from scratch: a schema-driven strategy clone engine and the Edge archive/restore isolation system.
+- Built the in-house observability layer - an Apollo plugin emits one structured event per GraphQL operation to CloudWatch, classed as fault or noise, with staging and prod dashboards - then removed New Relic.
 - Serialized rating upserts behind a Postgres advisory lock, killed a duplicate-groups race in a sync resolver, blocked re-entrant AI generation calls, and added double-press guards plus stale-poll reconciliation.
+- Built per-strategy, per-user response controls for the AI assistant that only an internal strategy lead can set (clamped on read, refused on write otherwise), plus help-centre retrieval.
 - Built the registry-driven data-dependency subsystem - GraphQL contract, resolver, modal - that warns before archiving or deleting finalised entities with dependents, then cascades the archive/restore across them.
-- Evolved the schema against live customer data - idempotent backfills in an ordered pipeline with an audit gate, repair scripts, a string-encoded key swapped for a real foreign key, and an index pinned to stop drift.
+- Hardened the AI endpoints - a per-user LLM rate limit, no prompt text in logs, and raw provider errors (which can quote an API key fragment) no longer returned to the browser.
 - Contributed to real-time collaboration (GraphQL subscriptions), OpenAI-backed generation features, and platform security (OWASP/IDOR, JWT sessions).
-- Hardened the strategy clone engine I originated: pre-clone config validation, structured monitoring, extended CI tests, and a README on its foreign-key workflow and defense layers.
-- Built a Notion-backed knowledge base for the AI assistant - DB retrieval with fixture fallback, a Notion sync worker, a prompt sync gated by evals, and a daily coverage-drift report.
-- 9 more at https://bpabatao.github.io

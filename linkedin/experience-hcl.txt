@@ -2,6 +2,6 @@
 ## Senior Software Engineer II
 HCL Technologies · Full-time
 Feb 2020 - Apr 2022
-New York, USA / Remote
+New York, USA (Remote)
 
 - Product features at scale on HCL DX; automated test suites; led code reviews.

@@ -50,6 +50,14 @@ def contact(m):
     return para(out)
 
 
+def employer_tail(r, earlier=False):
+    """ - tagline (contract) - Location; earlier roles put the tagline in parentheses."""
+    tag = r.get("tagline")
+    out = (f" ({tag})" if earlier else f" - {tag}") if tag else ""
+    out += " (contract)" if r.get("contract") else ""
+    return out + (f" - {r['location']}" if r.get("location") else "")
+
+
 def bullet(b):
     runs = [run(b["lead"] + " ", bold=True)] if b.get("lead") else []
     runs.append(run(b["rest"]))
@@ -61,20 +69,19 @@ def body(m):
     p += [para([run("Summary")], "Heading2"), para([run(m["summary"])])]
     p.append(para([run("Professional Experience")], "Heading2"))
     for r in m["experience"]:
-        p.append(para([run(r["title"])], "Heading3"))
-        parts = [x for x in [r.get("location"), "contract" if r.get("contract") else None] if x]
-        loc = f" - {', '.join(parts)}" if parts else ""
-        p.append(para([run(r["company"], bold=True), run(f"{loc} | {r['dates']}")]))
-        history = ([f"Current title: {r['currentTitleDates']}"] if r.get("currentTitleDates") else []) + [f"Previously {prev['title']}: {prev['dates']}" for prev in r.get("previous", [])]
-        if history:
-            p.append(para([run(" | ".join(history))]))
+        # employer line carries the full tenure; each title is its own Heading3 position with its own dates,
+        # so a parser sees two positions instead of reading the latest title across the whole tenure
+        p.append(para([run(r["company"], bold=True), run(f"{employer_tail(r)} | {r['dates']}")]))
+        positions = [{"title": r["title"], "dates": r["currentTitleDates"]}] + r.get("previous", []) if r.get("currentTitleDates") else [{"title": r["title"], "dates": r["dates"]}]
+        for pos in positions:
+            p.append(para([run(pos["title"])], "Heading3"))
+            p.append(para([run(f"{r['company']} | {pos['dates']}")]))
         p += [bullet(b) for b in r["bullets"]]
     p.append(para([run("Earlier Experience")], "Heading2"))
     for r in m["earlier"]:
-        parts = [x for x in [r.get("location"), "contract" if r.get("contract") else None] if x]
-        loc = f" ({', '.join(parts)})" if parts else ""
-        p.append(para([run(f"{r['title']} - {r['company']}{loc}")], "Heading3"))
-        p.append(para([run(r["dates"])]))
+        # Heading3 is the title alone: parsers split title from company on the first dash
+        p.append(para([run(r["title"])], "Heading3"))
+        p.append(para([run(r["company"] + employer_tail(r, earlier=True) + f" | {r['dates']}")]))
         p += [bullet(b) for b in r["bullets"]]
     p.append(para([run("Technical Skills")], "Heading2"))
     for s in m["skills"]:
@@ -149,7 +156,7 @@ def _selftest():
         "name": "Test Person", "role": "Engineer", "roleLine": "ENGINEER | AWS", "contact": "a | b",
         "contactItems": [{"text": "a", "href": None}, {"text": "b@x.io", "href": "mailto:b@x.io"}, {"text": "x.io", "href": "https://x.io"}],
         "summary": "Sum & more", "page": "letter",
-        "experience": [{"title": "T", "company": "C", "location": "L", "dates": "Jan 2020 - Present", "contract": True,
+        "experience": [{"title": "T", "company": "C", "tagline": "SaaS", "location": "L", "dates": "Jan 2020 - Present", "contract": True,
                         "currentTitleDates": "Jan 2020 - Present", "previous": [{"title": "Old Title", "dates": "Jan 2019 - Dec 2019"}],
                         "bullets": [{"lead": "Did X:", "rest": "then Y"}, {"lead": None, "rest": "plain"}]}],
         "earlier": [{"title": "T2", "company": "C2", "location": "L2", "contract": True, "dates": "2019 - 2020", "bullets": [{"lead": None, "rest": "old"}]}],
@@ -169,17 +176,17 @@ def _selftest():
     assert "<w:tbl" not in doc
     assert "Sum &amp; more" in doc
     assert 'w:w="12240" w:h="15840"' in doc
-    # the title history is one line, not one per title
-    assert "Current title: Jan 2020 - Present | Previously Old Title: Jan 2019 - Dec 2019" in doc
-    assert ", contract)" in doc
-    # the current-role line must carry the contract marker too - without it the DOCX
+    # stacked titles: the employer line carries the full tenure, each title its own dates
+    assert "SaaS (contract) - L | Jan 2020 - Present" in doc
+    assert "C | Jan 2019 - Dec 2019" in doc and ">Old Title<" in doc
+    # the contract marker on both current and earlier roles - without it the DOCX
     # (the format most ATS ingest) shows concurrent roles as permanent ones.
-    assert "L, contract | Jan 2020 - Present" in doc
+    assert "C2 (contract) - L2 | 2019 - 2020" in doc
     assert doc.count('w:val="Heading1"') == 1
     # contact links are real hyperlinks, each backed by an external relationship
     assert doc.count("<w:hyperlink ") == 2 and 'r:id="rIdL1"' in doc
     assert 'Target="mailto:b@x.io" TargetMode="External"' in rels and 'Target="https://x.io" TargetMode="External"' in rels
-    assert doc.count('w:val="Heading3"') == 3, doc.count('w:val="Heading3"')
+    assert doc.count('w:val="Heading3"') == 4, doc.count('w:val="Heading3"')
     print("docx selftest ok")
 
 

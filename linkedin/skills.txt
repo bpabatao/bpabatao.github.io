@@ -24,15 +24,12 @@ ALB
 IAM
 Elastic Beanstalk
 Docker
-Linux
 Bitbucket Pipelines
 GitHub Actions
+OIDC deploys
+Snyk
 FinOps
 Cost Explorer
-AWS Bedrock (Claude)
-AI code review in CI
-LLM knowledge bases (RAG)
-Evaluating and pruning AI tooling
 Fastify
 Express
 Python
@@ -46,17 +43,13 @@ Vitest
 Playwright
 Oracle Utilities CCS
 Invoice Cloud
-Datadog RUM/APM
 CloudWatch
 CloudWatch Synthetics
 Sentry
 Structured logging
-Session Replay
 OWASP/IDOR
-JWT
 OAuth 2.0
-OIDC
-Snyk
+JWT
 Pentest remediation
 React
 Next.js
@@ -65,6 +58,9 @@ Styled Components
 Tailwind
 React Native (Expo)
 Accessibility (WCAG 2.1 AA)
+AWS Bedrock (Claude)
+AI code review in CI
+LLM knowledge bases (RAG)
 Infrastructure-as-Code (IaC)
 Security & Compliance
 Incident Response
