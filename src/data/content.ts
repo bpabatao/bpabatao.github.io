@@ -372,6 +372,11 @@ export const secondaryProjects: SecondaryProject[] = [
     jobId: "hth",
   },
   {
+    title: "Bedrock Knowledge Base",
+    description: "Built with a colleague. My part was the refresh and the platform side: a scheduled in-VPC Fargate task that re-ingests Oracle CCS product docs, per-client material and service-desk pages across four data sources, with alerts when it fails.",
+    jobId: "hth",
+  },
+  {
     title: "Tenant Go-Lives",
     description: "Production go-live readiness for client launches across the fleet.",
     jobId: "hth",
