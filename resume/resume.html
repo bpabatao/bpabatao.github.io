@@ -17,7 +17,7 @@
     max-width: 178mm;
   }
   h1 { font-size: 20pt; letter-spacing: -0.01em; color: #111; }
-  .role-line { font-size: 10pt; font-weight: 600; color: #c44400; margin-top: 2pt; }
+  .role-line { font-size: 10pt; font-weight: 600; color: #111; margin-top: 2pt; }
   .contact { font-size: 9pt; color: #444; margin-top: 4pt; }
   h2 {
     font-size: 10pt;
@@ -28,7 +28,6 @@
     margin: 12pt 0 6pt;
   }
   h3 { font-size: 10pt; margin-top: 2pt; }
-  .row { display: flex; justify-content: space-between; align-items: baseline; gap: 10pt; }
   .employer { margin-top: 9pt; font-size: 9pt; color: #555; }
   /* a role may split between bullets, never inside one or right after its header */
   li { break-inside: avoid; }
@@ -57,9 +56,10 @@
 <h2>Professional Experience</h2>
 
 <section class="role">
-<div class="row employer"><span><span class="co">ESC Partners / HometownHUB</span> - multi-tenant utility customer-portal SaaS (contract) - New York, USA (Remote)</span> <span class="meta">May 2023 - Present</span></div>
-<h3 class="row"><span>Staff Software Engineer, Platform &amp; Product</span> <span class="meta">Sep 2025 - Present</span></h3>
-<h3 class="row"><span>Senior Full-Stack Engineer (Cloud)</span> <span class="meta">May 2023 - Aug 2025</span></h3>
+<div class="employer"><span class="co">ESC Partners / HometownHUB</span> (contract) | <span class="meta">May 2023 - Present</span></div>
+<div class="loc">multi-tenant utility customer-portal SaaS - New York, USA (Remote)</div>
+<h3>Staff Software Engineer, Platform &amp; Product | <span class="meta">Sep 2025 - Present</span></h3>
+<h3>Senior Full-Stack Engineer (Cloud) | <span class="meta">May 2023 - Aug 2025</span></h3>
 <ul>
   <li><b>Primary author of the fleet's core REST API, both generations</b> - 58% of v1, which serves 6 of the 7 live tenants, and 76% of v2 (Fastify, TypeScript, Zod, MongoDB on ECS Fargate), in production for the seventh since June 2026; own the shared auth, data-access and Oracle CCS billing integration (OAuth 2.0).</li>
   <li><b>Primary author (93%) of the internal developer platform</b> - a Terraform control-plane (9 stacks, ~60 AWS resource types) with a Fastify/React dashboard that plans, applies and attributes cost; the fleet is moving onto it from per-portal provisioning, tenant by tenant.</li>
@@ -74,7 +74,8 @@
 </section>
 
 <section class="role">
-<div class="row employer"><span><span class="co">Nmblr</span> - Biopharma Strategy &amp; Collaboration Platform (contract) - London, UK (Remote)</span> <span class="meta">Mar 2024 - Present</span></div>
+<div class="employer"><span class="co">Nmblr</span> (contract) | <span class="meta">Mar 2024 - Present</span></div>
+<div class="loc">Biopharma Strategy &amp; Collaboration Platform - London, UK (Remote)</div>
 <h3>Senior Full-Stack Engineer</h3>
 <ul>
   <li><b>One of 3 core engineers, reporting to the CEO,</b> on an ISO 27001-certified biopharma strategy SaaS in private beta with enterprise pharma clients (React, TypeScript, Node, GraphQL, Prisma, AWS Elastic Beanstalk).</li>
@@ -87,15 +88,15 @@
 
 <h2>Earlier Experience</h2>
 
-<p class="earlier row"><span><b>Senior Software Engineer</b> - CoDev (agency, embedded with BaseMap) - Utah, USA (Remote) (JavaScript, Docker)</span> <span class="meta">Mar 2022 - May 2023</span></p>
+<p class="earlier"><b>Senior Software Engineer</b> - CoDev (agency, embedded with BaseMap) | <span class="meta">Mar 2022 - May 2023</span> - Utah, USA (Remote) (JavaScript, Docker)</p>
 
-<p class="earlier row"><span><b>Full-Stack Software Engineer</b> - Ordermentum (contract) - NSW, Australia (Remote) (Node.js, PostgreSQL, Docker, Kubernetes)</span> <span class="meta">Sep 2022 - Mar 2023</span></p>
+<p class="earlier"><b>Full-Stack Software Engineer</b> - Ordermentum (contract) | <span class="meta">Sep 2022 - Mar 2023</span> - NSW, Australia (Remote) (Node.js, PostgreSQL, Docker, Kubernetes)</p>
 
-<p class="earlier row"><span><b>Senior Software Engineer II</b> - HCL Technologies - New York, USA (Remote) (Kubernetes, Selenium)</span> <span class="meta">Feb 2020 - Apr 2022</span></p>
+<p class="earlier"><b>Senior Software Engineer II</b> - HCL Technologies | <span class="meta">Feb 2020 - Apr 2022</span> - New York, USA (Remote) (Kubernetes, Selenium)</p>
 
-<p class="earlier row"><span><b>Full-Stack Developer</b> - Zencomputes - Singapore (React, Node.js, AWS Elastic Beanstalk)</span> <span class="meta">Mar 2019 - Feb 2020</span></p>
+<p class="earlier"><b>Full-Stack Developer</b> - Zencomputes | <span class="meta">Mar 2019 - Feb 2020</span> - Singapore (React, Node.js, AWS Elastic Beanstalk)</p>
 
-<p class="earlier row"><span><b>Mobile Application Developer</b> - Halcyon Digital Media Design - Philippines (Ionic)</span> <span class="meta">Mar 2018 - Mar 2019</span></p>
+<p class="earlier"><b>Mobile Application Developer</b> - Halcyon Digital Media Design | <span class="meta">Mar 2018 - Mar 2019</span> - Philippines (Ionic)</p>
 
 <h2>Technical Skills</h2>
 <div class="skills">
