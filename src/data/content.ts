@@ -28,9 +28,9 @@ export const profile = {
   thesis: { lead: "I build the platform", tail: "other engineers", accent: "ship on." },
   statusLine: `OPERATIONAL - ${fleetPortals.length} TENANTS · AWS · REMOTE (ITALY)`,
   summary:
-    "I build multi-tenant SaaS platforms end to end - the Terraform that provisions them, the API they run on, and the product customers actually use. Staff Software Engineer - 8+ years in software, 5+ hands-on with AWS, and ~3 years leading cloud platforms: from AWS infrastructure-as-code to the shared backend services an entire product fleet runs on.",
+    "I build multi-tenant SaaS platforms end to end - the Terraform that provisions them, the API they run on, and the product customers actually use. Staff Software Engineer - 8+ years in software, 5+ hands-on with AWS, and 3+ years building and operating cloud platforms: from AWS infrastructure-as-code to the shared backend services an entire product fleet runs on.",
   resumeSummary:
-    `Staff Software Engineer - I build the platform other engineers ship on. 8+ years in software, 5+ on AWS, ~3 leading a multi-tenant SaaS platform: primary author (93%) of the Terraform control-plane the fleet is migrating onto, primary author of the core REST API behind ${fleetPortals.length} live utility client portals (58% of the v1 serving them today) and of its v2 successor (78%), now in production for the first tenant ahead of its cutover - and its operator: CI/CD, observability, on-call, cost.`,
+    `Staff Software Engineer - I build the platform other engineers ship on. 8+ years in software, 5+ on AWS, 3+ building and operating a multi-tenant SaaS platform as its most senior engineer: primary author (93%) of the Terraform control-plane the fleet is migrating onto, primary author of the core REST API behind ${fleetPortals.length} live utility client portals (58% of the v1 serving them today) and of its v2 successor (78%), now in production for the first tenant ahead of its cutover - and its operator: CI/CD, observability, on-call, cost.`,
   location: "Italy (Remote)",
   availability: "STAFF/LEAD PLATFORM ROLES · CONSULTING · AWS / TERRAFORM / MULTI-TENANT",
   /* The hero gets one sentence; `summary` is the long form for LinkedIn and the resume block. */
@@ -114,7 +114,7 @@ export const currentJobs: Job[] = [
       { title: "Senior Full-Stack Engineer (Cloud)", period: { start: "2023-05", end: "2025-08" } },
     ],
     receipts: [
-      "De-facto technical lead of a 5-engineer team, reporting to the COO/CEO: set the standards the fleet adopts, specify the CCS-side (IWS) changes the vendor team implements, own the team's AWS access as Terraform.",
+      "Most senior hands-on engineer on a small product team: set the standards the fleet adopts, specify the CCS-side (IWS) changes the vendor team implements, own the team's AWS access as Terraform.",
       "Sole platform engineer for the multi-tenant AWS fleet - production and test - running CI/CD, Datadog/CloudWatch observability, and FinOps tooling that drives right-sizing and Fargate-Spot savings.",
       "Built a CCS-authoritative duplicate-login reconciler, dry-run by default, with a daily read-only prod sweep on Fargate in Terraform; it fails closed on a stale login-usage feed, found frozen for about 2 months.",
       "Primary author of both generations of the fleet's core API - 58% of v1, serving all seven launched tenants; 78% of v2, in production for the first ahead of its cutover - and the auth and Oracle CCS patterns both share.",
@@ -122,7 +122,7 @@ export const currentJobs: Job[] = [
       "Closed pentest findings in severity-labelled batches across 6 external test rounds - 60 findings triaged, false positives refuted - from IDOR and unauthenticated endpoints to URL-borne tokens and missing rate limits.",
       "Built the runtime feature-flag platform: a database-backed reader replacing build-time env vars, SSE push with fail-open, wired into 6 v1 admin consoles and 4 portals, shipped flag-gated per tenant with parity tests.",
       "Shipped the fix for an SSN identity-verification gap enabling account takeover - wrong-person matches on ~2.4% of one tenant's accounts - as attempt lockout plus ZIP disambiguation, flag-gated for per-tenant rollout.",
-      "Owned production go-live readiness for 6 client launches.",
+      "Owned production go-live readiness for client launches across the fleet.",
       "Staged the IC-sync rollout via prod shadow mode: read-only checks flagged 3 of 26 planned password pushes on accounts with no live service; verification found 8 test-tier pushes that did not fix sign-on; guards added.",
       "Hardened unauthenticated v2 endpoints - lockout, OTP send cap and per-account limit on Stop Service verification, length caps on outage, contact and donation forms - and cleared 2 high/critical Snyk findings.",
       "Fixed an account-takeover path in email-change: the code went to the current address, not the target, never checked for an existing login - codes now go to the new address, and the taken-address check leaks nothing.",
@@ -147,14 +147,14 @@ export const currentJobs: Job[] = [
     resumeReceipts: [
       "**Primary author of both generations of the fleet's core REST API** - 58% of v1, which serves all seven launched tenants, and 78% of v2, in production for the first tenant ahead of its cutover - owning the multi-tenant auth, data-access and Oracle CCS (OAuth 2.0) integration patterns both generations share.",
       "**Primary author (93%) of the internal developer platform:** a Terraform control-plane (9 stacks, ~60 AWS resource types - Cognito, ECS Fargate, CloudFront, WAFv2, Secrets Manager, Route 53, ElastiCache, KMS) with a Fastify/React dashboard that plans, applies and cost-attributes; the fleet's per-portal provisioning is consolidating onto it tenant by tenant.",
-      "**De-facto technical lead of a 5-engineer team** - most senior hands-on engineer, reporting to the COO/CEO; set the platform standards the fleet adopts (provisioning modules, CI/CD, security guardrails).",
+      "**Most senior hands-on engineer on a small product team** - set the platform standards the fleet adopts (provisioning modules, CI/CD, security guardrails).",
       "**Ran the remediation program for 6 rounds of external penetration testing** - triaged 60 findings into severity-labelled batches (IDOR, unauthenticated endpoints, URL-borne tokens, client-side privilege checks, missing rate limits), then blocking Snyk gates and keyless OIDC deploys took long-lived AWS keys out of the deploy path.",
       "**Own the reconciliation between systems of record** - a detection-only CCS/Invoice Cloud reconciler (4x daily Lambda, per-tenant queries, pre-flight link checks, split-identity healing) that replaced the batch sync I retired, plus a dry-run-default duplicate-login reconciler with a daily read-only prod sweep.",
       "**Built, measured and pruned the team's AI tooling** - kept a Claude PR reviewer in CI on the core API and backend, shelved a Bedrock auto-remediation service that was never wired to a live alarm, shipped a Bedrock knowledge-base agent (curated-first retrieval, flagged SQL fallback), and designed a ticket-to-PR pipeline with human gates, not yet live.",
       `**Own and operate the multi-tenant portal infrastructure as sole platform engineer** - the ${fleetPortals.length}-tenant production and test fleet - with CI/CD (Bitbucket Pipelines), Datadog / CloudWatch observability, on-call incident response, and cost-attribution tooling (Cost Explorer API) driving right-sizing, shared-ALB, and Fargate-Spot savings.`,
       "**Shipped the fix for an SSN identity-verification gap enabling account takeover** - the last-four plus street match resolved to the wrong person on ~2.4% of one tenant's accounts - as attempt lockout plus ZIP-based disambiguation against the brute-forceable last-4 space, flag-gated for per-tenant rollout.",
       "**Built a runtime feature-flag platform** - flags moved from build-time env vars to a MongoDB-backed runtime reader with change-stream SSE push and fail-open on outage, wired into 6 v1 tenants' admin consoles and 4 customer portals and enabled per tenant behind a gate, with a flag manifest and parity tests guarding tenants still on compile-time flags.",
-      "**Owned production go-live readiness for 6 client launches** - primary engineer on four, core contributor on two - environment validation, deployment, rollback planning, and stabilization.",
+      "**Owned production go-live readiness for client launches across the fleet** - environment validation, deployment, rollback planning, and stabilization.",
     ],
     stack: ["TypeScript", "Fastify", "React", "Terraform", "AWS", "MongoDB", "Oracle CCS"],
   },
@@ -336,7 +336,7 @@ export const flagships: Flagship[] = [
     jobId: "hth",
     title: "Observability & Accountability",
     outcome:
-      "Universal capture with redacted payloads, tiered audit retention, account-to-IP anomaly views, and a takeover alert - so a five-engineer team can answer who did what.",
+      "Universal capture with redacted payloads, tiered audit retention, account-to-IP anomaly views, and a takeover alert - so a small team can answer who did what.",
     ownership: "SOLE AUTHOR",
     stack: ["MongoDB", "Datadog", "CloudWatch", "WAFv2", "React"],
   },
