@@ -46,6 +46,16 @@ test("external links announce new tab", () => {
   assert.equal(hints.length, blanks.length, `${blanks.length} target=_blank links, ${hints.length} hints`);
 });
 
+test("every case page ends with a next-case link and the resume and email CTAs", () => {
+  cases.forEach((c, i) => {
+    const html = readFileSync(resolve(ROOT, `out/case/${c.slug}/index.html`), "utf8");
+    const next = cases[(i + 1) % cases.length];
+    assert.ok(hasTag(html, "a", { href: `/case/${next.slug}/`, rel: "next" }), `${c.slug} -> ${next.slug}`);
+    assert.ok(html.includes('data-goatcounter-click="resume-case"') && html.includes('data-goatcounter-click="email-case"'), `${c.slug} CTAs`);
+    assert.equal((html.match(/<h1[\s>]/g) ?? []).length, 1, `${c.slug} has one h1`);
+  });
+});
+
 test("theme toggle accessible name is its visible label", () => {
   assert.ok(!home.includes('aria-label="Toggle color theme"'));
   assert.ok(home.includes(">light mode<") && home.includes(">dark mode<"));

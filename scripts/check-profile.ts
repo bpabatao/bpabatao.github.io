@@ -105,6 +105,7 @@ export function narrativeFields(): { label: string; text: string }[] {
   for (const c of cases) {
     out.push({ label: `case ${c.slug} subtitle`, text: c.subtitle });
     for (const section of c.sections) out.push(...section.paragraphs.map((p, i) => ({ label: `case ${c.slug} ${section.heading}[${i}]`, text: p })));
+    out.push(...(c.decisions ?? []).map((d, i) => ({ label: `case ${c.slug} decision[${i}]`, text: d })));
     out.push(...c.outcomes.map((o, i) => ({ label: `case ${c.slug} outcome[${i}]`, text: o })));
     out.push({ label: `case ${c.slug} meta`, text: `${c.meta.role} ${c.meta.ownership}` });
   }

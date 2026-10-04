@@ -47,6 +47,7 @@ export default async function CasePage({ params }: Props) {
   const cs = cases.find((c) => c.slug === slug);
   if (!cs) notFound();
 
+  const next = cases[(cases.indexOf(cs) + 1) % cases.length];
   const Diagram = diagrams[cs.slug as keyof typeof diagrams];
   const Portrait = portraits[cs.slug as keyof typeof portraits];
 
@@ -98,6 +99,20 @@ export default async function CasePage({ params }: Props) {
         </section>
       ))}
 
+      {cs.decisions && (
+        <section aria-labelledby="decisions-heading" className="mt-12">
+          <h2 id="decisions-heading" className="font-display text-2xl font-semibold tracking-tight text-ink">Decisions</h2>
+          <ul className="mt-4 space-y-2.5">
+            {cs.decisions.map((d) => (
+              <li key={d} className="flex gap-3 leading-relaxed">
+                <span className="mt-2.5 h-px w-3 shrink-0 bg-accent" aria-hidden />
+                <span>{d}</span>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
+
       <section aria-labelledby="outcome-heading" className="mt-12">
         <h2 id="outcome-heading" className="font-display text-2xl font-semibold tracking-tight text-ink">Outcome</h2>
         <ul className="mt-4 space-y-2.5">
@@ -110,10 +125,32 @@ export default async function CasePage({ params }: Props) {
         </ul>
       </section>
 
-      <div className="mt-16 border-t border-line pt-8">
-        <Link href="/#projects" className="font-mono text-sm text-muted transition-colors hover:text-accent">
+      {/* The reader is most convinced at the end of a case: give them somewhere to go. */}
+      <nav aria-label="Case studies" className="mt-16 flex flex-wrap items-center justify-between gap-4 border-t border-line pt-8 font-mono text-sm">
+        <Link href="/#projects" className="text-muted transition-colors hover:text-accent">
           ← all projects
         </Link>
+        <Link href={`/case/${next.slug}/`} rel="next" data-goatcounter-click={`next-${next.slug}`} className="text-ink transition-colors hover:text-accent">
+          next case: {next.title} →
+        </Link>
+      </nav>
+      <div className="mt-8 flex flex-wrap items-center gap-4">
+        <a
+          href="/resume.pdf"
+          target="_blank"
+          rel="noopener"
+          data-goatcounter-click="resume-case"
+          className="rounded-sm bg-accent px-5 py-2.5 font-mono text-sm font-medium text-accent-contrast transition-opacity hover:opacity-85"
+        >
+          view resume ↗<span className="sr-only"> (opens in new tab)</span>
+        </a>
+        <a
+          href={`mailto:${profile.email}`}
+          data-goatcounter-click="email-case"
+          className="rounded-sm border border-line px-5 py-2.5 font-mono text-sm font-medium text-ink transition-colors hover:border-accent hover:text-accent"
+        >
+          email me
+        </a>
       </div>
     </main>
   );

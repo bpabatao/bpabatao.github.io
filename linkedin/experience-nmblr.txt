@@ -12,6 +12,6 @@ London, UK (Remote)
 - Built the registry-driven data-dependency subsystem - GraphQL contract, resolver, modal - that warns before archiving or deleting finalised entities with dependents, then cascades the archive/restore across them.
 - Evolved the schema against live customer data - idempotent backfills in an ordered pipeline with an audit gate, repair scripts, a string-encoded key swapped for a real foreign key, and an index pinned to stop drift.
 - Contributed to real-time collaboration (GraphQL subscriptions), OpenAI-backed generation features, and platform security (OWASP/IDOR, JWT sessions).
+- Hardened the strategy clone engine I originated: pre-clone config validation, structured monitoring, extended CI tests, and a README on its foreign-key workflow and defense layers.
 - Built a Notion-backed knowledge base for the AI assistant - DB retrieval with fixture fallback, a Notion sync worker, a prompt sync gated by evals, and a daily coverage-drift report.
-- Grounded the AI assistant per step - step-readiness checks mirroring the app's gates, per-step methodology-chapter sections instead of a chapter prefix, and no concept articles passed off as a guide.
-- 8 more at https://bpabatao.github.io
+- 9 more at https://bpabatao.github.io

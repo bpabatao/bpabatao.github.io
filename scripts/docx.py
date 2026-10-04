@@ -65,10 +65,9 @@ def body(m):
         parts = [x for x in [r.get("location"), "contract" if r.get("contract") else None] if x]
         loc = f" - {', '.join(parts)}" if parts else ""
         p.append(para([run(r["company"], bold=True), run(f"{loc} | {r['dates']}")]))
-        if r.get("currentTitleDates"):
-            p.append(para([run(f"{r['title']} | {r['currentTitleDates']}")]))
-        for prev in r.get("previous", []):
-            p.append(para([run(f"Previously {prev['title']} | {prev['dates']}")]))
+        history = ([f"Current title: {r['currentTitleDates']}"] if r.get("currentTitleDates") else []) + [f"Previously {prev['title']}: {prev['dates']}" for prev in r.get("previous", [])]
+        if history:
+            p.append(para([run(" | ".join(history))]))
         p += [bullet(b) for b in r["bullets"]]
     p.append(para([run("Earlier Experience")], "Heading2"))
     for r in m["earlier"]:
@@ -151,7 +150,7 @@ def _selftest():
         "contactItems": [{"text": "a", "href": None}, {"text": "b@x.io", "href": "mailto:b@x.io"}, {"text": "x.io", "href": "https://x.io"}],
         "summary": "Sum & more", "page": "letter",
         "experience": [{"title": "T", "company": "C", "location": "L", "dates": "Jan 2020 - Present", "contract": True,
-                        "previous": [{"title": "Old Title", "dates": "Jan 2019 - Dec 2019"}],
+                        "currentTitleDates": "Jan 2020 - Present", "previous": [{"title": "Old Title", "dates": "Jan 2019 - Dec 2019"}],
                         "bullets": [{"lead": "Did X:", "rest": "then Y"}, {"lead": None, "rest": "plain"}]}],
         "earlier": [{"title": "T2", "company": "C2", "location": "L2", "contract": True, "dates": "2019 - 2020", "bullets": [{"lead": None, "rest": "old"}]}],
         "skills": [{"title": "Cloud", "items": "AWS, Terraform"}],
@@ -170,7 +169,8 @@ def _selftest():
     assert "<w:tbl" not in doc
     assert "Sum &amp; more" in doc
     assert 'w:w="12240" w:h="15840"' in doc
-    assert "Previously Old Title | Jan 2019 - Dec 2019" in doc
+    # the title history is one line, not one per title
+    assert "Current title: Jan 2020 - Present | Previously Old Title: Jan 2019 - Dec 2019" in doc
     assert ", contract)" in doc
     # the current-role line must carry the contract marker too - without it the DOCX
     # (the format most ATS ingest) shows concurrent roles as permanent ones.

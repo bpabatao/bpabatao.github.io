@@ -1,6 +1,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { currentJobs, earlierJobs, earlierProjects, fleetPortals, fleetSize, metrics, profile, stackGroups } from "../src/data/content.ts";
+import { cases } from "../src/data/cases.ts";
 import { formatPeriod, plainText } from "../src/lib/format.ts";
 
 test("every job has a unique id and a parseable period", () => {
@@ -54,4 +55,12 @@ test("stack items name each technology once", () => {
   const items = stackGroups.flatMap((g) => g.items.flatMap((i) => i.split(/\s*(?:·|,|\s-\s)\s*/)));
   assert.ok(!items.includes("Bedrock"), "bare Bedrock duplicates AWS Bedrock (Claude)");
   assert.ok(!items.includes("WAF"), "bare WAF duplicates WAFv2");
+});
+
+test("case decisions only restate the case's own text", () => {
+  const norm = (s: string) => s.toLowerCase().replace(/[.;:,]+$/, "");
+  for (const c of cases) {
+    const body = norm(c.sections.flatMap((s) => s.paragraphs).join(" "));
+    for (const d of c.decisions ?? []) assert.ok(body.includes(norm(d).slice(-40)), `${c.slug}: ${d.slice(0, 40)}`);
+  }
 });
