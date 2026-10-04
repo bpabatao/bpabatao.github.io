@@ -20,7 +20,7 @@
     "kicker": "~/case/control-plane",
     "title": "Terraform Control-Plane & IDP",
     "accent": "",
-    "body": "The internal developer platform that provisions, ships, and cost-tracks every client environment in the fleet.",
+    "body": "The internal developer platform that provisions new client environments, cost-tracks the fleet, and is absorbing the rest tenant by tenant.",
     "foot": "93% of commits · Terraform · Fastify 5 · React 18 · TypeScript"
   },
   {

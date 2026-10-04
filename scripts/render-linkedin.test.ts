@@ -61,7 +61,7 @@ test("about uses the budget and skills lead with platform vocabulary", () => {
   const about = bodyOf(pack["about.txt"]);
   assert.ok(about.length > 1000 && about.length <= LIMITS.about, `${about.length} chars`);
   assert.ok(about.includes("Currently:"));
-  for (const gone of ["How I work:", "Open to Staff / Lead platform roles"]) assert.ok(!about.includes(gone), `${gone} is site-only`);
+  for (const gone of ["How I work:", "Open to Staff / Lead platform and product engineering roles"]) assert.ok(!about.includes(gone), `${gone} is site-only`);
   const skills = bodyOf(pack["skills.txt"]).split("\n");
   assert.deepEqual(skills.slice(0, 3), ["AWS", "Terraform", "TypeScript"]);
   assert.equal(new Set(skills).size, skills.length, "no duplicate skills");

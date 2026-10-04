@@ -77,12 +77,12 @@ const LAST_X = 42 + (TENANTS.length - 1) * 78;
    where a 640-unit canvas cannot carry 9px labels. Derived counts stay derived. */
 export const captions = {
   "core-api": `${TENANTS.length} tenant portals connect through the core API to Oracle CCS over OAuth 2.0`,
-  "control-plane": `The provisioning dashboard drives the Terraform control-plane, which provisions ${TENANTS.length} tenant environments`,
-  "ai-sdlc": "Alerts were routed through Bedrock triage to fix PRs and human review, a lane shelved in August 2026; tickets flow through planning and two human gates to a merge, designed and dry-run",
+  "control-plane": `The provisioning dashboard drives the Terraform control-plane that new tenant environments are provisioned from; the ${TENANTS.length} live tenants are migrating onto it`,
+  "ai-sdlc": "Alerts were routed through Bedrock triage to fix PRs and human review, a lane shelved in August 2026; tickets flow through planning and human approval gates to a merge, designed and dry-run",
   "nmblr": "A DMMF-driven clone engine copies a finalised strategy, and a dependency registry cascades archive and restore across dependent entities",
   "ccs-kb": "A question routes through the knowledge-base agent to a curated corpus first, with generated SQL against tenant-scoped CCS only as a flagged fallback",
   "observability": "Portals, the core API and outbound providers feed one capture layer that redacts payloads, raises anomaly alerts, and writes to retention tiers",
-  "identity": "The browser no longer reaches the identity provider directly; every identity call goes through the API, which forwards the real client IP and gates registration on verification with lockout",
+  "identity": "On most portals the browser no longer changes email or password directly; those calls go through the API, which forwards the real client IP and gates registration on verification with lockout",
 } as const;
 
 export function CoreApiDiagram() {
@@ -121,7 +121,7 @@ export function CoreApiDiagram() {
           core api
         </Label>
         <Label x={320} y={140} size={9.5}>
-          authz on every route
+          authz on every account route
         </Label>
         <Label x={320} y={156} size={9.5}>
           per-tenant config
@@ -196,7 +196,7 @@ export function ControlPlaneDiagram() {
       ))}
 
       <Label x={320} y={272} size={9}>
-        7 production tenants · templated, repeatable, cost-attributed
+        {TENANTS.length} production tenants · migrating tenant by tenant
       </Label>
     </svg>
   );
@@ -600,13 +600,16 @@ export function IdentityDiagram() {
       <Label x={293} y={113} size={9} anchor="start">
         no direct access
       </Label>
+      <Label x={293} y={124} size={9} anchor="start">
+        on most portals
+      </Label>
 
       <Box x={24} y={130} w={120} h={44}>
         <Label x={84} y={146} size={10.5} color="var(--ink)" weight={600}>
           browser
         </Label>
         <Label x={84} y={161} size={8.5}>
-          holds no credentials
+          changes via the api
         </Label>
       </Box>
 

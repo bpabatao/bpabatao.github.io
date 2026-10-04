@@ -7,7 +7,10 @@ export function Hero() {
     <section className="relative overflow-hidden">
       <div className="hero-grid pointer-events-none absolute inset-0" aria-hidden />
       <div className="relative mx-auto w-full max-w-5xl px-6 pt-24 pb-16 sm:pt-32 sm:pb-20">
-        <p className="flex items-center gap-2 font-mono text-[11px] tracking-wide text-muted sm:text-xs">
+        <p className="font-mono text-xs leading-relaxed text-muted sm:text-sm">
+          <span className="font-semibold text-ink">{profile.name}</span> · {profile.role}
+        </p>
+        <p className="mt-3 flex items-center gap-2 font-mono text-[11px] tracking-wide text-muted sm:text-xs">
           <span className="status-dot size-2 shrink-0 rounded-full bg-ok" aria-hidden />
           <span className="status-text">
             <span className="text-ok">{profile.statusLine.split(" - ")[0]}</span> - {profile.statusLine.split(" - ").slice(1).join(" - ")}
