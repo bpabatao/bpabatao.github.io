@@ -4,11 +4,10 @@ Nmblr · Contract
 Mar 2024 - Present
 London, UK (Remote)
 
-- One of 3 core engineers on an ISO 27001-certified biopharma strategy SaaS in private beta with enterprise pharma clients.
-- Originated two subsystems from scratch: a schema-driven strategy clone engine and the Edge archive/restore isolation system.
-- Built the in-house observability layer - an Apollo plugin emits one structured event per GraphQL operation to CloudWatch, classed as fault or noise, with staging and prod dashboards - then removed New Relic.
-- Serialized rating upserts behind a Postgres advisory lock, killed a duplicate-groups race in a sync resolver, blocked re-entrant AI generation calls, and added double-press guards plus stale-poll reconciliation.
-- Built per-strategy, per-user response controls for the AI assistant that only an internal strategy lead can set (clamped on read, refused on write otherwise), plus help-centre retrieval.
-- Built the registry-driven data-dependency subsystem - GraphQL contract, resolver, modal - that warns before archiving or deleting finalised entities with dependents, then cascades the archive/restore across them.
-- Hardened the AI endpoints - a per-user LLM rate limit, no prompt text in logs, and raw provider errors (which can quote an API key fragment) no longer returned to the browser.
-- Contributed to real-time collaboration (GraphQL subscriptions), OpenAI-backed generation features, and platform security (OWASP/IDOR, JWT sessions).
+One of three core engineers on an ISO 27001-certified strategy platform for biopharma, in private beta with enterprise pharma clients.
+
+- Built two subsystems from scratch: the engine that deep-clones an entire strategy, and the archive/restore system for the Edge module.
+- Built our observability: one structured event per GraphQL operation, sent to CloudWatch and sorted into faults and noise, with dashboards for staging and prod. Then removed New Relic.
+- Fixed two concurrent-write races: rating upserts now run behind a Postgres advisory lock, and a sync resolver no longer creates duplicate groups.
+- Added per-strategy controls for the AI assistant that only internal strategy leads can change, and hardened the AI endpoints: per-user rate limits, no prompts in logs, no raw provider errors sent to the browser.
+- Built the dependency checks that warn before you archive or delete something other records rely on, then carry the archive or restore through to them.

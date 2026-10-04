@@ -37,6 +37,8 @@ export const profile = {
   /* The hero gets one sentence; `summary` is the long form for LinkedIn and the resume block. */
   heroLine: "The Terraform that provisions a multi-tenant utility SaaS, the API it runs on, and the product customers use - built and operated end to end.",
   availabilityLine: `Open to Staff / Lead platform and product engineering roles · Remote from Italy (CET), async-first · EU work authorization · ${MARKETS}`,
+  /* LinkedIn About, written in his own plainer voice; renderer uses it verbatim */
+  linkedinAbout: "I'm a Staff Software Engineer working remotely from Italy. For the last three years I've been the most senior hands-on engineer on a multi-tenant SaaS platform that runs the customer portals for 7 utility companies.\n\nI wrote most of what it runs on: 58% of the original API, 76% of its second generation, and 93% of the Terraform control-plane the fleet is moving onto. I also keep it running - pipelines, monitoring, incidents, security fixes and the AWS bill.\n\nThe part I care about most is the unglamorous work that lets a small team move fast without breaking things. Decisions get written down (I've authored 17 architecture decision records there). Standards live in the pipeline, not in review comments. Risky fixes ship behind a flag and get switched on one tenant at a time.\n\nI'm also one of three core engineers at Nmblr, an ISO 27001-certified strategy platform for biopharma, where I built the strategy clone engine, the archive/restore system and the observability layer.",
   markets: MARKETS,
   updated: "2026-10-04",
   atsKeywords: ["Staff", "REST", "Python", "IAM", "Terraform", "AWS", "TypeScript", "multi-tenant", "OAuth", "CI/CD", "React", "Node", "GraphQL", "IDOR"],
@@ -84,6 +86,8 @@ export interface Job {
   visible?: number;
   /* resume-only overlay; defaults to receipts */
   resumeReceipts?: string[];
+  /* LinkedIn-only description: an intro paragraph then bullets; defaults to receipts */
+  linkedin?: { intro: string; bullets: string[] };
   stack?: string[];
 }
 
@@ -102,6 +106,20 @@ export const currentJobs: Job[] = [
     ],
     lede: true,
     visible: 6,
+    /* LinkedIn-only copy, plainer voice (Benedict, 2026-10-04); same audited facts as receipts */
+    linkedin: {
+      intro: "I'm the most senior hands-on engineer on a small team running a multi-tenant platform for utility customer portals. I set the standards, write the decision records, and own our AWS access in Terraform.",
+      bullets: [
+        "Wrote most of the core API, both generations: 58% of v1, which still serves six of the seven live tenants, and 76% of v2, which has served the seventh since June 2026.",
+        "Wrote 93% of our internal developer platform, a Terraform control-plane (9 stacks, about 60 AWS resource types) with a small dashboard on top. The fleet is moving onto it one tenant at a time.",
+        "Authored 17 architecture decision records, 13 accepted. Moved standards out of code review and into pre-push and pipeline checks. Approved 135 of my teammates' PRs in 2026.",
+        "Fixed an account-takeover gap in SSN verification that matched the wrong person on about 2.4% of one tenant's accounts: attempt lockout plus a ZIP check, behind a flag so each tenant switches it on when ready.",
+        "Took the sessions view from 102 seconds to 2.4 with one composite index.",
+        "Ran remediation across 6 external pentest rounds: 60 findings triaged and false positives pushed back on, from IDOR to missing rate limits.",
+        "Built a duplicate-login reconciler that treats the billing system as the source of truth. It runs read-only every day and refuses to act on stale data, which is how it caught a feed that had been frozen for about two months.",
+        "Run the AWS side day to day: CI/CD, CloudWatch and cost tracking.",
+      ],
+    },
     receipts: [
       "Most senior hands-on engineer on a small product team: set the standards the fleet adopts, own the team's AWS access as Terraform.",
       "Primary author of both generations of the fleet's core API and the auth and Oracle CCS patterns they share - 58% of v1, serving six of the seven launched tenants; 76% of v2, serving the seventh since June 2026.",
@@ -139,6 +157,17 @@ export const currentJobs: Job[] = [
     location: "London, UK (Remote)",
     employmentType: "Contract",
     visible: 5,
+    /* LinkedIn-only copy, plainer voice (Benedict, 2026-10-04); same audited facts as receipts */
+    linkedin: {
+      intro: "One of three core engineers on an ISO 27001-certified strategy platform for biopharma, in private beta with enterprise pharma clients.",
+      bullets: [
+        "Built two subsystems from scratch: the engine that deep-clones an entire strategy, and the archive/restore system for the Edge module.",
+        "Built our observability: one structured event per GraphQL operation, sent to CloudWatch and sorted into faults and noise, with dashboards for staging and prod. Then removed New Relic.",
+        "Fixed two concurrent-write races: rating upserts now run behind a Postgres advisory lock, and a sync resolver no longer creates duplicate groups.",
+        "Added per-strategy controls for the AI assistant that only internal strategy leads can change, and hardened the AI endpoints: per-user rate limits, no prompts in logs, no raw provider errors sent to the browser.",
+        "Built the dependency checks that warn before you archive or delete something other records rely on, then carry the archive or restore through to them.",
+      ],
+    },
     receipts: [
       "One of 3 core engineers on an ISO 27001-certified biopharma strategy SaaS in private beta with enterprise pharma clients.",
       "Originated two subsystems from scratch: a schema-driven strategy clone engine and the Edge archive/restore isolation system.",

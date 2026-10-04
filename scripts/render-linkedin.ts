@@ -17,6 +17,7 @@ const allJobs = () => [...currentJobs, ...earlierJobs];
    does not claim. The operating principles and the availability line stay on the site only: Benedict
    removed both from LinkedIn on 2026-09-15 (Open to work is set recruiters-only there). */
 function about(): string {
+  if (profile.linkedinAbout) return profile.linkedinAbout;
   const now = currentJobs.map((j) => `- ${j.role}, ${j.company}: ${j.receipts.slice(0, 3).map(plainText).join(" ")}`);
   return [profile.resumeSummary, "Currently:", now.join("\n")].join("\n\n");
 }
@@ -30,8 +31,9 @@ export function experience(j: Job): string {
   /* LinkedIn caps a position description at LIMITS.description. Every header - the latest
      position and each earlier one - is fixed cost; the bullets get whatever is left, in order,
      and the file says plainly what did not fit rather than throwing or dropping it silently. */
-  const bullets = j.receipts.map((r) => `- ${plainText(r)}`);
-  const fixed = heads.join("\n\n").length + 1; // +1: the blank line before the bullets
+  const intro = j.linkedin ? `${j.linkedin.intro}\n\n` : "";
+  const bullets = (j.linkedin?.bullets ?? j.receipts).map((r) => `- ${plainText(r)}`);
+  const fixed = heads.join("\n\n").length + 1 + intro.length; // +1: the blank line before the bullets
   const kept: string[] = [];
   let used = fixed;
   for (const b of bullets) {
@@ -43,7 +45,7 @@ export function experience(j: Job): string {
   }
   const dropped = bullets.length - kept.length;
   if (dropped > 0) kept.push(`- ${dropped} more at ${profile.siteUrl}`);
-  return [[heads[0], "", ...kept].join("\n"), ...heads.slice(1)].join("\n\n");
+  return [[heads[0], "", intro + kept.join("\n")].join("\n"), ...heads.slice(1)].join("\n\n");
 }
 
 function project(p: SecondaryProject): string {
