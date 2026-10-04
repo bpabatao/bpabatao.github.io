@@ -59,6 +59,7 @@ function role(job: Job): Role {
 export function buildResumeModel(page: Page = "a4"): ResumeModel {
   const contactItems = [
     { text: profile.location, href: null },
+    { text: profile.workAuthorization, href: null },
     { text: profile.email, href: `mailto:${profile.email}` },
     ...[profile.linkedin, profile.github, profile.siteUrl].map((u) => ({ text: bare(u), href: u })),
   ];

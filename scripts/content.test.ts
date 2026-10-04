@@ -45,9 +45,9 @@ test("a Practices group exists and is LinkedIn-only", () => {
   assert.equal(practices?.linkedinOnly, true);
 });
 
-test("hero availability line carries remote, CET and the markets", () => {
+test("hero availability line carries remote, CET, work authorization and the markets", () => {
   assert.equal(profile.markets, "US and EU teams");
-  assert.equal(profile.availabilityLine, "Open to Staff / Lead platform and product engineering roles · Remote from Italy (CET), async-first · US and EU teams");
+  assert.equal(profile.availabilityLine, "Open to Staff / Lead platform and product engineering roles · Remote from Italy (CET), async-first · EU work authorization · US and EU teams");
   assert.ok(profile.availabilityLine.endsWith(profile.markets));
 });
 
