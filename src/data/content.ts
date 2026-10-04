@@ -25,7 +25,7 @@ export const profile = {
   /* canonical title: <title>, OG, JSON-LD, PDF Title and the current hth position all read this */
   role: "Staff Software Engineer, Platform & Product",
   headline:
-    "Staff Software Engineer, Platform & Product | AWS · Terraform · TypeScript · agentic tooling",
+    "Staff Software Engineer, Platform & Product | AWS · Terraform · agentic tooling",
   thesis: { lead: "I build the platform", tail: "other engineers", accent: "ship on." },
   statusLine: `OPERATIONAL - ${fleetPortals.length} TENANTS · AWS · REMOTE (ITALY)`,
   summary:

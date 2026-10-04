@@ -1,2 +1,2 @@
 # updated 2026-10-04 - paste into LinkedIn > Intro > Headline
-Staff Software Engineer, Platform & Product | AWS · Terraform · TypeScript · agentic tooling
+Staff Software Engineer, Platform & Product | AWS · Terraform · agentic tooling
