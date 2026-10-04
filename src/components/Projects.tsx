@@ -93,7 +93,7 @@ export function Projects() {
         <Reveal className="mt-16">
           <h3 className="font-mono text-xs tracking-wide text-muted uppercase">Fleet portals</h3>
           <p className="mt-2 max-w-2xl text-sm leading-relaxed text-muted">
-            {fleetPortals.length} tenant portals in production on the core API and control-plane.
+            {fleetPortals.length} tenant portals in production on the core API.
           </p>
           <div className="mt-5 grid gap-x-8 gap-y-4 grid-cols-2 md:grid-cols-4">
             {fleetPortals.map((p, i) => (

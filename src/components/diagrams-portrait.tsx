@@ -56,7 +56,7 @@ export function CoreApiPortrait() {
           core api
         </Label>
         <Label x={160} y={272} size={9.5}>
-          authz on every route
+          authz on every account route
         </Label>
         <Label x={160} y={287} size={9.5}>
           per-tenant config
@@ -130,7 +130,7 @@ export function ControlPlanePortrait() {
         tenants
       </Label>
       <Label x={160} y={412} size={8.5}>
-        templated · repeatable · cost-attributed
+        migrating tenant by tenant
       </Label>
     </svg>
   );
@@ -459,8 +459,11 @@ export function IdentityPortrait() {
         <line x1={294} y1={114} x2={306} y2={126} stroke="var(--muted)" strokeWidth={1.5} />
         <line x1={306} y1={114} x2={294} y2={126} stroke="var(--muted)" strokeWidth={1.5} />
       </g>
-      <Label x={288} y={96} size={8.5} anchor="end">
+      <Label x={288} y={84} size={8.5} anchor="end">
         no direct access
+      </Label>
+      <Label x={288} y={96} size={8.5} anchor="end">
+        on most portals
       </Label>
 
       <Box x={90} y={12} w={140} h={40}>
@@ -468,7 +471,7 @@ export function IdentityPortrait() {
           browser
         </Label>
         <Label x={160} y={42} size={8.5}>
-          holds no credentials
+          no password or email calls
         </Label>
       </Box>
       <Box x={80} y={100} w={160} h={40}>

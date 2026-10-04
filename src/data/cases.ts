@@ -55,7 +55,7 @@ export const cases: CaseStudy[] = [
     slug: "control-plane",
     title: "Terraform Control-Plane & IDP",
     subtitle:
-      "The internal developer platform that provisions, ships, and cost-tracks every client environment in the fleet.",
+      "The internal developer platform that provisions new client environments, cost-tracks the fleet, and is absorbing the rest tenant by tenant.",
     meta: {
       role: "Primary author and operator",
       period: "2026 - present",
@@ -292,7 +292,7 @@ export const cases: CaseStudy[] = [
         paragraphs: [
           "At the front door: the fix for an identity-verification gap that enabled account takeover - the last-four plus street match resolved to the wrong person on roughly 2.4% of one tenant's accounts - shipped as attempt lockout plus ZIP-based disambiguation, flag-gated so it is enabled tenant by tenant rather than switched on fleet-wide.",
           "In the browser: on most portals, email and password changes now go through the API instead of from the page. A build-time content-security policy injects environment-aware provider URLs, and the real client IP is forwarded to the provider so its adaptive threat protection sees the actual source rather than the load balancer - with an alarm when that forwarding falls back.",
-          "In the console: route permissions moved from scattered checks to one declarative config behind a global guard, with every destructive operation permission-gated. IAM roles are recorded in Terraform as the source of truth - least-privilege developer policy, per-client task roles, deploy roles named and documented rather than inherited - down to a colleague's entire IAM footprint, bootstrapped into the stack and maintained there when a policy turned out to belong to a pipeline user rather than a person.",
+          "In the console: route permissions moved from scattered checks to one declarative config behind a global guard, with every destructive operation permission-gated. The team's IAM roles are recorded in Terraform as the source of truth - least-privilege developer policy, per-client task roles, deploy roles named and documented rather than inherited - down to a colleague's entire IAM footprint, bootstrapped into the stack and maintained there when a policy turned out to belong to a pipeline user rather than a person.",
         ],
       },
     ],
