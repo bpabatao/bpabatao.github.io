@@ -39,7 +39,7 @@ export function Projects() {
         <SectionHeading
           id="projects"
           title="Selected work"
-          annotation={`${flagships.length} case studies · ${fleetPortals.length} portals · ${secondaryProjects.length + earlierProjects.length} more`}
+          annotation={`${flagships.length} case studies · ${fleetPortals.length} live portals`}
         />
 
         <div>
@@ -84,6 +84,7 @@ export function Projects() {
                     {p.title}
                   </span>
                   <span className="font-mono text-sm text-muted transition-colors group-hover:text-accent"> →</span>
+                  <span className="mt-1 block font-mono text-[11px] text-accent">{p.ownership}</span>
                   <p className="mt-1 text-sm leading-relaxed text-muted">{p.outcome}</p>
                 </Link>
               ))}

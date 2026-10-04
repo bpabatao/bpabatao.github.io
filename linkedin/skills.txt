@@ -7,12 +7,13 @@ Multi-tenant provisioning
 Internal Developer Platform
 ECS Fargate
 System Design & Architecture
-Infrastructure-as-Code
 Node.js
+Lambda
 CloudFront
 Cognito
+DynamoDB
+EventBridge
 ElastiCache
-KMS
 Secrets Manager
 WAFv2
 SES
@@ -47,6 +48,7 @@ Oracle Utilities CCS
 Invoice Cloud
 Datadog RUM/APM
 CloudWatch
+CloudWatch Synthetics
 Sentry
 Structured logging
 Session Replay
@@ -57,9 +59,12 @@ OIDC
 Snyk
 Pentest remediation
 React
-Redux
+Next.js
+MUI
 Styled Components
 Tailwind
-Next.js
+React Native (Expo)
+Accessibility (WCAG 2.1 AA)
+Infrastructure-as-Code (IaC)
 Security & Compliance
 Incident Response

@@ -18,26 +18,34 @@ function GateBeside({ x, y }: { x: number; y: number }) {
 
 const COL = { l: 12, r: 168, w: 140 } as const; // two-column grid inside a 320 canvas
 
+const GENS = [
+  { x: COL.l, cx: COL.l + COL.w / 2, name: "core api v1", lines: ["6 of 7 launched", "express", "patched + audited"] },
+  { x: COL.r, cx: COL.r + COL.w / 2, name: "core api v2", lines: ["7th + 1st migration", "account-route authz", "per-tenant config"] },
+] as const;
+
 export function CoreApiPortrait() {
   const rows = TENANTS.map((_, i) => 12 + i * 28);
   const last = rows[rows.length - 1] + 11;
+  const [v1, v2] = GENS;
   return (
     <svg viewBox="0 0 320 420" role="img" aria-label={captions["core-api"]} className="block w-full">
       {rows.map((y, i) => (
         <Line key={i} d={`M132 ${y + 11} H160`} />
       ))}
-      <Line d={`M160 23 V232`} />
-      <Line d="M160 316 V360" />
+      <Line d={`M160 23 V216 M${v1.cx} 216 H${v2.cx} M${v1.cx} 216 V232 M${v2.cx} 216 V232`} />
+      <Line d={`M${v1.cx} 316 V332 M${v2.cx} 316 V332 M${v1.cx} 332 H${v2.cx} M160 332 V360`} />
+      <path d={`M${COL.l + COL.w} 274 H${COL.r}`} fill="none" stroke="var(--accent)" strokeWidth={1} strokeDasharray="4 4" />
 
       {rows.map((y, i) => (
-        <Packet key={i} d={`M132 ${y + 11} H160 V232`} dur="3.2s" delay={`${((i * 3.2) / TENANTS.length).toFixed(2)}s`} />
+        <Packet key={i} d={`M132 ${y + 11} H160 V216 H${v1.cx} V232`} dur="3.2s" delay={`${((i * 3.2) / TENANTS.length).toFixed(2)}s`} />
       ))}
-      <Packet d="M160 316 V360" dur="1.8s" delay="0.5s" />
+      <Packet d={`M160 216 H${v2.cx} V232`} dur="1.4s" delay="1.2s" />
+      <Packet d="M160 332 V360" dur="1.2s" delay="0.5s" />
       <circle
         r={3.5}
         fill="var(--ok)"
         className="packet"
-        style={{ offsetPath: 'path("M160 360 V316")', animationDuration: "1.8s", animationDelay: "1.4s" }}
+        style={{ offsetPath: 'path("M160 360 V332")', animationDuration: "1.2s", animationDelay: "1.4s" }}
       />
 
       {TENANTS.map((t, i) => (
@@ -50,23 +58,24 @@ export function CoreApiPortrait() {
       <Label x={172} y={last} size={8.5} anchor="start">
         {TENANTS.length} portals
       </Label>
+      <Label x={172} y={last + 15} size={8.5} color="var(--accent)" anchor="start">
+        v1 → v2 on parity
+      </Label>
 
-      <Box x={40} y={232} w={240} h={84}>
-        <Label x={160} y={252} size={12} color="var(--ink)" weight={600}>
-          core api
-        </Label>
-        <Label x={160} y={272} size={9.5}>
-          authz on every account route
-        </Label>
-        <Label x={160} y={287} size={9.5}>
-          per-tenant config
-        </Label>
-        <Label x={160} y={302} size={9.5}>
-          fixed response shape
-        </Label>
-      </Box>
+      {GENS.map((g) => (
+        <Box key={g.name} x={g.x} y={232} w={COL.w} h={84}>
+          <Label x={g.cx} y={252} size={11} color="var(--ink)" weight={600}>
+            {g.name}
+          </Label>
+          {g.lines.map((l, i) => (
+            <Label key={l} x={g.cx} y={272 + i * 15} size={9}>
+              {l}
+            </Label>
+          ))}
+        </Box>
+      ))}
 
-      <Label x={172} y={338} size={9} color="var(--accent)" anchor="start">
+      <Label x={172} y={346} size={9} color="var(--accent)" anchor="start">
         oauth 2.0
       </Label>
 
@@ -411,7 +420,7 @@ export function ObservabilityPortrait() {
           capture layer
         </Label>
         <Label x={160} y={130} size={9}>
-          deep-redacted payloads · 156,656 events/day
+          deep-redacted on v2 · 156,656 events/day
         </Label>
       </Box>
       <Box x={40} y={168} w={240} h={44}>

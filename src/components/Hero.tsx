@@ -60,12 +60,12 @@ export function Hero() {
         </div>
 
         <div
-          className="hero-fade mt-16 grid grid-cols-2 gap-x-6 gap-y-8 border-t border-line pt-8 sm:grid-cols-4"
+          className="hero-fade mt-16 grid grid-cols-2 gap-x-6 gap-y-8 border-t border-line pt-8 sm:grid-cols-3 lg:grid-cols-5"
           style={{ animationDelay: "0.5s" }}
         >
           {metrics.map((m) => (
             <div key={m.label}>
-              <div className="font-mono text-2xl text-ink sm:text-3xl">{m.value}</div>
+              <div className="font-mono text-xl whitespace-nowrap text-ink sm:text-3xl">{m.value}</div>
               <div className="mt-1 font-mono text-[11px] tracking-wide text-muted uppercase">{m.label}</div>
             </div>
           ))}

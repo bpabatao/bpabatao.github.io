@@ -18,8 +18,7 @@ function currentRole(r: Role): string {
     `<section class="role">`,
     `<h3>${esc(r.title)}</h3>`,
     `<div class="loc"><span class="co">${esc(r.company)}</span>${kind}${loc} | <span class="meta">${esc(r.dates)}</span></div>`,
-    ...(r.currentTitleDates ? [`<div class="loc">${esc(r.title)} | <span class="meta">${esc(r.currentTitleDates)}</span></div>`] : []),
-    ...r.previous.map((p) => `<div class="loc">Previously ${esc(p.title)} | <span class="meta">${esc(p.dates)}</span></div>`),
+    ...(titleHistory(r) ? [`<div class="loc">${titleHistory(r)}</div>`] : []),
     "<ul>",
     ...r.bullets.map(li),
     "</ul>",
@@ -27,11 +26,20 @@ function currentRole(r: Role): string {
   ].join("\n");
 }
 
+/* The h3 already names the current title; its span and the earlier titles share one line. */
+function titleHistory(r: Role): string {
+  return [
+    ...(r.currentTitleDates ? [`Current title: <span class="meta">${esc(r.currentTitleDates)}</span>`] : []),
+    ...r.previous.map((p) => `Previously ${esc(p.title)}: <span class="meta">${esc(p.dates)}</span>`),
+  ].join(" | ");
+}
+
 /* Pre-2023 roles earn one line each: they establish tenure, not the Staff platform case. */
 function earlierRole(r: Role): string {
   const parts = [r.location, r.contract ? "contract" : null].filter(Boolean) as string[];
   const loc = parts.length ? ` (${esc(parts.join(", "))})` : "";
-  return `<p class="earlier"><b>${esc(r.title)}</b> - ${esc(r.company)}${loc} | <span class="meta">${esc(r.dates)}</span></p>`;
+  const stack = r.stack.length ? ` (${esc(r.stack.join(", "))})` : "";
+  return `<p class="earlier"><b>${esc(r.title)}</b> - ${esc(r.company)}${loc} | <span class="meta">${esc(r.dates)}</span>${stack}</p>`;
 }
 
 /* The template is the July 2026 ATS-safe resume verbatim: single column, linear flow,

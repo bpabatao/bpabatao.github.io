@@ -4,6 +4,8 @@ export interface CaseStudy {
   subtitle: string;
   meta: { role: string; period: string; ownership: string; stack: string[] };
   sections: { heading: string; paragraphs: string[] }[];
+  /* trade-offs lifted verbatim from the sections above, for readers who scan for judgment */
+  decisions?: string[];
   outcomes: string[];
 }
 
@@ -24,7 +26,7 @@ export const cases: CaseStudy[] = [
         heading: "Problem",
         paragraphs: [
           "A fleet of utility companies each needed a customer portal talking to Oracle Utilities CCS. The v1 server I inherited when I joined in 2023 - an Express codebase that predates me, 58% mine by commit today - had authorization gaps and no clean way to vary behavior per tenant. Every new client meant forked code and re-audited security.",
-          "The v2 rebuild, started in early 2026, had one mandate: a single API where a new tenant is configuration, not code, and where authorization failure is impossible to ship by accident. All seven launched tenants still run production on v1 today. v2 runs in production for the first tenant beside its v1 service, certified and waiting on the DNS cutover; a second tenant's v2 stack is provisioned and idle. The fleet moves one tenant at a time.",
+          "The v2 rebuild, started in early 2026, had one mandate: a single API where a new tenant is configuration, not code, and where authorization failure is impossible to ship by accident. Six of the seven launched tenants run production on v1 today; the seventh launched directly on v2 in June 2026. The first v1-to-v2 migration runs v2 beside its v1 service, certified, with the cutover held; a pre-launch tenant's v2 stack is provisioned and idle. The fleet moves one tenant at a time.",
         ],
       },
       {
@@ -38,14 +40,19 @@ export const cases: CaseStudy[] = [
         paragraphs: [
           "Fastify 5 on Node 22, ESM-only, TypeScript strict with no `any`. Zod validates every input at the boundary; responses use one fixed envelope so clients never parse ad-hoc shapes.",
           "Tenant behavior is composed from a base configuration plus per-tenant overrides, assembled by strategy factories - the request path never branches on tenant name. Authorization is enforced as a route-level gate: every account-scoped endpoint proves the caller owns the account it touches before any data access, which is what kills IDOR as a class.",
-          "Accountability does not stop at the customer. On v2, admin reads and impersonated sessions are audited as well as writes, attributed to the acting admin, with field-level capture of what a write actually changed and deep redaction so tokens and provider passwords never reach the log. Admin writes are kept for a year, admin reads for ninety days.",
+          "Accountability does not stop at the customer. On v2, admin reads and impersonated sessions are audited as well as writes, attributed to the acting admin, with field-level capture of what a write actually changed and, on the v2 capture path, deep redaction of tokens, passwords and identifiers. Admin writes are kept for a year, admin reads for ninety days.",
           "Where the billing system of record and the payment provider disagree, a reconciler surfaces the drift first; repairs run guarded, in shadow before they write, and the account-linking path guards against duplicate registrations and signup conflicts. Small guards pay: enforcing the ten-digit account number on one tenant's sign-in forms targeted about 215 CCS errors a day that partial or oversized numbers had been generating.",
           "Typecheck, lint, tests and a Snyk gate run in CI; Bitbucket Pipelines builds to ECR and deploys to ECS Fargate behind a shared ALB.",
         ],
       },
     ],
+    decisions: [
+      "The migration cannot pause billing, so both generations run side by side, the portals carry interceptors for either backend, and a tenant moves only when its parity checks pass.",
+      "Tenant behavior is composed from a base configuration plus per-tenant overrides, assembled by strategy factories - the request path never branches on tenant name.",
+      "Authorization is enforced as a route-level gate: every account-scoped endpoint proves the caller owns the account it touches before any data access, which is what kills IDOR as a class.",
+    ],
     outcomes: [
-      "On v2 a tenant is config plus provisioning, not a fork; the first tenant's v2 runs beside its v1 with the cutover certified and awaiting DNS, a second stack is provisioned, and v1 stays patched and audited until the last one moves.",
+      "On v2 a tenant is config plus provisioning, not a fork; one launched tenant runs production on v2, the first migration runs v2 beside its v1, certified, with the cutover held, and v1 stays patched and audited until the last one moves.",
       "Authorization is structural, not reviewed-in: the route contract enforces ownership checks on every account-scoped endpoint.",
       "Billing drift surfaces through a reconciler first; repairs run guarded, in shadow before they write.",
       "The integration patterns became the fleet standard other services adopt.",
@@ -78,18 +85,23 @@ export const cases: CaseStudy[] = [
       {
         heading: "Architecture",
         paragraphs: [
-          "Nine Terraform stacks covering ~60 AWS resource types: Cognito user pools, ECS Fargate services, CloudFront distributions, WAFv2, Route 53, ElastiCache, KMS, Secrets Manager. Tenant environments are instantiated from templated modules - the same shape every time. The modules were imported from the fleet's earlier per-portal Terraform in March 2026 and consolidated; colleagues contributed the other 7% of commits - Entra ID SSO for the admin portal, the monitoring tab, the production backend deploy path, and per-client state isolation with a plan-approval gate.",
+          "Nine Terraform stacks covering ~60 AWS resource types: Cognito user pools, ECS Fargate services, CloudFront distributions, WAFv2, Route 53, ElastiCache, KMS, Secrets Manager. Tenant environments are instantiated from templated modules - the same shape every time. The modules were imported from the fleet's earlier per-portal Terraform in March 2026 and consolidated; colleagues contributed the other 7% of commits - Entra ID SSO for the admin portal, the clients tab and onboarding wizard, the production backend deploy path, and per-client state isolation with a plan-approval gate.",
           "Where it stands: the control-plane state owns one deployed tenant awaiting launch, the shared ALB and WAF, and the first migrating tenant's v2 stack, now running beside its v1. The live fleet still runs on its earlier per-portal Terraform and is being brought under the control-plane tenant by tenant, so the same environment is provisioned the same way whether it is the first or the last.",
           "On top sits a Fastify + React dashboard that runs Terraform plans and applies, detects drift against live state, enforces tag compliance, and attributes cost per client through the Cost Explorer API. The shared ALB and test-fleet Fargate Spot cut cost; per-client attribution shows it.",
-          "Delivery is gated rather than trusted. Blocking Snyk scans were rolled across the portal pipelines - the scan runs beside the build and blocks the deploy - and deploys authenticate through keyless OIDC, piloted on one environment, then rolled to test and production on four repositories, taking long-lived keys out of their deploy paths.",
+          "Delivery is gated rather than trusted. Blocking Snyk scans were rolled onto the newer portal pipelines and both API repos - the scan runs beside the build and blocks the deploy - and deploys authenticate through keyless OIDC, piloted on one environment, then rolled to test and production on four repositories, taking long-lived keys out of their deploy paths.",
           "The pipelines got faster while getting stricter. The admin portal's run went from about ten minutes to six in April 2026 by merging lint into the build and running the security scan in parallel; the core API's went from twelve to seven with esbuild transpile, cache-mounted installs and fail-fast, and the twenty-minute build hangs ended when the stale registry cache was dropped.",
         ],
       },
     ],
+    decisions: [
+      "The modules were imported from the fleet's earlier per-portal Terraform in March 2026 and consolidated.",
+      "The live fleet still runs on its earlier per-portal Terraform and is being brought under the control-plane tenant by tenant, so the same environment is provisioned the same way whether it is the first or the last.",
+      "Delivery is gated rather than trusted.",
+    ],
     outcomes: [
       "New tenant onboarding is provisioned through the control-plane's templated modules and a written runbook; existing tenants are migrating onto the same state.",
       "Per-client cost attribution, and drift detection on the stacks the control-plane owns.",
-      "Portal pipelines block on a supply-chain scan before they deploy, and OIDC deploys removed long-lived AWS keys from four repositories.",
+      "The newer portal pipelines and both APIs block on a supply-chain scan before they deploy, and OIDC deploys removed long-lived AWS keys from four repositories.",
       "Pipeline runs dropped from about ten minutes to six on the admin portal (April 2026) and twelve to seven on the core API, and the twenty-minute build hangs are gone.",
       "Go-live readiness owned for client launches across the fleet - environment validation, deployment, rollback planning, on the provisioning this platform consolidates.",
     ],
@@ -115,7 +127,7 @@ export const cases: CaseStudy[] = [
       {
         heading: "Approach",
         paragraphs: [
-          "Every pipeline is built around human gates. Agents propose; people approve. State lives in labels on the ticket and PR, so any step is inspectable and reversible, and nothing merges without a named human owning the decision. The same rule applies to the tools themselves: each one is measured, and one that does not earn its keep is shelved rather than invested in further.",
+          "Every pipeline is built around human gates. Agents propose; people approve. State lives in labels on the ticket and PR, so any step is inspectable and reversible, and nothing merges without a named human owning the decision. The same rule applies to the tools themselves: each one has to earn its keep, and one that does not is shelved rather than invested in further.",
         ],
       },
       {
@@ -213,7 +225,7 @@ export const cases: CaseStudy[] = [
           "Curated first. Questions route through Bedrock's RetrieveAndGenerate over a curated corpus - an account-type catalog covering collective, secondary, usage, registration and service states - and answers cite the source they came from, with a badge marking whether that source is authoritative for the environment being asked about.",
           "Generated SQL is the fallback, not the default. It sits behind an environment kill-switch and a separate grantable permission - flip the switch and the agent runs curated-only - and a source selector lets the asker choose documentation, live data, or automatic.",
           "The guardrails are the product. The prompt forbids claiming absence - the model may not say a thing does not exist merely because a lookup returned nothing - and is guarded against inventing terms, confusing environments, or mislabelling a count column. Tenant routing is explicit, scoped per tenant family, so a question can only reach the data it is entitled to.",
-          "The corpus does not go stale: a scheduled Fargate task refreshes it, with the task role scoped to exactly the S3 and Bedrock actions that refresh needs.",
+          "The corpus does not go stale: a scheduled Fargate task refreshes it, with a least-privilege task role for the bucket, the knowledge base and the secrets it reads.",
         ],
       },
     ],
@@ -232,7 +244,7 @@ export const cases: CaseStudy[] = [
       role: "Sole author",
       period: "2026",
       ownership: "Sole author",
-      stack: ["MongoDB", "Datadog", "CloudWatch", "WAFv2", "Fastify", "React"],
+      stack: ["MongoDB", "CloudWatch", "WAFv2", "Fastify", "React"],
     },
     sections: [
       {
@@ -250,12 +262,17 @@ export const cases: CaseStudy[] = [
       {
         heading: "Architecture",
         paragraphs: [
-          "Capture is universal: a wrapper records calls out to identity, mail, payment and billing providers alike, so an event exists whether the failure was ours or theirs, with payloads deep-redacted so tokens and provider passwords never reach the store. Measured, not estimated: 156,656 events a day, 1.8 KB each, about 35 GB at steady state.",
+          "Capture is universal: a wrapper records calls out to identity, mail, payment and billing providers alike, so an event exists whether the failure was ours or theirs, with payloads deep-redacted on the v2 capture path - tokens, passwords and identifiers. Measured, not estimated: 156,656 events a day at 1.8 KB each, projected to about 35 GB at steady state.",
           "Accountability is tiered. Admin writes record which fields actually changed and are kept for a year; admin reads and impersonated sessions are captured too on the v2 API, attributed to the acting admin, and kept for ninety days. The tiers are deliberate - the trail that answers 'who changed this' outlives the one that answers 'who looked'.",
           "Signal beats volume: benign authentication failures, account lockouts and revoked tokens are folded into an expected class so the error rate means something, an account-to-IP fan-out view surfaces anomalies, and an alert fires on the email-reversal pattern that precedes account takeover. Per-pattern batch analysis replaced per-event analysis so the AI spend tracks patterns, not traffic.",
           "It stays fast under load: a composite index on tenant, environment, user and timestamp cut the sessions view 43x, and Bedrock spend is attributed to its own client in the cost dashboard so AI cost is visible next to everything else.",
         ],
       },
+    ],
+    decisions: [
+      "The tiers are deliberate - the trail that answers 'who changed this' outlives the one that answers 'who looked'.",
+      "Benign authentication failures, account lockouts and revoked tokens are folded into an expected class so the error rate means something.",
+      "Per-pattern batch analysis replaced per-event analysis so the AI spend tracks patterns, not traffic.",
     ],
     outcomes: [
       "Admin writes are attributable fleet-wide; admin reads and impersonation on the v2 API.",
@@ -291,10 +308,15 @@ export const cases: CaseStudy[] = [
         heading: "Architecture",
         paragraphs: [
           "At the front door: the fix for an identity-verification gap that enabled account takeover - the last-four plus street match resolved to the wrong person on roughly 2.4% of one tenant's accounts - shipped as attempt lockout plus ZIP-based disambiguation, flag-gated so it is enabled tenant by tenant rather than switched on fleet-wide.",
-          "In the browser: on most portals, email and password changes now go through the API instead of from the page. A build-time content-security policy injects environment-aware provider URLs, and the real client IP is forwarded to the provider so its adaptive threat protection sees the actual source rather than the load balancer - with an alarm when that forwarding falls back.",
+          "In the browser: on most portals, email and password changes now go through the API instead of from the page. A build-time content-security policy injects environment-aware provider URLs, and the real client IP is forwarded to the provider so its adaptive threat protection sees the actual source rather than the load balancer, logging an error when that forwarding falls back.",
           "In the console: route permissions moved from scattered checks to one declarative config behind a global guard, with every destructive operation permission-gated. The team's IAM roles are recorded in Terraform as the source of truth - least-privilege developer policy, per-client task roles, deploy roles named and documented rather than inherited - down to a colleague's entire IAM footprint, bootstrapped into the stack and maintained there when a policy turned out to belong to a pipeline user rather than a person.",
         ],
       },
+    ],
+    decisions: [
+      "The registration fix shipped as attempt lockout plus ZIP-based disambiguation, flag-gated so it is enabled tenant by tenant rather than switched on fleet-wide.",
+      "Route permissions moved from scattered checks to one declarative config behind a global guard, with every destructive operation permission-gated.",
+      "The team's IAM roles are recorded in Terraform as the source of truth.",
     ],
     outcomes: [
       "The registration fix ships flag-gated per tenant - attempt lockout and ZIP disambiguation - enabled realm by realm rather than switched on fleet-wide.",

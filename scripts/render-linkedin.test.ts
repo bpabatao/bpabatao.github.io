@@ -21,7 +21,7 @@ test("bodies respect LinkedIn limits and render positions", () => {
   assert.ok(bodyOf(pack["about.txt"]).length <= LIMITS.about);
   for (const n of names.filter((n) => n.startsWith("experience-") || n.startsWith("projects-"))) assert.ok(bodyOf(pack[n]).length <= LIMITS.description, n);
   assert.ok(bodyOf(pack["skills.txt"]).split("\n").length <= LIMITS.skills);
-  assert.equal(bodyOf(pack["headline.txt"]), "Staff Software Engineer, Platform & Product | Multi-tenant SaaS | AWS · Terraform · TypeScript · agentic tooling");
+  assert.equal(bodyOf(pack["headline.txt"]), "Staff Software Engineer, Platform & Product | AWS · Terraform · TypeScript · agentic tooling");
   const hth = bodyOf(pack["experience-hth.txt"]);
   assert.ok(!hth.includes("**"), "lead markers must be stripped");
   assert.ok(hth.startsWith("## Staff Software Engineer, Platform & Product\nESC Partners / HometownHUB · Contract\nSep 2025 - Present\nNew York, USA (Remote)\n"));

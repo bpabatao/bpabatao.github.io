@@ -5,7 +5,7 @@
     "title": "I build the platform other engineers",
     "accent": "ship on.",
     "body": "Benedict Pabatao · Staff Software Engineer, Platform & Product",
-    "foot": "8+ years in software   ·   11 tenant fleet, 7 live   ·   58/76% core API authorship, v1/v2   ·   93% control-plane authorship"
+    "foot": "8+ years in software   ·   11 tenant fleet, 7 live   ·   58% · 76% core API authorship · v1 · v2   ·   93% control-plane authorship   ·   43x sessions view, measured live"
   },
   {
     "file": "og/core-api.png",
@@ -53,7 +53,7 @@
     "title": "Observability & Accountability",
     "accent": "",
     "body": "The platform that makes a small team's fleet legible: who did what, which accounts look wrong, and what an incident actually cost.",
-    "foot": "Sole author · MongoDB · Datadog · CloudWatch · WAFv2"
+    "foot": "Sole author · MongoDB · CloudWatch · WAFv2 · Fastify"
   },
   {
     "file": "og/identity.png",

@@ -76,14 +76,20 @@ const LAST_X = 42 + (TENANTS.length - 1) * 78;
 /* One sentence per diagram: the SVG's accessible name on every screen, and the visible caption on phones,
    where a 640-unit canvas cannot carry 9px labels. Derived counts stay derived. */
 export const captions = {
-  "core-api": `${TENANTS.length} tenant portals connect through the core API to Oracle CCS over OAuth 2.0`,
+  "core-api": `${TENANTS.length} tenant portals reach Oracle CCS over OAuth 2.0 through two generations of the core API: v1 serves six, v2 serves the seventh and runs beside v1 for the first migration, and a tenant moves when its parity checks pass`,
   "control-plane": `The provisioning dashboard drives the Terraform control-plane that new tenant environments are provisioned from; the ${TENANTS.length} live tenants are migrating onto it`,
   "ai-sdlc": "Alerts were routed through Bedrock triage to fix PRs and human review, a lane shelved in August 2026; tickets flow through planning and human approval gates to a merge, designed and dry-run",
   "nmblr": "A DMMF-driven clone engine copies a finalised strategy, and a dependency registry cascades archive and restore across dependent entities",
   "ccs-kb": "A question routes through the knowledge-base agent to a curated corpus first, with generated SQL against tenant-scoped CCS only as a flagged fallback",
-  "observability": "Portals, the core API and outbound providers feed one capture layer that redacts payloads, raises anomaly alerts, and writes to retention tiers",
+  "observability": "Portals, the core API and outbound providers feed one capture layer that deep-redacts payloads on v2, raises anomaly alerts, and writes to retention tiers",
   "identity": "On most portals the browser no longer changes email or password directly; those calls go through the API, which forwards the real client IP and gates registration on verification with lockout",
 } as const;
+
+/* Both generations side by side: the case is the migration between them, one tenant at a time. */
+const GENS = [
+  { x: 110, cx: 200, name: "core api v1", lines: ["6 of 7 launched tenants", "express, patched + audited"] },
+  { x: 350, cx: 440, name: "core api v2", lines: ["7th tenant + 1st migration", "authz on every account route", "per-tenant config"] },
+] as const;
 
 export function CoreApiDiagram() {
   return (
@@ -93,19 +99,23 @@ export function CoreApiDiagram() {
         <Line key={i} d={`M${42 + i * 78} 40 V64`} />
       ))}
       <Line d={`M42 64 H${LAST_X}`} />
-      <Line d="M320 64 V96" />
-      <Line d="M320 184 V232" />
-
-      {/* one packet per tenant, evenly staggered - the count is the point */}
-      {TENANTS.map((t, i) => (
-        <Packet key={t} d={`M${42 + i * 78} 40 V64 H320 V96`} dur="3.2s" delay={`${((i * 3.2) / TENANTS.length).toFixed(2)}s`} />
+      {GENS.map((g) => (
+        <Line key={g.name} d={`M${g.cx} 64 V96 M${g.cx} 184 V208`} />
       ))}
-      <Packet d="M320 184 V232" dur="1.8s" delay="0.5s" />
+      <Line d={`M${GENS[0].cx} 208 H${GENS[1].cx} M320 208 V232`} />
+      <path d="M290 140 H350" fill="none" stroke="var(--accent)" strokeWidth={1} strokeDasharray="4 4" />
+
+      {TENANTS.map((t, i) => (
+        <Packet key={t} d={`M${42 + i * 78} 40 V64 H${GENS[0].cx} V96`} dur="3.2s" delay={`${((i * 3.2) / TENANTS.length).toFixed(2)}s`} />
+      ))}
+      <Packet d={`M320 64 H${GENS[1].cx} V96`} dur="1.6s" delay="1.2s" />
+      <Packet d="M290 140 H350" dur="2.4s" delay="0.8s" />
+      <Packet d="M320 208 V232" dur="1.2s" delay="0.5s" />
       <circle
         r={3.5}
         fill="var(--ok)"
         className="packet"
-        style={{ offsetPath: 'path("M320 232 V184")', animationDuration: "1.8s", animationDelay: "1.4s" }}
+        style={{ offsetPath: 'path("M320 232 V208")', animationDuration: "1.2s", animationDelay: "1.4s" }}
       />
 
       {TENANTS.map((t, i) => (
@@ -116,22 +126,23 @@ export function CoreApiDiagram() {
         </Box>
       ))}
 
-      <Box x={200} y={96} w={240} h={88}>
-        <Label x={320} y={118} size={12} color="var(--ink)" weight={600}>
-          core api
-        </Label>
-        <Label x={320} y={140} size={9.5}>
-          authz on every account route
-        </Label>
-        <Label x={320} y={156} size={9.5}>
-          per-tenant config
-        </Label>
-        <Label x={320} y={172} size={9.5}>
-          fixed response shape
-        </Label>
-      </Box>
+      {GENS.map((g) => (
+        <Box key={g.name} x={g.x} y={96} w={180} h={88}>
+          <Label x={g.cx} y={118} size={12} color="var(--ink)" weight={600}>
+            {g.name}
+          </Label>
+          {g.lines.map((l, i) => (
+            <Label key={l} x={g.cx} y={140 + i * 16} size={9.5}>
+              {l}
+            </Label>
+          ))}
+        </Box>
+      ))}
+      <Label x={320} y={128} size={8.5} color="var(--accent)">
+        parity
+      </Label>
 
-      <Label x={334} y={208} size={9} color="var(--accent)" anchor="start">
+      <Label x={334} y={221} size={9} color="var(--accent)" anchor="start">
         oauth 2.0
       </Label>
 
@@ -544,7 +555,7 @@ export function ObservabilityDiagram() {
           capture layer
         </Label>
         <Label x={280} y={131} size={9}>
-          deep-redacted payloads
+          deep-redacted on v2
         </Label>
       </Box>
 

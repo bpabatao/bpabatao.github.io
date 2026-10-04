@@ -15,6 +15,7 @@ export interface Role {
   /* earlier titles held at the same employer, newest first */
   previous: { title: string; dates: string }[];
   bullets: Bullet[];
+  stack: string[];
 }
 export interface ResumeModel {
   name: string;
@@ -50,6 +51,7 @@ function role(job: Job): Role {
     contract: job.employmentType === "Contract",
     previous: (job.positions ?? []).slice(1).map((p) => ({ title: p.title, dates: formatPeriod(p.period) })),
     bullets: (job.resumeReceipts ?? job.receipts).map(splitLead),
+    stack: job.stack ?? [],
   };
 }
 
