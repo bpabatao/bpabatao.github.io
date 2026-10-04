@@ -64,6 +64,11 @@ h3 {
   text-wrap: balance;
 }
 
+/* Clash's space glyph is narrow; at heading sizes "Selected work" read as one word */
+.font-display {
+  word-spacing: 0.12em;
+}
+
 ::selection {
   background: var(--accent);
   color: var(--accent-contrast);
@@ -84,26 +89,14 @@ h3 {
   opacity: 0.4;
 }
 
+/* Grid recedes as the hero scrolls out - scroll-driven, no JS; it never drifts on its own */
 @media (prefers-reduced-motion: no-preference) {
-  .hero-grid {
-    animation: grid-drift 60s linear infinite;
-  }
-
-  /* Grid recedes as the hero scrolls out - scroll-driven, no JS */
   @supports (animation-timeline: view()) {
     .hero-grid {
-      animation:
-        grid-drift 60s linear infinite,
-        grid-fade linear both;
-      animation-timeline: auto, view();
-      animation-range: normal, exit 0% exit 85%;
+      animation: grid-fade linear both;
+      animation-timeline: view();
+      animation-range: exit 0% exit 85%;
     }
-  }
-}
-
-@keyframes grid-drift {
-  to {
-    background-position: 72px 72px;
   }
 }
 
@@ -126,11 +119,6 @@ h3 {
 
 .link-sweep:hover {
   background-size: 100% 1px;
-}
-
-/* Fleet portal telemetry dots - same pulse as the hero status dot */
-.portal-dot {
-  animation: pulse 2.4s ease-in-out infinite;
 }
 
 /* Scroll progress hairline - scroll-driven CSS only; hidden where unsupported */
@@ -173,12 +161,6 @@ h3 {
       visibility: visible;
       animation: packet-travel 4s linear infinite;
     }
-
-    .packet-approve {
-      animation:
-        packet-travel 4s linear infinite,
-        packet-approve 4s linear infinite;
-    }
   }
 }
 
@@ -196,18 +178,6 @@ h3 {
   100% {
     offset-distance: 100%;
     opacity: 0;
-  }
-}
-
-/* The delivery packet turns green once it clears the last human gate */
-@keyframes packet-approve {
-  0%,
-  82% {
-    fill: var(--accent);
-  }
-  86%,
-  100% {
-    fill: var(--ok);
   }
 }
 
@@ -260,35 +230,6 @@ h3 {
 }
 
 /* Hero entrance - CSS only, no hydration dependency */
-/* Status line types on like a terminal (desktop); static on mobile where it wraps */
-@media (min-width: 640px) and (prefers-reduced-motion: no-preference) {
-  .status-text {
-    display: inline-block;
-    overflow: hidden;
-    white-space: nowrap;
-    vertical-align: bottom;
-    max-width: 0;
-    border-right: 0.55em solid var(--accent);
-    animation:
-      typing 1.3s steps(46) 0.15s forwards,
-      caret-blink 1.1s steps(2, jump-none) infinite;
-  }
-}
-
-/* Overshoot on purpose: letter-spacing widens the line past its char count,
-   and the box stops at natural text width anyway */
-@keyframes typing {
-  to {
-    max-width: 54ch;
-  }
-}
-
-@keyframes caret-blink {
-  50% {
-    border-color: transparent;
-  }
-}
-
 .hero-rise {
   /* transform-only: the LCP element is visible from first paint */
   animation: rise 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
@@ -318,20 +259,6 @@ h3 {
   }
 }
 
-.status-dot {
-  animation: pulse 2.4s ease-in-out infinite;
-}
-
-@keyframes pulse {
-  0%,
-  100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.35;
-  }
-}
-
 .skip-link {
   position: absolute;
   left: 1rem;
@@ -351,15 +278,13 @@ h3 {
   html {
     scroll-behavior: auto;
   }
-  .status-dot,
-  .portal-dot {
-    animation: none;
-  }
   /* infinite animations must stop, not restart every 0.01ms */
   *,
   *::before,
   *::after {
     animation-duration: 0.01ms !important;
+    /* a staggered entrance delay would otherwise hold content invisible */
+    animation-delay: 0s !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
@@ -409,10 +334,5 @@ h3 {
   }
   .sr-only {
     display: none !important;
-  }
-  /* the status line is revealed by a typing animation; with animation off it stayed 0px wide */
-  .status-text {
-    max-width: none !important;
-    border-right: 0 !important;
   }
 }

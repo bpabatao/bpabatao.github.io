@@ -27,6 +27,15 @@ export function Header() {
               {item.label}
             </Link>
           ))}
+          <a
+            href="/resume.pdf"
+            target="_blank"
+            rel="noopener"
+            data-goatcounter-click="resume-nav"
+            className="link-sweep hidden font-mono text-xs text-accent sm:block"
+          >
+            resume ↗<span className="sr-only"> (opens in new tab)</span>
+          </a>
           <ThemeToggle />
           <MobileMenu links={nav} />
         </nav>

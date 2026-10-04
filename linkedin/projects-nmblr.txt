@@ -2,7 +2,7 @@
 Biopharma Strategy Platform
 Mar 2024 - Present
 Associated with: Nmblr
-A DMMF-driven clone engine and a dependency-aware archive/restore system on an ISO 27001-certified strategy SaaS in private beta with enterprise pharma.
+A schema-driven clone engine and a dependency-aware archive/restore system on an ISO 27001-certified strategy SaaS in private beta with enterprise pharma.
 Ownership: 1 OF 3 CORE ENGINEERS
 Stack: React, TypeScript, GraphQL, Prisma, PostgreSQL
 https://bpabatao.github.io/case/nmblr/

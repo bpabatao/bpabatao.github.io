@@ -6,6 +6,8 @@ export interface Bullet { lead: string | null; rest: string }
 export interface Role {
   title: string;
   company: string;
+  /* short descriptor of the employer, rendered next to the company name */
+  tagline: string | null;
   location: string | null;
   /* full tenure at this employer, across every title held */
   dates: string;
@@ -34,14 +36,13 @@ export interface ResumeModel {
   page: Page;
 }
 
-/* ATS parsers are happiest with ASCII; the site keeps "·", the resume gets " | ". */
-const ascii = (s: string) => s.replace(/\s*·\s*/g, " | ");
 const bare = (url: string) => url.replace(/^https?:\/\//, "");
 
 function role(job: Job): Role {
   return {
     title: job.role,
-    company: job.tagline ? `${job.company} - ${job.tagline}` : job.company,
+    company: job.company,
+    tagline: job.tagline ?? null,
     location: job.location ?? null,
     /* The employer line carries the FULL tenure, not just the current title's span.
        ATS parsers bind one date range per employer block and drop the "Previously"
@@ -64,13 +65,13 @@ export function buildResumeModel(page: Page = "a4"): ResumeModel {
   return {
     name: profile.name,
     role: profile.role,
-    roleLine: ascii(profile.headline).toUpperCase(),
+    roleLine: profile.headline,
     contact: contactItems.map((c) => c.text).join(" | "),
     contactItems,
     summary: profile.resumeSummary,
     experience: currentJobs.map(role),
     earlier: earlierJobs.filter((j) => j.resume !== false).map(role),
-    skills: stackGroups.map((g) => ({ title: g.title, items: g.items.map((i) => i.replace(/\s*·\s*/g, ", ")).join(", ") })),
+    skills: stackGroups.filter((g) => !g.linkedinOnly).map((g) => ({ title: g.title, items: g.items.map((i) => i.replace(/\s*·\s*/g, ", ")).join(", ") })),
     education: credentials.map((c) => ({ title: c.title, detail: c.detail, dates: c.period })),
     keywords: [...profile.atsKeywords],
     updated: profile.updated,

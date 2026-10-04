@@ -6,6 +6,7 @@ import { ogImage } from "@/lib/og";
 import { profile } from "@/data/content";
 import { AiSdlcDiagram, CcsKbDiagram, ControlPlaneDiagram, CoreApiDiagram, IdentityDiagram, NmblrDiagram, ObservabilityDiagram, captions } from "@/components/diagrams";
 import { portraits } from "@/components/diagrams-portrait";
+import { Unbroken } from "@/components/Projects";
 
 const diagrams = {
   "core-api": CoreApiDiagram,
@@ -50,6 +51,20 @@ export default async function CasePage({ params }: Props) {
   const next = cases[(cases.indexOf(cs) + 1) % cases.length];
   const Diagram = diagrams[cs.slug as keyof typeof diagrams];
   const Portrait = portraits[cs.slug as keyof typeof portraits];
+  /* Problem and Constraints, then the judgment calls, then how it is built */
+  const split = cs.sections.findIndex((s) => s.heading === "Architecture");
+  const head = cs.sections.slice(0, split);
+  const tail = cs.sections.slice(split);
+  const renderSection = (section: (typeof cs.sections)[number]) => (
+    <section key={section.heading} aria-labelledby={headingId(section.heading)} className="mt-12">
+      <h2 id={headingId(section.heading)} className="font-display text-2xl font-semibold tracking-normal text-ink">{section.heading}</h2>
+      {section.paragraphs.map((p) => (
+        <p key={p.slice(0, 32)} className="mt-4 leading-relaxed">
+          {p}
+        </p>
+      ))}
+    </section>
+  );
 
   return (
     <main id="main" className="mx-auto w-full max-w-3xl px-6 py-16">
@@ -57,10 +72,9 @@ export default async function CasePage({ params }: Props) {
         ← back to index
       </Link>
 
-      <div className="mt-8 font-mono text-xs text-muted">
-        <span className="text-accent">~/</span>case/{cs.slug}
-      </div>
-      <h1 className="mt-3 font-display text-4xl font-semibold tracking-tight text-ink sm:text-5xl">{cs.title}</h1>
+      <h1 className="mt-8 font-display text-4xl font-semibold tracking-normal text-ink sm:text-5xl">
+        <Unbroken text={cs.title} />
+      </h1>
       <p className="mt-4 text-lg leading-relaxed">{cs.subtitle}</p>
 
       <dl className="mt-10 grid gap-x-8 gap-y-4 border border-line bg-surface p-6 sm:grid-cols-2">
@@ -69,7 +83,7 @@ export default async function CasePage({ params }: Props) {
           ["Period", cs.meta.period],
           ["Ownership", cs.meta.ownership],
           ["Stack", cs.meta.stack.join(" · ")],
-        ].map(([k, v]) => (
+        ].filter(([k, v]) => k !== "Ownership" || v !== cs.meta.role).map(([k, v]) => (
           <div key={k}>
             <dt className="font-mono text-[11px] tracking-wide text-muted uppercase">{k}</dt>
             <dd className="mt-1 text-sm leading-relaxed text-body">{v}</dd>
@@ -78,7 +92,8 @@ export default async function CasePage({ params }: Props) {
       </dl>
 
       {/* Landscape needs ~560px for legible labels; phones get the portrait layout of the same diagram. */}
-      <figure className="mt-10 border border-line bg-surface p-6">
+      {/* phones get less padding so the 320-unit portrait renders near 1:1 */}
+      <figure className="mt-10 border border-line bg-surface p-3 sm:p-6">
         <div className="hidden sm:block">
           <Diagram />
         </div>
@@ -88,20 +103,11 @@ export default async function CasePage({ params }: Props) {
         <figcaption className="mt-4 font-mono text-xs leading-relaxed text-muted sm:hidden">{captions[cs.slug as keyof typeof captions]}</figcaption>
       </figure>
 
-      {cs.sections.map((section) => (
-        <section key={section.heading} aria-labelledby={headingId(section.heading)} className="mt-12">
-          <h2 id={headingId(section.heading)} className="font-display text-2xl font-semibold tracking-tight text-ink">{section.heading}</h2>
-          {section.paragraphs.map((p) => (
-            <p key={p.slice(0, 32)} className="mt-4 leading-relaxed">
-              {p}
-            </p>
-          ))}
-        </section>
-      ))}
+      {head.map(renderSection)}
 
       {cs.decisions && (
         <section aria-labelledby="decisions-heading" className="mt-12">
-          <h2 id="decisions-heading" className="font-display text-2xl font-semibold tracking-tight text-ink">Decisions</h2>
+          <h2 id="decisions-heading" className="font-display text-2xl font-semibold tracking-normal text-ink">Decisions</h2>
           <ul className="mt-4 space-y-2.5">
             {cs.decisions.map((d) => (
               <li key={d} className="flex gap-3 leading-relaxed">
@@ -113,8 +119,10 @@ export default async function CasePage({ params }: Props) {
         </section>
       )}
 
+      {tail.map(renderSection)}
+
       <section aria-labelledby="outcome-heading" className="mt-12">
-        <h2 id="outcome-heading" className="font-display text-2xl font-semibold tracking-tight text-ink">Outcome</h2>
+        <h2 id="outcome-heading" className="font-display text-2xl font-semibold tracking-normal text-ink">Outcome</h2>
         <ul className="mt-4 space-y-2.5">
           {cs.outcomes.map((o) => (
             <li key={o} className="flex gap-3 leading-relaxed">

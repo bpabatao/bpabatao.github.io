@@ -11,11 +11,11 @@ test("every job has a unique id and a parseable period", () => {
 });
 
 test("tenant count is derived from fleetPortals", () => {
-  assert.equal(profile.statusLine, `OPERATIONAL - ${fleetPortals.length} TENANTS · AWS · REMOTE (ITALY)`);
-  /* the fleet tile names the whole fleet and the live subset; both stay derived */
-  const fleetTile = metrics.find((m) => m.label.startsWith("tenant fleet"));
-  assert.equal(fleetTile?.value, String(fleetSize));
-  assert.equal(fleetTile?.label, `tenant fleet, ${fleetPortals.length} live`);
+  /* the fleet tile names the live subset and the whole fleet; both stay derived */
+  const fleetTile = metrics.find((m) => m.label.endsWith("tenant fleet"));
+  assert.equal(fleetTile?.value, `${fleetPortals.length} live`);
+  assert.equal(fleetTile?.label, `${fleetSize}-tenant fleet`);
+  assert.equal(metrics.length, 4, "four tiles fill a 2x2 grid on phones");
   assert.ok(fleetSize >= fleetPortals.length, "fleet cannot be smaller than the launched subset");
   assert.equal(new Set(fleetPortals.map((p) => p.key)).size, fleetPortals.length);
 });
@@ -40,9 +40,9 @@ test("bullet lengths respect the limits", () => {
   }
 });
 
-test("a Practices group exists and is resume-only", () => {
+test("a Practices group exists and is LinkedIn-only", () => {
   const practices = stackGroups.find((g) => g.title === "Practices");
-  assert.equal(practices?.resumeOnly, true);
+  assert.equal(practices?.linkedinOnly, true);
 });
 
 test("hero availability line carries remote, CET and the markets", () => {
@@ -57,10 +57,12 @@ test("stack items name each technology once", () => {
   assert.ok(!items.includes("WAF"), "bare WAF duplicates WAFv2");
 });
 
-test("case decisions only restate the case's own text", () => {
+test("every case has decisions, moved out of the sections rather than copied", () => {
   const norm = (s: string) => s.toLowerCase().replace(/[.;:,]+$/, "");
   for (const c of cases) {
+    assert.ok(c.decisions?.length, `${c.slug} has no decisions`);
+    assert.ok(c.sections.some((s) => s.heading === "Architecture"), `${c.slug}: decisions render before Architecture`);
     const body = norm(c.sections.flatMap((s) => s.paragraphs).join(" "));
-    for (const d of c.decisions ?? []) assert.ok(body.includes(norm(d).slice(-40)), `${c.slug}: ${d.slice(0, 40)}`);
+    for (const d of c.decisions ?? []) assert.ok(!body.includes(norm(d).slice(-40)), `${c.slug} repeats: ${d.slice(0, 40)}`);
   }
 });

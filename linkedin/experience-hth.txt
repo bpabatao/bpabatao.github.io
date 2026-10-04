@@ -4,15 +4,15 @@ ESC Partners / HometownHUB · Contract
 Sep 2025 - Present
 New York, USA (Remote)
 
+- Most senior hands-on engineer on a small product team: set the standards the fleet adopts, own the team's AWS access as Terraform.
 - Primary author of both generations of the fleet's core API and the auth and Oracle CCS patterns they share - 58% of v1, serving six of the seven launched tenants; 76% of v2, serving the seventh since June 2026.
 - Primary author (93%) of the internal developer platform: a Terraform control-plane (9 stacks, ~60 AWS resource types) with a Fastify/React dashboard, onto which the fleet's provisioning is migrating tenant by tenant.
-- Most senior hands-on engineer on a small product team: set the standards the fleet adopts, own the team's AWS access as Terraform.
-- Primary platform engineer for the multi-tenant AWS fleet - production and test - running CI/CD, CloudWatch observability, FinOps tooling, a shared ALB and Fargate Spot on the test fleet.
-- Remediated pentest findings in severity-labelled batches across 6 external test rounds - 60 findings triaged, false positives refuted - from IDOR and unauthenticated endpoints to URL-borne tokens and missing rate limits.
+- Authored 17 architecture decision records (13 accepted); turned standards into gates - pre-push and pipeline verify checks, a lint rule instead of trusting review - and approved 135 PRs from teammates in 2026.
 - Shipped the fix for an SSN identity-verification gap enabling account takeover - wrong-person matches on ~2.4% of one tenant's accounts - as attempt lockout plus ZIP disambiguation, flag-gated for per-tenant rollout.
-- Built and pruned the team's AI tooling: kept the Claude PR reviewer in CI across the API and portal repos, shelved the Bedrock auto-fix on evidence, shipped the knowledge-base agent.
-- Built a CCS-authoritative duplicate-login reconciler, dry-run by default, with a daily read-only prod sweep on Fargate in Terraform; it fails closed on a stale login-usage feed, found frozen for about 2 months.
-- 22 more at https://bpabatao.github.io
+- Built a billing-authoritative duplicate-login reconciler, dry-run by default, with a daily read-only prod sweep on Fargate in Terraform; it fails closed on a stale login-usage feed, found frozen for about 2 months.
+- Remediated pentest findings in severity-labelled batches across 6 external test rounds - 60 findings triaged, false positives refuted - from IDOR and unauthenticated endpoints to URL-borne tokens and missing rate limits.
+- Primary platform engineer for the multi-tenant AWS fleet - production and test - running CI/CD, CloudWatch observability, FinOps tooling, a shared ALB and Fargate Spot on the test fleet.
+- 5 more at https://bpabatao.github.io
 
 ## Senior Full-Stack Engineer (Cloud)
 ESC Partners / HometownHUB · Contract

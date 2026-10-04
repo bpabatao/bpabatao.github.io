@@ -27,10 +27,8 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: [
-    { media: "(prefers-color-scheme: dark)", color: "#0b0c0e" },
-    { media: "(prefers-color-scheme: light)", color: "#f5f6f8" },
-  ],
+  /* dark-first: the page ignores the OS scheme until the toggle is used, so the chrome does too */
+  themeColor: "#0b0c0e",
 };
 
 /* Dark-first by design - light is an explicit opt-in via the toggle */

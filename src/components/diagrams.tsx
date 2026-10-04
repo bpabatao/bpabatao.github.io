@@ -6,17 +6,13 @@ import { fleetPortals } from "@/data/content";
 
 const mono = "var(--font-jetbrains), ui-monospace, monospace";
 
-export function Packet({ d, dur, delay = "0s", approve = false }: { d: string; dur: string; delay?: string; approve?: boolean }) {
+export function Packet({ d, dur, delay = "0s" }: { d: string; dur: string; delay?: string }) {
   return (
     <circle
       r={3.5}
       fill="var(--accent)"
-      className={approve ? "packet packet-approve" : "packet"}
-      style={{
-        offsetPath: `path("${d}")`,
-        animationDuration: approve ? `${dur}, ${dur}` : dur,
-        animationDelay: approve ? `${delay}, ${delay}` : delay,
-      }}
+      className="packet"
+      style={{ offsetPath: `path("${d}")`, animationDuration: dur, animationDelay: delay }}
     />
   );
 }
@@ -66,8 +62,9 @@ export function Label({
   );
 }
 
-export function Line({ d }: { d: string }) {
-  return <path d={d} fill="none" stroke="var(--line)" strokeWidth={1} />;
+/* dashed = a relationship that is in progress, not yet owned */
+export function Line({ d, dashed = false }: { d: string; dashed?: boolean }) {
+  return <path d={d} fill="none" stroke={dashed ? "var(--muted)" : "var(--line)"} strokeWidth={1} strokeDasharray={dashed ? "4 4" : undefined} />;
 }
 
 export const TENANTS = fleetPortals.map((t) => t.key);
@@ -77,8 +74,8 @@ const LAST_X = 42 + (TENANTS.length - 1) * 78;
    where a 640-unit canvas cannot carry 9px labels. Derived counts stay derived. */
 export const captions = {
   "core-api": `${TENANTS.length} tenant portals reach Oracle CCS over OAuth 2.0 through two generations of the core API: v1 serves six, v2 serves the seventh and runs beside v1 for the first migration, and a tenant moves when its parity checks pass`,
-  "control-plane": `The provisioning dashboard drives the Terraform control-plane that new tenant environments are provisioned from; the ${TENANTS.length} live tenants are migrating onto it`,
-  "ai-sdlc": "Alerts were routed through Bedrock triage to fix PRs and human review, a lane shelved in August 2026; tickets flow through planning and human approval gates to a merge, designed and dry-run",
+  "control-plane": `The provisioning dashboard drives the Terraform control-plane that new tenant environments are provisioned from; the ${TENANTS.length} live tenants (dashed) are migrating onto it`,
+  "ai-sdlc": "A Claude reviewer runs in CI ahead of human review and a knowledge-base agent answers from curated sources first; a ticket-to-merge pipeline with human approval gates is designed and dry-run only, and Bedrock auto-remediation was shelved in August 2026",
   "nmblr": "A DMMF-driven clone engine copies a finalised strategy, and a dependency registry cascades archive and restore across dependent entities",
   "ccs-kb": "A question routes through the knowledge-base agent to a curated corpus first, with generated SQL against tenant-scoped CCS only as a flagged fallback",
   "observability": "Portals, the core API and outbound providers feed one capture layer that deep-redacts payloads on v2, raises anomaly alerts, and writes to retention tiers",
@@ -166,16 +163,14 @@ export function ControlPlaneDiagram() {
       className="block w-full"
     >
       <Line d="M320 68 V100" />
-      <Line d="M320 172 V196" />
-      <Line d="M80 196 H560" />
+      <Line dashed d="M320 172 V196" />
+      <Line dashed d="M80 196 H560" />
       {TENANTS.map((_, i) => (
-        <Line key={i} d={`M${80 + i * 80} 196 V220`} />
+        <Line dashed key={i} d={`M${80 + i * 80} 196 V220`} />
       ))}
 
+      {/* no packets to the tenants: the live fleet still runs on its earlier per-portal Terraform */}
       <Packet d="M320 68 V100" dur="2s" />
-      {TENANTS.map((t, i) => (
-        <Packet key={t} d={`M320 172 V196 H${80 + i * 80} V220`} dur="2.6s" delay={`${(0.6 + (i * 2.2) / TENANTS.length).toFixed(2)}s`} />
-      ))}
 
       <Box x={140} y={12} w={360} h={56}>
         <Label x={320} y={34} size={11} color="var(--ink)" weight={600}>
@@ -207,13 +202,13 @@ export function ControlPlaneDiagram() {
       ))}
 
       <Label x={320} y={272} size={9}>
-        {TENANTS.length} production tenants · migrating tenant by tenant
+        {TENANTS.length} live tenants · dashed: migrating onto it, tenant by tenant
       </Label>
     </svg>
   );
 }
 
-export function Gate({ x, y }: { x: number; y: number }) {
+export function Gate({ x, y, label = "gate" }: { x: number; y: number; label?: string }) {
   return (
     <g>
       <rect
@@ -226,81 +221,69 @@ export function Gate({ x, y }: { x: number; y: number }) {
         stroke="var(--accent)"
       />
       <Label x={x} y={y + 28} size={8.5} color="var(--accent)">
-        gate
+        {label}
       </Label>
     </g>
   );
 }
 
-export function AiSdlcDiagram() {
+/* A retired or not-yet-live node: dashed outline, muted text. */
+export function GhostBox({ x, y, w, h, children }: { x: number; y: number; w: number; h: number; children?: ReactNode }) {
   return (
-    <svg viewBox="0 0 640 240" role="img" aria-label={captions["ai-sdlc"]} className="block w-full">
-      <Label x={8} y={26} size={9} anchor="start">
-        AUTO-REMEDIATION · shelved aug 2026
+    <g>
+      <rect x={x} y={y} width={w} height={h} fill="none" stroke="var(--muted)" strokeDasharray="4 4" />
+      {children}
+    </g>
+  );
+}
+
+/* What runs is drawn first and animated; the designed lane is static, the shelved one a ghost. */
+export function AiSdlcDiagram() {
+  const node = (x: number, y: number, w: number, text: string, color = "var(--body)") => (
+    <Box x={x} y={y} w={w} h={28}>
+      <Label x={x + w / 2} y={y + 15} size={9.5} color={color}>
+        {text}
       </Label>
-      <Label x={8} y={106} size={9} anchor="start">
-        TICKET → MERGE
+    </Box>
+  );
+  return (
+    <svg viewBox="0 0 640 296" role="img" aria-label={captions["ai-sdlc"]} className="block w-full">
+      <Label x={8} y={16} size={9} anchor="start" color="var(--ok)">
+        RUNS IN CI · kept
       </Label>
+      <Line d="M128 46 H176 M316 46 H364" />
+      <Packet d="M8 46 H484" dur="4.5s" />
+      {node(8, 32, 120, "pull request")}
+      {node(176, 32, 140, "claude reviewer", "var(--ink)")}
+      {node(364, 32, 120, "human review")}
 
-      <Line d="M68 60 H124" />
-      <Line d="M244 60 H292" />
-      <Line d="M372 60 H420" />
-      <Line d="M76 140 H124" />
-      <Line d="M192 140 H252" />
-      <Line d="M284 140 H344" />
-      <Line d="M432 140 H492" />
-      <Line d="M524 140 H564" />
-
-      <Packet d="M8 60 H540" dur="5s" />
-      <Packet d="M8 140 H632" dur="6.5s" delay="1s" approve />
-
-      <Box x={8} y={44} w={60} h={32}>
-        <Label x={38} y={61} size={9.5} color="var(--body)">
-          alert
-        </Label>
-      </Box>
-      <Box x={124} y={44} w={120} h={32}>
-        <Label x={184} y={61} size={9.5} color="var(--body)">
-          bedrock triage
-        </Label>
-      </Box>
-      <Box x={292} y={44} w={80} h={32}>
-        <Label x={332} y={61} size={9.5} color="var(--body)">
-          fix pr
-        </Label>
-      </Box>
-      <Box x={420} y={44} w={120} h={32}>
-        <Label x={480} y={61} size={9.5} color="var(--body)">
-          human review
-        </Label>
-      </Box>
-
-      <Box x={8} y={124} w={68} h={32}>
-        <Label x={42} y={141} size={9.5} color="var(--body)">
-          ticket
-        </Label>
-      </Box>
-      <Box x={124} y={124} w={68} h={32}>
-        <Label x={158} y={141} size={9.5} color="var(--body)">
-          plan
-        </Label>
-      </Box>
-      <Gate x={268} y={140} />
-      <Box x={344} y={124} w={88} h={32}>
-        <Label x={388} y={141} size={9.5} color="var(--body)">
-          draft pr
-        </Label>
-      </Box>
-      <Gate x={508} y={140} />
-      <Box x={564} y={124} w={68} h={32}>
-        <Label x={598} y={141} size={9.5} color="var(--ok)">
-          merge
-        </Label>
-      </Box>
-
-      <Label x={320} y={210} size={9.5}>
-        label-driven state machine · every step reversible · humans own every gate
+      <Label x={8} y={88} size={9} anchor="start" color="var(--ok)">
+        SHIPPED · knowledge base
       </Label>
+      <Line d="M128 118 H176 M316 118 H364" />
+      <Packet d="M8 118 H584" dur="5s" delay="1s" />
+      {node(8, 104, 120, "question")}
+      {node(176, 104, 140, "kb agent", "var(--ink)")}
+      {node(364, 104, 220, "curated first · sql behind a flag")}
+
+      <Label x={8} y={160} size={9} anchor="start">
+        DESIGNED · ticket to merge, dry-run only
+      </Label>
+      <Line d="M76 190 H124 M192 190 H240 M328 190 H369 M391 190 H432" />
+      {node(8, 176, 68, "ticket")}
+      {node(124, 176, 68, "plan")}
+      {node(240, 176, 88, "draft pr")}
+      <Gate x={380} y={190} label="human gates" />
+      {node(432, 176, 68, "merge")}
+
+      <Label x={8} y={244} size={9} anchor="start">
+        SHELVED · aug 2026
+      </Label>
+      <GhostBox x={8} y={256} w={340} h={28}>
+        <Label x={178} y={271} size={9.5}>
+          bedrock auto-remediation · 12 of 13 runs failed
+        </Label>
+      </GhostBox>
     </svg>
   );
 }
@@ -589,7 +572,7 @@ export function ObservabilityDiagram() {
 export function IdentityDiagram() {
   return (
     <svg
-      viewBox="0 0 640 288"
+      viewBox="0 60 640 200"
       role="img"
       aria-label={captions["identity"]}
       className="block w-full"
@@ -608,6 +591,12 @@ export function IdentityDiagram() {
         <line x1={271} y1={107} x2={283} y2={119} stroke="var(--muted)" strokeWidth={1.5} />
         <line x1={283} y1={107} x2={271} y2={119} stroke="var(--muted)" strokeWidth={1.5} />
       </g>
+      <Label x={150} y={110} size={8.5} anchor="start">
+        before
+      </Label>
+      <Label x={197} y={142} size={8.5} color="var(--accent)">
+        after
+      </Label>
       <Label x={293} y={113} size={9} anchor="start">
         no direct access
       </Label>

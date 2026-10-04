@@ -10,25 +10,18 @@ export function Hero() {
         <p className="font-mono text-xs leading-relaxed text-muted sm:text-sm">
           <span className="font-semibold text-ink">{profile.name}</span> · {profile.role}
         </p>
-        <p className="mt-3 flex items-center gap-2 font-mono text-[11px] tracking-wide text-muted sm:text-xs">
-          <span className="status-dot size-2 shrink-0 rounded-full bg-ok" aria-hidden />
-          <span className="status-text">
-            <span className="text-ok">{profile.statusLine.split(" - ")[0]}</span> - {profile.statusLine.split(" - ").slice(1).join(" - ")}
-          </span>
-        </p>
-
-        <h1 className="mt-7 max-w-4xl font-display text-5xl leading-[1.04] font-semibold tracking-tight text-ink sm:text-6xl md:text-7xl">
+        <h1 className="mt-7 max-w-4xl font-display text-4xl leading-[1.04] font-semibold tracking-normal text-ink sm:text-6xl sm:tracking-tight md:text-7xl">
           <span className="hero-rise block">{profile.thesis.lead}</span>
           <span className="hero-rise block" style={{ animationDelay: "0.12s" }}>
             {profile.thesis.tail} <span className="text-accent">{profile.thesis.accent}</span>
           </span>
         </h1>
 
-        <p className="hero-fade mt-6 max-w-2xl text-lg leading-relaxed" style={{ animationDelay: "0.2s" }}>
+        <p className="hero-fade mt-6 max-w-2xl text-xl leading-relaxed text-ink" style={{ animationDelay: "0.2s" }}>
           {profile.heroLine}
         </p>
 
-        <p className="hero-fade mt-4 max-w-2xl leading-relaxed text-ink" style={{ animationDelay: "0.28s" }}>
+        <p className="hero-fade mt-4 max-w-4xl leading-relaxed text-body" style={{ animationDelay: "0.28s" }}>
           {profile.availabilityLine}
         </p>
 
@@ -60,13 +53,13 @@ export function Hero() {
         </div>
 
         <div
-          className="hero-fade mt-16 grid grid-cols-2 gap-x-6 gap-y-8 border-t border-line pt-8 sm:grid-cols-3 lg:grid-cols-5"
+          className="hero-fade mt-16 grid grid-cols-2 gap-x-6 gap-y-8 border-t border-line pt-8 sm:grid-cols-4"
           style={{ animationDelay: "0.5s" }}
         >
           {metrics.map((m) => (
             <div key={m.label}>
               <div className="font-mono text-xl whitespace-nowrap text-ink sm:text-3xl">{m.value}</div>
-              <div className="mt-1 font-mono text-[11px] tracking-wide text-muted uppercase">{m.label}</div>
+              <div className="mt-1 text-xs leading-snug text-muted">{m.label}</div>
             </div>
           ))}
         </div>

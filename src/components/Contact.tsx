@@ -9,11 +9,7 @@ export function Contact() {
       <div className="mx-auto w-full max-w-5xl px-6 py-20">
         <SectionHeading id="contact" title="Contact" annotation="async-first · CET" />
         <Reveal>
-          <p className="flex items-start gap-2 font-mono text-xs tracking-wide text-muted">
-            <span className="status-dot size-2 shrink-0 rounded-full bg-ok" aria-hidden />
-            <span className="text-ok">ACCEPTING</span>
-            <span>- {profile.availability}</span>
-          </p>
+          <p className="leading-relaxed text-ink">{profile.availability}</p>
           <a
             href={`mailto:${profile.email}`}
             data-goatcounter-click="email"
