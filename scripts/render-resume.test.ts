@@ -17,11 +17,13 @@ test("html keeps the ATS contract", () => {
 
 test("roles render in the two conventions with escaped text", () => {
   // stacked titles under one employer; the employer line keeps the full tenure for ATS date extraction
-  assert.ok(html.includes('<div class="row employer"><span><span class="co">ESC Partners / HometownHUB</span> - multi-tenant utility customer-portal SaaS (contract) - New York, USA (Remote)</span> <span class="meta">May 2023 - Present</span></div>\n<h3 class="row"><span>Staff Software Engineer, Platform &amp; Product</span> <span class="meta">Sep 2025 - Present</span></h3>\n<h3 class="row"><span>Senior Full-Stack Engineer (Cloud)</span> <span class="meta">May 2023 - Aug 2025</span></h3>'));
-  assert.ok(html.includes('<p class="earlier row"><span><b>Senior Software Engineer II</b> - HCL Technologies - New York, USA (Remote) (Kubernetes, Selenium)</span> <span class="meta">Feb 2020 - Apr 2022</span></p>'));
+  assert.ok(html.includes("<div class=\"employer\"><span class=\"co\">ESC Partners / HometownHUB</span> (contract) | <span class=\"meta\">May 2023 - Present</span></div>\n<div class=\"loc\">multi-tenant utility customer-portal SaaS - New York, USA (Remote)</div>\n<h3>Staff Software Engineer, Platform &amp; Product | <span class=\"meta\">Sep 2025 - Present</span></h3>\n<h3>Senior Full-Stack Engineer (Cloud) | <span class=\"meta\">May 2023 - Aug 2025</span></h3>"));
+  // each title is followed by its own dates in text order, so extraction never detaches them
+  assert.ok(!html.includes('class="row'));
+  assert.ok(html.includes("<p class=\"earlier\"><b>Senior Software Engineer II</b> - HCL Technologies | <span class=\"meta\">Feb 2020 - Apr 2022</span> - New York, USA (Remote) (Kubernetes, Selenium)</p>"));
   // earlier roles are one line each: no heading, no bullets
-  assert.ok(html.includes('<p class="earlier row"><span><b>Full-Stack Software Engineer</b> - Ordermentum (contract) - NSW, Australia (Remote) (Node.js, PostgreSQL, Docker, Kubernetes)</span> <span class="meta">Sep 2022 - Mar 2023</span></p>'));
-  assert.ok(html.includes("<b>Senior Software Engineer</b> - CoDev (agency, embedded with BaseMap) - Utah, USA (Remote)"));
+  assert.ok(html.includes("<p class=\"earlier\"><b>Full-Stack Software Engineer</b> - Ordermentum (contract) | <span class=\"meta\">Sep 2022 - Mar 2023</span> - NSW, Australia (Remote) (Node.js, PostgreSQL, Docker, Kubernetes)</p>"));
+  assert.ok(html.includes("<b>Senior Software Engineer</b> - CoDev (agency, embedded with BaseMap) | "));
   assert.ok(!html.includes("<h3>Full-Stack Software Engineer"));
   assert.ok(!/Menlo|monospace/.test(html), "one typeface: dates and contact use the body font");
   assert.ok(html.includes("<li><b>Primary author of the fleet's core REST API, both generations</b> - 58% of v1"));

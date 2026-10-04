@@ -10,21 +10,22 @@ const CHROME = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome";
 const esc = (s: string) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 const li = (b: Bullet) => (b.lead ? `  <li><b>${esc(b.lead)}</b> ${esc(b.rest)}</li>` : `  <li>${esc(b.rest)}</li>`);
 
-const dates = (d: string) => `<span class="meta">${esc(d)}</span>`;
+/* Dates sit inline after their label (" | dates"), never in a right-aligned column: text extraction
+   reads a right column as a separate block, which detached titles from their date ranges. */
+const dates = (d: string) => `| <span class="meta">${esc(d)}</span>`;
 
 /* Employer first, then each title with its own dates (a standard stacked role). The employer
    line keeps the FULL tenure: ATS parsers bind one range per employer block, and a stacked
    title alone made a 3-year relationship parse as its latest title's span. */
 function currentRole(r: Role): string {
-  const tagline = r.tagline ? ` - ${esc(r.tagline)}` : "";
   const kind = r.contract ? " (contract)" : "";
-  const loc = r.location ? ` - ${esc(r.location)}` : "";
   const titles = r.currentTitleDates
-    ? [{ title: r.title, dates: r.currentTitleDates }, ...r.previous].map((p) => `<h3 class="row"><span>${esc(p.title)}</span> ${dates(p.dates)}</h3>`)
+    ? [{ title: r.title, dates: r.currentTitleDates }, ...r.previous].map((p) => `<h3>${esc(p.title)} ${dates(p.dates)}</h3>`)
     : [`<h3>${esc(r.title)}</h3>`];
   return [
     `<section class="role">`,
-    `<div class="row employer"><span><span class="co">${esc(r.company)}</span>${tagline}${kind}${loc}</span> ${dates(r.dates)}</div>`,
+    `<div class="employer"><span class="co">${esc(r.company)}</span>${kind} ${dates(r.dates)}</div>`,
+    `<div class="loc">${[r.tagline, r.location].filter(Boolean).map((x) => esc(x as string)).join(" - ")}</div>`,
     ...titles,
     "<ul>",
     ...r.bullets.map(li),
@@ -38,7 +39,7 @@ function earlierRole(r: Role): string {
   const company = `${esc(r.company)}${r.tagline ? ` (${esc(r.tagline)})` : ""}${r.contract ? " (contract)" : ""}`;
   const loc = r.location ? ` - ${esc(r.location)}` : "";
   const stack = r.stack.length ? ` (${esc(r.stack.join(", "))})` : "";
-  return `<p class="earlier row"><span><b>${esc(r.title)}</b> - ${company}${loc}${stack}</span> ${dates(r.dates)}</p>`;
+  return `<p class="earlier"><b>${esc(r.title)}</b> - ${company} ${dates(r.dates)}${loc}${stack}</p>`;
 }
 
 /* The template is the July 2026 ATS-safe resume verbatim: single column, linear flow,
@@ -64,7 +65,7 @@ export function renderHtml(m: ResumeModel): string {
     max-width: 178mm;
   }
   h1 { font-size: 20pt; letter-spacing: -0.01em; color: #111; }
-  .role-line { font-size: 10pt; font-weight: 600; color: #c44400; margin-top: 2pt; }
+  .role-line { font-size: 10pt; font-weight: 600; color: #111; margin-top: 2pt; }
   .contact { font-size: 9pt; color: #444; margin-top: 4pt; }
   h2 {
     font-size: 10pt;
@@ -75,7 +76,6 @@ export function renderHtml(m: ResumeModel): string {
     margin: 12pt 0 6pt;
   }
   h3 { font-size: 10pt; margin-top: 2pt; }
-  .row { display: flex; justify-content: space-between; align-items: baseline; gap: 10pt; }
   .employer { margin-top: 9pt; font-size: 9pt; color: #555; }
   /* a role may split between bullets, never inside one or right after its header */
   li { break-inside: avoid; }
