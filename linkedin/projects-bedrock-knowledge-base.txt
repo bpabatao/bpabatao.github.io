@@ -1,0 +1,5 @@
+# updated 2026-10-04 - paste into LinkedIn > Projects > Bedrock Knowledge Base
+Bedrock Knowledge Base
+Associated with: ESC Partners / HometownHUB
+
+Built with a colleague. My part was the refresh and the platform side: a scheduled in-VPC Fargate task that re-ingests Oracle CCS product docs, per-client material and service-desk pages across four data sources, with alerts when it fails.
