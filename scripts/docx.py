@@ -10,6 +10,7 @@ from xml.sax.saxutils import escape
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 W = 'xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"'
+R = 'xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"'
 PAGE = {"a4": (11906, 16838), "letter": (12240, 15840)}   # twips
 MARGIN_TB, MARGIN_LR = 794, 907                            # 14mm, 16mm
 
@@ -29,6 +30,26 @@ def para(runs, style=None, bullet=False):
     return f"<w:p>{ppr}{''.join(runs)}</w:p>"
 
 
+def links(m):
+    """External hrefs in contact order; the docx relationship ids are rIdL0, rIdL1, ..."""
+    return [c["href"] for c in m.get("contactItems", []) if c.get("href")]
+
+
+def contact(m):
+    if "contactItems" not in m:
+        return para([run(m["contact"])])
+    out, i = [], 0
+    for n, c in enumerate(m["contactItems"]):
+        if n:
+            out.append(run(" | "))
+        if c.get("href"):
+            out.append(f'<w:hyperlink r:id="rIdL{i}" w:history="1">{run(c["text"])}</w:hyperlink>')
+            i += 1
+        else:
+            out.append(run(c["text"]))
+    return para(out)
+
+
 def bullet(b):
     runs = [run(b["lead"] + " ", bold=True)] if b.get("lead") else []
     runs.append(run(b["rest"]))
@@ -36,7 +57,7 @@ def bullet(b):
 
 
 def body(m):
-    p = [para([run(m["name"])], "Heading1"), para([run(m["roleLine"], bold=True)]), para([run(m["contact"])])]
+    p = [para([run(m["name"])], "Heading1"), para([run(m["roleLine"], bold=True)]), contact(m)]
     p += [para([run("Summary")], "Heading2"), para([run(m["summary"])])]
     p.append(para([run("Professional Experience")], "Heading2"))
     for r in m["experience"]:
@@ -66,7 +87,7 @@ def body(m):
     w, h = PAGE[m.get("page", "a4")]
     sect = (f'<w:sectPr><w:pgSz w:w="{w}" w:h="{h}"/>'
             f'<w:pgMar w:top="{MARGIN_TB}" w:right="{MARGIN_LR}" w:bottom="{MARGIN_TB}" w:left="{MARGIN_LR}" w:header="0" w:footer="0" w:gutter="0"/></w:sectPr>')
-    return f'<?xml version="1.0" encoding="UTF-8" standalone="yes"?><w:document {W}><w:body>{"".join(p)}{sect}</w:body></w:document>'
+    return f'<?xml version="1.0" encoding="UTF-8" standalone="yes"?><w:document {W} {R}><w:body>{"".join(p)}{sect}</w:body></w:document>'
 
 
 STYLES = f'''<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
@@ -102,18 +123,23 @@ RELS = '''<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="word/document.xml"/>
 </Relationships>'''
 
-DOC_RELS = '''<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+HYPERLINK = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/hyperlink"
+
+
+def doc_rels(m):
+    ext = "".join(f'<Relationship Id="rIdL{i}" Type="{HYPERLINK}" Target="{escape(h, {chr(34): "&quot;"})}" TargetMode="External"/>\n' for i, h in enumerate(links(m)))
+    return f'''<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">
 <Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles" Target="styles.xml"/>
 <Relationship Id="rId2" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/numbering" Target="numbering.xml"/>
-</Relationships>'''
+{ext}</Relationships>'''
 
 
 def write_docx(model, out_path):
     with zipfile.ZipFile(out_path, "w", zipfile.ZIP_DEFLATED) as z:
         z.writestr("[Content_Types].xml", CONTENT_TYPES)
         z.writestr("_rels/.rels", RELS)
-        z.writestr("word/_rels/document.xml.rels", DOC_RELS)
+        z.writestr("word/_rels/document.xml.rels", doc_rels(model))
         z.writestr("word/styles.xml", STYLES)
         z.writestr("word/numbering.xml", NUMBERING)
         z.writestr("word/document.xml", body(model))
@@ -122,6 +148,7 @@ def write_docx(model, out_path):
 def _selftest():
     model = {
         "name": "Test Person", "role": "Engineer", "roleLine": "ENGINEER | AWS", "contact": "a | b",
+        "contactItems": [{"text": "a", "href": None}, {"text": "b@x.io", "href": "mailto:b@x.io"}, {"text": "x.io", "href": "https://x.io"}],
         "summary": "Sum & more", "page": "letter",
         "experience": [{"title": "T", "company": "C", "location": "L", "dates": "Jan 2020 - Present", "contract": True,
                         "previous": [{"title": "Old Title", "dates": "Jan 2019 - Dec 2019"}],
@@ -135,6 +162,7 @@ def _selftest():
         write_docx(model, out)
         with zipfile.ZipFile(out) as z:
             doc = z.read("word/document.xml").decode()
+            rels = z.read("word/_rels/document.xml.rels").decode()
             names = set(z.namelist())
     assert {"word/document.xml", "word/styles.xml", "word/numbering.xml", "[Content_Types].xml"} <= names
     assert doc.count('w:val="Heading2"') == 5, doc.count('w:val="Heading2"')
@@ -148,6 +176,9 @@ def _selftest():
     # (the format most ATS ingest) shows concurrent roles as permanent ones.
     assert "L, contract | Jan 2020 - Present" in doc
     assert doc.count('w:val="Heading1"') == 1
+    # contact links are real hyperlinks, each backed by an external relationship
+    assert doc.count("<w:hyperlink ") == 2 and 'r:id="rIdL1"' in doc
+    assert 'Target="mailto:b@x.io" TargetMode="External"' in rels and 'Target="https://x.io" TargetMode="External"' in rels
     assert doc.count('w:val="Heading3"') == 3, doc.count('w:val="Heading3"')
     print("docx selftest ok")
 

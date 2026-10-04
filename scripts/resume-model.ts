@@ -21,6 +21,8 @@ export interface ResumeModel {
   role: string;
   roleLine: string;
   contact: string;
+  /* same items as `contact`, with hrefs so the PDF and docx carry clickable links */
+  contactItems: { text: string; href: string | null }[];
   summary: string;
   experience: Role[];
   earlier: Role[];
@@ -52,11 +54,17 @@ function role(job: Job): Role {
 }
 
 export function buildResumeModel(page: Page = "a4"): ResumeModel {
+  const contactItems = [
+    { text: profile.location, href: null },
+    { text: profile.email, href: `mailto:${profile.email}` },
+    ...[profile.linkedin, profile.github, profile.siteUrl].map((u) => ({ text: bare(u), href: u })),
+  ];
   return {
     name: profile.name,
     role: profile.role,
     roleLine: ascii(profile.headline).toUpperCase(),
-    contact: [profile.location, profile.email, bare(profile.linkedin), bare(profile.github), bare(profile.siteUrl)].join(" | "),
+    contact: contactItems.map((c) => c.text).join(" | "),
+    contactItems,
     summary: profile.resumeSummary,
     experience: currentJobs.map(role),
     earlier: earlierJobs.filter((j) => j.resume !== false).map(role),

@@ -71,7 +71,7 @@ export function renderHtml(m: ResumeModel): string {
   .role { break-inside: avoid; }
   .earlier { margin: 3pt 0 0; font-size: 9.5pt; }
   .co { color: #c44400; font-weight: 600; }
-  .meta { font-size: 8.5pt; color: #555; font-family: "SF Mono", Menlo, Consolas, monospace; font-weight: 400; }
+  .meta { white-space: nowrap; font-size: 8.5pt; color: #555; font-family: "SF Mono", Menlo, Consolas, monospace; font-weight: 400; }
   .loc { font-size: 8.8pt; color: #555; margin-bottom: 3pt; }
   ul { padding-left: 12pt; margin: 3pt 0 6pt; }
   li { margin: 2.2pt 0; }
@@ -85,7 +85,7 @@ export function renderHtml(m: ResumeModel): string {
 
 <h1>${esc(m.name)}</h1>
 <div class="role-line">${esc(m.roleLine)}</div>
-<div class="contact">${esc(m.contact)}</div>
+<div class="contact">${m.contactItems.map((c) => (c.href ? `<a href="${esc(c.href)}">${esc(c.text)}</a>` : esc(c.text))).join(" | ")}</div>
 
 <h2>Summary</h2>
 <p>${esc(m.summary)}</p>
