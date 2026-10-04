@@ -17,7 +17,7 @@ export function Contact() {
           <a
             href={`mailto:${profile.email}`}
             data-goatcounter-click="email"
-            className="mt-6 inline-block font-display text-3xl font-semibold tracking-tight text-ink underline decoration-accent decoration-2 underline-offset-8 transition-colors hover:text-accent sm:text-4xl"
+            className="mt-6 inline-block break-all font-display text-3xl font-semibold tracking-tight text-ink underline decoration-accent decoration-2 underline-offset-8 transition-colors hover:text-accent sm:text-4xl"
           >
             {profile.email}
           </a>

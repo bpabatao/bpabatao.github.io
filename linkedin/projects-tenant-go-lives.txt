@@ -2,4 +2,4 @@
 Tenant Go-Lives
 Associated with: ESC Partners / HometownHUB
 
-Primary engineer on four tenant launches; core contributor on two.
+Production go-live readiness for client launches across the fleet.

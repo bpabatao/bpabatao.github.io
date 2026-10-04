@@ -1,7 +1,7 @@
 # updated 2026-10-04 - paste into LinkedIn > Projects > Identity & Access
 Identity & Access
 Associated with: ESC Partners / HometownHUB
-Closed an account-takeover path at registration, took identity-provider credentials out of the browser, and moved route permissions into one declarative guard.
+Shipped a flag-gated fix for a registration takeover path, moved email and password changes off the browser on most portals, and put route permissions behind one declarative guard.
 Ownership: PRIMARY AUTHOR
 Stack: AWS Cognito, Oracle CCS, Terraform, IAM, Fastify
 https://bpabatao.github.io/case/identity/

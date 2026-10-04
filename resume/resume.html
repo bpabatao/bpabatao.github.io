@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="author" content="Benedict Pabatao">
-<title>Benedict Pabatao - Staff Software Engineer</title>
+<title>Benedict Pabatao - Staff Software Engineer, Platform &amp; Product</title>
 <style>
   /* ATS-safe: single column, linear flow, real words in headings, no text-boxes.
      Styling via CSS only - text layer stays clean. */
@@ -31,7 +31,7 @@
   .role { break-inside: avoid; }
   .earlier { margin: 3pt 0 0; font-size: 9.5pt; }
   .co { color: #c44400; font-weight: 600; }
-  .meta { font-size: 8.5pt; color: #555; font-family: "SF Mono", Menlo, Consolas, monospace; font-weight: 400; }
+  .meta { white-space: nowrap; font-size: 8.5pt; color: #555; font-family: "SF Mono", Menlo, Consolas, monospace; font-weight: 400; }
   .loc { font-size: 8.8pt; color: #555; margin-bottom: 3pt; }
   ul { padding-left: 12pt; margin: 3pt 0 6pt; }
   li { margin: 2.2pt 0; }
@@ -45,10 +45,10 @@
 
 <h1>Benedict Pabatao</h1>
 <div class="role-line">STAFF SOFTWARE ENGINEER, PLATFORM &amp; PRODUCT | MULTI-TENANT SAAS | AWS | TERRAFORM | TYPESCRIPT | AGENTIC TOOLING</div>
-<div class="contact">Italy (Remote) | jajapabatao@gmail.com | linkedin.com/in/benedict-pabatao | github.com/bpabatao | bpabatao.github.io</div>
+<div class="contact">Italy (Remote) | <a href="mailto:jajapabatao@gmail.com">jajapabatao@gmail.com</a> | <a href="https://linkedin.com/in/benedict-pabatao">linkedin.com/in/benedict-pabatao</a> | <a href="https://github.com/bpabatao">github.com/bpabatao</a> | <a href="https://bpabatao.github.io">bpabatao.github.io</a></div>
 
 <h2>Summary</h2>
-<p>Staff Software Engineer - I build the platform other engineers ship on. 8+ years in software, 5+ on AWS, 3+ building and operating a multi-tenant SaaS platform as its most senior engineer: primary author (93%) of the Terraform control-plane the fleet is migrating onto, primary author of the core REST API behind 7 live utility client portals (58% of the v1 serving them today) and of its v2 successor (78%), now in production for the first tenant ahead of its cutover - and its operator: CI/CD, observability, on-call, cost.</p>
+<p>Staff Software Engineer - I build the platform other engineers ship on. 8+ years in software, 5+ on AWS, 3+ building and operating a multi-tenant SaaS platform as its most senior engineer: primary author (93%) of the Terraform control-plane the fleet is migrating onto, primary author of the core REST API behind 7 live utility client portals (58% of the v1 serving them today) and of its v2 successor (76%), now in production for the first tenant ahead of its cutover - and its operator: CI/CD, observability, incident response, cost.</p>
 
 <h2>Professional Experience</h2>
 
@@ -58,13 +58,13 @@
 <div class="loc">Staff Software Engineer, Platform &amp; Product | <span class="meta">Sep 2025 - Present</span></div>
 <div class="loc">Previously Senior Full-Stack Engineer (Cloud) | <span class="meta">May 2023 - Aug 2025</span></div>
 <ul>
-  <li><b>Primary author of both generations of the fleet's core REST API</b> - 58% of v1, which serves all seven launched tenants, and 78% of v2, in production for the first tenant ahead of its cutover - owning the multi-tenant auth, data-access and Oracle CCS (OAuth 2.0) integration patterns both generations share.</li>
+  <li><b>Primary author of both generations of the fleet's core REST API</b> - 58% of v1, which serves all seven launched tenants, and 76% of v2, in production for the first tenant ahead of its cutover - owning the multi-tenant auth, data-access and Oracle CCS (OAuth 2.0) integration patterns both generations share.</li>
   <li><b>Primary author (93%) of the internal developer platform:</b> a Terraform control-plane (9 stacks, ~60 AWS resource types - Cognito, ECS Fargate, CloudFront, WAFv2, Secrets Manager, Route 53, ElastiCache, KMS) with a Fastify/React dashboard that plans, applies and cost-attributes; the fleet's per-portal provisioning is consolidating onto it tenant by tenant.</li>
   <li><b>Most senior hands-on engineer on a small product team</b> - set the platform standards the fleet adopts (provisioning modules, CI/CD, security guardrails).</li>
-  <li><b>Ran the remediation program for 6 rounds of external penetration testing</b> - triaged 60 findings into severity-labelled batches (IDOR, unauthenticated endpoints, URL-borne tokens, client-side privilege checks, missing rate limits), then blocking Snyk gates and keyless OIDC deploys took long-lived AWS keys out of the deploy path.</li>
-  <li><b>Own the reconciliation between systems of record</b> - a detection-only CCS/Invoice Cloud reconciler (4x daily Lambda, per-tenant queries, pre-flight link checks, split-identity healing) that replaced the batch sync I retired, plus a dry-run-default duplicate-login reconciler with a daily read-only prod sweep.</li>
-  <li><b>Built, measured and pruned the team's AI tooling</b> - kept a Claude PR reviewer in CI on the core API and backend, shelved a Bedrock auto-remediation service that was never wired to a live alarm, shipped a Bedrock knowledge-base agent (curated-first retrieval, flagged SQL fallback), and designed a ticket-to-PR pipeline with human gates, not yet live.</li>
-  <li><b>Own and operate the multi-tenant portal infrastructure as sole platform engineer</b> - the 7-tenant production and test fleet - with CI/CD (Bitbucket Pipelines), Datadog / CloudWatch observability, on-call incident response, and cost-attribution tooling (Cost Explorer API) driving right-sizing, shared-ALB, and Fargate-Spot savings.</li>
+  <li><b>Ran the remediation program for 6 rounds of external penetration testing</b> - triaged 60 findings into severity-labelled batches (IDOR, unauthenticated endpoints, URL-borne tokens, client-side privilege checks, missing rate limits), then added blocking Snyk gates and moved 4 repos to keyless OIDC deploys.</li>
+  <li><b>Own the reconciliation between systems of record</b> - a CCS/Invoice Cloud reconciler (scheduled Lambda: detection-only reconcile, guarded desync repair, per-tenant queries, pre-flight link checks, split-identity healing) that replaced the batch sync I switched off, plus a dry-run-default duplicate-login reconciler with a daily read-only prod sweep.</li>
+  <li><b>Built, measured and pruned the team's AI tooling</b> - kept a Claude PR reviewer in CI across the API and portal repos, shelved a Bedrock auto-remediation service after 12 of 13 runs failed, shipped a Bedrock knowledge-base agent (curated-first retrieval, flagged SQL fallback), and designed a ticket-to-PR pipeline with human gates, not yet live.</li>
+  <li><b>Own and operate the multi-tenant portal infrastructure as primary platform engineer</b> - the 11-tenant production and test fleet (7 live) - with CI/CD (Bitbucket Pipelines), CloudWatch observability, incident response, cost-attribution tooling (Cost Explorer API), a shared ALB and Fargate Spot on the test fleet.</li>
   <li><b>Shipped the fix for an SSN identity-verification gap enabling account takeover</b> - the last-four plus street match resolved to the wrong person on ~2.4% of one tenant's accounts - as attempt lockout plus ZIP-based disambiguation against the brute-forceable last-4 space, flag-gated for per-tenant rollout.</li>
   <li><b>Built a runtime feature-flag platform</b> - flags moved from build-time env vars to a MongoDB-backed runtime reader with change-stream SSE push and fail-open on outage, wired into 6 v1 tenants' admin consoles and 4 customer portals and enabled per tenant behind a gate, with a flag manifest and parity tests guarding tenants still on compile-time flags.</li>
   <li><b>Owned production go-live readiness for client launches across the fleet</b> - environment validation, deployment, rollback planning, and stabilization.</li>
@@ -99,7 +99,7 @@
 <div class="skills">
   <p><b>Cloud &amp; Infra:</b> AWS - ECS Fargate, CloudFront, Cognito, ElastiCache, KMS, Secrets Manager, WAFv2, SES, S3, Route 53, VPC, ALB, IAM, Elastic Beanstalk, Terraform, Docker, Linux</p>
   <p><b>Platform &amp; DevOps:</b> Internal Developer Platform, Multi-tenant provisioning, Bitbucket Pipelines, GitHub Actions, FinOps - Cost Explorer</p>
-  <p><b>AI on the Platform:</b> AWS Bedrock (Claude), AI code review in CI, LLM knowledge bases (RAG), Evaluating and retiring AI tooling</p>
+  <p><b>AI on the Platform:</b> AWS Bedrock (Claude), AI code review in CI, LLM knowledge bases (RAG), Evaluating and pruning AI tooling</p>
   <p><b>Backend &amp; Data:</b> Node.js - Fastify, Express, TypeScript, Python, REST APIs, GraphQL, Prisma, PostgreSQL, MongoDB, Zod, Vitest, Playwright, Oracle Utilities CCS, Invoice Cloud</p>
   <p><b>Observability &amp; Security:</b> Datadog RUM/APM, CloudWatch, Sentry, Structured logging, Session Replay, OWASP/IDOR, JWT, OAuth 2.0, OIDC, IAM, WAFv2, Snyk, Pentest remediation</p>
   <p><b>Frontend:</b> React, Redux, TypeScript, Styled Components, Tailwind, Next.js</p>

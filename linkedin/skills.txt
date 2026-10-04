@@ -31,7 +31,7 @@ Cost Explorer
 AWS Bedrock (Claude)
 AI code review in CI
 LLM knowledge bases (RAG)
-Evaluating and retiring AI tooling
+Evaluating and pruning AI tooling
 Fastify
 Express
 Python

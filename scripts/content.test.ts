@@ -20,7 +20,7 @@ test("tenant count is derived from fleetPortals", () => {
 });
 
 test("headline, employer and promotion history follow the spec", () => {
-  assert.equal(profile.role, "Staff Software Engineer");
+  assert.equal(profile.role, "Staff Software Engineer, Platform & Product");
   assert.equal(currentJobs[0].company, "ESC Partners / HometownHUB");
   assert.equal(currentJobs[0].role, "Staff Software Engineer, Platform & Product");
   assert.equal(currentJobs[0].positions?.[0].title, currentJobs[0].role);

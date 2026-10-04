@@ -16,7 +16,7 @@ export const cases: CaseStudy[] = [
     meta: {
       role: "Primary author of both generations, architecture and security owner",
       period: "2023 - present",
-      ownership: "58% of v1 · 78% of v2",
+      ownership: "58% of v1 · 76% of v2",
       stack: ["Fastify 5", "TypeScript (strict)", "Zod", "MongoDB", "AWS SDK v3", "ECS Fargate", "Vitest"],
     },
     sections: [
@@ -37,18 +37,17 @@ export const cases: CaseStudy[] = [
         heading: "Architecture",
         paragraphs: [
           "Fastify 5 on Node 22, ESM-only, TypeScript strict with no `any`. Zod validates every input at the boundary; responses use one fixed envelope so clients never parse ad-hoc shapes.",
-          "Tenant behavior is composed from a base configuration plus per-tenant overrides, assembled by strategy factories - the request path never branches on tenant name. Authorization is enforced as a route-level gate: every endpoint proves the caller owns the account it touches before any data access, which is what kills IDOR as a class.",
-          "Accountability does not stop at the customer. Admin reads and impersonated sessions are audited as well as writes, attributed to the acting admin, with field-level capture of what a write actually changed and deep redaction so tokens and provider passwords never reach the log. Admin writes are kept for a year, admin reads for ninety days.",
-          "Where the billing system of record and the payment provider disagree, a detection-only reconciler surfaces the drift instead of silently writing to either, and the account-linking path guards against duplicate registrations and signup conflicts. Small guards pay: enforcing the ten-digit account number on every sign-in form removed about 215 CCS errors a day that partial or oversized numbers had been generating.",
-          "The integration runs in both directions. Where the fix belongs on the CCS side, I write the IWS change specification - request and response examples, tenant scope, blast radius - and the vendor team implements it; the portal side lands in step.",
-          "An 80% coverage gate and OWASP checks run in CI; Bitbucket Pipelines builds to ECR and deploys to ECS Fargate behind a shared ALB.",
+          "Tenant behavior is composed from a base configuration plus per-tenant overrides, assembled by strategy factories - the request path never branches on tenant name. Authorization is enforced as a route-level gate: every account-scoped endpoint proves the caller owns the account it touches before any data access, which is what kills IDOR as a class.",
+          "Accountability does not stop at the customer. On v2, admin reads and impersonated sessions are audited as well as writes, attributed to the acting admin, with field-level capture of what a write actually changed and deep redaction so tokens and provider passwords never reach the log. Admin writes are kept for a year, admin reads for ninety days.",
+          "Where the billing system of record and the payment provider disagree, a reconciler surfaces the drift first; repairs run guarded, in shadow before they write, and the account-linking path guards against duplicate registrations and signup conflicts. Small guards pay: enforcing the ten-digit account number on one tenant's sign-in forms targeted about 215 CCS errors a day that partial or oversized numbers had been generating.",
+          "Typecheck, lint, tests and a Snyk gate run in CI; Bitbucket Pipelines builds to ECR and deploys to ECS Fargate behind a shared ALB.",
         ],
       },
     ],
     outcomes: [
       "On v2 a tenant is config plus provisioning, not a fork; the first tenant's v2 runs beside its v1 with the cutover certified and awaiting DNS, a second stack is provisioned, and v1 stays patched and audited until the last one moves.",
-      "Authorization is structural, not reviewed-in: the route contract enforces ownership checks on every endpoint.",
-      "Billing drift surfaces through a detection-only reconciler instead of a silent write to either system.",
+      "Authorization is structural, not reviewed-in: the route contract enforces ownership checks on every account-scoped endpoint.",
+      "Billing drift surfaces through a reconciler first; repairs run guarded, in shadow before they write.",
       "The integration patterns became the fleet standard other services adopt.",
     ],
   },
@@ -73,25 +72,25 @@ export const cases: CaseStudy[] = [
       {
         heading: "Constraints",
         paragraphs: [
-          "One platform engineer - me - operating the AWS across production and test fleets, alongside feature work. The platform had to be self-service enough that provisioning doesn't need its author in the room, and observable enough that drift and cost anomalies surface themselves.",
+          "One platform engineer - me - owning the AWS across production and test fleets, alongside feature work. The platform had to be self-service enough that provisioning doesn't need its author in the room, and observable enough that drift and cost anomalies surface themselves.",
         ],
       },
       {
         heading: "Architecture",
         paragraphs: [
-          "Nine Terraform stacks covering ~60 AWS resource types: Cognito user pools, ECS Fargate services, CloudFront distributions, WAFv2, Route 53, ElastiCache, KMS, Secrets Manager. Tenant environments are instantiated from templated modules - the same shape every time. The modules were imported from the fleet's earlier per-portal Terraform in March 2026 and consolidated; colleagues contributed the other 7% of commits - Entra ID SSO for the admin portal, the monitoring tab, and the production backend deploy path.",
+          "Nine Terraform stacks covering ~60 AWS resource types: Cognito user pools, ECS Fargate services, CloudFront distributions, WAFv2, Route 53, ElastiCache, KMS, Secrets Manager. Tenant environments are instantiated from templated modules - the same shape every time. The modules were imported from the fleet's earlier per-portal Terraform in March 2026 and consolidated; colleagues contributed the other 7% of commits - Entra ID SSO for the admin portal, the monitoring tab, the production backend deploy path, and per-client state isolation with a plan-approval gate.",
           "Where it stands: the control-plane state owns one deployed tenant awaiting launch, the shared ALB and WAF, and the first migrating tenant's v2 stack, now running beside its v1. The live fleet still runs on its earlier per-portal Terraform and is being brought under the control-plane tenant by tenant, so the same environment is provisioned the same way whether it is the first or the last.",
-          "On top sits a Fastify + React dashboard that runs Terraform plans and applies, detects drift against live state, enforces tag compliance, and attributes cost per client through the Cost Explorer API. Right-sizing, the shared ALB, and Fargate Spot all came out of that same cost data.",
-          "Delivery is gated rather than trusted. Blocking Snyk scans were rolled across the portal pipelines - scan first, ahead of build and deploy - and deploys authenticate through keyless OIDC, piloted on one environment and then rolled through the test fleet and production, so the deploy path holds no long-lived AWS credentials.",
-          "The pipelines got faster while getting stricter. The admin portal's run went from about ten minutes to six by merging lint into the build and running the security scan in parallel; the core API's went from twelve to seven with esbuild transpile, cache-mounted installs and fail-fast, and the twenty-minute build hangs ended when the stale registry cache was dropped.",
+          "On top sits a Fastify + React dashboard that runs Terraform plans and applies, detects drift against live state, enforces tag compliance, and attributes cost per client through the Cost Explorer API. The shared ALB and test-fleet Fargate Spot cut cost; per-client attribution shows it.",
+          "Delivery is gated rather than trusted. Blocking Snyk scans were rolled across the portal pipelines - the scan runs beside the build and blocks the deploy - and deploys authenticate through keyless OIDC, piloted on one environment, then rolled to test and production on four repositories, taking long-lived keys out of their deploy paths.",
+          "The pipelines got faster while getting stricter. The admin portal's run went from about ten minutes to six in April 2026 by merging lint into the build and running the security scan in parallel; the core API's went from twelve to seven with esbuild transpile, cache-mounted installs and fail-fast, and the twenty-minute build hangs ended when the stale registry cache was dropped.",
         ],
       },
     ],
     outcomes: [
-      "Tenant onboarding for new launches runs through the control-plane's templated modules and a written runbook; existing tenants are migrating onto the same state.",
-      "The fleet's AWS runs with per-client cost attribution and continuous drift detection.",
-      "Portal pipelines block on a supply-chain scan before they build, and deploys carry no long-lived AWS credentials.",
-      "Pipeline runs dropped from about ten minutes to six on the admin portal and twelve to seven on the core API, and the twenty-minute build hangs are gone.",
+      "New tenant onboarding is provisioned through the control-plane's templated modules and a written runbook; existing tenants are migrating onto the same state.",
+      "Per-client cost attribution, and drift detection on the stacks the control-plane owns.",
+      "Portal pipelines block on a supply-chain scan before they deploy, and OIDC deploys removed long-lived AWS keys from four repositories.",
+      "Pipeline runs dropped from about ten minutes to six on the admin portal (April 2026) and twelve to seven on the core API, and the twenty-minute build hangs are gone.",
       "Go-live readiness owned for client launches across the fleet - environment validation, deployment, rollback planning, on the provisioning this platform consolidates.",
     ],
   },
@@ -104,7 +103,7 @@ export const cases: CaseStudy[] = [
       role: "Sole author",
       period: "2026 - present",
       ownership: "Sole author",
-      stack: ["AWS Bedrock (Claude)", "GitHub", "Jira", "Claude Code plugins", "Python", "S3/JSONL"],
+      stack: ["AWS Bedrock (Claude)", "GitHub", "Jira", "Claude Code plugins", "Python"],
     },
     sections: [
       {
@@ -122,7 +121,7 @@ export const cases: CaseStudy[] = [
       {
         heading: "Architecture",
         paragraphs: [
-          "Kept - review: a Claude-based PR reviewer runs in CI on the core API and backend repositories, ahead of the human pass. It was pulled from the five portal pipelines when it crashed on their builds; keeping it only where it worked was the decision.",
+          "Kept - review: a Claude-based PR reviewer runs in CI ahead of the human pass. It was pulled from the portal pipelines when it crashed, then restored once guarded; it now runs across the API and portal repos.",
           "Shelved - auto-remediation: an AWS Bedrock service (Claude via bedrock-runtime) built to triage production alerts, correlate them with recent changes, and open fix PRs. 12 of its 13 remediation runs had failed; it was shelved in August 2026 on that evidence.",
           "Designed - delivery: an agentic pipeline from the ticket queue to GitHub - plan, branch, implement in an isolated worktree, open a draft PR - with three human approval gates between intent and merge. Dry-run on one ticket, not yet run live.",
           "Shipped - knowledge: the Bedrock knowledge-base agent over Oracle CCS documentation and data, curated-first with a flagged SQL fallback; it has its own case study.",
@@ -137,7 +136,7 @@ export const cases: CaseStudy[] = [
       },
     ],
     outcomes: [
-      "The reviewer runs on every core API and backend pull request ahead of the human pass; the knowledge-base agent answers Oracle CCS questions from curated documentation and data.",
+      "The reviewer runs in CI across the API and portal repos ahead of the human pass; the knowledge-base agent answers Oracle CCS questions from curated documentation and data.",
       "The auto-fix was shelved on measured evidence rather than kept alive because it was clever - the decision to stop is the result.",
       "Every merge still has a named human approver; the state machine makes each step auditable.",
     ],
@@ -164,7 +163,7 @@ export const cases: CaseStudy[] = [
       {
         heading: "Constraints",
         paragraphs: [
-          "The platform is ISO 27001 certified and in private beta with enterprise pharma clients, so destructive actions have to be reversible and every session has to be attributable. Three core engineers cover the whole product, which rules out subsystems that need a specialist to operate.",
+          "The platform is ISO 27001 certified and in private beta with enterprise pharma clients, so destructive actions have to be reversible and admin and user actions have to be attributable. Three core engineers cover the whole product, which rules out subsystems that need a specialist to operate.",
         ],
       },
       {
@@ -245,21 +244,21 @@ export const cases: CaseStudy[] = [
       {
         heading: "Constraints",
         paragraphs: [
-          "Utility customer data, so retention and access are not free choices. The dashboard had to be usable during an incident by whoever was on call, not only by its author, and it had to run inside the same cost envelope as everything else on the platform.",
+          "Utility customer data, so retention and access are not free choices. The dashboard had to be usable during an incident by whoever was responding, not only by its author, and it had to run inside the same cost envelope as everything else on the platform.",
         ],
       },
       {
         heading: "Architecture",
         paragraphs: [
           "Capture is universal: a wrapper records calls out to identity, mail, payment and billing providers alike, so an event exists whether the failure was ours or theirs, with payloads deep-redacted so tokens and provider passwords never reach the store. Measured, not estimated: 156,656 events a day, 1.8 KB each, about 35 GB at steady state.",
-          "Accountability is tiered. Admin writes record which fields actually changed and are kept for a year; admin reads and impersonated sessions are captured too, attributed to the acting admin, and kept for ninety days. The tiers are deliberate - the trail that answers 'who changed this' outlives the one that answers 'who looked'.",
+          "Accountability is tiered. Admin writes record which fields actually changed and are kept for a year; admin reads and impersonated sessions are captured too on the v2 API, attributed to the acting admin, and kept for ninety days. The tiers are deliberate - the trail that answers 'who changed this' outlives the one that answers 'who looked'.",
           "Signal beats volume: benign authentication failures, account lockouts and revoked tokens are folded into an expected class so the error rate means something, an account-to-IP fan-out view surfaces anomalies, and an alert fires on the email-reversal pattern that precedes account takeover. Per-pattern batch analysis replaced per-event analysis so the AI spend tracks patterns, not traffic.",
           "It stays fast under load: a composite index on tenant, environment, user and timestamp cut the sessions view 43x, and Bedrock spend is attributed to its own client in the cost dashboard so AI cost is visible next to everything else.",
         ],
       },
     ],
     outcomes: [
-      "Every admin action, read or write, is attributable to the person who took it.",
+      "Admin writes are attributable fleet-wide; admin reads and impersonation on the v2 API.",
       "The error rate reflects real failures, and account anomalies surface as a view instead of a hunch.",
       "One composite index took the sessions view from 102 seconds to 2.4 - 43x, measured live - and AI spend is attributed rather than absorbed.",
     ],
@@ -268,7 +267,7 @@ export const cases: CaseStudy[] = [
     slug: "identity",
     title: "Identity & Access",
     subtitle:
-      "Closing the paths that let someone reach an account that was not theirs - at the front door, in the browser, and in the console.",
+      "Narrowing the paths that let someone reach an account that was not theirs - at the front door, in the browser, and in the console.",
     meta: {
       role: "Primary author",
       period: "2026",
@@ -285,22 +284,22 @@ export const cases: CaseStudy[] = [
       {
         heading: "Constraints",
         paragraphs: [
-          "Real utility customers register through this flow, so a fix that locks out legitimate people is not a fix. The portals are multi-tenant and the same identity plumbing serves all of them, which means a change lands everywhere at once.",
+          "Real utility customers register through this flow, so a fix that locks out legitimate people is not a fix. The portals are multi-tenant and the identity plumbing is shared, so a backend change reaches every tenant.",
         ],
       },
       {
         heading: "Architecture",
         paragraphs: [
           "At the front door: the fix for an identity-verification gap that enabled account takeover - the last-four plus street match resolved to the wrong person on roughly 2.4% of one tenant's accounts - shipped as attempt lockout plus ZIP-based disambiguation, flag-gated so it is enabled tenant by tenant rather than switched on fleet-wide.",
-          "In the browser: direct client-side access to the identity provider was removed, so email and password changes go through the API instead of from the page. A build-time content-security policy injects environment-aware provider URLs, and the real client IP is forwarded to the provider so its adaptive threat protection sees the actual source rather than the load balancer - with an alarm when that forwarding falls back.",
+          "In the browser: on most portals, email and password changes now go through the API instead of from the page. A build-time content-security policy injects environment-aware provider URLs, and the real client IP is forwarded to the provider so its adaptive threat protection sees the actual source rather than the load balancer - with an alarm when that forwarding falls back.",
           "In the console: route permissions moved from scattered checks to one declarative config behind a global guard, with every destructive operation permission-gated. IAM roles are recorded in Terraform as the source of truth - least-privilege developer policy, per-client task roles, deploy roles named and documented rather than inherited - down to a colleague's entire IAM footprint, bootstrapped into the stack and maintained there when a policy turned out to belong to a pipeline user rather than a person.",
         ],
       },
     ],
     outcomes: [
       "The registration fix ships flag-gated per tenant - attempt lockout and ZIP disambiguation - enabled realm by realm rather than switched on fleet-wide.",
-      "No page holds identity-provider credentials, and threat protection sees the true client IP.",
-      "Permissions are declared in one place and enforced by a global guard, and every role lives in Terraform.",
+      "Email and password changes go through the API on most portals, and threat protection sees the true client IP.",
+      "Permissions are declared in one place and enforced by a global guard, and the team's roles live in Terraform.",
     ],
   },
 ];

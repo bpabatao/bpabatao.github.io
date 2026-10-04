@@ -8,7 +8,7 @@ const html = renderHtml(buildResumeModel());
 test("html keeps the ATS contract", () => {
   assert.ok(html.startsWith("<!doctype html>"));
   assert.ok(html.includes('<meta name="author" content="Benedict Pabatao">'));
-  assert.ok(html.includes("<title>Benedict Pabatao - Staff Software Engineer</title>"));
+  assert.ok(html.includes("<title>Benedict Pabatao - Staff Software Engineer, Platform &amp; Product</title>"));
   assert.ok(html.includes("@page { size: A4; margin: 14mm 16mm; }"));
   for (const bad of ["<table", "<img", "column-count", "position: absolute", "@font-face"]) assert.ok(!html.includes(bad), bad);
   const h2 = [...html.matchAll(/<h2>(.*?)<\/h2>/g)].map((m) => m[1]);
@@ -24,6 +24,14 @@ test("roles render in the two conventions with escaped text", () => {
   assert.ok(html.includes("<li><b>Primary author of both generations of the fleet's core REST API</b> - 58% of v1"));
   assert.ok(html.includes("Biopharma Strategy &amp; Collaboration Platform"));
   assert.ok(html.includes("<p><b>Practices:</b> Platform Engineering, "));
+});
+
+test("contact links are clickable and date ranges never wrap", () => {
+  assert.ok(html.includes('<a href="mailto:jajapabatao@gmail.com">jajapabatao@gmail.com</a>'));
+  assert.ok(html.includes('<a href="https://linkedin.com/in/benedict-pabatao">linkedin.com/in/benedict-pabatao</a>'));
+  assert.ok(html.includes('<a href="https://github.com/bpabatao">github.com/bpabatao</a>'));
+  assert.ok(html.includes('<a href="https://bpabatao.github.io">bpabatao.github.io</a>'));
+  assert.match(html, /\.meta \{ white-space: nowrap;/);
 });
 
 test("letter page size is honoured", () => {

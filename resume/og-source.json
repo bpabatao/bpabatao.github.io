@@ -4,8 +4,8 @@
     "kicker": "OPERATIONAL - 7 TENANTS · AWS · REMOTE (ITALY)",
     "title": "I build the platform other engineers",
     "accent": "ship on.",
-    "body": "Benedict Pabatao · Staff Software Engineer",
-    "foot": "8+ years in software   ·   11 tenant fleet, 7 live   ·   58/78% core API authorship, v1/v2   ·   93% control-plane authorship"
+    "body": "Benedict Pabatao · Staff Software Engineer, Platform & Product",
+    "foot": "8+ years in software   ·   11 tenant fleet, 7 live   ·   58/76% core API authorship, v1/v2   ·   93% control-plane authorship"
   },
   {
     "file": "og/core-api.png",
@@ -13,7 +13,7 @@
     "title": "Multi-Tenant Core API",
     "accent": "",
     "body": "The middleware every utility-customer portal in the fleet stands on - two generations of it, and the migration from one to the other.",
-    "foot": "58% of v1 · 78% of v2 · Fastify 5 · TypeScript (strict) · Zod · MongoDB"
+    "foot": "58% of v1 · 76% of v2 · Fastify 5 · TypeScript (strict) · Zod · MongoDB"
   },
   {
     "file": "og/control-plane.png",
@@ -60,7 +60,7 @@
     "kicker": "~/case/identity",
     "title": "Identity & Access",
     "accent": "",
-    "body": "Closing the paths that let someone reach an account that was not theirs - at the front door, in the browser, and in the console.",
+    "body": "Narrowing the paths that let someone reach an account that was not theirs - at the front door, in the browser, and in the console.",
     "foot": "Primary author · AWS Cognito · Oracle CCS · Terraform · IAM"
   }
 ]
