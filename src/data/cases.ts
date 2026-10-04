@@ -79,7 +79,7 @@ export const cases: CaseStudy[] = [
       {
         heading: "Architecture",
         paragraphs: [
-          "Nine Terraform stacks covering ~60 AWS resource types: Cognito user pools, ECS Fargate services, CloudFront distributions, WAFv2, Route 53, ElastiCache, KMS, Secrets Manager. Tenant environments are instantiated from templated modules - the same shape every time. The modules were imported from the fleet's earlier per-portal Terraform in March 2026 and consolidated; a colleague contributed the other 7% of commits - Entra ID SSO for the admin portal, the monitoring tab, and the production backend deploy path.",
+          "Nine Terraform stacks covering ~60 AWS resource types: Cognito user pools, ECS Fargate services, CloudFront distributions, WAFv2, Route 53, ElastiCache, KMS, Secrets Manager. Tenant environments are instantiated from templated modules - the same shape every time. The modules were imported from the fleet's earlier per-portal Terraform in March 2026 and consolidated; colleagues contributed the other 7% of commits - Entra ID SSO for the admin portal, the monitoring tab, and the production backend deploy path.",
           "Where it stands: the control-plane state owns one deployed tenant awaiting launch, the shared ALB and WAF, and the first migrating tenant's v2 stack, now running beside its v1. The live fleet still runs on its earlier per-portal Terraform and is being brought under the control-plane tenant by tenant, so the same environment is provisioned the same way whether it is the first or the last.",
           "On top sits a Fastify + React dashboard that runs Terraform plans and applies, detects drift against live state, enforces tag compliance, and attributes cost per client through the Cost Explorer API. Right-sizing, the shared ALB, and Fargate Spot all came out of that same cost data.",
           "Delivery is gated rather than trusted. Blocking Snyk scans were rolled across the portal pipelines - scan first, ahead of build and deploy - and deploys authenticate through keyless OIDC, piloted on one environment and then rolled through the test fleet and production, so the deploy path holds no long-lived AWS credentials.",
@@ -92,7 +92,7 @@ export const cases: CaseStudy[] = [
       "The fleet's AWS runs with per-client cost attribution and continuous drift detection.",
       "Portal pipelines block on a supply-chain scan before they build, and deploys carry no long-lived AWS credentials.",
       "Pipeline runs dropped from about ten minutes to six on the admin portal and twelve to seven on the core API, and the twenty-minute build hangs are gone.",
-      "Go-live readiness owned for 6 client launches - primary engineer on four, core contributor on two - environment validation, deployment, rollback planning, on the provisioning this platform consolidates.",
+      "Go-live readiness owned for client launches across the fleet - environment validation, deployment, rollback planning, on the provisioning this platform consolidates.",
     ],
   },
   {
@@ -110,7 +110,7 @@ export const cases: CaseStudy[] = [
       {
         heading: "Problem",
         paragraphs: [
-          "Five engineers, one fleet: triage, code review, and backlog grooming eat the week if you let them. The interesting question wasn't whether AI could draft a fix - it was how to wire it in so speed goes up while accountability stays exactly where it was.",
+          "A small team, one fleet: triage, code review, and backlog grooming eat the week if you let them. The interesting question wasn't whether AI could draft a fix - it was how to wire it in so speed goes up while accountability stays exactly where it was.",
         ],
       },
       {
@@ -123,7 +123,7 @@ export const cases: CaseStudy[] = [
         heading: "Architecture",
         paragraphs: [
           "Kept - review: a Claude-based PR reviewer runs in CI on the core API and backend repositories, ahead of the human pass. It was pulled from the five portal pipelines when it crashed on their builds; keeping it only where it worked was the decision.",
-          "Shelved - auto-remediation: an AWS Bedrock service (Claude via bedrock-runtime) built to triage production alerts, correlate them with recent changes, and open fix PRs. Never wired to a live alarm, it had zero invocations in the 30 days measured and 12 of its 13 remediation runs had failed; it was shelved in August 2026 on that evidence.",
+          "Shelved - auto-remediation: an AWS Bedrock service (Claude via bedrock-runtime) built to triage production alerts, correlate them with recent changes, and open fix PRs. 12 of its 13 remediation runs had failed; it was shelved in August 2026 on that evidence.",
           "Designed - delivery: an agentic pipeline from the ticket queue to GitHub - plan, branch, implement in an isolated worktree, open a draft PR - with three human approval gates between intent and merge. Dry-run on one ticket, not yet run live.",
           "Shipped - knowledge: the Bedrock knowledge-base agent over Oracle CCS documentation and data, curated-first with a flagged SQL fallback; it has its own case study.",
         ],
