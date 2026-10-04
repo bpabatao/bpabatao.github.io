@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import { LIMITS, bodyOf, buildLinkedinPack, experience, header } from "./render-linkedin.ts";
 
 import type { Job } from "../src/data/content.ts";
-import { currentJobs, earlierJobs, earlierProjects, flagships, secondaryProjects } from "../src/data/content.ts";
+import { profile, currentJobs, earlierJobs, earlierProjects, flagships, secondaryProjects } from "../src/data/content.ts";
 
 const pack = buildLinkedinPack();
 const names = Object.keys(pack).sort();
@@ -42,6 +42,7 @@ test("skills.txt lists Bedrock and WAF once", () => {
 test("a position description that overflows LinkedIn's cap keeps the top receipts and says what it dropped", () => {
   const fat: Job = {
     ...currentJobs[0],
+    linkedin: undefined,
     positions: [
       { title: "Staff Software Engineer", period: { start: "2025-09", end: null } },
       { title: "Senior Engineer", period: { start: "2023-05", end: "2025-08" } },
@@ -56,11 +57,11 @@ test("a position description that overflows LinkedIn's cap keeps the top receipt
   assert.ok(body.includes("## Senior Engineer"), "the earlier position header survives and is counted");
 });
 
-test("about uses the budget and skills lead with platform vocabulary", () => {
+test("about is the hand-written copy and skills lead with platform vocabulary", () => {
   const pack = buildLinkedinPack();
   const about = bodyOf(pack["about.txt"]);
-  assert.ok(about.length > 1000 && about.length <= LIMITS.about, `${about.length} chars`);
-  assert.ok(about.includes("Currently:"));
+  assert.ok(about.length > 800 && about.length <= LIMITS.about, `${about.length} chars`);
+  assert.equal(about, profile.linkedinAbout, "LinkedIn About is the hand-written copy, verbatim");
   for (const gone of ["How I work:", "Open to Staff / Lead platform and product engineering roles"]) assert.ok(!about.includes(gone), `${gone} is site-only`);
   const skills = bodyOf(pack["skills.txt"]).split("\n");
   assert.deepEqual(skills.slice(0, 3), ["AWS", "Terraform", "TypeScript"]);

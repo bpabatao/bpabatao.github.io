@@ -4,15 +4,16 @@ ESC Partners / HometownHUB · Contract
 Sep 2025 - Present
 New York, USA (Remote)
 
-- Most senior hands-on engineer on a small product team: set the standards the fleet adopts, own the team's AWS access as Terraform.
-- Primary author of both generations of the fleet's core API and the auth and Oracle CCS patterns they share - 58% of v1, serving six of the seven launched tenants; 76% of v2, serving the seventh since June 2026.
-- Primary author (93%) of the internal developer platform: a Terraform control-plane (9 stacks, ~60 AWS resource types) with a Fastify/React dashboard, onto which the fleet's provisioning is migrating tenant by tenant.
-- Authored 17 architecture decision records (13 accepted); turned standards into gates - pre-push and pipeline verify checks, a lint rule instead of trusting review - and approved 135 PRs from teammates in 2026.
-- Shipped the fix for an SSN identity-verification gap enabling account takeover - wrong-person matches on ~2.4% of one tenant's accounts - as attempt lockout plus ZIP disambiguation, flag-gated for per-tenant rollout.
-- Built a billing-authoritative duplicate-login reconciler, dry-run by default, with a daily read-only prod sweep on Fargate in Terraform; it fails closed on a stale login-usage feed, found frozen for about 2 months.
-- Remediated pentest findings in severity-labelled batches across 6 external test rounds - 60 findings triaged, false positives refuted - from IDOR and unauthenticated endpoints to URL-borne tokens and missing rate limits.
-- Primary platform engineer for the multi-tenant AWS fleet - production and test - running CI/CD, CloudWatch observability, FinOps tooling, a shared ALB and Fargate Spot on the test fleet.
-- 5 more at https://bpabatao.github.io
+I'm the most senior hands-on engineer on a small team running a multi-tenant platform for utility customer portals. I set the standards, write the decision records, and own our AWS access in Terraform.
+
+- Wrote most of the core API, both generations: 58% of v1, which still serves six of the seven live tenants, and 76% of v2, which has served the seventh since June 2026.
+- Wrote 93% of our internal developer platform, a Terraform control-plane (9 stacks, about 60 AWS resource types) with a small dashboard on top. The fleet is moving onto it one tenant at a time.
+- Authored 17 architecture decision records, 13 accepted. Moved standards out of code review and into pre-push and pipeline checks. Approved 135 of my teammates' PRs in 2026.
+- Fixed an account-takeover gap in SSN verification that matched the wrong person on about 2.4% of one tenant's accounts: attempt lockout plus a ZIP check, behind a flag so each tenant switches it on when ready.
+- Took the sessions view from 102 seconds to 2.4 with one composite index.
+- Ran remediation across 6 external pentest rounds: 60 findings triaged and false positives pushed back on, from IDOR to missing rate limits.
+- Built a duplicate-login reconciler that treats the billing system as the source of truth. It runs read-only every day and refuses to act on stale data, which is how it caught a feed that had been frozen for about two months.
+- Run the AWS side day to day: CI/CD, CloudWatch and cost tracking.
 
 ## Senior Full-Stack Engineer (Cloud)
 ESC Partners / HometownHUB · Contract
