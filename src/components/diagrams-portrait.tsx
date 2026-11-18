@@ -516,7 +516,7 @@ export function IdentityPortrait() {
         registration: lockout on repeat attempts,
       </Label>
       <Label x={160} y={282} size={8.5}>
-        zip disambiguation on the last-four space
+        zip disambiguation
       </Label>
     </svg>
   );

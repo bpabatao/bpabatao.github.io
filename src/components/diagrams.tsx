@@ -641,7 +641,7 @@ export function IdentityDiagram() {
       </Box>
 
       <Label x={320} y={244} size={9}>
-        registration: lockout on repeat attempts, zip disambiguation on the last-four space
+        registration: lockout on repeat attempts, zip disambiguation
       </Label>
     </svg>
   );
