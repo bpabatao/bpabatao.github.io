@@ -38,7 +38,7 @@ export const profile = {
   heroLine: "The Terraform that provisions a multi-tenant utility SaaS, the API it runs on, and the product customers use - built and operated end to end.",
   availabilityLine: `Open to Staff / Lead platform and product engineering roles · Remote from Italy (CET), async-first · EU work authorization · ${MARKETS}`,
   /* LinkedIn About, written in his own plainer voice; renderer uses it verbatim */
-  linkedinAbout: "I'm a Staff Software Engineer working remotely from Italy. For the last three years I've been the most senior hands-on engineer on a multi-tenant SaaS platform that runs the customer portals for 7 utility companies.\n\nI wrote most of what it runs on: 58% of the original API, 76% of its second generation, and 93% of the Terraform control-plane the fleet is moving onto. I also keep it running - pipelines, monitoring, incidents, security fixes and the AWS bill.\n\nThe part I care about most is the unglamorous work that lets a small team move fast without breaking things. Decisions get written down (I've authored 17 architecture decision records there). Standards live in the pipeline, not in review comments. Risky fixes ship behind a flag and get switched on one tenant at a time.\n\nI'm also one of three core engineers at Nmblr, an ISO 27001-certified strategy platform for biopharma, where I built the strategy clone engine, the archive/restore system and the observability layer.",
+  linkedinAbout: "I'm a Staff Software Engineer working remotely from Italy. For the last three years I've been the most senior hands-on engineer on a multi-tenant SaaS platform that runs the customer portals for 7 utility companies.\n\nI wrote most of what it runs on: 58% of the original API, 76% of its second generation, and 93% of the Terraform control-plane the fleet is moving onto. I also keep it running - pipelines, monitoring, incidents, security fixes and the AWS bill.\n\nThe part I care about most is the unglamorous work that lets a small team move fast without breaking things. Decisions get written down (I've authored 19 architecture decision records there). Standards live in the pipeline, not in review comments. Risky fixes ship behind a flag and get switched on one tenant at a time.\n\nI'm also one of three core engineers at Nmblr, an ISO 27001-certified strategy platform for biopharma, where I built the strategy clone engine, the archive/restore system and the observability layer.",
   markets: MARKETS,
   updated: "2026-11-18",
   atsKeywords: ["Staff", "REST", "Python", "IAM", "Terraform", "AWS", "TypeScript", "multi-tenant", "OAuth", "CI/CD", "React", "Node", "GraphQL", "IDOR"],
@@ -54,7 +54,7 @@ export const fleetSize = 11;
 
 export const metrics = [
   { value: `${fleetPortals.length} live`, label: `${fleetSize}-tenant fleet` },
-  { value: "17", label: "architecture decision records, 13 accepted" },
+  { value: "19", label: "architecture decision records, 15 accepted" },
   { value: "60", label: "pentest findings triaged, 6 rounds" },
   { value: "2", label: "core API generations, primary author" },
 ] as const;
@@ -110,7 +110,7 @@ export const currentJobs: Job[] = [
     linkedin: {
       intro: "I'm the most senior hands-on engineer on a small team running a multi-tenant platform for utility customer portals. I set the standards, write the decision records, and own our AWS access in Terraform.",
       bullets: [
-        "Authored 17 architecture decision records, 13 accepted. Moved standards out of code review and into pre-push and pipeline checks. Approved 135 of my teammates' PRs in 2026.",
+        "Authored 19 architecture decision records, 15 accepted. Moved standards out of code review and into pre-push and pipeline checks. Approved 135 of my teammates' PRs in 2026.",
         "Wrote most of the core API, both generations: 58% of v1, which still serves six of the seven live tenants, and 76% of v2, which has served the seventh since June 2026.",
         "Wrote 93% of our internal developer platform, a Terraform control-plane (9 stacks, about 60 AWS resource types) with a small dashboard on top. The fleet is moving onto it one tenant at a time.",
         "Found an account-takeover risk in registration identity verification and built the defence: attempt lockout plus a ZIP check.",
@@ -122,7 +122,7 @@ export const currentJobs: Job[] = [
     },
     receipts: [
       "Most senior hands-on engineer on a small product team: set the standards the fleet adopts, own the team's AWS access as Terraform.",
-      "Authored 17 architecture decision records (13 accepted); turned standards into gates - pre-push and pipeline verify checks, a lint rule instead of trusting review - and approved 135 PRs from teammates in 2026.",
+      "Authored 19 architecture decision records (15 accepted); turned standards into gates - pre-push and pipeline verify checks, a lint rule instead of trusting review - and approved 135 PRs from teammates in 2026.",
       "Primary author of both generations of the fleet's core API and the auth and Oracle CCS patterns they share - 58% of v1, serving six of the seven launched tenants; 76% of v2, serving the seventh since June 2026.",
       "Primary author (93%) of the internal developer platform: a Terraform control-plane (9 stacks, ~60 AWS resource types) with a Fastify/React dashboard, onto which the fleet's provisioning is migrating tenant by tenant.",
       "Found an account-takeover risk in registration identity verification and built the defence - attempt lockout plus ZIP-based disambiguation on the shared identity path.",
@@ -136,7 +136,7 @@ export const currentJobs: Job[] = [
       "Remediated a tenant's web portal and native app against WCAG 2.1 AA - 32 audit findings on web, 21 native-app violations - labelled controls, live regions, focus states, contrast and keyboard paths on shared components.",
     ],
     resumeReceipts: [
-      `**Set engineering standards as primary platform engineer** for ${fleetSize} tenants across production and test (${fleetPortals.length} live) - 13 accepted ADRs, shared provisioning modules, pre-push and pipeline gates.`,
+      `**Set engineering standards as primary platform engineer** for ${fleetSize} tenants across production and test (${fleetPortals.length} live) - 15 accepted ADRs, shared provisioning modules, pre-push and pipeline gates.`,
       `**Primary author of the fleet's core REST API, both generations** - 58% of v1, which serves 6 of the ${fleetPortals.length} live tenants, and 76% of v2 (Fastify, TypeScript, Zod, MongoDB on ECS Fargate), in production for the seventh since June 2026; own the shared auth and the Oracle CCS billing integration (OAuth 2.0).`,
       "**Primary author (93%) of the internal developer platform** - a Terraform control-plane (9 stacks, ~60 AWS resource types) with a Fastify/React dashboard that plans, applies and attributes cost; the fleet is moving onto it tenant by tenant.",
       "**Found an account-takeover risk in registration identity verification and built the defence** - attempt lockout plus ZIP-based disambiguation on the identity path the tenant portals share.",
