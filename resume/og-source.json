@@ -5,7 +5,7 @@
     "title": "I build the platform other engineers",
     "accent": "ship on.",
     "body": "Benedict Pabatao · Staff Software Engineer, Platform & Product",
-    "foot": "7 live 11-tenant fleet   ·   93% control-plane, primary author   ·   2 core API generations, primary author   ·   43x faster sessions view (102s to 2.4s)"
+    "foot": "7 live 11-tenant fleet   ·   17 architecture decision records, 13 accepted   ·   60 pentest findings triaged, 6 rounds   ·   2 core API generations, primary author"
   },
   {
     "file": "og/core-api.png",
