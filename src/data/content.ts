@@ -133,9 +133,6 @@ export const currentJobs: Job[] = [
       "Built a Fargate runner for the end-to-end suite - one task per tenant under an S3 lock, a nightly Step Functions run, and a Playwright Test port that replaces its legacy script after 3 matching shadow runs.",
       "Took the billing-to-payments login reconciler from a daily dry run to capped nightly merge schedules (5 customers a night) for 4 production tenants, each behind a recorded sign-off and a 3-safe-mornings arming bar.",
       "Built and pruned the team's AI tooling: kept the Claude PR reviewer in CI across the API and portal repos, shelved the Bedrock auto-fix on evidence, shipped the knowledge-base agent.",
-      "Built the runtime feature-flag platform: a database-backed reader replacing build-time env vars, SSE push with fail-open, wired into 6 v1 admin consoles and 4 portals, shipped flag-gated per tenant with parity tests.",
-      "Deployed CloudWatch Synthetics canaries across tenant portals, admin consoles and APIs - 17 created in June 2026, running every 10 minutes - with failure alarms and canary status on the platform dashboard.",
-      "Moved the observability store off a tenant's production database onto a shared cluster with IAM-role auth, no static password - zero-loss copy, go/no-go gate, soak - then dropped the 4.5M-doc original (11.75 GB).",
       "Remediated a tenant's web portal and native app against WCAG 2.1 AA - 32 audit findings on web, 21 native-app violations - labelled controls, live regions, focus states, contrast and keyboard paths on shared components.",
     ],
     resumeReceipts: [
