@@ -25,7 +25,7 @@ export const cases: CaseStudy[] = [
       {
         heading: "Problem",
         paragraphs: [
-          "A fleet of utility companies each needed a customer portal talking to Oracle Utilities CCS, the billing system of record. The v1 server I inherited when I joined in 2023 - an Express codebase that predates me, 58% mine by commit today - had authorization gaps and no clean way to vary behavior per tenant. Every new client meant forked code and re-audited security.",
+          "A fleet of utility companies each needed a customer portal talking to Oracle Utilities CCS, the billing system of record. The v1 server I inherited when I joined in 2023 - an Express codebase that predates me, 58% mine by commit today - had no clean way to vary behavior per tenant. Every new client meant forked code and re-audited security.",
           "The v2 rebuild, started in early 2026, had one mandate: a single API where a new tenant is configuration, not code, and where authorization failure is hard to ship by accident. Six of the seven launched tenants run production on v1 today; the seventh launched directly on v2 in June 2026. The first v1-to-v2 migration runs v2 beside its v1 service, certified, with the cutover held. The fleet moves one tenant at a time.",
         ],
       },
@@ -322,19 +322,19 @@ export const cases: CaseStudy[] = [
       {
         heading: "Architecture",
         paragraphs: [
-          "At the front door: an identity-verification gap enabled account takeover - the last-four plus street match resolved to the wrong person on roughly 2.4% of one tenant's accounts.",
+          "At the front door: registration identity verification could, in rare cases, resolve to the wrong person - an account-takeover risk on a path the portals share.",
           "In the browser: on most portals, email and password changes now go through the API instead of from the page. A build-time content-security policy injects environment-aware provider URLs, and the real client IP is forwarded to the provider so its adaptive threat protection sees the actual source rather than the load balancer, logging an error when that forwarding falls back.",
           "In the console: every destructive operation is permission-gated, and the recorded IAM roles cover a least-privilege developer policy, per-client task roles, and deploy roles named and documented rather than inherited.",
         ],
       },
     ],
     decisions: [
-      "The registration fix shipped as attempt lockout plus ZIP-based disambiguation, flag-gated so it is enabled tenant by tenant rather than switched on fleet-wide.",
+      "The registration defence is attempt lockout plus ZIP-based disambiguation, designed so a legitimate customer is not locked out.",
       "Route permissions moved from scattered checks to one declarative config behind a global guard.",
       "The team's IAM roles are recorded in Terraform as the source of truth.",
     ],
     outcomes: [
-      "The registration fix ships flag-gated per tenant - attempt lockout and ZIP disambiguation - enabled realm by realm rather than switched on fleet-wide.",
+      "The registration defence - attempt lockout and ZIP disambiguation - is built on the shared identity path.",
       "Email and password changes go through the API on most portals, and threat protection sees the true client IP.",
       "Permissions are declared in one place and enforced by a global guard, and the team's roles live in Terraform.",
     ],
