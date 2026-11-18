@@ -15,7 +15,7 @@ test("model uses ASCII separators, resume overlays and Present", () => {
   assert.match(m.experience[0].currentTitleDates ?? "", /^Sep 2025 - Present$/);
   assert.deepEqual(m.experience[0].previous, [{ title: "Senior Full-Stack Engineer (Cloud)", dates: "May 2023 - Aug 2025" }]);
   assert.equal(m.experience[0].bullets.length, 9);
-  assert.equal(m.experience[0].bullets[0].lead, "Primary author of the fleet's core REST API, both generations");
+  assert.equal(m.experience[0].bullets[0].lead, "Set engineering standards as primary platform engineer");
   assert.equal(m.experience[1].company, "Nmblr");
   assert.equal(m.experience[1].tagline, "Biopharma Strategy & Collaboration Platform");
   assert.equal(m.earlier.length, 5); // BaseMap folded into CoDev
