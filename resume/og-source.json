@@ -24,30 +24,6 @@
     "foot": "93% of commits · Terraform · Fastify 5 · React 18 · TypeScript"
   },
   {
-    "file": "og/ai-sdlc.png",
-    "kicker": "~/case/ai-sdlc",
-    "title": "AI-Augmented SDLC",
-    "accent": "",
-    "body": "Four AI tools built for a small team running a large fleet - one kept, one shelved on evidence, one designed and not yet run live, one shipped into its own case study - with humans keeping every approval gate.",
-    "foot": "Sole author · AWS Bedrock (Claude) · GitHub · Jira · Claude Code plugins"
-  },
-  {
-    "file": "og/nmblr.png",
-    "kicker": "~/case/nmblr",
-    "title": "Biopharma Strategy Platform",
-    "accent": "",
-    "body": "An ISO 27001-certified strategy SaaS for enterprise pharma - a schema-driven clone engine, dependency-aware archive/restore, and real-time collaboration.",
-    "foot": "1 of 3 core engineers · React · TypeScript · Node · GraphQL"
-  },
-  {
-    "file": "og/ccs-kb.png",
-    "kicker": "~/case/ccs-kb",
-    "title": "Billing-Data Knowledge Agent",
-    "accent": "",
-    "body": "A retrieval agent over Oracle Utilities CCS billing systems that answers from curated documentation first and only reaches for generated SQL behind a flag.",
-    "foot": "Sole author · AWS Bedrock · RetrieveAndGenerate · Fargate · S3"
-  },
-  {
     "file": "og/observability.png",
     "kicker": "~/case/observability",
     "title": "Observability & Accountability",
@@ -56,11 +32,11 @@
     "foot": "Sole author · MongoDB · CloudWatch · WAFv2 · Fastify"
   },
   {
-    "file": "og/identity.png",
-    "kicker": "~/case/identity",
-    "title": "Identity & Access",
+    "file": "og/nmblr.png",
+    "kicker": "~/case/nmblr",
+    "title": "Biopharma Strategy Platform",
     "accent": "",
-    "body": "Narrowing the paths that let someone reach an account that was not theirs - at the front door, in the browser, and in the console.",
-    "foot": "Primary author · AWS Cognito · Oracle CCS · Terraform · IAM"
+    "body": "An ISO 27001-certified strategy SaaS for enterprise pharma - a schema-driven clone engine, dependency-aware archive/restore, and real-time collaboration.",
+    "foot": "1 of 3 core engineers · React · TypeScript · Node · GraphQL"
   }
 ]

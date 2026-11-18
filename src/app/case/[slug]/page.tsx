@@ -4,18 +4,15 @@ import { notFound } from "next/navigation";
 import { cases } from "@/data/cases";
 import { ogImage } from "@/lib/og";
 import { profile } from "@/data/content";
-import { AiSdlcDiagram, CcsKbDiagram, ControlPlaneDiagram, CoreApiDiagram, IdentityDiagram, NmblrDiagram, ObservabilityDiagram, captions } from "@/components/diagrams";
+import { ControlPlaneDiagram, CoreApiDiagram, NmblrDiagram, ObservabilityDiagram, captions } from "@/components/diagrams";
 import { portraits } from "@/components/diagrams-portrait";
 import { Unbroken } from "@/components/Projects";
 
 const diagrams = {
   "core-api": CoreApiDiagram,
   "control-plane": ControlPlaneDiagram,
-  "ai-sdlc": AiSdlcDiagram,
   "nmblr": NmblrDiagram,
-  "ccs-kb": CcsKbDiagram,
   "observability": ObservabilityDiagram,
-  "identity": IdentityDiagram,
 } as const;
 
 const headingId = (heading: string) => `${heading.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "")}-heading`;

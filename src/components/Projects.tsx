@@ -67,28 +67,6 @@ export function Projects() {
           </div>
         </Reveal>
 
-        <Reveal className="mt-12 border-t border-line pt-8">
-          <h3 className="font-mono text-xs tracking-wide text-muted uppercase">More case studies</h3>
-          <div className="mt-5 grid gap-x-10 gap-y-5 sm:grid-cols-2">
-            {flagships
-              .filter((p) => !p.featured)
-              .map((p) => (
-                <Link
-                  key={p.slug}
-                  href={`/case/${p.slug}/`}
-                  data-goatcounter-click={`case-${p.slug}`}
-                  className="group block"
-                >
-                  <span className="font-medium text-ink transition-colors group-hover:text-accent">
-                    {p.title}
-                  </span>
-                  <span className="font-mono text-sm text-muted transition-colors group-hover:text-accent"> →</span>
-                  <span className="mt-1 block font-mono text-[11px] text-accent">{p.ownership}</span>
-                  <p className="mt-1 text-sm leading-relaxed text-muted">{p.outcome}</p>
-                </Link>
-              ))}
-          </div>
-        </Reveal>
 
 
       </div>

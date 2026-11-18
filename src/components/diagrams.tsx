@@ -75,11 +75,8 @@ const LAST_X = 42 + (TENANTS.length - 1) * 78;
 export const captions = {
   "core-api": `${TENANTS.length} tenant portals reach Oracle CCS over OAuth 2.0 through two generations of the core API: v1 serves six, v2 serves the seventh and runs beside v1 for the first migration, and a tenant moves when its parity checks pass`,
   "control-plane": `The provisioning dashboard drives the Terraform control-plane that new tenant environments are provisioned from; the ${TENANTS.length} live tenants (dashed) are migrating onto it`,
-  "ai-sdlc": "A Claude reviewer runs in CI ahead of human review and a knowledge-base agent answers from curated sources first; a ticket-to-merge pipeline with human approval gates is designed and dry-run only, and Bedrock auto-remediation was shelved in August 2026",
   "nmblr": "A DMMF-driven clone engine copies a finalised strategy, and a dependency registry cascades archive and restore across dependent entities",
-  "ccs-kb": "A question routes through the knowledge-base agent to a curated corpus first, with generated SQL against tenant-scoped CCS only as a flagged fallback",
   "observability": "Portals, the core API and outbound providers feed one capture layer that deep-redacts payloads on v2, raises anomaly alerts, and writes to retention tiers",
-  "identity": "On most portals the browser no longer changes email or password directly; those calls go through the API, which forwards the real client IP and gates registration on verification with lockout",
 } as const;
 
 /* Both generations side by side: the case is the migration between them, one tenant at a time. */
@@ -208,86 +205,6 @@ export function ControlPlaneDiagram() {
   );
 }
 
-export function Gate({ x, y, label = "gate" }: { x: number; y: number; label?: string }) {
-  return (
-    <g>
-      <rect
-        x={-11}
-        y={-11}
-        width={22}
-        height={22}
-        transform={`translate(${x} ${y}) rotate(45)`}
-        fill="var(--surface-2)"
-        stroke="var(--accent)"
-      />
-      <Label x={x} y={y + 28} size={8.5} color="var(--accent)">
-        {label}
-      </Label>
-    </g>
-  );
-}
-
-/* A retired or not-yet-live node: dashed outline, muted text. */
-export function GhostBox({ x, y, w, h, children }: { x: number; y: number; w: number; h: number; children?: ReactNode }) {
-  return (
-    <g>
-      <rect x={x} y={y} width={w} height={h} fill="none" stroke="var(--muted)" strokeDasharray="4 4" />
-      {children}
-    </g>
-  );
-}
-
-/* What runs is drawn first and animated; the designed lane is static, the shelved one a ghost. */
-export function AiSdlcDiagram() {
-  const node = (x: number, y: number, w: number, text: string, color = "var(--body)") => (
-    <Box x={x} y={y} w={w} h={28}>
-      <Label x={x + w / 2} y={y + 15} size={9.5} color={color}>
-        {text}
-      </Label>
-    </Box>
-  );
-  return (
-    <svg viewBox="0 0 640 296" role="img" aria-label={captions["ai-sdlc"]} className="block w-full">
-      <Label x={8} y={16} size={9} anchor="start" color="var(--ok)">
-        RUNS IN CI · kept
-      </Label>
-      <Line d="M128 46 H176 M316 46 H364" />
-      <Packet d="M8 46 H484" dur="4.5s" />
-      {node(8, 32, 120, "pull request")}
-      {node(176, 32, 140, "claude reviewer", "var(--ink)")}
-      {node(364, 32, 120, "human review")}
-
-      <Label x={8} y={88} size={9} anchor="start" color="var(--ok)">
-        SHIPPED · knowledge base
-      </Label>
-      <Line d="M128 118 H176 M316 118 H364" />
-      <Packet d="M8 118 H584" dur="5s" delay="1s" />
-      {node(8, 104, 120, "question")}
-      {node(176, 104, 140, "kb agent", "var(--ink)")}
-      {node(364, 104, 220, "curated first · sql behind a flag")}
-
-      <Label x={8} y={160} size={9} anchor="start">
-        DESIGNED · ticket to merge, dry-run only
-      </Label>
-      <Line d="M76 190 H124 M192 190 H240 M328 190 H369 M391 190 H432" />
-      {node(8, 176, 68, "ticket")}
-      {node(124, 176, 68, "plan")}
-      {node(240, 176, 88, "draft pr")}
-      <Gate x={380} y={190} label="human gates" />
-      {node(432, 176, 68, "merge")}
-
-      <Label x={8} y={244} size={9} anchor="start">
-        SHELVED · aug 2026
-      </Label>
-      <GhostBox x={8} y={256} w={340} h={28}>
-        <Label x={178} y={271} size={9.5}>
-          bedrock auto-remediation · 12 of 13 runs failed
-        </Label>
-      </GhostBox>
-    </svg>
-  );
-}
-
 export function NmblrDiagram() {
   return (
     <svg
@@ -384,105 +301,6 @@ export function NmblrDiagram() {
   );
 }
 
-export function CcsKbDiagram() {
-  return (
-    <svg
-      viewBox="0 0 640 288"
-      role="img"
-      aria-label={captions["ccs-kb"]}
-      className="block w-full"
-    >
-      <Line d="M150 34 H230" />
-      <Line d="M410 34 H490" />
-      <Line d="M320 52 V80" />
-      <Line d="M180 80 H460" />
-      <Line d="M180 80 V112" />
-      <Line d="M460 80 V112" />
-      <Line d="M180 168 V214" />
-      <Line d="M460 168 V214" />
-
-      <Packet d="M150 34 H230" dur="1.4s" />
-      <Packet d="M320 52 V80 H180 V112" dur="2.2s" delay="0.5s" />
-      <Packet d="M320 52 V80 H460 V112" dur="2.2s" delay="2.6s" />
-      <Packet d="M460 168 V214" dur="1.4s" delay="1.2s" />
-      <Packet d="M180 214 V168" dur="1.8s" delay="2.2s" />
-      <circle
-        r={3.5}
-        fill="var(--ok)"
-        className="packet"
-        style={{ offsetPath: 'path("M410 34 H490")', animationDuration: "1.4s", animationDelay: "1.6s" }}
-      />
-
-      <Box x={20} y={16} w={130} h={36}>
-        <Label x={85} y={34} size={10.5} color="var(--ink)" weight={600}>
-          question
-        </Label>
-      </Box>
-
-      <Box x={230} y={16} w={180} h={36}>
-        <Label x={320} y={34} size={11} color="var(--ink)" weight={600}>
-          kb agent
-        </Label>
-      </Box>
-
-      <Box x={490} y={16} w={130} h={36}>
-        <Label x={555} y={28} size={10.5} color="var(--ink)" weight={600}>
-          answer
-        </Label>
-        <Label x={555} y={42} size={8.5} color="var(--ok)">
-          cited + badged
-        </Label>
-      </Box>
-
-      <Box x={110} y={112} w={140} h={56}>
-        <Label x={180} y={130} size={10.5} color="var(--ink)" weight={600}>
-          curated corpus
-        </Label>
-        <Label x={180} y={146} size={8.5}>
-          retrieve + generate
-        </Label>
-        <Label x={180} y={158} size={8.5} color="var(--ok)">
-          default path
-        </Label>
-      </Box>
-
-      <Box x={390} y={112} w={140} h={56}>
-        <Label x={460} y={130} size={10.5} color="var(--ink)" weight={600}>
-          generated sql
-        </Label>
-        <Label x={460} y={146} size={8.5} color="var(--accent)">
-          flag + permission
-        </Label>
-        <Label x={460} y={158} size={8.5}>
-          kill-switch to curated-only
-        </Label>
-      </Box>
-
-      <Box x={110} y={214} w={140} h={44}>
-        <Label x={180} y={230} size={10} color="var(--ink)" weight={600}>
-          s3 corpus
-        </Label>
-        <Label x={180} y={245} size={8.5}>
-          scheduled refresh
-        </Label>
-      </Box>
-
-      <Box x={390} y={214} w={140} h={44}>
-        <Label x={460} y={230} size={10} color="var(--ink)" weight={600}>
-          oracle ccs
-        </Label>
-        <Label x={460} y={245} size={8.5}>
-          tenant-scoped
-        </Label>
-      </Box>
-
-      <Label x={320} y={196} size={9} color="var(--muted)">
-        never claims absence
-      </Label>
-    </svg>
-  );
-}
-
 export function ObservabilityDiagram() {
   const TIERS = [
     { x: 30, cx: 115, name: "admin writes", keep: "365 days" },
@@ -564,84 +382,6 @@ export function ObservabilityDiagram() {
 
       <Label x={320} y={262} size={9}>
         benign auth failures folded out, so the error rate means something
-      </Label>
-    </svg>
-  );
-}
-
-export function IdentityDiagram() {
-  return (
-    <svg
-      viewBox="0 60 640 200"
-      role="img"
-      aria-label={captions["identity"]}
-      className="block w-full"
-    >
-      {/* the path that was removed */}
-      <path d="M84 130 L470 96" fill="none" stroke="var(--line)" strokeWidth={1} strokeDasharray="4 4" />
-      <Line d="M144 152 H250" />
-      <Line d="M390 145 L470 96" />
-      <Line d="M390 160 L470 200" />
-
-      <Packet d="M144 152 H250" dur="1.6s" />
-      <Packet d="M390 145 L470 96" dur="1.6s" delay="0.8s" />
-      <Packet d="M390 160 L470 200" dur="1.6s" delay="1.4s" />
-
-      <g>
-        <line x1={271} y1={107} x2={283} y2={119} stroke="var(--muted)" strokeWidth={1.5} />
-        <line x1={283} y1={107} x2={271} y2={119} stroke="var(--muted)" strokeWidth={1.5} />
-      </g>
-      <Label x={150} y={110} size={8.5} anchor="start">
-        before
-      </Label>
-      <Label x={197} y={142} size={8.5} color="var(--accent)">
-        after
-      </Label>
-      <Label x={293} y={113} size={9} anchor="start">
-        no direct access
-      </Label>
-      <Label x={293} y={124} size={9} anchor="start">
-        on most portals
-      </Label>
-
-      <Box x={24} y={130} w={120} h={44}>
-        <Label x={84} y={146} size={10.5} color="var(--ink)" weight={600}>
-          browser
-        </Label>
-        <Label x={84} y={161} size={8.5}>
-          changes via the api
-        </Label>
-      </Box>
-
-      <Box x={250} y={130} w={140} h={44}>
-        <Label x={320} y={146} size={11} color="var(--ink)" weight={600}>
-          core api
-        </Label>
-        <Label x={320} y={161} size={8.5} color="var(--accent)">
-          permissions declared once
-        </Label>
-      </Box>
-
-      <Box x={470} y={74} w={146} h={44}>
-        <Label x={543} y={90} size={10.5} color="var(--ink)" weight={600}>
-          cognito
-        </Label>
-        <Label x={543} y={105} size={8.5}>
-          real client ip forwarded
-        </Label>
-      </Box>
-
-      <Box x={470} y={178} w={146} h={44}>
-        <Label x={543} y={194} size={10.5} color="var(--ink)" weight={600}>
-          oracle ccs
-        </Label>
-        <Label x={543} y={209} size={8.5}>
-          identity verification
-        </Label>
-      </Box>
-
-      <Label x={320} y={244} size={9}>
-        registration: lockout on repeat attempts, zip disambiguation
       </Label>
     </svg>
   );
