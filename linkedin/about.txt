@@ -1,5 +1,5 @@
 # updated 2026-11-18 - paste into LinkedIn > About
-I'm a Staff Software Engineer working remotely from Italy. For the last three years I've been the most senior hands-on engineer on a multi-tenant SaaS platform that runs the customer portals for 7 utility companies.
+I'm a Staff Software Engineer working remotely from Italy. For the last three years I've been the most senior hands-on engineer on a multi-tenant SaaS platform that runs the customer portals for 7 utility companies, with more than 350,000 registered customer accounts between them.
 
 I wrote most of what it runs on: 58% of the original API, 76% of its second generation, and 93% of the Terraform control-plane the fleet is moving onto. I also keep it running - pipelines, monitoring, incidents, security fixes and the AWS bill.
 
