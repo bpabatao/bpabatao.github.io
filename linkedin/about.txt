@@ -3,6 +3,6 @@ I'm a Staff Software Engineer working remotely from Italy. For the last three ye
 
 I wrote most of what it runs on: 58% of the original API, 76% of its second generation, and 93% of the Terraform control-plane the fleet is moving onto. I also keep it running - pipelines, monitoring, incidents, security fixes and the AWS bill.
 
-The part I care about most is the unglamorous work that lets a small team move fast without breaking things. Decisions get written down (I've authored 17 architecture decision records there). Standards live in the pipeline, not in review comments. Risky fixes ship behind a flag and get switched on one tenant at a time.
+The part I care about most is the unglamorous work that lets a small team move fast without breaking things. Decisions get written down (I've authored 19 architecture decision records there). Standards live in the pipeline, not in review comments. Risky fixes ship behind a flag and get switched on one tenant at a time.
 
 I'm also one of three core engineers at Nmblr, an ISO 27001-certified strategy platform for biopharma, where I built the strategy clone engine, the archive/restore system and the observability layer.
