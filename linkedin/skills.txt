@@ -16,7 +16,6 @@ EventBridge
 ElastiCache
 Secrets Manager
 WAFv2
-SES
 S3
 Route 53
 VPC
@@ -47,15 +46,12 @@ Invoice Cloud
 CloudWatch
 CloudWatch Synthetics
 Sentry
-Structured logging
 OWASP/IDOR
 OAuth 2.0
 JWT
 Pentest remediation
 React
 Next.js
-MUI
-Styled Components
 Tailwind
 React Native (Expo)
 Accessibility (WCAG 2.1 AA)
