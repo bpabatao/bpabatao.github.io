@@ -4,4 +4,4 @@ HCL Technologies · Full-time
 Feb 2020 - Apr 2022
 New York, USA (Remote)
 
-- Product features at scale on HCL DX; automated test suites; led code reviews.
+- Shipped product features on HCL Digital Experience (Kubernetes-based), built and maintained automated test suites (Selenium), and led code reviews and knowledge transfer.

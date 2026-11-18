@@ -30,7 +30,7 @@ export const profile = {
   summary:
     "I build multi-tenant SaaS platforms end to end - the Terraform that provisions them, the API they run on, and the product customers actually use. Staff Software Engineer - 8+ years in software, 5+ hands-on with AWS, and 3+ years building and operating cloud platforms: from AWS infrastructure-as-code to the shared backend services an entire product fleet runs on.",
   resumeSummary:
-    `Staff Software Engineer with 8+ years in software (5+ on AWS), the last 3+ on a multi-tenant SaaS platform behind ${fleetPortals.length} live utility client portals, where I am now the most senior hands-on engineer. I am the primary author of its core REST API, both generations, and of the Terraform control-plane the fleet is migrating onto. I also run it: CI/CD, observability, incident response, security remediation and cost.`,
+    `Staff Software Engineer with 8+ years in software (5+ on AWS), the last 3+ on a multi-tenant SaaS platform behind ${fleetPortals.length} live utility client portals - 350k+ registered customer accounts, about 11M requests a month - where I am now the most senior hands-on engineer. I am the primary author of its core REST API, both generations, and of the Terraform control-plane the fleet is migrating onto. I also run it: CI/CD, observability, incident response, security remediation and cost.`,
   location: "Italy (Remote, CET)",
   workAuthorization: "EU work authorization",
   availability: "Open to Staff / Lead platform and product engineering roles, and consulting.",
@@ -38,7 +38,7 @@ export const profile = {
   heroLine: "The Terraform that provisions a multi-tenant utility SaaS, the API it runs on, and the product customers use - built and operated end to end.",
   availabilityLine: `Open to Staff / Lead platform and product engineering roles · Remote from Italy (CET), async-first · EU work authorization · ${MARKETS}`,
   /* LinkedIn About, written in his own plainer voice; renderer uses it verbatim */
-  linkedinAbout: "I'm a Staff Software Engineer working remotely from Italy. For the last three years I've been the most senior hands-on engineer on a multi-tenant SaaS platform that runs the customer portals for 7 utility companies.\n\nI wrote most of what it runs on: 58% of the original API, 76% of its second generation, and 93% of the Terraform control-plane the fleet is moving onto. I also keep it running - pipelines, monitoring, incidents, security fixes and the AWS bill.\n\nThe part I care about most is the unglamorous work that lets a small team move fast without breaking things. Decisions get written down (I've authored 19 architecture decision records there). Standards live in the pipeline, not in review comments. Risky fixes ship behind a flag and get switched on one tenant at a time.\n\nI'm also one of three core engineers at Nmblr, an ISO 27001-certified strategy platform for biopharma, where I built the strategy clone engine, the archive/restore system and the observability layer.",
+  linkedinAbout: "I'm a Staff Software Engineer working remotely from Italy. For the last three years I've been the most senior hands-on engineer on a multi-tenant SaaS platform that runs the customer portals for 7 utility companies, with more than 350,000 registered customer accounts between them.\n\nI wrote most of what it runs on: 58% of the original API, 76% of its second generation, and 93% of the Terraform control-plane the fleet is moving onto. I also keep it running - pipelines, monitoring, incidents, security fixes and the AWS bill.\n\nThe part I care about most is the unglamorous work that lets a small team move fast without breaking things. Decisions get written down (I've authored 19 architecture decision records there). Standards live in the pipeline, not in review comments. Risky fixes ship behind a flag and get switched on one tenant at a time.\n\nI'm also one of three core engineers at Nmblr, an ISO 27001-certified strategy platform for biopharma, where I built the strategy clone engine, the archive/restore system and the observability layer.",
   markets: MARKETS,
   updated: "2026-11-18",
   atsKeywords: ["Staff", "REST", "Python", "IAM", "Terraform", "AWS", "TypeScript", "multi-tenant", "OAuth", "CI/CD", "React", "Node", "GraphQL", "IDOR"],
@@ -54,9 +54,9 @@ export const fleetSize = 11;
 
 export const metrics = [
   { value: `${fleetPortals.length} live`, label: `${fleetSize}-tenant fleet` },
+  { value: "350k+", label: "registered customer accounts" },
+  { value: "~11M", label: "requests a month in production" },
   { value: "19", label: "architecture decision records, 15 accepted" },
-  { value: "60", label: "pentest findings triaged, 6 rounds" },
-  { value: "2", label: "core API generations, primary author" },
 ] as const;
 
 /* Promotion history inside one employer, newest first. */
@@ -223,7 +223,7 @@ export const earlierJobs: Job[] = [
     period: { start: "2020-02", end: "2022-04" },
     location: "New York, USA (Remote)",
     employmentType: "Full-time",
-    receipts: ["Product features at scale on HCL DX; automated test suites; led code reviews."],
+    receipts: ["Shipped product features on HCL Digital Experience (Kubernetes-based), built and maintained automated test suites (Selenium), and led code reviews and knowledge transfer."],
     resumeReceipts: ["Shipped product features at scale on HCL Digital Experience (Kubernetes-based); built and maintained automated test suites (Selenium) for unit, integration, and acceptance testing; led code reviews and knowledge transfer."],
     stack: ["Kubernetes", "Selenium"],
   },
@@ -233,7 +233,7 @@ export const earlierJobs: Job[] = [
     role: "Full-Stack Developer",
     period: { start: "2019-03", end: "2020-02" },
     location: "Singapore",
-    receipts: ["Full-stack development, Singapore - deployed and ran the client applications on AWS Elastic Beanstalk."],
+    receipts: ["Full-stack web development for studio and commerce clients (React, Node.js), deployed and operated on AWS Elastic Beanstalk."],
     resumeReceipts: ["Full-stack web development for studio and commerce clients (React, Node.js), deployed and operated on AWS Elastic Beanstalk."],
     stack: ["React", "Node.js", "AWS Elastic Beanstalk"],
   },
@@ -243,7 +243,7 @@ export const earlierJobs: Job[] = [
     role: "Mobile Application Developer",
     period: { start: "2018-03", end: "2019-03" },
     location: "Philippines",
-    receipts: ["Mobile applications, Philippines."],
+    receipts: ["Built customer and rider mobile applications (Ionic)."],
     resumeReceipts: ["Built customer and rider mobile applications (Ionic)."],
     stack: ["Ionic"],
   },

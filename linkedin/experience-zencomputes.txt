@@ -4,4 +4,4 @@ Zencomputes
 Mar 2019 - Feb 2020
 Singapore
 
-- Full-stack development, Singapore - deployed and ran the client applications on AWS Elastic Beanstalk.
+- Full-stack web development for studio and commerce clients (React, Node.js), deployed and operated on AWS Elastic Beanstalk.

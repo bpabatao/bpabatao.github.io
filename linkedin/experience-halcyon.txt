@@ -4,4 +4,4 @@ Halcyon Digital Media Design
 Mar 2018 - Mar 2019
 Philippines
 
-- Mobile applications, Philippines.
+- Built customer and rider mobile applications (Ionic).
