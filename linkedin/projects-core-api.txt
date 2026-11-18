@@ -1,4 +1,4 @@
-# updated 2026-10-04 - paste into LinkedIn > Projects > Multi-Tenant Core API
+# updated 2026-11-18 - paste into LinkedIn > Projects > Multi-Tenant Core API
 Multi-Tenant Core API
 Associated with: ESC Partners / HometownHUB
 Two generations of the fleet's core API: per-tenant behavior composed from config, OAuth 2.0 into Oracle CCS, and authorization gates on every account endpoint.
