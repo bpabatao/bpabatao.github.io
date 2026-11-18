@@ -303,34 +303,6 @@ export const flagships: Flagship[] = [
     stack: ["Terraform", "Fastify", "React", "~60 AWS resource types"],
   },
   {
-    slug: "ai-sdlc",
-    jobId: "hth",
-    title: "AI-Augmented SDLC",
-    outcome:
-      "Four AI tools built: a Claude reviewer kept where it earned its place, a Bedrock auto-fix shelved on measured evidence, a knowledge-base agent shipped, and a ticket-to-PR pipeline designed with human gates and not yet run live.",
-    ownership: "SOLE AUTHOR",
-    stack: ["AWS Bedrock", "Claude", "GitHub", "Jira"],
-  },
-  {
-    slug: "nmblr",
-    jobId: "nmblr",
-    period: { start: "2024-03", end: null },
-    title: "Biopharma Strategy Platform",
-    outcome:
-      "A schema-driven clone engine and a dependency-aware archive/restore system on an ISO 27001-certified strategy SaaS in private beta with enterprise pharma.",
-    ownership: "1 OF 3 CORE ENGINEERS",
-    stack: ["React", "TypeScript", "GraphQL", "Prisma", "PostgreSQL"],
-  },
-  {
-    slug: "ccs-kb",
-    jobId: "hth",
-    title: "Billing-Data Knowledge Agent",
-    outcome:
-      "A Bedrock retrieval agent over utility billing systems: curated documentation first, generated SQL only behind a flag, and a prompt that refuses to claim something is absent.",
-    ownership: "SOLE AUTHOR",
-    stack: ["AWS Bedrock", "Fargate", "S3", "Oracle CCS", "TypeScript"],
-  },
-  {
     slug: "observability",
     jobId: "hth",
     featured: true,
@@ -341,13 +313,15 @@ export const flagships: Flagship[] = [
     stack: ["MongoDB", "CloudWatch", "WAFv2", "React"],
   },
   {
-    slug: "identity",
-    jobId: "hth",
-    title: "Identity & Access",
+    slug: "nmblr",
+    featured: true,
+    jobId: "nmblr",
+    period: { start: "2024-03", end: null },
+    title: "Biopharma Strategy Platform",
     outcome:
-      "Built account-takeover defences into registration, moved email and password changes off the browser on most portals, and put route permissions behind one declarative guard.",
-    ownership: "PRIMARY AUTHOR",
-    stack: ["AWS Cognito", "Oracle CCS", "Terraform", "IAM", "Fastify"],
+      "A schema-driven clone engine and a dependency-aware archive/restore system on an ISO 27001-certified strategy SaaS in private beta with enterprise pharma.",
+    ownership: "1 OF 3 CORE ENGINEERS",
+    stack: ["React", "TypeScript", "GraphQL", "Prisma", "PostgreSQL"],
   },
 ];
 
@@ -364,6 +338,21 @@ export interface SecondaryProject {
 }
 
 export const secondaryProjects: SecondaryProject[] = [
+  {
+    title: "AI-Augmented SDLC",
+    description: "Four AI tools built: a Claude reviewer kept where it earned its place, a Bedrock auto-fix shelved on measured evidence, a knowledge-base agent shipped, and a ticket-to-PR pipeline designed with human gates and not yet run live.",
+    jobId: "hth",
+  },
+  {
+    title: "Billing-Data Knowledge Agent",
+    description: "A Bedrock retrieval agent over utility billing systems: curated documentation first, generated SQL only behind a flag, and a prompt that refuses to claim something is absent.",
+    jobId: "hth",
+  },
+  {
+    title: "Identity & Access",
+    description: "Built account-takeover defences into registration, moved email and password changes off the browser on most portals, and put route permissions behind one declarative guard.",
+    jobId: "hth",
+  },
   {
     title: "Campaign Manager",
     description: "Multi-channel notifications - Twilio SMS + IVR voice and AWS SES email with CSV lists and templated messaging.",

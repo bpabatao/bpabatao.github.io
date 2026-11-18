@@ -109,148 +109,6 @@ export const cases: CaseStudy[] = [
     ],
   },
   {
-    slug: "ai-sdlc",
-    title: "AI-Augmented SDLC",
-    subtitle:
-      "Four AI tools built for a small team running a large fleet - one kept, one shelved on evidence, one designed and not yet run live, one shipped into its own case study - with humans keeping every approval gate.",
-    meta: {
-      role: "Sole author",
-      period: "2026 - present",
-      ownership: "Sole author",
-      stack: ["AWS Bedrock (Claude)", "GitHub", "Jira", "Claude Code plugins", "Python"],
-    },
-    sections: [
-      {
-        heading: "Problem",
-        paragraphs: [
-          "A small team, one fleet: triage, code review, and backlog grooming eat the week if you let them. The interesting question wasn't whether AI could draft a fix - it was how to wire it in so speed goes up while accountability stays exactly where it was.",
-        ],
-      },
-      {
-        heading: "Approach",
-        paragraphs: [
-          "Every pipeline is built around human gates. State lives in labels on the ticket and PR, so any step is inspectable and reversible.",
-        ],
-      },
-      {
-        heading: "Architecture",
-        paragraphs: [
-          "Kept - review: a Claude-based PR reviewer runs in CI ahead of the human pass. It was pulled from the portal pipelines when it crashed, then restored once guarded; it now runs across the API and portal repos.",
-          "Shelved - auto-remediation: an AWS Bedrock service (Claude via bedrock-runtime) built to triage production alerts, correlate them with recent changes, and open fix PRs.",
-          "Designed - delivery: an agentic pipeline from the ticket queue to GitHub - plan, branch, implement in an isolated worktree, open a draft PR - with human approval gates between intent and merge. Dry-run on one ticket, not yet run live.",
-          "Shipped - knowledge: the Bedrock knowledge-base agent over the billing system's (Oracle Utilities CCS) documentation and data, curated-first with a flagged SQL fallback; it has its own case study.",
-        ],
-      },
-      {
-        heading: "When it went wrong",
-        paragraphs: [
-          "I shipped three of the tooling's public Lambda Function URLs - the auto-fix, the ECS rollback and the Bitbucket bridge - with a fallback bearer token hardcoded in the source, and never overrode it live. In August 2026 I found what that meant: the URL plus a value anyone with repository access could read was enough to invoke them.",
-          "I gave each function its own secret, removed the fallback, rotated the credentials and wrote the change up. It made shelving the auto-fix a few days later an easy call - a tool that is not earning its keep should not also be an attack surface.",
-        ],
-      },
-    ],
-    decisions: [
-      "Agents propose; people approve: nothing merges without a named human owning the decision.",
-      "Each tool has to earn its keep, and one that does not is shelved rather than invested in further.",
-      "The auto-remediation service was shelved in August 2026 because 12 of its 13 remediation runs had failed.",
-    ],
-    outcomes: [
-      "The reviewer runs in CI across the API and portal repos ahead of the human pass; the knowledge-base agent answers Oracle CCS questions from curated documentation and data.",
-      "The auto-fix was shelved on measured evidence rather than kept alive because it was clever - the decision to stop is the result.",
-      "Every merge still has a named human approver; the state machine makes each step auditable.",
-    ],
-  },
-  {
-    slug: "nmblr",
-    title: "Biopharma Strategy Platform",
-    subtitle:
-      "An ISO 27001-certified strategy SaaS for enterprise pharma - a schema-driven clone engine, dependency-aware archive/restore, and real-time collaboration.",
-    meta: {
-      role: "Originating engineer on two subsystems",
-      period: "2024 - present",
-      ownership: "1 of 3 core engineers",
-      stack: ["React", "TypeScript", "Node", "GraphQL", "Prisma", "PostgreSQL", "AWS"],
-    },
-    sections: [
-      {
-        heading: "Problem",
-        paragraphs: [
-          "Brand strategy in pharma is not one document. It is a graph of artefacts that teams finalise, reuse, and revise for years, and the two operations that matter most are the two that are easiest to get wrong: starting a new strategy from a finished one, and removing something other artefacts quietly depend on.",
-          "Copying by hand drifts the moment the schema moves. Deleting without knowing the dependents loses work that a regulated client cannot lose.",
-        ],
-      },
-      {
-        heading: "Constraints",
-        paragraphs: [
-          "The platform is ISO 27001 certified and in private beta with enterprise pharma clients, so destructive actions have to be reversible and admin and user actions have to be attributable. Three core engineers cover the whole product, which rules out subsystems that need a specialist to operate.",
-        ],
-      },
-      {
-        heading: "Architecture",
-        paragraphs: [
-          "Clone engine: driven by the schema's metadata, a new field or relation is cloned because the schema says so, not because someone remembered to add it.",
-          "Dependency subsystem: a registry describes which entities depend on which, exposed through its own GraphQL contract and resolver and rendered by a registry-driven modal. Finalised entities with dependents warn before an archive or a delete.",
-          "Across the product: real-time collaboration over GraphQL subscriptions, OpenAI-backed generation features, and platform security work on OWASP/IDOR exposure and JWT sessions.",
-        ],
-      },
-    ],
-    decisions: [
-      "The clone walks Prisma's DMMF, the generated data-model metadata, instead of hand-written per-model code.",
-      "The archive cascades across the dependents so a restore brings the whole set back together.",
-    ],
-    outcomes: [
-      "Two subsystems originated from scratch and in the product: the clone engine and the Edge archive/restore isolation system.",
-      "Destructive actions on finalised work are warned about first, then cascade and reverse as a set instead of one entity at a time.",
-      "Cloning survives schema change: the model metadata drives the copy, so new fields travel without new code.",
-    ],
-  },
-  {
-    slug: "ccs-kb",
-    title: "Billing-Data Knowledge Agent",
-    subtitle:
-      "A retrieval agent over Oracle Utilities CCS billing systems that answers from curated documentation first and only reaches for generated SQL behind a flag.",
-    meta: {
-      role: "Sole author",
-      period: "2026",
-      ownership: "Sole author",
-      stack: ["AWS Bedrock", "RetrieveAndGenerate", "Fargate", "S3", "Oracle CCS", "TypeScript"],
-    },
-    sections: [
-      {
-        heading: "Problem",
-        paragraphs: [
-          "Answering a question about a utility account meant knowing which of several tenant systems held the answer, which schema it used, and which of its account types applied. That knowledge lived with a handful of people, and the questions arrived constantly.",
-          "A language model over the data is the obvious idea and the dangerous one. On billing records the failure mode is not a bad sentence, it is a confident wrong number, or a claim that something does not exist when the query simply missed it.",
-        ],
-      },
-      {
-        heading: "Constraints",
-        paragraphs: [
-          "The corpus describes real customers, including person identifiers such as SSN fields, so the schema had to be modelled explicitly rather than left for the model to infer. Tenants must never see each other's data, and an answer that cannot be grounded has to say so instead of guessing.",
-        ],
-      },
-      {
-        heading: "Architecture",
-        paragraphs: [
-          "Curated first. Questions route through Bedrock's RetrieveAndGenerate over a curated corpus - an account-type catalog covering collective, secondary, usage, registration and service states - and answers cite the source they came from, with a badge marking whether that source is authoritative for the environment being asked about.",
-          "The SQL path sits behind an environment kill-switch and a separate grantable permission - flip the switch and the agent runs curated-only - and a source selector lets the asker choose documentation, live data, or automatic.",
-          "The guardrails are the product. The prompt is guarded against inventing terms, confusing environments, or mislabelling a count column.",
-          "The corpus does not go stale: a scheduled Fargate task refreshes it, with a least-privilege task role for the bucket, the knowledge base and the secrets it reads.",
-        ],
-      },
-    ],
-    decisions: [
-      "Generated SQL is the fallback, not the default.",
-      "The prompt forbids claiming absence - the model may not say a thing does not exist merely because a lookup returned nothing.",
-      "Tenant routing is explicit, scoped per tenant family, so a question can only reach the data it is entitled to.",
-    ],
-    outcomes: [
-      "Answers arrive with citations and an authoritative-source badge, so a reader can tell grounded fact from generated text.",
-      "The generated-SQL path sits behind an environment kill-switch and its own grantable permission, so any deployment can run curated-only with one flag.",
-      "The agent refuses to claim something is absent - the failure mode that quietly misleads is the one it is built to avoid.",
-    ],
-  },
-  {
     slug: "observability",
     title: "Observability & Accountability",
     subtitle:
@@ -296,47 +154,47 @@ export const cases: CaseStudy[] = [
     ],
   },
   {
-    slug: "identity",
-    title: "Identity & Access",
+    slug: "nmblr",
+    title: "Biopharma Strategy Platform",
     subtitle:
-      "Narrowing the paths that let someone reach an account that was not theirs - at the front door, in the browser, and in the console.",
+      "An ISO 27001-certified strategy SaaS for enterprise pharma - a schema-driven clone engine, dependency-aware archive/restore, and real-time collaboration.",
     meta: {
-      role: "Primary author",
-      period: "2026",
-      ownership: "Primary author",
-      stack: ["AWS Cognito", "Oracle CCS", "Terraform", "IAM", "Fastify", "TypeScript"],
+      role: "Originating engineer on two subsystems",
+      period: "2024 - present",
+      ownership: "1 of 3 core engineers",
+      stack: ["React", "TypeScript", "Node", "GraphQL", "Prisma", "PostgreSQL", "AWS"],
     },
     sections: [
       {
         heading: "Problem",
         paragraphs: [
-          "Three separate ways existed to end up somewhere you should not be. Identity verification at registration matched on data thin enough to hit the wrong person. The browser held credentials to talk to the identity provider directly. And engineer and pipeline access to AWS had grown by accretion rather than design.",
+          "Brand strategy in pharma is not one document. It is a graph of artefacts that teams finalise, reuse, and revise for years, and the two operations that matter most are the two that are easiest to get wrong: starting a new strategy from a finished one, and removing something other artefacts quietly depend on.",
+          "Copying by hand drifts the moment the schema moves. Deleting without knowing the dependents loses work that a regulated client cannot lose.",
         ],
       },
       {
         heading: "Constraints",
         paragraphs: [
-          "Real utility customers register through this flow, so a fix that locks out legitimate people is not a fix. The portals are multi-tenant and the identity plumbing is shared, so a backend change reaches every tenant.",
+          "The platform is ISO 27001 certified and in private beta with enterprise pharma clients, so destructive actions have to be reversible and admin and user actions have to be attributable. Three core engineers cover the whole product, which rules out subsystems that need a specialist to operate.",
         ],
       },
       {
         heading: "Architecture",
         paragraphs: [
-          "At the front door: registration identity verification could, in rare cases, resolve to the wrong person - an account-takeover risk on a path the portals share.",
-          "In the browser: on most portals, email and password changes now go through the API instead of from the page. A build-time content-security policy injects environment-aware provider URLs, and the real client IP is forwarded to the provider so its adaptive threat protection sees the actual source rather than the load balancer, logging an error when that forwarding falls back.",
-          "In the console: every destructive operation is permission-gated, and the recorded IAM roles cover a least-privilege developer policy, per-client task roles, and deploy roles named and documented rather than inherited.",
+          "Clone engine: driven by the schema's metadata, a new field or relation is cloned because the schema says so, not because someone remembered to add it.",
+          "Dependency subsystem: a registry describes which entities depend on which, exposed through its own GraphQL contract and resolver and rendered by a registry-driven modal. Finalised entities with dependents warn before an archive or a delete.",
+          "Across the product: real-time collaboration over GraphQL subscriptions, OpenAI-backed generation features, and platform security work on OWASP/IDOR exposure and JWT sessions.",
         ],
       },
     ],
     decisions: [
-      "The registration defence is attempt lockout plus ZIP-based disambiguation, designed so a legitimate customer is not locked out.",
-      "Route permissions moved from scattered checks to one declarative config behind a global guard.",
-      "The team's IAM roles are recorded in Terraform as the source of truth.",
+      "The clone walks Prisma's DMMF, the generated data-model metadata, instead of hand-written per-model code.",
+      "The archive cascades across the dependents so a restore brings the whole set back together.",
     ],
     outcomes: [
-      "The registration defence - attempt lockout and ZIP disambiguation - is built on the shared identity path.",
-      "Email and password changes go through the API on most portals, and threat protection sees the true client IP.",
-      "Permissions are declared in one place and enforced by a global guard, and the team's roles live in Terraform.",
+      "Two subsystems originated from scratch and in the product: the clone engine and the Edge archive/restore isolation system.",
+      "Destructive actions on finalised work are warned about first, then cascade and reverse as a set instead of one entity at a time.",
+      "Cloning survives schema change: the model metadata drives the copy, so new fields travel without new code.",
     ],
   },
 ];
