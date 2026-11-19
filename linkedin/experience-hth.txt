@@ -1,4 +1,4 @@
-# updated 2026-11-18 - paste into LinkedIn > Experience > ESC Partners / HometownHUB (one block per position)
+# updated 2026-11-19 - paste into LinkedIn > Experience > ESC Partners / HometownHUB (one block per position)
 ## Staff Software Engineer, Platform & Product
 ESC Partners / HometownHUB · Contract
 Sep 2025 - Present
@@ -12,7 +12,7 @@ I'm the most senior hands-on engineer on a small team running a multi-tenant pla
 - Found an account-takeover risk in registration identity verification and built the defence: attempt lockout plus a ZIP check.
 - Took the sessions view from 102 seconds to 2.4 with one composite index.
 - Ran remediation across 6 pentest rounds: 60 findings triaged and false positives pushed back on.
-- Built a duplicate-login reconciler that treats the billing system as the source of truth. It runs read-only every day and refuses to act on stale data, which is how it caught a feed that had been frozen for about two months.
+- Built a duplicate-login reconciler for one tenant that treats the billing system as the source of truth. It runs read-only every day and refuses to act on stale data, which is how it caught a feed that had been frozen for about two months.
 - Run the AWS side day to day: CI/CD, CloudWatch and cost tracking.
 
 ## Senior Full-Stack Engineer (Cloud)

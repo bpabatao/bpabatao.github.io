@@ -28,9 +28,9 @@ export const profile = {
     "Staff Software Engineer, Platform & Product | AWS · Terraform · TypeScript",
   thesis: { lead: "I build the platform", tail: "other engineers", accent: "ship on." },
   summary:
-    "I build multi-tenant SaaS platforms end to end - the Terraform that provisions them, the API they run on, and the product customers actually use. Staff Software Engineer - 8+ years in software, 5+ hands-on with AWS, and 3+ years building and operating cloud platforms: from AWS infrastructure-as-code to the shared backend services an entire product fleet runs on.",
+    "I build multi-tenant SaaS platforms end to end - the Terraform that provisions them, the API they run on, and the product customers use. I have 8+ years in software, 5+ of them hands-on with AWS, and 3+ building and operating cloud platforms, from AWS infrastructure-as-code to the shared backend services a product fleet runs on.",
   resumeSummary:
-    `Staff Software Engineer with 8+ years in software (5+ on AWS), the last 3+ on a multi-tenant SaaS platform behind ${fleetPortals.length} live utility client portals - 350k+ registered customer accounts, about 11M requests a month - where I am now the most senior hands-on engineer. I am the primary author of its core REST API, both generations, and of the Terraform control-plane the fleet is migrating onto. I also run it: CI/CD, observability, incident response, security remediation and cost.`,
+    `Staff Software Engineer with 8+ years in software (5+ on AWS), the last 3+ on a multi-tenant SaaS platform behind ${fleetPortals.length} live utility client portals - 350k+ registered customer accounts - where I am now the most senior hands-on engineer. I am the primary author of its core REST API, both generations, and of the Terraform control-plane the fleet is migrating onto. I also run it: CI/CD, observability, incident response, security remediation and cost.`,
   location: "Italy (Remote, CET)",
   workAuthorization: "EU work authorization",
   availability: "Open to Staff / Lead platform and product engineering roles, and consulting.",
@@ -40,7 +40,7 @@ export const profile = {
   /* LinkedIn About, written in his own plainer voice; renderer uses it verbatim */
   linkedinAbout: "I'm a Staff Software Engineer working remotely from Italy. For the last three years I've been the most senior hands-on engineer on a multi-tenant SaaS platform that runs the customer portals for 7 utility companies, with more than 350,000 registered customer accounts between them.\n\nI wrote most of what it runs on: 58% of the original API, 76% of its second generation, and 93% of the Terraform control-plane the fleet is moving onto. I also keep it running - pipelines, monitoring, incidents, security fixes and the AWS bill.\n\nThe part I care about most is the unglamorous work that lets a small team move fast without breaking things. Decisions get written down (I've authored 19 architecture decision records there). Standards live in the pipeline, not in review comments. Risky fixes ship behind a flag and get switched on one tenant at a time.\n\nI'm also one of three core engineers at Nmblr, an ISO 27001-certified strategy platform for biopharma, where I built the strategy clone engine, the archive/restore system and the observability layer.",
   markets: MARKETS,
-  updated: "2026-11-18",
+  updated: "2026-11-19",
   atsKeywords: ["Staff", "REST", "Python", "IAM", "Terraform", "AWS", "TypeScript", "multi-tenant", "OAuth", "CI/CD", "React", "Node", "GraphQL", "IDOR"],
   email: "jajapabatao@gmail.com",
   github: "https://github.com/bpabatao",
@@ -55,7 +55,7 @@ export const fleetSize = 11;
 export const metrics = [
   { value: `${fleetPortals.length} live`, label: `${fleetSize}-tenant fleet` },
   { value: "350k+", label: "registered customer accounts" },
-  { value: "~11M", label: "requests a month in production" },
+  { value: "43x", label: "faster sessions view - 102s to 2.4s, one index" },
   { value: "19", label: "architecture decision records, 15 accepted" },
 ] as const;
 
@@ -116,7 +116,7 @@ export const currentJobs: Job[] = [
         "Found an account-takeover risk in registration identity verification and built the defence: attempt lockout plus a ZIP check.",
         "Took the sessions view from 102 seconds to 2.4 with one composite index.",
         "Ran remediation across 6 pentest rounds: 60 findings triaged and false positives pushed back on.",
-        "Built a duplicate-login reconciler that treats the billing system as the source of truth. It runs read-only every day and refuses to act on stale data, which is how it caught a feed that had been frozen for about two months.",
+        "Built a duplicate-login reconciler for one tenant that treats the billing system as the source of truth. It runs read-only every day and refuses to act on stale data, which is how it caught a feed that had been frozen for about two months.",
         "Run the AWS side day to day: CI/CD, CloudWatch and cost tracking.",
       ],
     },
@@ -126,12 +126,12 @@ export const currentJobs: Job[] = [
       "Primary author of both generations of the fleet's core API and the auth and Oracle CCS patterns they share - 58% of v1, serving six of the seven launched tenants; 76% of v2, serving the seventh since June 2026.",
       "Primary author (93%) of the internal developer platform: a Terraform control-plane (9 stacks, ~60 AWS resource types) with a Fastify/React dashboard, onto which the fleet's provisioning is migrating tenant by tenant.",
       "Found an account-takeover risk in registration identity verification and built the defence - attempt lockout plus ZIP-based disambiguation on the shared identity path.",
-      "Built a billing-authoritative duplicate-login reconciler, dry-run by default, with a daily read-only prod sweep on Fargate in Terraform; it fails closed on a stale login-usage feed, found frozen for about 2 months.",
+      "Built a billing-authoritative duplicate-login reconciler for one tenant - a daily read-only prod sweep on Fargate in Terraform that fails closed on a stale login-usage feed, found frozen for about 2 months.",
       "Remediated pentest findings in severity-labelled batches across 6 test rounds - 60 findings triaged, false positives refuted.",
       "Primary platform engineer for the multi-tenant AWS fleet - production and test - running CI/CD, CloudWatch observability, FinOps tooling, a shared ALB and Fargate Spot on the test fleet.",
       "Built a capability catalog (95 entries) and deployment registry in place of per-build flag lists - generated consumer files, a PROD-tier promotion diff, and boot refusal on an unknown deployment.",
       "Built a Fargate runner for the end-to-end suite - one task per tenant under an S3 lock, a nightly Step Functions run, and a Playwright Test port that replaces its legacy script after 3 matching shadow runs.",
-      "Took the billing-to-payments login reconciler from a daily dry run to capped nightly merge schedules (5 customers a night) for 4 production tenants, each behind a recorded sign-off and a 3-safe-mornings arming bar.",
+      "Took the billing-to-payments reconciler from a daily dry run to nightly apply-mode schedules - capped repairs on 5 production tenants and capped login merges (5 a night) on 4, each merge behind a recorded sign-off.",
       "Built and pruned the team's AI tooling: kept the Claude PR reviewer in CI across the API and portal repos, shelved the Bedrock auto-fix on evidence, shipped the knowledge-base agent.",
       "Remediated a tenant's web portal and native app against WCAG 2.1 AA - 32 audit findings on web, 21 native-app violations - labelled controls, live regions, focus states, contrast and keyboard paths on shared components.",
     ],
@@ -142,7 +142,7 @@ export const currentJobs: Job[] = [
       "**Found an account-takeover risk in registration identity verification and built the defence** - attempt lockout plus ZIP-based disambiguation on the identity path the tenant portals share.",
       "**Built the audit and observability layer as sole author** - outbound provider-call capture, tiered audit retention, an account-to-IP anomaly view and a takeover alert; one composite index took the sessions view from 102s to 2.4s.",
       "**Cut CI from ~12 to ~7 min on the core API and ~10 to ~6 min on the admin portal** (esbuild, cache-mounted installs, fail-fast) while adding blocking Snyk gates (newer portals, both APIs) and keyless OIDC deploys on 4 repos.",
-      "**Ran remediation across 6 pentest rounds** - triaged 60 findings into severity-labelled fix batches across authorization, authentication and rate limiting, and refuted the false positives.",
+      "**Ran remediation across 6 pentest rounds** - triaged 60 findings into severity-labelled fix batches and refuted the false positives.",
       "**Built, measured and pruned the team's AI tooling** - kept a Claude PR reviewer in CI across the API and portal repos, shipped a Bedrock knowledge-base agent, and shelved a Bedrock auto-remediation service after 12 of 13 runs failed.",
       "**Own the billing-to-payments reconciler** (Oracle CCS vs Invoice Cloud) - it detects drift by default, repairs only when guarded, and replaced a batch sync I switched off.",
     ],
@@ -175,11 +175,11 @@ export const currentJobs: Job[] = [
       "Serialized rating upserts behind a Postgres advisory lock, killed a duplicate-groups race in a sync resolver, blocked re-entrant AI generation calls, and added double-press guards plus stale-poll reconciliation.",
       "Built per-strategy, per-user response controls for the AI assistant that only an internal strategy lead can set (clamped on read, refused on write otherwise), plus help-centre retrieval.",
       "Built the registry-driven data-dependency subsystem - GraphQL contract, resolver, modal - that warns before archiving or deleting finalised entities with dependents, then cascades the archive/restore across them.",
-      "Hardened the AI endpoints - a per-user LLM rate limit, no prompt text in logs, and raw provider errors (which can quote an API key fragment) no longer returned to the browser.",
+      "Hardened the AI endpoints - a per-user LLM rate limit, no prompt text in logs, and a generic message to the browser in place of provider errors.",
       "Contributed to real-time collaboration (GraphQL subscriptions), OpenAI-backed generation features, and platform security (OWASP/IDOR, JWT sessions).",
       "Built the admin usage dashboard - usage events written in the same transaction as the user action, a frozen baseline for prior history, 5-minute activity blocks with a 30-minute session gap, and an AI request record.",
       "Built a static help centre from the Notion knowledge base to replace the third-party one - a cutover check on the 45 old paths, 13 slug redirects, and release-time auto-fix of flagged articles.",
-      "Added ownership checks on image and key-insight writes (a row's own S3 key, ids within the insight's strategy), scoped brand rename to admins and the brand owner, and 7-day invite expiry with token-only signup.",
+      "Added ownership checks on image and key-insight writes, scoped brand rename to admins and the brand owner, and set invites to expire after 7 days with token-only signup.",
     ],
     resumeReceipts: [
       "**One of 3 core engineers, reporting to the CEO,** on an ISO 27001-certified biopharma strategy SaaS in private beta with enterprise pharma clients (React, TypeScript, Node, GraphQL, Prisma, AWS Elastic Beanstalk).",
@@ -288,7 +288,7 @@ export const flagships: Flagship[] = [
     jobId: "hth",
     title: "Multi-Tenant Core API",
     outcome:
-      "Two generations of the fleet's core API: per-tenant behavior composed from config, OAuth 2.0 into Oracle CCS, and authorization gates on every account endpoint.",
+      "Two generations of the fleet's core API: per-tenant behavior composed from config, OAuth 2.0 into Oracle CCS, and route-level ownership checks on account-scoped endpoints.",
     ownership: "PRIMARY AUTHOR · 58% V1 / 76% V2",
     stack: ["Fastify 5", "TypeScript", "Zod", "MongoDB", "ECS Fargate"],
   },
@@ -308,7 +308,7 @@ export const flagships: Flagship[] = [
     featured: true,
     title: "Observability & Accountability",
     outcome:
-      "Universal provider-call capture, deep-redacted on v2, tiered audit retention, account-to-IP anomaly views, and a takeover alert - so a small team can answer who did what.",
+      "Provider-call capture (deep-redacted on v2), tiered audit retention, account-to-IP anomaly views and an email-change alert, so a small team can answer who did what.",
     ownership: "SOLE AUTHOR",
     stack: ["MongoDB", "CloudWatch", "WAFv2", "React"],
   },
@@ -360,17 +360,12 @@ export const secondaryProjects: SecondaryProject[] = [
   },
   {
     title: "CCS ↔ Invoice Cloud Reconciler",
-    description: "Detection-only reconcile mode between two systems of record - scheduled Lambda, daily (4x for one tenant), per-tenant population queries, reasoned link verdicts.",
+    description: "Reconciles two systems of record on a scheduled Lambda: daily detection reports (4x for one tenant), capped nightly repair schedules on 5 production tenants, and capped nightly login-merge schedules on 4 behind a recorded sign-off.",
     jobId: "hth",
   },
   {
     title: "Bedrock Knowledge Base",
     description: "Built with a colleague. My part was the refresh and the platform side: a scheduled in-VPC Fargate task that re-ingests Oracle CCS product docs, per-client material and service-desk pages across four data sources, with alerts when it fails.",
-    jobId: "hth",
-  },
-  {
-    title: "Tenant Go-Lives",
-    description: "Production go-live readiness for client launches across the fleet.",
     jobId: "hth",
   },
 ];
