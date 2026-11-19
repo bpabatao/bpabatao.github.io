@@ -5,14 +5,14 @@
     "title": "I build the platform other engineers",
     "accent": "ship on.",
     "body": "Benedict Pabatao · Staff Software Engineer, Platform & Product",
-    "foot": "7 live 11-tenant fleet   ·   350k+ registered customer accounts   ·   ~11M requests a month in production   ·   19 architecture decision records, 15 accepted"
+    "foot": "7 live 11-tenant fleet   ·   350k+ registered customer accounts   ·   43x faster sessions view - 102s to 2.4s, one index   ·   19 architecture decision records, 15 accepted"
   },
   {
     "file": "og/core-api.png",
     "kicker": "~/case/core-api",
     "title": "Multi-Tenant Core API",
     "accent": "",
-    "body": "The middleware every utility-customer portal in the fleet stands on - two generations of it, and the migration from one to the other.",
+    "body": "The API behind the fleet's utility customer portals: two generations of it, and the migration from one to the other.",
     "foot": "58% of v1 · 76% of v2 · Fastify 5 · TypeScript (strict) · Zod · MongoDB"
   },
   {
@@ -28,7 +28,7 @@
     "kicker": "~/case/observability",
     "title": "Observability & Accountability",
     "accent": "",
-    "body": "The platform that makes a small team's fleet legible: who did what, which accounts look wrong, and what an incident actually cost.",
+    "body": "How a small team answers questions about its fleet: who changed what, and which accounts look wrong.",
     "foot": "Sole author · MongoDB · CloudWatch · WAFv2 · Fastify"
   },
   {
@@ -36,7 +36,7 @@
     "kicker": "~/case/nmblr",
     "title": "Biopharma Strategy Platform",
     "accent": "",
-    "body": "An ISO 27001-certified strategy SaaS for enterprise pharma - a schema-driven clone engine, dependency-aware archive/restore, and real-time collaboration.",
+    "body": "An ISO 27001-certified strategy SaaS for enterprise pharma: a schema-driven clone engine and dependency-aware archive/restore.",
     "foot": "1 of 3 core engineers · React · TypeScript · Node · GraphQL"
   }
 ]

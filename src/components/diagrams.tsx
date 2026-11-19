@@ -82,7 +82,7 @@ export const captions = {
 /* Both generations side by side: the case is the migration between them, one tenant at a time. */
 const GENS = [
   { x: 110, cx: 200, name: "core api v1", lines: ["6 of 7 launched tenants", "express, patched + audited"] },
-  { x: 350, cx: 440, name: "core api v2", lines: ["7th tenant + 1st migration", "authz on every account route", "per-tenant config"] },
+  { x: 350, cx: 440, name: "core api v2", lines: ["7th tenant + 1st migration", "authz on account routes", "per-tenant config"] },
 ] as const;
 
 export function CoreApiDiagram() {

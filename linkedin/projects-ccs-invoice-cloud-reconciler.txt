@@ -1,5 +1,5 @@
-# updated 2026-11-18 - paste into LinkedIn > Projects > CCS ↔ Invoice Cloud Reconciler
+# updated 2026-11-19 - paste into LinkedIn > Projects > CCS ↔ Invoice Cloud Reconciler
 CCS ↔ Invoice Cloud Reconciler
 Associated with: ESC Partners / HometownHUB
 
-Detection-only reconcile mode between two systems of record - scheduled Lambda, daily (4x for one tenant), per-tenant population queries, reasoned link verdicts.
+Reconciles two systems of record on a scheduled Lambda: daily detection reports (4x for one tenant), capped nightly repair schedules on 5 production tenants, and capped nightly login-merge schedules on 4 behind a recorded sign-off.
