@@ -30,7 +30,7 @@ export const profile = {
   summary:
     "I build multi-tenant SaaS platforms end to end - the Terraform that provisions them, the API they run on, and the product customers use. I have 8+ years in software, 5+ of them hands-on with AWS, and 3+ building and operating cloud platforms, from AWS infrastructure-as-code to the shared backend services a product fleet runs on.",
   resumeSummary:
-    `Staff Software Engineer with 8+ years in software (5+ on AWS), the last 3+ on a multi-tenant SaaS platform behind ${fleetPortals.length} live utility client portals - 350k+ registered customer accounts - where I am now the most senior hands-on engineer. I am the primary author of its core REST API, both generations, and of the Terraform control-plane the fleet is migrating onto. I also run it: CI/CD, observability, incident response, security remediation and cost.`,
+    `Staff Software Engineer with 8+ years in software (5+ on AWS), the last 3+ on a multi-tenant SaaS platform behind ${fleetPortals.length} live utility client portals - about 850k active utility accounts served - where I am now the most senior hands-on engineer. I am the primary author of its core REST API, both generations, and of the Terraform control-plane the fleet is migrating onto. I also run it: CI/CD, observability, incident response, security remediation and cost.`,
   location: "Italy (Remote, CET)",
   workAuthorization: "EU work authorization",
   availability: "Open to Staff / Lead platform and product engineering roles, and consulting.",
@@ -38,9 +38,9 @@ export const profile = {
   heroLine: "The Terraform that provisions a multi-tenant utility SaaS, the API it runs on, and the product customers use - built and operated end to end.",
   availabilityLine: `Open to Staff / Lead platform and product engineering roles · Remote from Italy (CET), async-first · EU work authorization · ${MARKETS}`,
   /* LinkedIn About, written in his own plainer voice; renderer uses it verbatim */
-  linkedinAbout: "I'm a Staff Software Engineer working remotely from Italy. For the last three years I've been the most senior hands-on engineer on a multi-tenant SaaS platform that runs the customer portals for 7 utility companies, with more than 350,000 registered customer accounts between them.\n\nI wrote most of what it runs on: 58% of the original API, 76% of its second generation, and 93% of the Terraform control-plane the fleet is moving onto. I also keep it running - pipelines, monitoring, incidents, security fixes and the AWS bill.\n\nThe part I care about most is the unglamorous work that lets a small team move fast without breaking things. Decisions get written down (I've authored 19 architecture decision records there). Standards live in the pipeline, not in review comments. Risky fixes ship behind a flag and get switched on one tenant at a time.\n\nI'm also one of three core engineers at Nmblr, an ISO 27001-certified strategy platform for biopharma, where I built the strategy clone engine, the archive/restore system and the observability layer.",
+  linkedinAbout: "I'm a Staff Software Engineer working remotely from Italy. For the last three years I've been the most senior hands-on engineer on a multi-tenant SaaS platform that runs the customer portals for 7 utility companies, serving about 850,000 active utility accounts between them.\n\nI wrote most of what it runs on: 58% of the original API, 76% of its second generation, and 93% of the Terraform control-plane the fleet is moving onto. I also keep it running - pipelines, monitoring, incidents, security fixes and the AWS bill.\n\nThe part I care about most is the unglamorous work that lets a small team move fast without breaking things. Decisions get written down (I've authored 19 architecture decision records there). Standards live in the pipeline, not in review comments. Risky fixes ship behind a flag and get switched on one tenant at a time.\n\nI'm also one of three core engineers at Nmblr, an ISO 27001-certified strategy platform for biopharma, where I built the strategy clone engine, the archive/restore system and the observability layer.",
   markets: MARKETS,
-  updated: "2026-11-19",
+  updated: "2026-11-20",
   atsKeywords: ["Staff", "REST", "Python", "IAM", "Terraform", "AWS", "TypeScript", "multi-tenant", "OAuth", "CI/CD", "React", "Node", "GraphQL", "IDOR"],
   email: "jajapabatao@gmail.com",
   github: "https://github.com/bpabatao",
@@ -54,7 +54,7 @@ export const fleetSize = 11;
 
 export const metrics = [
   { value: `${fleetPortals.length} live`, label: `${fleetSize}-tenant fleet` },
-  { value: "350k+", label: "registered customer accounts" },
+  { value: "~850k", label: "active utility accounts served" },
   { value: "43x", label: "faster sessions view - 102s to 2.4s, one index" },
   { value: "19", label: "architecture decision records, 15 accepted" },
 ] as const;
