@@ -1,4 +1,4 @@
-# updated 2026-11-19 - paste into LinkedIn > Projects > Observability & Accountability
+# updated 2026-11-20 - paste into LinkedIn > Projects > Observability & Accountability
 Observability & Accountability
 Associated with: ESC Partners / HometownHUB
 Provider-call capture (deep-redacted on v2), tiered audit retention, account-to-IP anomaly views and an email-change alert, so a small team can answer who did what.
