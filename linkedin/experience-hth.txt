@@ -9,7 +9,7 @@ I'm the most senior hands-on engineer on a small team running a multi-tenant pla
 - Authored 19 architecture decision records, 15 accepted. Moved standards out of code review and into pre-push and pipeline checks. Approved 135 of my teammates' PRs in 2026.
 - Wrote most of the core API, both generations: 58% of v1, which still serves six of the seven live tenants, and 76% of v2, which has served the seventh since June 2026.
 - Wrote 93% of our internal developer platform, a Terraform control-plane (9 stacks, about 60 AWS resource types) with a small dashboard on top. The fleet is moving onto it one tenant at a time.
-- Found an account-takeover risk in registration identity verification and built the defence: attempt lockout plus a ZIP check.
+- Found an account-takeover risk in registration identity verification and built the defense: attempt lockout plus a ZIP check.
 - Took the sessions view from 102 seconds to 2.4 with one composite index.
 - Ran remediation across 6 pentest rounds: 60 findings triaged and false positives pushed back on.
 - Built a duplicate-login reconciler for one tenant that treats the billing system as the source of truth. It runs read-only every day and refuses to act on stale data, which is how it caught a feed that had been frozen for about two months.

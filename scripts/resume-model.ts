@@ -72,7 +72,7 @@ export function buildResumeModel(page: Page = "a4"): ResumeModel {
     summary: profile.resumeSummary,
     experience: currentJobs.map(role),
     earlier: earlierJobs.filter((j) => j.resume !== false).map(role),
-    skills: stackGroups.filter((g) => !g.linkedinOnly).map((g) => ({ title: g.title, items: g.items.map((i) => i.replace(/\s*·\s*/g, ", ")).join(", ") })),
+    skills: stackGroups.filter((g) => !g.linkedinOnly).map((g) => ({ title: g.title, items: g.items.map((i) => i.replace(/\s*·\s*/g, ", ").replace(/^(.+?) - (.+)$/, "$1 ($2)")).join(", ") })),
     education: credentials.map((c) => ({ title: c.title, detail: c.detail, dates: c.period })),
     keywords: [...profile.atsKeywords],
     updated: profile.updated,

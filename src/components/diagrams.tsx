@@ -75,7 +75,7 @@ const LAST_X = 42 + (TENANTS.length - 1) * 78;
 export const captions = {
   "core-api": `${TENANTS.length} tenant portals reach Oracle CCS over OAuth 2.0 through two generations of the core API: v1 serves six, v2 serves the seventh and runs beside v1 for the first migration, and a tenant moves when its parity checks pass`,
   "control-plane": `The provisioning dashboard drives the Terraform control-plane that new tenant environments are provisioned from; the ${TENANTS.length} live tenants (dashed) are migrating onto it`,
-  "nmblr": "A DMMF-driven clone engine copies a finalised strategy, and a dependency registry cascades archive and restore across dependent entities",
+  "nmblr": "A DMMF-driven clone engine copies a finalized strategy, and a dependency registry cascades archive and restore across dependent entities",
   "observability": "Portals, the core API and outbound providers feed one capture layer that deep-redacts payloads on v2, raises anomaly alerts, and writes to retention tiers",
 } as const;
 
@@ -239,7 +239,7 @@ export function NmblrDiagram() {
 
       <Box x={24} y={16} w={150} h={40}>
         <Label x={99} y={31} size={10.5} color="var(--ink)" weight={600}>
-          finalised strategy
+          finalized strategy
         </Label>
         <Label x={99} y={45} size={9}>
           the source of truth
@@ -293,7 +293,7 @@ export function NmblrDiagram() {
             {e.label}
           </Label>
           <Label x={e.cx} y={253} size={9}>
-            per-group finalise
+            per-group finalize
           </Label>
         </Box>
       ))}
