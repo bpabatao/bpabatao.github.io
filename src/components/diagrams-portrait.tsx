@@ -163,7 +163,7 @@ export function NmblrPortrait() {
 
       <Box x={60} y={12} w={200} h={36}>
         <Label x={160} y={26} size={10.5} color="var(--ink)" weight={600}>
-          finalised strategy
+          finalized strategy
         </Label>
         <Label x={160} y={40} size={8.5}>
           the source of truth
@@ -211,7 +211,7 @@ export function NmblrPortrait() {
             {e.label}
           </Label>
           <Label x={e.cx} y={325} size={8}>
-            per-group finalise
+            per-group finalize
           </Label>
         </Box>
       ))}

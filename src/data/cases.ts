@@ -77,7 +77,7 @@ export const cases: CaseStudy[] = [
       {
         heading: "Constraints",
         paragraphs: [
-          "I was the one platform engineer, owning the AWS across the production and test fleets alongside feature work. Provisioning had to work without me in the room, and drift and cost anomalies had to show up without someone going looking for them.",
+          "I was the primary platform engineer, owning the AWS across the production and test fleets alongside feature work. Provisioning had to work without me in the room, and drift and cost anomalies had to show up without someone going looking for them.",
         ],
       },
       {
@@ -138,7 +138,7 @@ export const cases: CaseStudy[] = [
           "A wrapper records calls out to identity, mail, payment and billing providers alike, so an event exists whether the failure was ours or theirs. On the v2 capture path payloads are deep-redacted: tokens, passwords and identifiers. Measured volume is 156,656 events a day at 1.8 KB each, projected to about 35 GB at steady state.",
           "Accountability is tiered. Admin writes record which fields changed and are kept for a year. On the v2 API, admin reads and impersonated sessions are captured too, attributed to the acting admin, and kept for ninety days.",
           "An account-to-IP fan-out view surfaces anomalies, and an alert fires on a suspicious email-change pattern.",
-          "A composite index on tenant, environment, user and timestamp cut the sessions view 43x, and Bedrock spend is attributed to its own client in the cost dashboard so AI cost is visible next to everything else.",
+          "A composite index on tenant, environment, user and timestamp cut the sessions view 43x, and Bedrock spend is attributed to its own client in the cost dashboard so AI cost is visible next to everything else. A scheduled analyzer groups errors by code and endpoint and sends each pattern to Bedrock once, re-analyzing only when it spikes, spreads to more users or goes stale.",
         ],
       },
     ],
@@ -168,7 +168,7 @@ export const cases: CaseStudy[] = [
       {
         heading: "Problem",
         paragraphs: [
-          "A pharma brand strategy is a graph of artefacts that teams finalise, reuse and revise for years. Two operations on it are easy to get wrong: starting a new strategy from a finished one, and removing something other artefacts depend on.",
+          "A pharma brand strategy is a graph of artifacts that teams finalize, reuse and revise for years. Two operations on it are easy to get wrong: starting a new strategy from a finished one, and removing something other artifacts depend on.",
           "A hand-written copy drifts as soon as the schema changes. Deleting without knowing the dependents loses work that a regulated client cannot lose.",
         ],
       },
@@ -182,7 +182,7 @@ export const cases: CaseStudy[] = [
         heading: "Architecture",
         paragraphs: [
           "Clone engine: the schema's metadata drives the copy, so a new field or relation is cloned without anyone adding code for it.",
-          "Dependency subsystem: a registry describes which entities depend on which, exposed through its own GraphQL contract and resolver and rendered by a registry-driven modal. Finalised entities with dependents warn before an archive or a delete.",
+          "Dependency subsystem: a registry describes which entities depend on which, exposed through its own GraphQL contract and resolver and rendered by a registry-driven modal. Finalized entities with dependents warn before an archive or a delete.",
           "Elsewhere in the product I contributed to real-time collaboration over GraphQL subscriptions, OpenAI-backed generation features, and platform security work on ownership checks and JWT sessions.",
         ],
       },
@@ -193,7 +193,7 @@ export const cases: CaseStudy[] = [
     ],
     outcomes: [
       "Two subsystems originated from scratch and in the product: the clone engine and the Edge archive/restore isolation system.",
-      "Destructive actions on finalised work warn first, then cascade and reverse as a set.",
+      "Destructive actions on finalized work warn first, then cascade and reverse as a set.",
       "Cloning survives schema change: the model metadata drives the copy, so new fields travel without new code.",
     ],
   },

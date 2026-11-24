@@ -64,7 +64,7 @@
   <li><b>Set engineering standards as primary platform engineer</b> for 11 tenants across production and test (7 live) - 15 accepted ADRs, shared provisioning modules, pre-push and pipeline gates.</li>
   <li><b>Primary author of the fleet's core REST API, both generations</b> - 58% of v1, which serves 6 of the 7 live tenants, and 76% of v2 (Fastify, TypeScript, Zod, MongoDB on ECS Fargate), in production for the seventh since June 2026; own the shared auth and the Oracle CCS billing integration (OAuth 2.0).</li>
   <li><b>Primary author (93%) of the internal developer platform</b> - a Terraform control-plane (9 stacks, ~60 AWS resource types) with a Fastify/React dashboard that plans, applies and attributes cost; the fleet is moving onto it tenant by tenant.</li>
-  <li><b>Found an account-takeover risk in registration identity verification and built the defence</b> - attempt lockout plus ZIP-based disambiguation on the identity path the tenant portals share.</li>
+  <li><b>Found an account-takeover risk in registration identity verification and built the defense</b> - attempt lockout plus ZIP-based disambiguation on the identity path the tenant portals share.</li>
   <li><b>Built the audit and observability layer as sole author</b> - outbound provider-call capture, tiered audit retention, an account-to-IP anomaly view and a takeover alert; one composite index took the sessions view from 102s to 2.4s.</li>
   <li><b>Cut CI from ~12 to ~7 min on the core API and ~10 to ~6 min on the admin portal</b> (esbuild, cache-mounted installs, fail-fast) while adding blocking Snyk gates (newer portals, both APIs) and keyless OIDC deploys on 4 repos.</li>
   <li><b>Ran remediation across 6 pentest rounds</b> - triaged 60 findings into severity-labelled fix batches and refuted the false positives.</li>
@@ -100,9 +100,9 @@
 
 <h2>Technical Skills</h2>
 <div class="skills">
-  <p><b>Cloud &amp; IaC:</b> AWS - ECS Fargate, Lambda, CloudFront, Cognito, DynamoDB, EventBridge, ElastiCache, Secrets Manager, WAFv2, S3, Route 53, VPC, ALB, IAM, Elastic Beanstalk, Terraform, Docker</p>
-  <p><b>Platform &amp; DevOps:</b> Internal Developer Platform, Multi-tenant provisioning, Bitbucket Pipelines, GitHub Actions, OIDC deploys, Snyk, FinOps - Cost Explorer</p>
-  <p><b>Backend &amp; Data:</b> Node.js - Fastify, Express, TypeScript, Python, REST APIs, GraphQL, Prisma, PostgreSQL, MongoDB, Redis, Zod, Vitest, Playwright, Oracle Utilities CCS, Invoice Cloud</p>
+  <p><b>Cloud &amp; IaC:</b> AWS (ECS Fargate, Lambda, CloudFront, Cognito, DynamoDB, EventBridge, ElastiCache, Secrets Manager, WAFv2, S3, Route 53, VPC, ALB, IAM, Elastic Beanstalk), Terraform, Docker</p>
+  <p><b>Platform &amp; DevOps:</b> Internal Developer Platform, Multi-tenant provisioning, Bitbucket Pipelines, GitHub Actions, OIDC deploys, Snyk, FinOps (Cost Explorer)</p>
+  <p><b>Backend &amp; Data:</b> Node.js (Fastify, Express), TypeScript, Python, REST APIs, GraphQL, Prisma, PostgreSQL, MongoDB, Redis, Zod, Vitest, Playwright, Oracle Utilities CCS, Invoice Cloud</p>
   <p><b>Observability &amp; Security:</b> CloudWatch, CloudWatch Synthetics, Sentry, OWASP/IDOR, OAuth 2.0, JWT, Pentest remediation</p>
   <p><b>Frontend &amp; AI:</b> React, Next.js, Tailwind, React Native (Expo), Accessibility (WCAG 2.1 AA), AWS Bedrock (Claude), AI code review in CI, LLM knowledge bases (RAG)</p>
 </div>

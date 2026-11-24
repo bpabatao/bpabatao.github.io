@@ -29,7 +29,7 @@ test("headline, employer and promotion history follow the spec", () => {
   assert.equal(currentJobs[0].period.start, "2023-05");
   // BaseMap was a client of the CoDev agency, not an employer: it is a project under codev, never a job
   assert.ok(!earlierJobs.some((j) => j.id === "basemap"));
-  assert.ok(earlierProjects.some((p) => p.title.startsWith("Basemap") && p.jobId === "codev"));
+  assert.ok(earlierProjects.some((p) => p.title.startsWith("BaseMap") && p.jobId === "codev"));
   assert.match(profile.updated, /^\d{4}-\d{2}-\d{2}$/);
 });
 
